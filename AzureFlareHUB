@@ -82,6 +82,14 @@ Section:NewButton("Free Emotes (R15)", "Free Emotes", function()
     loadstring(game:HttpGet("https://raw.githubusercontent.com/o5u3/emotesv2/main/script"))()
 end)
 
+Section:NewButton("Ultimate Admin (check :)", "Write commands in chat", function()
+    loadstring(game:HttpGet("loadstring(game:HttpGet("https://pastebin.com/raw/bVjM0xCS", true))()"))()
+end)
+
+Section:NewButton("FE Flip", "yes", function()
+    loadstring(game:HttpGet("loadstring(game:HttpGet("https://raw.githubusercontent.com/ibosik/AzureFlareHUB/main/feFlip", true))()"))()
+end)
+
 
 local Tab = Window:NewTab("Other Scripts")
 
