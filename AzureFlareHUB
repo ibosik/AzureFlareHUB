@@ -1,4 +1,4 @@
---loadstring(game:HttpGet('https://raw.githubusercontent.com/ibosik/AzureFlareHUB/main/AzureFlareHUB'))()
+--loadstring(game:HttpGet('https://raw.githubusercontent.com/ibosik/testhub/main/testhub'))()
 
 local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/xHeptc/Kavo-UI-Library/main/source.lua"))()
 
@@ -63,19 +63,19 @@ Section:NewButton("Universal Hub", "", function()
 end)
 
 Section:NewButton("Nullware V3", "Very cool fe anim., but error when u stop any anim.", function()
-    loadstring(game:HttpGet('https://raw.githubusercontent.com/Kurus00/ABOBA/main/nullware.lua'))()
+    loadstring(game:HttpGet('https://raw.githubusercontent.com/ibosik/AzureFlareHUB/main/NullWare'))()
 end)
 
 Section:NewButton("Chat Art (key - .)", ".nigger", function()
-    loadstring(game:HttpGet("https://raw.githubusercontent.com/Kurus00/ABOBA/main/chat%20art.lua"))()
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/ibosik/AzureFlareHUB/main/ChatArt"))()
 end)
 
 Section:NewButton("Bang (R6)", "FUCK", function()
-    loadstring(game:HttpGet("https://raw.githubusercontent.com/Kurus00/ABOBA/main/ne%20znayu.lua"))()
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/ibosik/AzureFlareHUB/main/Bang"))()
 end)
 
 Section:NewButton("Invisible (R6, R15)", "If r6 u cant move.", function()
-    loadstring(game:HttpGet("https://raw.githubusercontent.com/Kurus00/ABOBA/main/FE%20Invisible%20r15.lua"))()
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/ibosik/AzureFlareHUB/main/Invisible"))()
 end)
 
 Section:NewButton("Free Emotes (R15)", "Free Emotes", function()
@@ -88,11 +88,11 @@ local Tab = Window:NewTab("Other Scripts")
 local Section = Tab:NewSection("Other Scripts")
 
 Section:NewButton("Azure Flare hub - Ragdoll Engine", "hub", function()
-    loadstring(game:HttpGet("https://raw.githubusercontent.com/Kurus00/ABOBA/main/Kurus%20hub%20-%20da%20hood.lua"))()
+    loadstring(game:HttpGet(""))()
 end)
 
 Section:NewButton("Azure Flare Hub - KAT", "hub", function()
-    loadstring(game:HttpGet("https://raw.githubusercontent.com/Kurus00/ABOBA/main/Kurus%20hub%20-%20PLS%20DONATE.lua"))()
+    loadstring(game:HttpGet(""))()
 end)
 
 Section:NewButton("Noob Army", "Best lt2 script.", function()
@@ -114,6 +114,6 @@ Section:NewButton("Aimbot", "haha funny aim skill", function()
 end)
 
 
-local Tab = Window:NewTab("Updates")
+local Tab = Window:NewTab("Credits")
 
-local Section = Tab:NewSection("Added fling")
+local Section = Tab:NewSection("ibosiktt#5391")
