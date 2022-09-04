@@ -25,6 +25,10 @@ Section:NewSlider("Walk Speed", "Walk Speed.", 500, 0, function(s)
     game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = s
 end)
 
+Section:NewSlider("Jump Power", "Jump Power.", 500, 0, function(s) 
+    game.Players.LocalPlayer.Character.Humanoid.JumpPower = s
+end)
+
 Section:NewButton("Fling", "haha funny head spin go fling and bye bye", function()
 loadstring(game:HttpGet(('https://raw.githubusercontent.com/NotFalxe/Roblox-Scripts/source-code/headfling.lua'),true))()
 game.WorkSpace.Effects:Destroy()
