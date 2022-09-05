@@ -1,8 +1,7 @@
 --loadstring(game:HttpGet('https://raw.githubusercontent.com/ibosik/AzureFlareHUB/main/AzureFlareHUB'))()
 
-
-
-game.StarterGui:SetCore("SendNotification", {Title = "Please sub to my yt", Text = "Link copied", Duration = 100, Button1 = "ok"})
+game.StarterGui:SetCore("SendNotification", {Title = "Welcome to A.F. Hub", Text = "gui by xHeptc", Duration = 10000, Button1 = "ok"})
+game.StarterGui:SetCore("SendNotification", {Title = "Please, sub to my yt", Text = "https://www.youtube.com/channel/UC_wPcE323Qfe0Wntx44FcKw", Duration = 10000, Button1 = "already subbed"})
 
 local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/xHeptc/Kavo-UI-Library/main/source.lua"))()
 
