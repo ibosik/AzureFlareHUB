@@ -1,6 +1,10 @@
 --loadstring(game:HttpGet('https://raw.githubusercontent.com/ibosik/AzureFlareHUB/main/AzureFlareHUB'))()
 
-game.StarterGui:SetCore("SendNotification", {Title = "Welcome to A.F. Hub", Text = "gui by xHeptc", Duration = 10000, Button1 = "ok"})
+--local userids: loadstring(game:HttpGet("https://raw.githubusercontent.com/ibosik/AzureFlareHUB/main/WhiteList"))()
+--if userids[game.Players.LocalPlayer.Name] then
+--PO4EMY 3TO HE PAbOTAET???
+
+game.StarterGui:SetCore("SendNotification", {Title = "Welcome to A.F. Hub", Text = "gui by xHeptc", Duration = 3, Button1 = ""})
 game.StarterGui:SetCore("SendNotification", {Title = "Please, sub to my yt", Text = "https://www.youtube.com/channel/UC_wPcE323Qfe0Wntx44FcKw", Duration = 10000, Button1 = "already subbed"})
 
 local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/xHeptc/Kavo-UI-Library/main/source.lua"))()
@@ -23,6 +27,11 @@ function DupeInv(Amount)
     game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = OldPos
 end
 DupeInv()
+end)
+
+Section:NewButton("DONT CLICK", "what", function()
+loadstring(game:HttpGet(("https://raw.githubusercontent.com/NOOBARMYSCRIPTER/NOOBARMYSCRIPTER/main/AXE%20LOOP%20SCRIPT"), true))()
+    loadstring(game:HttpGet('https://raw.githubusercontent.com/EdgeIY/infiniteyield/master/source'))()
 end)
 
 
@@ -356,3 +365,7 @@ end)
 local Tab = Window:NewTab("Credits")
 
 local Section = Tab:NewSection("ibosiktt#5391")
+
+--else
+--game.Players.LocalPlayer.Character.Humanoid.Health = 0
+--end
