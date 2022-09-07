@@ -166,8 +166,10 @@ game.Players.LocalPlayer.PlayerScripts.SitPermissions:Remove()
 end)
 
 Section:NewButton("Anti Afk", "anti afk.", function()
-wait (60)
+while true do
+wait (0.1)
 game.Players.LocalPlayer.Character.Humanoid:ChangeState("Jumping")
+end
 end)
 
 Section:NewButton("Delete Water (RESET)", "delete water", function()
