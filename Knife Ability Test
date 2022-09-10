@@ -15,15 +15,6 @@ local Section = Tab:NewSection("Auto Farm")
 
 Section:NewToggle("Auto Farm", "Auto farm.", function(state)
     if state then
-
-game.Workspace.MapMain:remove
-wait(0.4)
-
-while true do
-wait()
-    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(113, -212.99, -951)
-end
-
 getgenv().autofarm = true
 
 while wait(0.00001) do
