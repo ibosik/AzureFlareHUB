@@ -1,5 +1,8 @@
 --setclipboard(game:GetService("RbxAnalyticsService"):GetClientId())
 
-return {
-"F824E018-20C3-4672-AA57-BF4DC2DBF571"
+--return {
+--"F824E018-20C3-4672-AA57-BF4DC2DBF571"
+--}
+local white list = {
+    [3734124942] = true
 }
