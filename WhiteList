@@ -1,5 +1,5 @@
+--setclipboard(game:GetService("RbxAnalyticsService"):GetClientId())
+
 return {
-["zxcibosik"] = true,
-["morgenlt2_1"] = true,
-["morgenlt2_2"] = true
+"F824E018-20C3-4672-AA57-BF4DC2DBF571"
 }
