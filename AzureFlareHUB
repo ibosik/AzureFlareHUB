@@ -312,6 +312,10 @@ local Tab = Window:NewTab("Fun")
 
 local Section = Tab:NewSection("Fun")
 
+Section:NewButton("Default Dance", "Default dance.", function()
+    loadstring(game:HttpGet('https://raw.githubusercontent.com/ibosik/AzureFlareHUB/main/DefaultDance'))()
+end)
+
 Section:NewButton("Universal Hub", "idk", function()
     loadstring(game:HttpGet('https://raw.githubusercontent.com/Dvrknvss/UniversalFEScriptHub/main/Script'))()
 end)
