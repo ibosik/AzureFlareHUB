@@ -1,5 +1,11 @@
 --loadstring(game:HttpGet('https://raw.githubusercontent.com/ibosik/AzureFlareHUB/main/AzureFlareHUB'))()
 
+local HWIDTable = loadstring(game:HttpGet("https://raw.githubusercontent.com/ibosik/AzureFlareHUB/main/WhiteList"))()
+local HWID = game:GetService("RbxAnalyticsService"):GetClientId()
+print(HWIDTable)
+for i,v in pairs(HWIDTable) do
+    if v == HWID then
+
 if game.PlaceId == 13822889 then
 loadstring(game:HttpGet('https://raw.githubusercontent.com/ibosik/AzureFlareHUB/main/Lumber%20Tycoon%202'))()
 end
@@ -7,3 +13,5 @@ end
 if game.PlaceId == 621129760 then
 loadstring(game:HttpGet('https://raw.githubusercontent.com/ibosik/AzureFlareHUB/main/Knife%20Ability%20Test'))()
 end
+end
+    end
