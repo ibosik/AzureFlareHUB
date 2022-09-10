@@ -11,7 +11,7 @@ local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/xHept
 
 local Window = Library.CreateLib("Azure Flare hub", "GrapeTheme")
 
-local Tab = Window:NewTab("LT2")
+local Tab = Window:NewTab("---LT2---")
 
 local Tab = Window:NewTab("Dupe")
 
@@ -309,7 +309,7 @@ Section:NewButton("Lone Cave (Endtimes)", "Teleports You To The End Times Tree C
     game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(113, -212.99, -951)
 end)
 
-local Tab = Window:NewTab("OTHER")
+local Tab = Window:NewTab("---OTHER---")
 
 local Tab = Window:NewTab("Fun")
 
@@ -363,17 +363,6 @@ end)
 Section:NewButton("Infinite Yield FE", "Admin commands.", function()
     loadstring(game:HttpGet('https://raw.githubusercontent.com/EdgeIY/infiniteyield/master/source'))()
 end)
-
-
-local Tab = Window:NewTab("for other scripts xd")
-
-local Section = Tab:NewSection("4o4o4o")
-
-Section:NewButton("Aimbot", "haha funny aim skill", function()
-    loadstring(game:HttpGet("https://raw.githubusercontent.com/ibosik/ok/main/ok"))()
-
-end)
-
 
 local Tab = Window:NewTab("Credits")
 
