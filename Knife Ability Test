@@ -1,4 +1,4 @@
---loadstring(game:HttpGet(''))()
+--loadstring(game:HttpGet('https://raw.githubusercontent.com/ibosik/AzureFlareHUB/main/Knife%20Ability%20Test'))()
 
 game.StarterGui:SetCore("SendNotification", {Title = "Welcome to A.F. Hub", Text = "gui by xHeptc", Duration = 3, Button1 = ""})
 game.StarterGui:SetCore("SendNotification", {Title = "Please, sub to my yt", Text = "https://www.youtube.com/channel/UC_wPcE323Qfe0Wntx44FcKw", Duration = 10000, Button1 = "already subbed"})
