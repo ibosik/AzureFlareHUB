@@ -9,11 +9,11 @@ local Window = Library.CreateLib("Azure Flare hub", "GrapeTheme")
 
 local Tab = Window:NewTab("---KAT---")
 
-local Tab = Window:NewTab("AutoFarm")
+local Tab = Window:NewTab("Auto Farm")
 
-local Section = Tab:NewSection("AutoFarm")
+local Section = Tab:NewSection("Auto Farm")
 
-Section:NewToggle("ToggleText", "ToggleInfo", function(state)
+Section:NewToggle("Auto Farm", "Auto farm.", function(state)
     if state then
 
 getgenv().autofarm = true
