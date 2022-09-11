@@ -1,4 +1,9 @@
-game.StarterGui:SetCore("SendNotification", {Title = "Azure Flare Hub", Text = "Welcome, 'pl nick xd'", Duration = 3, Button1 = ""})
+local player = game.Players.LocalPlayer
+
+if player then
+
+game.StarterGui:SetCore("SendNotification", {Title = "Azure Flare Hub", Text = "Welcome, "..player.Name..".", Duration = 3, Button1 = ""})
+end
 
 local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/slf0Dev/Ocerium_Project/main/Library.lua"))()
 
@@ -148,6 +153,24 @@ local Tab = Window.NewTab("Player")
 
 local Section = Tab.NewSection("Player")
 
+local Button = Section.NewButton("Noclip",function()
+local noClip = true
+local noClipConnect = game:GetService("RunService").Stepped:Connect(function()
+    local chr = game.Players.LocalPlayer.Character
+    if chr:FindFirstChild'Torso' and chr:FindFirstChild'Head' then
+        chr:FindFirstChild'Torso'.CanCollide = not noClip
+        chr:FindFirstChild'Head'.CanCollide = not noClip
+    end
+end)
+
+task.wait(20)
+noClipConnect:Disconnect()
+end)
+
+local Button = Section.NewButton("Off Noclip",function()
+local noClip = false
+end)
+
 local Button = Section.NewButton("Click-TP",function()
     mouse = game.Players.LocalPlayer:GetMouse()
 tool = Instance.new("Tool")
@@ -210,7 +233,7 @@ end)
 
 local Tab = Window.NewTab("Waypoints")
 
-local Section = Tab.NewSection("Waypoints")
+local Section = Tab.NewSection("Teleport To...")
 
 local Button = Section.NewButton("Spawn",function()
     game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(172, 2.9, 74)
@@ -314,7 +337,7 @@ end)
 
 local Tab = Window.NewTab("Fun")
 
-local Section = Tab.NewSection("Fun")
+local Section = Tab.NewSection("Fun Scripts")
 
 
 local Button = Section.NewButton("Default Dance",function()
@@ -347,8 +370,4 @@ end)
 
 Section:NewButton("FE Flip", "yes", function()
     loadstring(game:HttpGet("https://raw.githubusercontent.com/ibosik/AzureFlareHUB/main/feFlip", true))()
-end)
-
-local SliderPrecise = section.NewSlider("why", 100, 0, function(s)
-    game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = s
 end)
