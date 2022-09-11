@@ -1,0 +1,174 @@
+game.StarterGui:SetCore("SendNotification", {Title = "Azure Flare Hub", Text = "Welcome, 'pl nick xd'", Duration = 3, Button1 = ""})
+
+local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/slf0Dev/Ocerium_Project/main/Library.lua"))()
+
+Window = Library.Main("Azure Flare Hub | LT2","LeftAlt") -- change "LeftAlt" to key that you want will hide gui
+
+
+local Tab = Window.NewTab("Credits")
+
+local Section = Tab.NewSection("Discord")
+
+local Button = Section.NewButton("ibosiktt#5391",function()
+end)
+
+local Button = Section.NewButton("Kurus#6448",function()
+end)
+
+local Section = Tab.NewSection("Youtube")
+
+local Button = Section.NewButton("IbosikYT",function()
+setclipboard("https://www.youtube.com/channel/UC_wPcE323Qfe0Wntx44FcKw")
+game.StarterGui:SetCore("SendNotification", {Title = "Link copied", Text = "", Duration = 3, Button1 = ""})
+end)
+
+local Tab = Window.NewTab("Dupe")
+
+local Section = Tab.NewSection("Axe")
+
+local Button = Section.NewButton("Dupe Axe (hold axe)",function()
+local OldPos
+function DupeInv(Amount)
+    if not game.Players.LocalPlayer.Character:FindFirstChild("Tool") then return end
+    OldPos = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame
+        game:GetService("ReplicatedStorage").Interaction.ClientInteracted:FireServer(game.Players.LocalPlayer.Character:FindFirstChild("Tool"),"Drop tool",game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame + Vector3.new(3,1,0))
+        game.Players.LocalPlayer.Character.Head:Remove()
+    wait()
+    repeat task.wait() until game.Players.LocalPlayer.Character:FindFirstChild("Head") and game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart")
+    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = OldPos
+end
+DupeInv()
+end)
+
+local Section = Tab.NewSection("Items")
+
+local Button = Section.NewButton("Fixed ;(((((",function()
+end)
+
+local Button = Section.NewButton("Suicide",function()
+local A_1 = "mne nadaela eta zhizn"
+local A_2 = "All"
+local Event = game:GetService("ReplicatedStorage").DefaultChatSystemChatEvents.SayMessageRequest
+Event:FireServer(A_1, A_2)
+wait(3)
+local A_1 = "ya stal ded insyltom"
+local A_2 = "All"
+local Event = game:GetService("ReplicatedStorage").DefaultChatSystemChatEvents.SayMessageRequest
+Event:FireServer(A_1, A_2)
+wait(1)
+local A_1 = "1000-7"
+local A_2 = "All"
+local Event = game:GetService("ReplicatedStorage").DefaultChatSystemChatEvents.SayMessageRequest
+Event:FireServer(A_1, A_2)
+wait(1)
+LocalPlayer = game:GetService("Players").LocalPlayer
+LocalPlayer.Character.Humanoid:MoveTo(LocalPlayer.Character.HumanoidRootPart.Position + LocalPlayer.Character.HumanoidRootPart.CFrame.lookVector * 10)
+LocalPlayer.Character.Humanoid.Jump = true
+wait(0.5)
+function Iterate(instance, func)
+for i, v in next, instance:GetChildren() do
+func(v)
+end
+end
+limbs = {
+["Right Leg"] = true;
+["Right Arm"] = true;
+["Left Leg"] = true;
+["Left Arm"] = true;
+}
+Iterate(LocalPlayer.Character, function(v)
+if v:IsA("BasePart") then
+local attachment = Instance.new("Attachment")
+attachment.Parent = v
+attachment.Name = (v.Name .. "[Attachment]")
+if limbs[v.Name] then
+attachment.Position = Vector3.new(0, v.Size.Y/2, 0)
+elseif v.Name == "Head" then
+attachment.Position = Vector3.new(0, -v.Size.Y/2, 0)
+attachment.Rotation = Vector3.new(0, 0, -90)
+end
+end
+end)
+local leftLegAttachment = Instance.new("Attachment")
+leftLegAttachment.Position = Vector3.new(-.5, -1, 0)
+leftLegAttachment.Rotation = Vector3.new(0, -90, 0)
+local rightLegAttachment = Instance.new("Attachment")
+rightLegAttachment.Position = Vector3.new(.5, -1, 0)
+rightLegAttachment.Rotation = Vector3.new(0, -90, 0)
+rightLegAttachment.Parent, leftLegAttachment.Parent = LocalPlayer.Character.Torso, LocalPlayer.Character.Torso
+jointAttachments = {
+['Head'] = {
+['Attachment0'] = LocalPlayer.Character.Torso['NeckAttachment'];
+['Attachment1'] = LocalPlayer.Character.Head['Head[Attachment]'];
+};
+['Left Arm'] = {
+['Attachment0'] = LocalPlayer.Character.Torso['LeftCollarAttachment'];
+['Attachment1'] = LocalPlayer.Character['Left Arm']['Left Arm[Attachment]'];
+};
+['Right Arm'] = {
+['Attachment0'] = LocalPlayer.Character.Torso['RightCollarAttachment'];
+['Attachment1'] = LocalPlayer.Character['Right Arm']['Right Arm[Attachment]'];
+};
+['Left Leg'] = {
+['Attachment0'] = leftLegAttachment;
+['Attachment1'] = LocalPlayer.Character['Left Leg']['Left Leg[Attachment]'];
+};
+['Right Leg'] = {
+['Attachment0'] = rightLegAttachment;
+['Attachment1'] = LocalPlayer.Character['Right Leg']['Right Leg[Attachment]'];
+};
+}
+LocalPlayer.Character.Humanoid.PlatformStand = true
+Iterate(LocalPlayer.Character, function(v)
+if v:IsA("BasePart") then
+if jointAttachments[v.Name] then
+local ballSocketJoint = Instance.new("BallSocketConstraint")
+ballSocketJoint.Parent = v
+ballSocketJoint.Radius = 0.15
+ballSocketJoint.Attachment0, ballSocketJoint.Attachment1 = jointAttachments[v.Name]['Attachment0'], jointAttachments[v.Name]['Attachment1']
+end
+end
+end)
+Iterate(LocalPlayer.Character.Torso, function(v)
+if v:IsA("Motor") then
+v:Remove()
+end
+end)
+end)
+
+local Tab = Window.NewTab("Player")
+
+local Section = Tab.NewSection("Player")
+
+local Button = Section.NewButton("Click-TP",function()
+    mouse = game.Players.LocalPlayer:GetMouse()
+tool = Instance.new("Tool")
+tool.RequiresHandle = false
+tool.Name = "Click TP"
+tool.Activated:connect(function()
+local pos = mouse.Hit+Vector3.new(0,2.5,0)
+pos = CFrame.new(pos.X,pos.Y,pos.Z)
+game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = pos
+end)
+tool.Parent = game.Players.LocalPlayer.Backpack
+end)
+
+local SliderPrecise = section.NewSlider("Walk Speed",0,500,true,function(value)
+    game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = s
+end)
+
+local Tab = Window.NewTab("Waypoints")
+
+local Section = Tab.NewSection("Waypoints")
+
+local Button = Section.NewButton("idk",function()
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/ibosik/AzureFlareHUB/main/feFlip", true))()
+end)
+
+local Tab = Window.NewTab("Fun")
+
+local Section = Tab.NewSection("Fun")
+
+local Button = Section.NewButton("idk",function()
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/ibosik/AzureFlareHUB/main/feFlip", true))()
+end)
