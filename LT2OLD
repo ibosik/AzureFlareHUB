@@ -1,4 +1,4 @@
---loadstring(game:HttpGet('https://raw.githubusercontent.com/ibosik/AzureFlareHUB/main/Lumber%20Tycoon%202'))()
+--loadstring(game:HttpGet('https://raw.githubusercontent.com/ibosik/AzureFlareHUB/main/LT2OLD'))()
 
 --local userids: loadstring(game:HttpGet("https://raw.githubusercontent.com/ibosik/AzureFlareHUB/main/WhiteList"))()
 --if userids[game.Players.LocalPlayer.Name] then
