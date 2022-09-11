@@ -1,20 +1,46 @@
---loadstring(game:HttpGet('https://raw.githubusercontent.com/ibosik/AzureFlareHUB/main/Knife%20Ability%20Test'))()
+local player = game.Players.LocalPlayer
 
-game.StarterGui:SetCore("SendNotification", {Title = "Welcome to A.F. Hub", Text = "gui by xHeptc", Duration = 3, Button1 = ""})
-game.StarterGui:SetCore("SendNotification", {Title = "Please, sub to my yt", Text = "https://www.youtube.com/channel/UC_wPcE323Qfe0Wntx44FcKw", Duration = 10000, Button1 = "already subbed"})
+if player then
 
-local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/xHeptc/Kavo-UI-Library/main/source.lua"))()
+game.StarterGui:SetCore("SendNotification", {Title = "Azure Flare Hub", Text = "Welcome, "..player.Name..".", Duration = 3, Button1 = ""})
+end
 
-local Window = Library.CreateLib("Azure Flare hub", "GrapeTheme")
+local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/slf0Dev/Ocerium_Project/main/Library.lua"))()
 
-local Tab = Window:NewTab("---KAT---")
+Window = Library.Main("Azure Flare Hub | KAT","LeftAlt") -- change "LeftAlt" to key that you want will hide gui
 
-local Tab = Window:NewTab("Auto Farm")
 
-local Section = Tab:NewSection("Auto Farm")
+local Tab = Window.NewTab("Credits")
 
-Section:NewToggle("Auto Farm", "Auto farm.", function(state)
-    if state then
+local Section = Tab.NewSection("Discord")
+
+local Button = Section.NewButton("ibosiktt#5391",function()
+end)
+
+local Button = Section.NewButton("Kurus#6448",function()
+loadstring(game:HttpGet("http://darkhub.xyz/remote-script.lua", true))()
+end)
+
+local Section = Tab.NewSection("Youtube")
+
+local Button = Section.NewButton("IbosikYT",function()
+setclipboard("https://www.youtube.com/channel/UC_wPcE323Qfe0Wntx44FcKw")
+game.StarterGui:SetCore("SendNotification", {Title = "Link copied", Text = "", Duration = 3, Button1 = ""})
+end)
+
+local Tab = Window.NewTab("Old Gui")
+
+local Section = Tab.NewSection("Old Azure Flare Hub")
+
+local Button = Section.NewButton("Old Gui With Toggles And Sliders",function()
+    loadstring(game:HttpGet('https://raw.githubusercontent.com/ibosik/AzureFlareHUB/main/KATOLD'))()
+end)
+
+local Tab = Window.NewTab("Auto Farm")
+
+local Section = Tab.NewSection("Auto Farm")
+
+local Button = Section.NewButton("Auto Farm #1",function()
 getgenv().autofarm = true
 
 while wait(0.00001) do
@@ -39,25 +65,101 @@ end
 end
 end
 end
-
-    else
-getgenv().autofarm = false
-    end
 end)
 
-local Tab = Window:NewTab("AimBot")
 
-local Section = Tab:NewSection("AimBot")
+local Button = Section.NewButton("OFF Auto Farm #1",function()
+getgenv().autofarm = false
+end)
 
-Section:NewButton("Aimbot", "haha funny aim skill", function()
+local Tab = Window.NewTab("Silent Aim")
+
+local Section = Tab.NewSection("Silent Aim")
+
+local Button = Section.NewButton("Silent Aim #1",function()
+getgenv().silentaim_settings = {
+   fov = 150,
+   hitbox = "Head",
+   fovcircle = true,
+}
+-- Services
+local Players = game:GetService("Players")
+local RunService = game:GetService("RunService")
+
+-- Player
+local Player = Players.LocalPlayer
+local Mouse = Player:GetMouse()
+local CurrentCamera = workspace.CurrentCamera
+
+local function GetClosest(Fov)
+   local Target, Closest = nil, Fov or math.huge
+
+   for i,v in pairs(Players:GetPlayers()) do
+       if (v.Character and v ~= Player and v.Character:FindFirstChild(getgenv().silentaim_settings.hitbox)) then
+           local Position, OnScreen = CurrentCamera:WorldToScreenPoint(v.Character[getgenv().silentaim_settings.hitbox].Position)
+           local Distance = (Vector2.new(Position.X, Position.Y) - Vector2.new(Mouse.X, Mouse.Y)).Magnitude
+
+           if (Distance < Closest and OnScreen) then
+               Closest = Distance
+               Target = v
+           end
+       end
+   end
+   
+   return Target
+end
+
+local Target
+local CircleInline = Drawing.new("Circle")
+local CircleOutline = Drawing.new("Circle")
+RunService.Stepped:Connect(function()
+   CircleInline.Radius = getgenv().silentaim_settings.fov
+   CircleInline.Thickness = 2
+   CircleInline.Position = Vector2.new(Mouse.X, Mouse.Y + 36)
+   CircleInline.Transparency = 1
+   CircleInline.Color = Color3.fromHSV(tick()%5/5,1,1)
+   CircleInline.Visible = getgenv().silentaim_settings.fovcircle
+   CircleInline.ZIndex = 2
+
+   CircleOutline.Radius = getgenv().silentaim_settings.fov
+   CircleOutline.Thickness = 4
+   CircleOutline.Position = Vector2.new(Mouse.X, Mouse.Y + 36)
+   CircleOutline.Transparency = 1
+   CircleOutline.Color = Color3.new()
+   CircleOutline.Visible = getgenv().silentaim_settings.fovcircle
+   CircleOutline.ZIndex = 1
+
+   Target = GetClosest(getgenv().silentaim_settings.fov)
+end)
+
+local Old; Old = hookmetamethod(game, "__namecall", function(Self, ...)
+   local Args = {...}
+
+   if (not checkcaller() and getnamecallmethod() == "FindPartOnRayWithIgnoreList") then
+       if (table.find(Args[2], workspace.WorldIgnore.Ignore) and Target and Target.Character) then
+           local Origin = Args[1].Origin
+
+           Args[1] = Ray.new(Origin, Target.Character[getgenv().silentaim_settings.hitbox].Position - Origin)
+       end
+   end
+
+   return Old(Self, unpack(Args))
+end)
+end)
+
+local Tab = Window.NewTab("Aim Bot")
+
+local Section = Tab.NewSection("Aim Bot")
+
+local Button = Section.NewButton("Aim Bot #1",function()
     loadstring(game:HttpGet("https://raw.githubusercontent.com/ibosik/ok/main/ok"))()
 end)
 
-local Tab = Window:NewTab("Esp")
+local Tab = Window.NewTab("Esp")
 
-local Section = Tab:NewSection("Esp")
+local Section = Tab.NewSection("Esp")
 
-Section:NewButton("Esp 1 (maybe lags)", "bad esp", function()
+local Button = Section.NewButton("Esp #1 (maybe lags)",function()
 while wait(0.5) do
     for i, childrik in ipairs(workspace:GetDescendants()) do
         if childrik:FindFirstChild("Humanoid") then
@@ -78,11 +180,11 @@ while wait(0.5) do
 end
 end)
 
-local Tab = Window:NewTab("Tracer")
+local Tab = Window.NewTab("Tracer")
 
-local Section = Tab:NewSection("Tracer")
+local Section = Tab.NewSection("Tracer")
 
-Section:NewButton("ButtonText", "ButtonInfo", function()
+local Button = Section.NewButton("Tracer #1 (maybe crash)",function()
 local RunService = game:GetService("RunService")
 local Players = game:GetService("Players")
 local function Vector2Find(P)
@@ -115,11 +217,136 @@ end
     end)
 end)
 
- Tab = Window:NewTab("Player")
+local Button = Section.NewButton("Tracer #2",function()
 
-local Section = Tab:NewSection("Player")
+end)
 
-Section:NewButton("Click-TP", "idk", function()
+local Tab = Window.NewTab("Walk Speed")
+
+local Section = Tab.NewSection("Walk Speed")
+
+local Button = Section.NewButton("Reset Walk Speed",function()
+    game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 16
+end)
+
+local Button = Section.NewButton("Only This W.S. Works",function()
+while game:GetService("RunService").RenderStepped:wait() do
+    game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 27
+end
+end)
+
+local Button = Section.NewButton("WalkSpeed 50",function()
+    game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 50
+end)
+
+local Button = Section.NewButton("WalkSpeed 100",function()
+    game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 100
+end)
+
+local Button = Section.NewButton("WalkSpeed 150",function()
+    game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 150
+end)
+
+local Button = Section.NewButton("WalkSpeed 200",function()
+    game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 200
+end)
+
+local Button = Section.NewButton("WalkSpeed 250",function()
+    game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 250
+end)
+
+local Button = Section.NewButton("WalkSpeed 300",function()
+    game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 300
+end)
+
+local Button = Section.NewButton("WalkSpeed 350",function()
+    game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 350
+end)
+
+local Button = Section.NewButton("WalkSpeed 400",function()
+    game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 400
+end)
+
+local Button = Section.NewButton("WalkSpeed 450",function()
+    game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 450
+end)
+
+local Button = Section.NewButton("WalkSpeed 500",function()
+    game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 500
+end)
+
+local Tab = Window.NewTab("Jump Power")
+
+local Section = Tab.NewSection("Jump Power")
+
+local Button = Section.NewButton("Reset Jump Power",function()
+    game.Players.LocalPlayer.Character.Humanoid.JumpPower = 50
+end)
+
+local Button = Section.NewButton("Only This J.P. Works",function()
+    game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 27
+end)
+
+local Button = Section.NewButton("Jump Power 100",function()
+    game.Players.LocalPlayer.Character.Humanoid.JumpPower = 100
+end)
+
+local Button = Section.NewButton("Jump Power 150",function()
+    game.Players.LocalPlayer.Character.Humanoid.JumpPower = 150
+end)
+
+local Button = Section.NewButton("Jump Power 200",function()
+    game.Players.LocalPlayer.Character.Humanoid.JumpPower = 200
+end)
+
+local Button = Section.NewButton("Jump Power 250",function()
+    game.Players.LocalPlayer.Character.Humanoid.JumpPower = 250
+end)
+
+local Button = Section.NewButton("Jump Power 300",function()
+    game.Players.LocalPlayer.Character.Humanoid.JumpPower = 300
+end)
+
+local Button = Section.NewButton("Jump Power 350",function()
+    game.Players.LocalPlayer.Character.Humanoid.JumpPower = 350
+end)
+
+local Button = Section.NewButton("Jump Power 400",function()
+    game.Players.LocalPlayer.Character.Humanoid.JumpPower = 400
+end)
+
+local Button = Section.NewButton("Jump Power 450",function()
+    game.Players.LocalPlayer.Character.Humanoid.JumpPower = 450
+end)
+
+local Button = Section.NewButton("Jump Power 500",function()
+    game.Players.LocalPlayer.Character.Humanoid.JumpPower = 500
+end)
+
+
+local Tab = Window.NewTab("Player")
+
+local Section = Tab.NewSection("Player")
+
+local Button = Section.NewButton("Noclip",function()
+local noClip = true
+local noClipConnect = game:GetService("RunService").Stepped:Connect(function()
+    local chr = game.Players.LocalPlayer.Character
+    if chr:FindFirstChild'Torso' and chr:FindFirstChild'Head' then
+        chr:FindFirstChild'Torso'.CanCollide = not noClip
+        chr:FindFirstChild'Head'.CanCollide = not noClip
+    end
+end)
+
+task.wait(20)
+noClipConnect:Disconnect()
+end)
+
+local Button = Section.NewButton("Off Noclip",function()
+local noClip = false
+end)
+
+local Button = Section.NewButton("Click-TP",function()
     mouse = game.Players.LocalPlayer:GetMouse()
 tool = Instance.new("Tool")
 tool.RequiresHandle = false
@@ -132,50 +359,37 @@ end)
 tool.Parent = game.Players.LocalPlayer.Backpack
 end)
 
-Section:NewSlider("Walk Speed", "Walk Speed.", 500, 0, function(s) 
-    game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = s
-end)
-
-Section:NewSlider("Jump Power", "Jump Power.", 500, 0, function(s) 
-    game.Players.LocalPlayer.Character.Humanoid.JumpPower = s
-end)
-
-Section:NewButton("Fling", "haha funny head spin go fling and bye bye", function()
+local Button = Section.NewButton("Fling",function()
 loadstring(game:HttpGet(('https://raw.githubusercontent.com/NotFalxe/Roblox-Scripts/source-code/headfling.lua'),true))()
 game.WorkSpace.Effects:Destroy()
 end)
 
-local Tab = Window:NewTab("Credits")
+local Tab = Window.NewTab("Fun")
 
-local Section = Tab:NewSection("ibosiktt#5391")
+local Section = Tab.NewSection("Fun Scripts")
 
-local Tab = Window:NewTab("---OTHER---")
 
-local Tab = Window:NewTab("Fun")
-
-local Section = Tab:NewSection("Fun")
-
-Section:NewButton("Default Dance", "Default dance.", function()
+local Button = Section.NewButton("Default Dance",function()
     loadstring(game:HttpGet('https://raw.githubusercontent.com/ibosik/AzureFlareHUB/main/DefaultDance'))()
 end)
 
-Section:NewButton("Universal Hub", "idk", function()
+local Button = Section.NewButton("Universal Hub",function()
     loadstring(game:HttpGet('https://raw.githubusercontent.com/Dvrknvss/UniversalFEScriptHub/main/Script'))()
 end)
 
-Section:NewButton("Nullware V3", "Very cool fe animations", function()
+local Button = Section.NewButton("NullWare V3",function()
     loadstring(game:HttpGet('https://raw.githubusercontent.com/ibosik/AzureFlareHUB/main/NullWare'))()
 end)
 
-Section:NewButton("Chat Art (key - .)", ".nigger", function()
+local Button = Section.NewButton("Chat Art",function()
     loadstring(game:HttpGet("https://raw.githubusercontent.com/ibosik/AzureFlareHUB/main/ChatArt"))()
 end)
 
-Section:NewButton("Bang (R6)", "FUCK", function()
+local Button = Section.NewButton("Bang",function()
     loadstring(game:HttpGet("https://raw.githubusercontent.com/ibosik/AzureFlareHUB/main/Bang"))()
 end)
 
-Section:NewButton("Invisible (R6)", "yes", function()
+local Button = Section.NewButton("Invisible",function()
     loadstring(game:HttpGet("https://raw.githubusercontent.com/ibosik/AzureFlareHUB/main/Invisible"))()
 end)
 
@@ -186,4 +400,3 @@ end)
 Section:NewButton("FE Flip", "yes", function()
     loadstring(game:HttpGet("https://raw.githubusercontent.com/ibosik/AzureFlareHUB/main/feFlip", true))()
 end)
-
