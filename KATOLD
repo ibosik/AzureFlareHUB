@@ -1,0 +1,188 @@
+--loadstring(game:HttpGet('https://raw.githubusercontent.com/ibosik/AzureFlareHUB/main/Knife%20Ability%20Test'))()
+
+game.StarterGui:SetCore("SendNotification", {Title = "Welcome to A.F. Hub", Text = "gui by xHeptc", Duration = 3, Button1 = ""})
+game.StarterGui:SetCore("SendNotification", {Title = "Please, sub to my yt", Text = "https://www.youtube.com/channel/UC_wPcE323Qfe0Wntx44FcKw", Duration = 10000, Button1 = "already subbed"})
+
+local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/xHeptc/Kavo-UI-Library/main/source.lua"))()
+
+local Window = Library.CreateLib("Azure Flare hub", "GrapeTheme")
+
+local Tab = Window:NewTab("---KAT---")
+
+local Tab = Window:NewTab("Auto Farm")
+
+local Section = Tab:NewSection("Auto Farm")
+
+Section:NewToggle("Auto Farm", "Auto farm.", function(state)
+    if state then
+getgenv().autofarm = true
+
+while wait(0.00001) do
+if not getgenv().autofarm then return end
+for i,v in pairs(game.Players:GetChildren()) do
+if v ~= game.Players.LocalPlayer and v.Character ~= nil and v.Character:FindFirstChild("HumanoidRootPart") ~= nil and not v.Character:FindFirstChild("ForceField") then
+if not getgenv().autofarm then return end
+if game.Players.LocalPlayer.Character:FindFirstChild("Knife")  then
+v.Character:FindFirstChild("HumanoidRootPart").CFrame = game.Players.LocalPlayer.Character:WaitForChild("HumanoidRootPart").CFrame   +  game.Players.LocalPlayer.Character:WaitForChild("HumanoidRootPart").CFrame.LookVector * 2
+wait(0.1)
+game:GetService'VirtualUser':Button1Down(Vector2.new(1,1))
+wait(0.1)
+game:GetService'VirtualUser':Button1Up(Vector2.new(1,1))
+     elseif game.Players.LocalPlayer.Backpack:FindFirstChild("Knife") and not game.Players.LocalPlayer.Character:FindFirstChild("Knife") then 
+game.Players.LocalPlayer.Backpack:FindFirstChild("Knife").Parent = game.Players.LocalPlayer.Character
+v.Character:FindFirstChild("HumanoidRootPart").CFrame = game.Players.LocalPlayer.Character:WaitForChild("HumanoidRootPart").CFrame   +  game.Players.LocalPlayer.Character:WaitForChild("HumanoidRootPart").CFrame.LookVector * 2
+wait(0.1)
+game:GetService'VirtualUser':Button1Down(Vector2.new(1,1))
+wait(0.1)
+game:GetService'VirtualUser':Button1Up(Vector2.new(1,1))
+end
+end
+end
+end
+
+    else
+getgenv().autofarm = false
+    end
+end)
+
+local Tab = Window:NewTab("AimBot")
+
+local Section = Tab:NewSection("AimBot")
+
+Section:NewButton("Aimbot", "haha funny aim skill", function()
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/ibosik/ok/main/ok"))()
+end)
+
+local Tab = Window:NewTab("Esp")
+
+local Section = Tab:NewSection("Esp")
+
+Section:NewButton("Esp 1 (maybe lags)", "bad esp", function()
+while wait(0.5) do
+    for i, childrik in ipairs(workspace:GetDescendants()) do
+        if childrik:FindFirstChild("Humanoid") then
+            if not childrik:FindFirstChild("EspBox") then
+                if childrik ~= game.Players.LocalPlayer.Character then
+                    local esp = Instance.new("BoxHandleAdornment",childrik)
+                    esp.Adornee = childrik
+                    esp.ZIndex = 0
+                    esp.Size = Vector3.new(4, 5, 1)
+                    esp.Transparency = 0.65
+                    esp.Color3 = Color3.fromRGB(255,105,180)
+                    esp.AlwaysOnTop = true
+                    esp.Name = "EspBox"
+                end
+            end
+        end
+    end
+end
+end)
+
+local Tab = Window:NewTab("Tracer")
+
+local Section = Tab:NewSection("Tracer")
+
+Section:NewButton("ButtonText", "ButtonInfo", function()
+local RunService = game:GetService("RunService")
+local Players = game:GetService("Players")
+local function Vector2Find(P)
+    local camera = workspace.CurrentCamera
+    local worldPoint = P.Character.HumanoidRootPart.Position
+    local vector, inViewport = camera:WorldToViewportPoint(worldPoint)
+    if inViewport then else return nil end
+    return Vector2.new(vector.X, vector.Y)
+end
+    local function CreateTracer(PlayerN)
+        local line = Drawing.new("Line")
+        local success, err = pcall(function()
+             line.Visible = true
+             line.Color = Color3.fromRGB(255,105,180)
+             line.Thickness = 2
+             line.Transparency = 1
+             line.To = Vector2Find(PlayerN)
+             line.From = Vector2Find(game.Players.LocalPlayer)
+         end)
+         RunService.Stepped:Wait(1)
+         line:Remove()
+    end
+    local stepped = RunService.Stepped:Connect(function()
+        for i,v in ipairs(Players:GetPlayers()) do
+            if v.Name == Players.LocalPlayer.Name then
+            else
+                CreateTracer(v)
+            end
+        end
+    end)
+end)
+
+ Tab = Window:NewTab("Player")
+
+local Section = Tab:NewSection("Player")
+
+Section:NewButton("Click-TP", "idk", function()
+    mouse = game.Players.LocalPlayer:GetMouse()
+tool = Instance.new("Tool")
+tool.RequiresHandle = false
+tool.Name = "Click TP"
+tool.Activated:connect(function()
+local pos = mouse.Hit+Vector3.new(0,2.5,0)
+pos = CFrame.new(pos.X,pos.Y,pos.Z)
+game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = pos
+end)
+tool.Parent = game.Players.LocalPlayer.Backpack
+end)
+
+Section:NewSlider("Walk Speed", "Walk Speed.", 500, 0, function(s) 
+    game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = s
+end)
+
+Section:NewSlider("Jump Power", "Jump Power.", 500, 0, function(s) 
+    game.Players.LocalPlayer.Character.Humanoid.JumpPower = s
+end)
+
+Section:NewButton("Fling", "haha funny head spin go fling and bye bye", function()
+loadstring(game:HttpGet(('https://raw.githubusercontent.com/NotFalxe/Roblox-Scripts/source-code/headfling.lua'),true))()
+game.WorkSpace.Effects:Destroy()
+end)
+
+local Tab = Window:NewTab("Credits")
+
+local Section = Tab:NewSection("ibosiktt#5391")
+
+local Tab = Window:NewTab("---OTHER---")
+
+local Tab = Window:NewTab("Fun")
+
+local Section = Tab:NewSection("Fun")
+
+Section:NewButton("Default Dance", "Default dance.", function()
+    loadstring(game:HttpGet('https://raw.githubusercontent.com/ibosik/AzureFlareHUB/main/DefaultDance'))()
+end)
+
+Section:NewButton("Universal Hub", "idk", function()
+    loadstring(game:HttpGet('https://raw.githubusercontent.com/Dvrknvss/UniversalFEScriptHub/main/Script'))()
+end)
+
+Section:NewButton("Nullware V3", "Very cool fe animations", function()
+    loadstring(game:HttpGet('https://raw.githubusercontent.com/ibosik/AzureFlareHUB/main/NullWare'))()
+end)
+
+Section:NewButton("Chat Art (key - .)", ".nigger", function()
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/ibosik/AzureFlareHUB/main/ChatArt"))()
+end)
+
+Section:NewButton("Bang (R6)", "FUCK", function()
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/ibosik/AzureFlareHUB/main/Bang"))()
+end)
+
+Section:NewButton("Invisible (R6)", "yes", function()
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/ibosik/AzureFlareHUB/main/Invisible"))()
+end)
+
+Section:NewButton("Ultimate Admin", "Write commands in chat", function()
+    loadstring(game:HttpGet("https://pastebin.com/raw/bVjM0xCS", true))()
+end)
+
+Section:NewButton("FE Flip", "yes", function()
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/ibosik/AzureFlareHUB/main/feFlip", true))()
+end)
