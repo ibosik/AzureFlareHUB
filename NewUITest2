@@ -35,9 +35,9 @@ local Button = Section.NewButton("Old Gui With Toggles And Sliders",function()
     loadstring(game:HttpGet('https://raw.githubusercontent.com/ibosik/AzureFlareHUB/main/KATOLD'))()
 end)
 
-local Tab = Window:NewTab("Auto Farm")
+local Tab = Window.NewTab("Auto Farm")
 
-local Section = Tab:NewSection("Auto Farm")
+local Section = Tab.NewSection("Auto Farm")
 
 local Button = Section.NewButton("Auto Farm #1",function()
 getgenv().autofarm = true
@@ -64,22 +64,24 @@ end
 end
 end
 end
+end)
+
 
 local Button = Section.NewButton("OFF Auto Farm #1",function()
 getgenv().autofarm = false
 end)
 
-local Tab = Window:NewTab("Aim Bot")
+local Tab = Window.NewTab("Aim Bot")
 
-local Section = Tab:NewSection("Aim Bot")
+local Section = Tab.NewSection("Aim Bot")
 
 local Button = Section.NewButton("Aim Bot #1",function()
     loadstring(game:HttpGet("https://raw.githubusercontent.com/ibosik/ok/main/ok"))()
 end)
 
-local Tab = Window:NewTab("Esp")
+local Tab = Window.NewTab("Esp")
 
-local Section = Tab:NewSection("Esp")
+local Section = Tab.NewSection("Esp")
 
 local Button = Section.NewButton("Esp #1 (maybe lags)",function()
 while wait(0.5) do
@@ -102,9 +104,9 @@ while wait(0.5) do
 end
 end)
 
-local Tab = Window:NewTab("Tracer")
+local Tab = Window.NewTab("Tracer")
 
-local Section = Tab:NewSection("Tracer")
+local Section = Tab.NewSection("Tracer")
 
 local Button = Section.NewButton("Tracer #1 (maybe crash)",function()
 local RunService = game:GetService("RunService")
@@ -139,9 +141,27 @@ end
     end)
 end)
 
- Tab = Window:NewTab("Player")
+local Tab = Window.NewTab("Player")
 
-local Section = Tab:NewSection("Player")
+local Section = Tab.NewSection("Player")
+
+local Button = Section.NewButton("Noclip",function()
+local noClip = true
+local noClipConnect = game:GetService("RunService").Stepped:Connect(function()
+    local chr = game.Players.LocalPlayer.Character
+    if chr:FindFirstChild'Torso' and chr:FindFirstChild'Head' then
+        chr:FindFirstChild'Torso'.CanCollide = not noClip
+        chr:FindFirstChild'Head'.CanCollide = not noClip
+    end
+end)
+
+task.wait(20)
+noClipConnect:Disconnect()
+end)
+
+local Button = Section.NewButton("Off Noclip",function()
+local noClip = false
+end)
 
 local Button = Section.NewButton("Click-TP",function()
     mouse = game.Players.LocalPlayer:GetMouse()
