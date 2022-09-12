@@ -40,7 +40,7 @@ local Tab = Window.NewTab("Auto Farm")
 
 local Section = Tab.NewSection("Auto Farm")
 
-local Button = Section.NewButton("Auto Farm #1",function()
+local Button = Section.NewButton("Auto Farm 1",function()
 getgenv().autofarm = true
 
 while wait(0.00001) do
@@ -68,7 +68,7 @@ end
 end)
 
 
-local Button = Section.NewButton("OFF Auto Farm #1",function()
+local Button = Section.NewButton("OFF Auto Farm 1",function()
 getgenv().autofarm = false
 end)
 
@@ -76,7 +76,7 @@ local Tab = Window.NewTab("Silent Aim")
 
 local Section = Tab.NewSection("Silent Aim")
 
-local Button = Section.NewButton("Silent Aim #1",function()
+local Button = Section.NewButton("Silent Aim 1",function()
 getgenv().silentaim_settings = {
    fov = 150,
    hitbox = "Head",
@@ -151,7 +151,7 @@ local Tab = Window.NewTab("Aim Bot")
 
 local Section = Tab.NewSection("Aim Bot")
 
-local Button = Section.NewButton("Aim Bot #1",function()
+local Button = Section.NewButton("Aim Bot 1",function()
     loadstring(game:HttpGet("https://raw.githubusercontent.com/ibosik/ok/main/ok"))()
 end)
 
@@ -159,7 +159,7 @@ local Tab = Window.NewTab("Esp")
 
 local Section = Tab.NewSection("Esp")
 
-local Button = Section.NewButton("Esp #1 (maybe lags)",function()
+local Button = Section.NewButton("Esp 1 (maybe lags)",function()
 while wait(0.5) do
     for i, childrik in ipairs(workspace:GetDescendants()) do
         if childrik:FindFirstChild("Humanoid") then
@@ -184,7 +184,7 @@ local Tab = Window.NewTab("Tracer")
 
 local Section = Tab.NewSection("Tracer")
 
-local Button = Section.NewButton("Tracer #1 (maybe crash)",function()
+local Button = Section.NewButton("Tracer 1 (maybe crash)",function()
 local RunService = game:GetService("RunService")
 local Players = game:GetService("Players")
 local function Vector2Find(P)
@@ -217,8 +217,84 @@ end
     end)
 end)
 
-local Button = Section.NewButton("Tracer #2",function()
+local Button = Section.NewButton("Tracer 2",function()
 
+end)
+
+local Tab = Window.NewTab("Chams")
+
+local Section = Tab.NewSection("Chams")
+
+local Button = Section.NewButton("Chams 1",function()
+--// Chams ESP | CSGO Style
+ 
+ client = game.Players.LocalPlayer
+local players = game:GetService("Players")
+local rs = game:GetService("RunService")
+ 
+local function clonePart(part, model, character)
+   if part:IsA("BasePart") then
+local head = character:WaitForChild("Head")
+local clone = part:Clone()
+for i, v in ipairs(clone:GetChildren()) do
+if not v:IsA("SpecialMesh") then
+v:Destroy()
+continue
+end
+v.TextureId = ""
+end
+clone.Color = Color3.fromRGB(0, 255, 0)
+pcall(function()clone.Size = clone.Size * 0.7 clone.CanCollide = false end)
+clone.Parent = model
+rs.RenderStepped:connect(function()
+if head:IsDescendantOf(workspace) then
+clone.CFrame = part.CFrame
+clone.Size = part.Size
+else
+model:Destroy()
+return
+end
+end)
+end
+end
+local function chams(character)
+   local model = Instance.new("Model")
+   model.Name = character.Name
+   model.Parent = workspace
+   local cham = Instance.new("Highlight",model)
+   cham.Name = "cham"
+   cham.DepthMode = Enum.HighlightDepthMode.AlwaysOnTop  
+   cham.OutlineColor = Color3.fromRGB(0,0,0)
+   cham.FillColor = Color3.fromRGB(255,0,0)
+   cham.FillTransparency = 0
+   cham.OutlineTransparency = 1
+   local new = cham:Clone()
+   new.Parent = character
+   new.FillColor = Color3.fromRGB(0,255,0)
+   new.DepthMode = Enum.HighlightDepthMode.Occluded  
+   for i,v in ipairs(character:GetChildren()) do
+-- if character has a head then
+       if character:FindFirstChild("Head") then
+           clonePart(v, model, character)
+       end
+   end
+end
+for i,v in ipairs(players:GetPlayers()) do
+   if v~= client then
+       if v.Character then
+           chams(v.Character)
+       end
+   end
+   v.CharacterAdded:connect(function()wait(0.1)chams(v.Character)end)
+end
+players.PlayerAdded:connect(function()
+   if v~= client then
+       if v.Character then
+           chams(v.Character)
+       end
+   end
+   v.CharacterAdded:connect(function()wait(0.1)chams(v.Character)end)
+end)
 end)
 
 local Tab = Window.NewTab("Walk Speed")
