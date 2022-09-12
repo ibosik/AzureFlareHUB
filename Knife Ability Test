@@ -28,9 +28,13 @@ setclipboard("https://www.youtube.com/channel/UC_wPcE323Qfe0Wntx44FcKw")
 game.StarterGui:SetCore("SendNotification", {Title = "Link copied", Text = "", Duration = 3, Button1 = ""})
 end)
 
-local Tab = Window.NewTab("Old Gui")
+local Tab = Window.NewTab("Settings")
 
-local Section = Tab.NewSection("Old Azure Flare Hub")
+local Section = Tab.NewSection("GUI")
+
+local Button = Section.NewButton("Destroy GUI",function()
+        game:GetService("CoreGui").Library:Destroy()
+end)
 
 local Button = Section.NewButton("Old Gui With Toggles And Sliders",function()
     loadstring(game:HttpGet('https://raw.githubusercontent.com/ibosik/AzureFlareHUB/main/KATOLD'))()
@@ -305,7 +309,7 @@ local Button = Section.NewButton("Reset Walk Speed",function()
     game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 16
 end)
 
-local Button = Section.NewButton("Only This W.S. Works",function()
+local Button = Section.NewButton("Only This W.S. Works In KAT",function()
 while game:GetService("RunService").RenderStepped:wait() do
     game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 27
 end
