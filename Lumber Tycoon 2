@@ -27,11 +27,15 @@ setclipboard("https://www.youtube.com/channel/UC_wPcE323Qfe0Wntx44FcKw")
 game.StarterGui:SetCore("SendNotification", {Title = "Link copied", Text = "", Duration = 3, Button1 = ""})
 end)
 
-local Tab = Window.NewTab("Old Gui")
+local Tab = Window.NewTab("Settings")
 
-local Section = Tab.NewSection("Old Azure Flare Hub")
+local Section = Tab.NewSection("GUI")
 
-local Button = Section.NewButton("Old Gui With Toggles And Sliders",function()
+local Button = Section.NewButton("Destroy GUI",function()
+        game:GetService("CoreGui").Library:Destroy()
+end)
+
+local Button = Section.NewButton("Old Azure Flare Hub",function()
 loadstring(game:HttpGet('https://raw.githubusercontent.com/ibosik/AzureFlareHUB/main/LT2OLD'))()
 end)
 
@@ -149,6 +153,168 @@ end
 end)
 end)
 
+local Tab = Window.NewTab("Wood")
+
+local Section = Tab.NewSection("Wood")
+
+local Button = Section.NewButton("Sell Logs (Tree)",function()
+        for _, Log in pairs(workspace.LogModels:GetChildren()) do
+    if Log.Name:sub(1, 6) == "Loose_" and Log:findFirstChild("Owner") then
+        if Log.Owner.Value == game.Players.LocalPlayer then
+            for i,v in pairs(Log:GetChildren()) do
+                if v.Name=="WoodSection" then
+                    spawn(function()
+                        for i=1,10 do
+                            wait()
+                            v.CFrame=CFrame.new(Vector3.new(315, -0.296, 85.791))*CFrame.Angles(math.rad(90),0,0)
+                        end
+                    end)
+                end
+            end
+            spawn(function()
+                for i=1,20 do
+                    wait()
+                    game.ReplicatedStorage.Interaction.ClientIsDragging:FireServer(Log)
+                end
+            end)
+        end
+    end
+end
+end)
+
+local Button = Section.NewButton("Sell Planks",function()
+    for _, Plank in pairs(game.Workspace.PlayerModels:GetChildren()) do
+		if Plank.Name=="Plank" and Plank:findFirstChild("Owner") then
+			if Plank.Owner.Value == game.Players.LocalPlayer then
+				for i,v in pairs(Plank:GetChildren()) do
+					if v.Name=="WoodSection" then
+						spawn(function()
+							for i=1,10 do
+								wait()
+								v.CFrame=CFrame.new(Vector3.new(315, -0.296, 85.791))*CFrame.Angles(math.rad(90),0,0)
+							end
+						end)
+					end
+				end
+				spawn(function()
+					for i=1,20 do
+						wait()
+						game.ReplicatedStorage.Interaction.ClientIsDragging:FireServer(Plank)
+					end
+				end)
+			end
+		end
+	end
+end)
+
+local Button = Section.NewButton("TP Wood",function()
+    for _, Log in pairs(game.Workspace.LogModels:GetChildren()) do
+        if Log.Name:sub(1, 6) == "Loose_" and Log:findFirstChild("Owner") then
+            if Log.Owner.Value == game.Players.LocalPlayer then
+                Log:MoveTo(game.Players.LocalPlayer.Character.HumanoidRootPart.Position + Vector3.new(0, 20, 0))
+                for i=1,100 do
+                    game.ReplicatedStorage.Interaction.ClientIsDragging:FireServer(Log)
+                end
+            end
+        end
+    end
+end)
+local Button = Section.NewButton("TP Planks",function()
+    for _, Plank in pairs(game.Workspace.PlayerModels:GetChildren()) do
+		if Plank.Name=="Plank" and Plank:findFirstChild("Owner") then
+			if Plank.Owner.Value == game.Players.LocalPlayer then
+				local sendNotice = game.ReplicatedStorage.Notices.SendUserNotice
+				sendNotice:Fire("Click where you want ALL the Planks to TP to")
+				local ButtonPress
+				ButtonPress = game.Players.LocalPlayer:GetMouse().Button1Down:Connect(function()
+					local Square = game.Players.LocalPlayer:GetMouse().Target
+					if (Square.Name == "OriginSquare" or Square.Name == "Square") then
+						ButtonPress:Disconnect()
+						Plank:MoveTo(Square.Position)
+						for i=1,100 do
+							game.ReplicatedStorage.Interaction.ClientIsDragging:FireServer(Plank)
+						end
+					end
+				end)
+			end
+		end
+	end
+end)
+
+local Tab = Window.NewTab("Slot")
+
+local Section = Tab.NewSection("Slot")
+
+local Button = Section.NewButton("Free Land",function()
+for a,b in pairs(workspace.Properties:GetChildren()) do 
+    if b:FindFirstChild("Owner") and b:FindFirstChild("OriginSquare") and b.Owner.Value == nil then 
+        game.ReplicatedStorage.PropertyPurchasing.ClientPurchasedProperty:FireServer(b, b.OriginSquare.OriginCFrame.Value.p + Vector3.new(0,3,0))
+ wait(0.5)
+        Instance.new('RemoteEvent', game:service'ReplicatedStorage'.Interaction).Name = "Ban"
+	for i,v in pairs(game.Workspace.Properties:GetChildren()) do
+		if v.Owner.Value == game.Players.LocalPlayer then
+    game.Players.LocalPlayer.Character.Humanoid.Jump = true
+    wait(0.1)
+			game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.OriginSquare.CFrame + Vector3.new(0,10,0)
+    game.Players.LocalPlayer.Character.Humanoid.Jump = true
+    wait(0.1)
+		end
+	end
+    end
+end
+end)
+
+local Button = Section.NewButton("Max Land",function()
+    for i, v in pairs(game:GetService("Workspace").Properties:GetChildren()) do
+        if v:FindFirstChild("Owner") and v.Owner.Value == game.Players.LocalPlayer then
+            base = v
+            square = v.OriginSquare
+            end
+        end
+    function makebase(pos)
+        local Event = game:GetService("ReplicatedStorage").PropertyPurchasing.ClientExpandedProperty
+        Event:FireServer(base, pos)
+        end
+    local spos = square.Position
+    makebase(CFrame.new(spos.X + 40, spos.Y, spos.Z))
+    makebase(CFrame.new(spos.X - 40, spos.Y, spos.Z))
+    makebase(CFrame.new(spos.X, spos.Y, spos.Z + 40))
+    makebase(CFrame.new(spos.X, spos.Y, spos.Z - 40))
+    makebase(CFrame.new(spos.X + 40, spos.Y, spos.Z + 40))
+    makebase(CFrame.new(spos.X + 40, spos.Y, spos.Z - 40))
+    makebase(CFrame.new(spos.X - 40, spos.Y, spos.Z + 40))
+    makebase(CFrame.new(spos.X - 40, spos.Y, spos.Z - 40))
+    makebase(CFrame.new(spos.X + 80, spos.Y, spos.Z))
+    makebase(CFrame.new(spos.X - 80, spos.Y, spos.Z))
+    makebase(CFrame.new(spos.X, spos.Y, spos.Z + 80))
+    makebase(CFrame.new(spos.X, spos.Y, spos.Z - 80))
+--Corners--
+    makebase(CFrame.new(spos.X + 80, spos.Y, spos.Z + 80))
+    makebase(CFrame.new(spos.X + 80, spos.Y, spos.Z - 80))
+    makebase(CFrame.new(spos.X - 80, spos.Y, spos.Z + 80))
+    makebase(CFrame.new(spos.X - 80, spos.Y, spos.Z - 80))
+--Corners--
+    makebase(CFrame.new(spos.X + 40, spos.Y, spos.Z + 80))
+    makebase(CFrame.new(spos.X - 40, spos.Y, spos.Z + 80))
+    makebase(CFrame.new(spos.X + 80, spos.Y, spos.Z + 40))
+    makebase(CFrame.new(spos.X + 80, spos.Y, spos.Z - 40))
+    makebase(CFrame.new(spos.X - 80, spos.Y, spos.Z + 40))
+    makebase(CFrame.new(spos.X - 80, spos.Y, spos.Z - 40))
+    makebase(CFrame.new(spos.X + 40, spos.Y, spos.Z - 80))
+    makebase(CFrame.new(spos.X - 40, spos.Y, spos.Z - 80))
+end)
+
+--local Button = Section.NewButton("Car color",function()
+--    loadstring(game:HttpGetAsync("https://raw.githubusercontent.com/DragonDupe/SubscribeDragonDupe/main/PINK%20CAR%20SPAWNER.txt"))()
+--end)
+
+local Button = Section.NewButton("All Blueprints",function()
+    for i,v in pairs(game.ReplicatedStorage.Purchasables.Structures.BlueprintStructures:GetChildren()) do
+        local clone = v:Clone()
+        clone.Parent = game.Players.LocalPlayer.PlayerBlueprints.Blueprints
+        end
+end)
+
 local Tab = Window.NewTab("Walk Speed")
 
 local Section = Tab.NewSection("Walk Speed")
@@ -245,6 +411,16 @@ local Tab = Window.NewTab("Player")
 
 local Section = Tab.NewSection("Player")
 
+local Button = Section.NewButton("Full Bright",function()
+    loadstring(game:HttpGet("https://pastebin.com/raw/06iG6YkU", true))();
+    _G.FullBrightExecuted = true
+end)
+
+local Button = Section.NewButton("OFF Full Bright",function()
+    loadstring(game:HttpGet("https://pastebin.com/raw/06iG6YkU", true))();
+    _G.FullBrightExecuted = false
+end)
+
 local Button = Section.NewButton("Noclip",function()
 local noClip = true
 local noClipConnect = game:GetService("RunService").Stepped:Connect(function()
@@ -292,6 +468,18 @@ game.Players.LocalPlayer.Character.Humanoid:ChangeState("Jumping")
 end
 end)
 
+local Button = Section.NewButton("Btools",function()
+    loadstring(game:HttpGetAsync("https://pastebin.com/raw/Lf1ySa1m"))()
+end)
+
+local Button = Section.NewButton("No Fog",function()
+    game.Lighting.Changed:Connect(function()
+        game.Lighting.TimeOfDay = "12:00:00"
+        game.Lighting.FogEnd = 9999
+        game.Lighting.Brightness = 2
+    end)
+end)
+
 local Button = Section.NewButton("Delete Water",function()
 game.Workspace.Water.Water:Destroy()
 game.Workspace.Water.Water:Destroy()
@@ -312,11 +500,15 @@ game.Players.LocalPlayer.Character.Humanoid.Health = 0
 end)
 
 local Button = Section.NewButton("Walk On Water",function()
-        if state then
             for _,v in pairs(game.Workspace.Water:GetChildren()) do
                 v.CanCollide = true
                 end
-end -- "true" is the default value of toggle
+end)
+
+local Button = Section.NewButton("OFF Walk On Water",function()
+            for _,v in pairs(game.Workspace.Water:GetChildren()) do
+                v.CanCollide = false
+                end
 end)
 
 --local SliderPrecise = section.NewSlider("Walk Speed",0,500,true,function(value)
