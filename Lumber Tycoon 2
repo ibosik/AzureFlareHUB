@@ -464,7 +464,7 @@ local Button = Section.NewButton("Off Noclip",function()
 local noClip = false
 end)
 
-local Button = Section.NewButton("CTRL Click-TP",function()
+--[[local Button = Section.NewButton("CTRL Click-TP",function()
         getgenv().ClickTP = state;
 	end;
 });
@@ -473,7 +473,7 @@ Mouse.Button1Down:connect(function()
     if not Mouse.Target then return end;
     if not getgenv().ClickTP then return end;
     Character:MoveTo(Mouse.Hit.p);
-end)
+end)]]--
 
 local Button = Section.NewButton("Fling",function()
 loadstring(game:HttpGet(('https://raw.githubusercontent.com/NotFalxe/Roblox-Scripts/source-code/headfling.lua'),true))()
