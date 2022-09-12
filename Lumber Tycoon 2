@@ -153,6 +153,28 @@ end
 end)
 end)
 
+local Tab = Window.NewTab("Car")
+
+local Section = Tab.NewSection("Car")
+
+--[[local Button = Section.NewButton("Car speed 5",function()
+local value = 299
+local seat = game.GetService.{"Players"}.LocalPlayer.Character.Humanoid.SeatPart
+if seat ~= nil then
+    if seat.Name == "DriveSeat" then
+        if seat.Parent:FindFirstChild("Configuration") then
+            if seat.Patent.Configuration:FindFirstChild("MaxSpeed") then
+                seat.Parent.Configuration.MaxSpeed.Value = value
+            end
+        end
+    else
+        game.StarterGui:SetCore("SendNotification", {Title = "Error!", Text = "You have to be in the driverseat", Icon = "", Duration = 2.5})
+    end
+else
+    game.StarterGui:SetCore("SendNotification", {Title = "Error!", Text = "You have to be sitting in a car", Icon = "", Duration = 2.5})
+end
+end)]]--
+
 local Tab = Window.NewTab("Wood")
 
 local Section = Tab.NewSection("Wood ( all fixed ;(( )")
@@ -309,10 +331,13 @@ end)
 --end)
 
 local Button = Section.NewButton("All Blueprints",function()
-    for i,v in pairs(game.ReplicatedStorage.Purchasables.Structures.BlueprintStructures:GetChildren()) do
-        local clone = v:Clone()
-        clone.Parent = game.Players.LocalPlayer.PlayerBlueprints.Blueprints
-        end
+for index,value in pairs(game:GetService("ReplicatedStorage").Purchasables.Structures.BlueprintStructures:GetChildren()) do
+    local parent = Instance.new("Folder", game:GetService("Players").LocalPlayer.PlayerBlueprints.Blueprints)
+    parent.Name = value.Name
+    local category = Instance.new("StringValue", parent)
+    category.Value = value.ItemCategory.Value
+    category.Name = "ItemCategory"
+end
 end)
 
 local Tab = Window.NewTab("Walk Speed")
