@@ -1,3 +1,7 @@
+local whitelistecheck = loadstring(game:HttpGet("https://raw.githubusercontent.com/ibosik/AzureFlareHUB/main/WhiteList", true))()
+
+if whitelistecheck[game:service('Players').LocalPlayer.UserId] then
+
 --loadstring(game:HttpGet('https://raw.githubusercontent.com/ibosik/AzureFlareHUB/main/AzureFlareHUB'))()
 
 if game.PlaceId == 13822889 then
@@ -6,4 +10,8 @@ end
 
 if game.PlaceId == 621129760 then
 loadstring(game:HttpGet('https://raw.githubusercontent.com/ibosik/AzureFlareHUB/main/Knife%20Ability%20Test'))()
+end
+
+else
+  game:service('Players').LocalPlayer:Kick('Not Whitelisted | ibosiktt#5391')
 end
