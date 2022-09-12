@@ -44,6 +44,16 @@ local Tab = Window.NewTab("Auto Farm")
 
 local Section = Tab.NewSection("Auto Farm")
 
+local Button = Section.NewButton("Safe Zone",function()
+loadstring(game:HttpGet("https://raw.githubusercontent.com/ibosik/AzureFlareHUB/main/SafeZoneKAT"))()
+end)
+
+local Button = Section.NewButton("Safe Zone Loop",function()
+while true do
+game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(8.90638733, 957.896484, -27.9066772)
+end
+end)
+
 local Button = Section.NewButton("Auto Farm 1",function()
 getgenv().autofarm = true
 
@@ -121,6 +131,82 @@ RunService.Stepped:Connect(function()
    CircleInline.Thickness = 2
    CircleInline.Position = Vector2.new(Mouse.X, Mouse.Y + 36)
    CircleInline.Transparency = 1
+   CircleInline.Color = Color3.fromRGB(255,255,255)
+   CircleInline.Visible = getgenv().silentaim_settings.fovcircle
+   CircleInline.ZIndex = 2
+
+   CircleOutline.Radius = getgenv().silentaim_settings.fov
+   CircleOutline.Thickness = 4
+   CircleOutline.Position = Vector2.new(Mouse.X, Mouse.Y + 36)
+   CircleOutline.Transparency = 1
+   CircleOutline.Color = Color3.new()
+   CircleOutline.Visible = getgenv().silentaim_settings.fovcircle
+   CircleOutline.ZIndex = 1
+
+   Target = GetClosest(getgenv().silentaim_settings.fov)
+end)
+
+local Old; Old = hookmetamethod(game, "__namecall", function(Self, ...)
+   local Args = {...}
+
+   if (not checkcaller() and getnamecallmethod() == "FindPartOnRayWithIgnoreList") then
+       if (table.find(Args[2], workspace.WorldIgnore.Ignore) and Target and Target.Character) then
+           local Origin = Args[1].Origin
+
+           Args[1] = Ray.new(Origin, Target.Character[getgenv().silentaim_settings.hitbox].Position - Origin)
+       end
+   end
+
+   return Old(Self, unpack(Args))
+end)
+end)
+
+local Button = Section.NewButton("Rainbow Fov",function()
+getgenv().silentaim_settings = {
+   fov = 0,
+   hitbox = "1",
+   fovcircle = false,
+}
+getgenv().silentaim_settings = {
+   fov = 150,
+   hitbox = "Head",
+   fovcircle = true,
+}
+-- Services
+local Players = game:GetService("Players")
+local RunService = game:GetService("RunService")
+
+-- Player
+local Player = Players.LocalPlayer
+local Mouse = Player:GetMouse()
+local CurrentCamera = workspace.CurrentCamera
+
+local function GetClosest(Fov)
+   local Target, Closest = nil, Fov or math.huge
+
+   for i,v in pairs(Players:GetPlayers()) do
+       if (v.Character and v ~= Player and v.Character:FindFirstChild(getgenv().silentaim_settings.hitbox)) then
+           local Position, OnScreen = CurrentCamera:WorldToScreenPoint(v.Character[getgenv().silentaim_settings.hitbox].Position)
+           local Distance = (Vector2.new(Position.X, Position.Y) - Vector2.new(Mouse.X, Mouse.Y)).Magnitude
+
+           if (Distance < Closest and OnScreen) then
+               Closest = Distance
+               Target = v
+           end
+       end
+   end
+   
+   return Target
+end
+
+local Target
+local CircleInline = Drawing.new("Circle")
+local CircleOutline = Drawing.new("Circle")
+RunService.Stepped:Connect(function()
+   CircleInline.Radius = getgenv().silentaim_settings.fov
+   CircleInline.Thickness = 2
+   CircleInline.Position = Vector2.new(Mouse.X, Mouse.Y + 36)
+   CircleInline.Transparency = 1
    CircleInline.Color = Color3.fromHSV(tick()%5/5,1,1)
    CircleInline.Visible = getgenv().silentaim_settings.fovcircle
    CircleInline.ZIndex = 2
@@ -149,6 +235,86 @@ local Old; Old = hookmetamethod(game, "__namecall", function(Self, ...)
 
    return Old(Self, unpack(Args))
 end)
+end)
+
+local Button = Section.NewButton("Fov 10000",function()
+getgenv().silentaim_settings = {
+   fov = 10000,
+   hitbox = "Head",
+   fovcircle = true,
+}
+-- Services
+local Players = game:GetService("Players")
+local RunService = game:GetService("RunService")
+
+-- Player
+local Player = Players.LocalPlayer
+local Mouse = Player:GetMouse()
+local CurrentCamera = workspace.CurrentCamera
+
+local function GetClosest(Fov)
+   local Target, Closest = nil, Fov or math.huge
+
+   for i,v in pairs(Players:GetPlayers()) do
+       if (v.Character and v ~= Player and v.Character:FindFirstChild(getgenv().silentaim_settings.hitbox)) then
+           local Position, OnScreen = CurrentCamera:WorldToScreenPoint(v.Character[getgenv().silentaim_settings.hitbox].Position)
+           local Distance = (Vector2.new(Position.X, Position.Y) - Vector2.new(Mouse.X, Mouse.Y)).Magnitude
+
+           if (Distance < Closest and OnScreen) then
+               Closest = Distance
+               Target = v
+           end
+       end
+   end
+   
+   return Target
+end
+
+local Target
+local CircleInline = Drawing.new("Circle")
+local CircleOutline = Drawing.new("Circle")
+RunService.Stepped:Connect(function()
+   CircleInline.Radius = getgenv().silentaim_settings.fov
+   CircleInline.Thickness = 2
+   CircleInline.Position = Vector2.new(Mouse.X, Mouse.Y + 36)
+   CircleInline.Transparency = 1
+   CircleInline.Color = Color3.fromRGB(255,255,255)
+   CircleInline.Visible = getgenv().silentaim_settings.fovcircle
+   CircleInline.ZIndex = 2
+
+   CircleOutline.Radius = getgenv().silentaim_settings.fov
+   CircleOutline.Thickness = 4
+   CircleOutline.Position = Vector2.new(Mouse.X, Mouse.Y + 36)
+   CircleOutline.Transparency = 1
+   CircleOutline.Color = Color3.new()
+   CircleOutline.Visible = getgenv().silentaim_settings.fovcircle
+   CircleOutline.ZIndex = 1
+
+   Target = GetClosest(getgenv().silentaim_settings.fov)
+end)
+
+local Old; Old = hookmetamethod(game, "__namecall", function(Self, ...)
+   local Args = {...}
+
+   if (not checkcaller() and getnamecallmethod() == "FindPartOnRayWithIgnoreList") then
+       if (table.find(Args[2], workspace.WorldIgnore.Ignore) and Target and Target.Character) then
+           local Origin = Args[1].Origin
+
+           Args[1] = Ray.new(Origin, Target.Character[getgenv().silentaim_settings.hitbox].Position - Origin)
+       end
+   end
+
+   return Old(Self, unpack(Args))
+end)
+end)
+
+
+local Button = Section.NewButton("OFF Silent Aim 1",function()
+getgenv().silentaim_settings = {
+   fov = 0,
+   hitbox = "1",
+   fovcircle = false,
+}
 end)
 
 local Tab = Window.NewTab("Aim Bot")
@@ -554,7 +720,6 @@ end)
 
 local Button = Section.NewButton("Fling",function()
 loadstring(game:HttpGet(('https://raw.githubusercontent.com/NotFalxe/Roblox-Scripts/source-code/headfling.lua'),true))()
-game.WorkSpace.Effects:Destroy()
 end)
 
 local Tab = Window.NewTab("Fun")
