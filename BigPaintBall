@@ -7,7 +7,7 @@ end
 
 local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/slf0Dev/Ocerium_Project/main/Library.lua"))()
 
-Window = Library.Main("Azure Flare Hub | KAT","LeftAlt") -- change "LeftAlt" to key that you want will hide gui
+Window = Library.Main("Azure Flare Hub | BPB","LeftAlt") -- change "LeftAlt" to key that you want will hide gui
 
 
 local Tab = Window.NewTab("Credits")
@@ -38,6 +38,58 @@ end)
 
 local Button = Section.NewButton("Old Gui With Toggles And Sliders",function()
     loadstring(game:HttpGet('https://raw.githubusercontent.com/ibosik/AzureFlareHUB/main/KATOLD'))()
+end)
+
+local Tab = Window.NewTab("Weapon")
+
+local Section = Tab.NewSection("Weapon")
+
+local Button = Section.NewButton("Cum Gun",function()
+        for i,v in pairs(game:GetService("ReplicatedStorage").Framework.Modules["1 | Directory"].Guns:GetChildren()) do
+            pcall(function()
+                require(v)[tostring(i)].velocity = 0
+            end)
+        end
+end)
+
+local Button = Section.NewButton("Bullet Velocity",function()
+        for i,v in pairs(game:GetService("ReplicatedStorage").Framework.Modules["1 | Directory"].Guns:GetChildren()) do
+            pcall(function()
+                require(v)[tostring(i)].velocity = 99999
+            end)
+        end
+end)
+
+local Button = Section.NewButton("Increased Fire Rate",function()
+        for i,v in pairs(game:GetService("ReplicatedStorage").Framework.Modules["1 | Directory"].Guns:GetChildren()) do
+            pcall(function()
+                require(v)[tostring(i)].firerate = -math.huge
+            end)
+        end
+end)
+
+local Button = Section.NewButton("Automatic Fire Rate",function()
+        for i,v in pairs(game:GetService("ReplicatedStorage").Framework.Modules["1 | Directory"].Guns:GetChildren()) do
+            pcall(function()
+                require(v)[tostring(i)].automatic = value
+            end)
+        end
+end)
+
+local Button = Section.NewButton("WalkSpeed 100 without kick",function()
+        for i,v in pairs(game:GetService("ReplicatedStorage").Framework.Modules["1 | Directory"].Guns:GetChildren()) do
+            pcall(function()
+                require(v)[tostring(i)].additionalSpeed = 100
+            end)
+        end
+end)
+
+local Button = Section.NewButton("Reset WalkSpeed",function()
+        for i,v in pairs(game:GetService("ReplicatedStorage").Framework.Modules["1 | Directory"].Guns:GetChildren()) do
+            pcall(function()
+                require(v)[tostring(i)].additionalSpeed = 16
+            end)
+        end
 end)
 
 local Tab = Window.NewTab("Unlock")
@@ -87,267 +139,70 @@ local Tab = Window.NewTab("Auto Farm")
 local Section = Tab.NewSection("Auto Farm")
 
 local Button = Section.NewButton("Auto Farm 1",function()
-getgenv().autofarm = true
+if _G.active == nil then 
+	_G.active = true
+end
 
-while wait(0.00001) do
-if not getgenv().autofarm then return end
-for i,v in pairs(game.Players:GetChildren()) do
-if v ~= game.Players.LocalPlayer and v.Character ~= nil and v.Character:FindFirstChild("HumanoidRootPart") ~= nil and not v.Character:FindFirstChild("ForceField") then
-if not getgenv().autofarm then return end
-if game.Players.LocalPlayer.Character:FindFirstChild("Knife")  then
-v.Character:FindFirstChild("HumanoidRootPart").CFrame = game.Players.LocalPlayer.Character:WaitForChild("HumanoidRootPart").CFrame   +  game.Players.LocalPlayer.Character:WaitForChild("HumanoidRootPart").CFrame.LookVector * 2
-wait(0.1)
-game:GetService'VirtualUser':Button1Down(Vector2.new(1,1))
-wait(0.1)
-game:GetService'VirtualUser':Button1Up(Vector2.new(1,1))
-     elseif game.Players.LocalPlayer.Backpack:FindFirstChild("Knife") and not game.Players.LocalPlayer.Character:FindFirstChild("Knife") then 
-game.Players.LocalPlayer.Backpack:FindFirstChild("Knife").Parent = game.Players.LocalPlayer.Character
-v.Character:FindFirstChild("HumanoidRootPart").CFrame = game.Players.LocalPlayer.Character:WaitForChild("HumanoidRootPart").CFrame   +  game.Players.LocalPlayer.Character:WaitForChild("HumanoidRootPart").CFrame.LookVector * 2
-wait(0.1)
-game:GetService'VirtualUser':Button1Down(Vector2.new(1,1))
-wait(0.1)
-game:GetService'VirtualUser':Button1Up(Vector2.new(1,1))
+local plr = game:GetService("Players").LocalPlayer
+local round_type = game:GetService("Workspace")["__VARIABLES"].RoundType
+local guns_folder = game:GetService("Workspace")["__DEBRIS"].Guns
+local RS = game:GetService("RunService")
+
+local function getPlayer()
+	local char = plr.Character or plr.CharacterAdded:Wait()
+	local humr = char:WaitForChild("HumanoidRootPart")
+
+	return char, humr
 end
+
+local function get_target_players()
+	local current_guns = guns_folder:GetChildren()
+	local target_players = {}
+
+		for i,v in next, current_guns do 
+			local player = game:GetService("Players"):FindFirstChild(v.Name)
+
+			if player then 
+				if round_type.Value:lower():match("tdm") and player.Team ~= plr.Team then 
+					table.insert(target_players, player)
+				elseif round_type.Value:lower():match("ffa") and player.UserId ~= plr.UserId then 
+					table.insert(target_players, player)
+				end
+			end
+		end
+
+	return target_players
 end
-end
+
+while RS.RenderStepped:Wait() and _G.active do 
+	local targets = get_target_players()
+
+	for i,v in next, targets do 
+		local cam = workspace.CurrentCamera
+
+		repeat
+			local char, humr = getPlayer()
+			local target_char = v.Character if not target_char then break end
+			local target_humr = target_char:WaitForChild("HumanoidRootPart")
+
+			humr.CFrame = target_humr.CFrame - target_humr.CFrame.lookVector * 5
+			cam.CFrame = CFrame.new(cam.CFrame.p, target_humr.Position)
+			RS.RenderStepped:Wait()
+		until not guns_folder:FindFirstChild(v.Name) or not _G.active
+	end
 end
 end)
 
 
 local Button = Section.NewButton("OFF Auto Farm 1",function()
-getgenv().autofarm = false
+	_G.active = false
+end)
+
+local Button = Section.NewButton("ON Auto Farm 1",function()
+	_G.active = true
 end)
 
 local Tab = Window.NewTab("Silent Aim")
-
-local Section = Tab.NewSection("Silent Aim")
-
-local Button = Section.NewButton("Silent Aim 1",function()
-getgenv().silentaim_settings = {
-   fov = 150,
-   hitbox = "Head",
-   fovcircle = true,
-}
--- Services
-local Players = game:GetService("Players")
-local RunService = game:GetService("RunService")
-
--- Player
-local Player = Players.LocalPlayer
-local Mouse = Player:GetMouse()
-local CurrentCamera = workspace.CurrentCamera
-
-local function GetClosest(Fov)
-   local Target, Closest = nil, Fov or math.huge
-
-   for i,v in pairs(Players:GetPlayers()) do
-       if (v.Character and v ~= Player and v.Character:FindFirstChild(getgenv().silentaim_settings.hitbox)) then
-           local Position, OnScreen = CurrentCamera:WorldToScreenPoint(v.Character[getgenv().silentaim_settings.hitbox].Position)
-           local Distance = (Vector2.new(Position.X, Position.Y) - Vector2.new(Mouse.X, Mouse.Y)).Magnitude
-
-           if (Distance < Closest and OnScreen) then
-               Closest = Distance
-               Target = v
-           end
-       end
-   end
-   
-   return Target
-end
-
-local Target
-local CircleInline = Drawing.new("Circle")
-local CircleOutline = Drawing.new("Circle")
-RunService.Stepped:Connect(function()
-   CircleInline.Radius = getgenv().silentaim_settings.fov
-   CircleInline.Thickness = 2
-   CircleInline.Position = Vector2.new(Mouse.X, Mouse.Y + 36)
-   CircleInline.Transparency = 1
-   CircleInline.Color = Color3.fromRGB(255,255,255)
-   CircleInline.Visible = getgenv().silentaim_settings.fovcircle
-   CircleInline.ZIndex = 2
-
-   CircleOutline.Radius = getgenv().silentaim_settings.fov
-   CircleOutline.Thickness = 4
-   CircleOutline.Position = Vector2.new(Mouse.X, Mouse.Y + 36)
-   CircleOutline.Transparency = 1
-   CircleOutline.Color = Color3.new()
-   CircleOutline.Visible = getgenv().silentaim_settings.fovcircle
-   CircleOutline.ZIndex = 1
-
-   Target = GetClosest(getgenv().silentaim_settings.fov)
-end)
-
-local Old; Old = hookmetamethod(game, "__namecall", function(Self, ...)
-   local Args = {...}
-
-   if (not checkcaller() and getnamecallmethod() == "FindPartOnRayWithIgnoreList") then
-       if (table.find(Args[2], workspace.WorldIgnore.Ignore) and Target and Target.Character) then
-           local Origin = Args[1].Origin
-
-           Args[1] = Ray.new(Origin, Target.Character[getgenv().silentaim_settings.hitbox].Position - Origin)
-       end
-   end
-
-   return Old(Self, unpack(Args))
-end)
-end)
-
-local Button = Section.NewButton("Rainbow Fov",function()
-getgenv().silentaim_settings = {
-   fov = 0,
-   hitbox = "1",
-   fovcircle = false,
-}
-getgenv().silentaim_settings = {
-   fov = 150,
-   hitbox = "Head",
-   fovcircle = true,
-}
--- Services
-local Players = game:GetService("Players")
-local RunService = game:GetService("RunService")
-
--- Player
-local Player = Players.LocalPlayer
-local Mouse = Player:GetMouse()
-local CurrentCamera = workspace.CurrentCamera
-
-local function GetClosest(Fov)
-   local Target, Closest = nil, Fov or math.huge
-
-   for i,v in pairs(Players:GetPlayers()) do
-       if (v.Character and v ~= Player and v.Character:FindFirstChild(getgenv().silentaim_settings.hitbox)) then
-           local Position, OnScreen = CurrentCamera:WorldToScreenPoint(v.Character[getgenv().silentaim_settings.hitbox].Position)
-           local Distance = (Vector2.new(Position.X, Position.Y) - Vector2.new(Mouse.X, Mouse.Y)).Magnitude
-
-           if (Distance < Closest and OnScreen) then
-               Closest = Distance
-               Target = v
-           end
-       end
-   end
-   
-   return Target
-end
-
-local Target
-local CircleInline = Drawing.new("Circle")
-local CircleOutline = Drawing.new("Circle")
-RunService.Stepped:Connect(function()
-   CircleInline.Radius = getgenv().silentaim_settings.fov
-   CircleInline.Thickness = 2
-   CircleInline.Position = Vector2.new(Mouse.X, Mouse.Y + 36)
-   CircleInline.Transparency = 1
-   CircleInline.Color = Color3.fromHSV(tick()%5/5,1,1)
-   CircleInline.Visible = getgenv().silentaim_settings.fovcircle
-   CircleInline.ZIndex = 2
-
-   CircleOutline.Radius = getgenv().silentaim_settings.fov
-   CircleOutline.Thickness = 4
-   CircleOutline.Position = Vector2.new(Mouse.X, Mouse.Y + 36)
-   CircleOutline.Transparency = 1
-   CircleOutline.Color = Color3.new()
-   CircleOutline.Visible = getgenv().silentaim_settings.fovcircle
-   CircleOutline.ZIndex = 1
-
-   Target = GetClosest(getgenv().silentaim_settings.fov)
-end)
-
-local Old; Old = hookmetamethod(game, "__namecall", function(Self, ...)
-   local Args = {...}
-
-   if (not checkcaller() and getnamecallmethod() == "FindPartOnRayWithIgnoreList") then
-       if (table.find(Args[2], workspace.WorldIgnore.Ignore) and Target and Target.Character) then
-           local Origin = Args[1].Origin
-
-           Args[1] = Ray.new(Origin, Target.Character[getgenv().silentaim_settings.hitbox].Position - Origin)
-       end
-   end
-
-   return Old(Self, unpack(Args))
-end)
-end)
-
-local Button = Section.NewButton("Fov 10000",function()
-getgenv().silentaim_settings = {
-   fov = 10000,
-   hitbox = "Head",
-   fovcircle = true,
-}
--- Services
-local Players = game:GetService("Players")
-local RunService = game:GetService("RunService")
-
--- Player
-local Player = Players.LocalPlayer
-local Mouse = Player:GetMouse()
-local CurrentCamera = workspace.CurrentCamera
-
-local function GetClosest(Fov)
-   local Target, Closest = nil, Fov or math.huge
-
-   for i,v in pairs(Players:GetPlayers()) do
-       if (v.Character and v ~= Player and v.Character:FindFirstChild(getgenv().silentaim_settings.hitbox)) then
-           local Position, OnScreen = CurrentCamera:WorldToScreenPoint(v.Character[getgenv().silentaim_settings.hitbox].Position)
-           local Distance = (Vector2.new(Position.X, Position.Y) - Vector2.new(Mouse.X, Mouse.Y)).Magnitude
-
-           if (Distance < Closest and OnScreen) then
-               Closest = Distance
-               Target = v
-           end
-       end
-   end
-   
-   return Target
-end
-
-local Target
-local CircleInline = Drawing.new("Circle")
-local CircleOutline = Drawing.new("Circle")
-RunService.Stepped:Connect(function()
-   CircleInline.Radius = getgenv().silentaim_settings.fov
-   CircleInline.Thickness = 2
-   CircleInline.Position = Vector2.new(Mouse.X, Mouse.Y + 36)
-   CircleInline.Transparency = 1
-   CircleInline.Color = Color3.fromRGB(255,255,255)
-   CircleInline.Visible = getgenv().silentaim_settings.fovcircle
-   CircleInline.ZIndex = 2
-
-   CircleOutline.Radius = getgenv().silentaim_settings.fov
-   CircleOutline.Thickness = 4
-   CircleOutline.Position = Vector2.new(Mouse.X, Mouse.Y + 36)
-   CircleOutline.Transparency = 1
-   CircleOutline.Color = Color3.new()
-   CircleOutline.Visible = getgenv().silentaim_settings.fovcircle
-   CircleOutline.ZIndex = 1
-
-   Target = GetClosest(getgenv().silentaim_settings.fov)
-end)
-
-local Old; Old = hookmetamethod(game, "__namecall", function(Self, ...)
-   local Args = {...}
-
-   if (not checkcaller() and getnamecallmethod() == "FindPartOnRayWithIgnoreList") then
-       if (table.find(Args[2], workspace.WorldIgnore.Ignore) and Target and Target.Character) then
-           local Origin = Args[1].Origin
-
-           Args[1] = Ray.new(Origin, Target.Character[getgenv().silentaim_settings.hitbox].Position - Origin)
-       end
-   end
-
-   return Old(Self, unpack(Args))
-end)
-end)
-
-
-local Button = Section.NewButton("OFF Silent Aim 1",function()
-getgenv().silentaim_settings = {
-   fov = 0,
-   hitbox = "1",
-   fovcircle = false,
-}
-end)
 
 local Tab = Window.NewTab("Aim Bot")
 
