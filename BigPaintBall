@@ -1,3 +1,5 @@
+--loadstring(game:HttpGet("https://raw.githubusercontent.com/ibosik/AzureFlareHUB/main/BigPaintBall"))()
+
 local player = game.Players.LocalPlayer
 
 if player then
