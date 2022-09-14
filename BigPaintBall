@@ -150,7 +150,7 @@ local Tab = Window.NewTab("Auto Farm")
 
 local Section = Tab.NewSection("Auto Farm")
 
-local Button = Section.NewButton("Safe Zone Loop",function()
+local Button = Section.NewButton("Safe Zone",function()
 game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-54.7965088, 106.498009, 4353.1665)
 end)
 
