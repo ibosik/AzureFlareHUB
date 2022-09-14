@@ -1,3 +1,5 @@
+--loadstring(game:HttpGet('https://raw.githubusercontent.com/ibosik/AzureFlareHUB/main/AzureFlareHUB'))()
+
 --loadstring(game:HttpGet("https://raw.githubusercontent.com/ibosik/AzureFlareHUB/main/BigPaintBall"))()
 
 local player = game.Players.LocalPlayer
@@ -551,7 +553,7 @@ end)
 local Button = Section.NewButton("Loop WS 69",function()
 while game:GetService('RunService').RenderStepped:Wait() do
     game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 69
-end)
+end
 end)
 
 local Button = Section.NewButton("WalkSpeed 100",function()
@@ -601,7 +603,7 @@ end)
 local Button = Section.NewButton("Loop JP 69",function()
 while game:GetService('RunService').RenderStepped:Wait() do
     game.Players.LocalPlayer.Character.Humanoid.JumpPower = 69
-end)
+end
 end)
 
 local Button = Section.NewButton("Jump Power 100",function()
