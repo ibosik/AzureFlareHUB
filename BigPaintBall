@@ -46,6 +46,22 @@ local Tab = Window.NewTab("Weapon")
 
 local Section = Tab.NewSection("Weapon")
 
+local Button = Section.NewButton("idk",function()
+local myPart = Instance.new("Part")
+
+myPart.Transparency = 0
+myPart.Anchored = true
+
+myPart.Position = Vector3.new(48.2695, 590.262, -606.339)
+myPart.Size = Vector3.new(50, 0, 50)
+
+myPart.Parent = game.Workspace
+end)
+
+local Button = Section.NewButton("destroy idk",function()
+game.Workspace.Part:Destroy()
+end)
+
 local Button = Section.NewButton("Cum Gun",function()
         for i,v in pairs(game:GetService("ReplicatedStorage").Framework.Modules["1 | Directory"].Guns:GetChildren()) do
             pcall(function()
@@ -57,7 +73,7 @@ end)
 local Button = Section.NewButton("Bullet Velocity",function()
         for i,v in pairs(game:GetService("ReplicatedStorage").Framework.Modules["1 | Directory"].Guns:GetChildren()) do
             pcall(function()
-                require(v)[tostring(i)].velocity = 99999
+                require(v)[tostring(i)].velocity = 99999999
             end)
         end
 end)
@@ -78,18 +94,10 @@ local Button = Section.NewButton("Automatic Fire Rate",function()
         end
 end)
 
-local Button = Section.NewButton("WalkSpeed 100 without kick",function()
+local Button = Section.NewButton("Additional Speed 100",function()
         for i,v in pairs(game:GetService("ReplicatedStorage").Framework.Modules["1 | Directory"].Guns:GetChildren()) do
             pcall(function()
                 require(v)[tostring(i)].additionalSpeed = 100
-            end)
-        end
-end)
-
-local Button = Section.NewButton("Reset WalkSpeed",function()
-        for i,v in pairs(game:GetService("ReplicatedStorage").Framework.Modules["1 | Directory"].Guns:GetChildren()) do
-            pcall(function()
-                require(v)[tostring(i)].additionalSpeed = 16
             end)
         end
 end)
@@ -212,6 +220,65 @@ local Section = Tab.NewSection("Aim Bot")
 
 local Button = Section.NewButton("Aim Bot 1",function()
     loadstring(game:HttpGet("https://raw.githubusercontent.com/ibosik/ok/main/ok"))()
+end)
+
+local Button = Section.NewButton("Aim Bot 1 (FOV 10000)",function()
+local teamCheck = true
+local fov = 10000
+local smoothing = 1
+
+local RunService = game:GetService("RunService")
+
+local FOVring = Drawing.new("Circle")
+FOVring.Visible = true
+FOVring.Thickness = 1.5
+FOVring.Radius = fov
+FOVring.Transparency = 1
+FOVring.Color = Color3.fromRGB(255, 128, 128)
+FOVring.Position = workspace.CurrentCamera.ViewportSize/2
+
+local function getClosest(cframe)
+   local ray = Ray.new(cframe.Position, cframe.LookVector).Unit
+   
+   local target = nil
+   local mag = math.huge
+   
+   for i,v in pairs(game.Players:GetPlayers()) do
+       if v.Character and v.Character:FindFirstChild("Head") and v.Character:FindFirstChild("Humanoid") and v.Character:FindFirstChild("HumanoidRootPart") and v ~= game.Players.LocalPlayer and (v.Team ~= game.Players.LocalPlayer.Team or (not teamCheck)) then
+           local magBuf = (v.Character.Head.Position - ray:ClosestPoint(v.Character.Head.Position)).Magnitude
+           
+           if magBuf < mag then
+               mag = magBuf
+               target = v
+           end
+       end
+   end
+   
+   return target
+end
+
+loop = RunService.RenderStepped:Connect(function()
+   local UserInputService = game:GetService("UserInputService")
+   local pressed = --[[UserInputService:IsKeyDown(Enum.KeyCode.E)]] UserInputService:IsMouseButtonPressed(Enum.UserInputType.MouseButton2) --Enum.UserInputType.MouseButton2
+   local localPlay = game.Players.localPlayer.Character
+   local cam = workspace.CurrentCamera
+   local zz = workspace.CurrentCamera.ViewportSize/2
+   
+   if pressed then
+       local Line = Drawing.new("Line")
+       local curTar = getClosest(cam.CFrame)
+       local ssHeadPoint = cam:WorldToScreenPoint(curTar.Character.Head.Position)
+       ssHeadPoint = Vector2.new(ssHeadPoint.X, ssHeadPoint.Y)
+       if (ssHeadPoint - zz).Magnitude < fov then
+           workspace.CurrentCamera.CFrame = workspace.CurrentCamera.CFrame:Lerp(CFrame.new(cam.CFrame.Position, curTar.Character.Head.Position), smoothing)
+       end
+   end
+   
+   if UserInputService:IsKeyDown(Enum.KeyCode.Delete) then
+       loop:Disconnect()
+       FOVring:Remove()
+   end
+end)
 end)
 
 local Tab = Window.NewTab("Esp")
@@ -477,12 +544,6 @@ local Button = Section.NewButton("Reset Walk Speed",function()
     game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 16
 end)
 
-local Button = Section.NewButton("Only This W.S. Works In KAT",function()
-while game:GetService("RunService").RenderStepped:wait() do
-    game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 27
-end
-end)
-
 local Button = Section.NewButton("WalkSpeed 50",function()
     game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 50
 end)
@@ -531,10 +592,6 @@ local Button = Section.NewButton("Reset Jump Power",function()
     game.Players.LocalPlayer.Character.Humanoid.JumpPower = 50
 end)
 
-local Button = Section.NewButton("Only This J.P. Works",function()
-    game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 27
-end)
-
 local Button = Section.NewButton("Jump Power 100",function()
     game.Players.LocalPlayer.Character.Humanoid.JumpPower = 100
 end)
@@ -575,6 +632,21 @@ end)
 local Tab = Window.NewTab("Player")
 
 local Section = Tab.NewSection("Player")
+
+local Button = Section.NewButton("INF Jump",function()
+end)
+
+local Button = Section.NewButton("For Bhop (auto jump)",function()
+loadstring(game:HttpGet('https://raw.githubusercontent.com/GhostPlayer352/Test4/main/Auto%20Jump'))()
+end)
+
+local Button = Section.NewButton("Additional Speed 100",function()
+        for i,v in pairs(game:GetService("ReplicatedStorage").Framework.Modules["1 | Directory"].Guns:GetChildren()) do
+            pcall(function()
+                require(v)[tostring(i)].additionalSpeed = 100
+            end)
+        end
+end)
 
 local Button = Section.NewButton("Noclip",function()
 local noClip = true
