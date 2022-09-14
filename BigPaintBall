@@ -150,6 +150,16 @@ local Tab = Window.NewTab("Auto Farm")
 
 local Section = Tab.NewSection("Auto Farm")
 
+local Button = Section.NewButton("Safe Zone Loop",function()
+game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-54.7965088, 106.498009, 4353.1665)
+end)
+
+local Button = Section.NewButton("Safe Zone Loop",function()
+while game:GetService('RunService').RenderStepped:Wait() do
+game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-54.7965088, 106.498009, 4353.1665)
+end
+end)
+
 local Button = Section.NewButton("Auto Farm 1",function()
 if _G.active == nil then 
 	_G.active = true
