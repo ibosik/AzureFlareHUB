@@ -548,6 +548,12 @@ local Button = Section.NewButton("WalkSpeed 50",function()
     game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 50
 end)
 
+local Button = Section.NewButton("Loop WS 69",function()
+while game:GetService('RunService').RenderStepped:Wait() do
+    game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 69
+end)
+end)
+
 local Button = Section.NewButton("WalkSpeed 100",function()
     game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 100
 end)
@@ -590,6 +596,12 @@ local Section = Tab.NewSection("Jump Power")
 
 local Button = Section.NewButton("Reset Jump Power",function()
     game.Players.LocalPlayer.Character.Humanoid.JumpPower = 50
+end)
+
+local Button = Section.NewButton("Loop JP 69",function()
+while game:GetService('RunService').RenderStepped:Wait() do
+    game.Players.LocalPlayer.Character.Humanoid.JumpPower = 69
+end)
 end)
 
 local Button = Section.NewButton("Jump Power 100",function()
