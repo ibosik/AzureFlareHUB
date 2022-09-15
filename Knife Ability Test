@@ -687,6 +687,13 @@ local Tab = Window.NewTab("Player")
 
 local Section = Tab.NewSection("Player")
 
+local Button = Section.NewButton("Rejoin",function()
+			local tpservice= game:GetService("TeleportService")
+			local plr = game.Players.LocalPlayer
+
+			tpservice:Teleport(game.PlaceId, plr)
+end)
+
 local Button = Section.NewButton("Noclip",function()
 local noClip = true
 local noClipConnect = game:GetService("RunService").Stepped:Connect(function()
