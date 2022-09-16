@@ -49,6 +49,7 @@ loadstring(game:HttpGet("https://raw.githubusercontent.com/ibosik/AzureFlareHUB/
 end)
 
 local Button = Section.NewButton("Safe Zone Loop",function()
+repeat wait() until game.Players.assbreaker666
 while game:GetService('RunService').RenderStepped:Wait() do
 game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(8.90638733, 957.896484, -27.9066772)
 end
