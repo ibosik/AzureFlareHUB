@@ -687,6 +687,13 @@ local Tab = Window.NewTab("Player")
 
 local Section = Tab.NewSection("Player")
 
+local Button = Section.NewButton("Anti Afk",function()
+while wait(0.000001) do
+wait(3)
+game.Players.LocalPlayer.Character.Humanoid:ChangeState("Jumping")
+end
+end)
+
 local Button = Section.NewButton("Rejoin",function()
 			local tpservice= game:GetService("TeleportService")
 			local plr = game.Players.LocalPlayer
