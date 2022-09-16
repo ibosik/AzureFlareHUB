@@ -28,6 +28,11 @@ setclipboard("https://www.youtube.com/channel/UC_wPcE323Qfe0Wntx44FcKw")
 game.StarterGui:SetCore("SendNotification", {Title = "Link copied", Text = "", Duration = 3, Button1 = ""})
 end)
 
+local Section = Tab.NewSection("Information")
+
+local Button = Section.NewButton("Press Left Alt To Hide Gui",function()
+end)
+
 local Tab = Window.NewTab("Settings")
 
 local Section = Tab.NewSection("GUI")
@@ -36,26 +41,27 @@ local Button = Section.NewButton("Destroy GUI",function()
         game:GetService("CoreGui").Library:Destroy()
 end)
 
-local Button = Section.NewButton("Old Gui With Toggles And Sliders",function()
+local Button = Section.NewButton("Old Gui",function()
     loadstring(game:HttpGet('https://raw.githubusercontent.com/ibosik/AzureFlareHUB/main/KATOLD'))()
 end)
 
 local Tab = Window.NewTab("Auto Farm")
 
-local Section = Tab.NewSection("Auto Farm")
+local Section = Tab.NewSection("Teleport")
 
 local Button = Section.NewButton("Safe Zone",function()
 loadstring(game:HttpGet("https://raw.githubusercontent.com/ibosik/AzureFlareHUB/main/SafeZoneKAT"))()
 end)
 
 local Button = Section.NewButton("Safe Zone Loop",function()
-repeat wait() until game.Players.assbreaker666
 while game:GetService('RunService').RenderStepped:Wait() do
 game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(8.90638733, 957.896484, -27.9066772)
 end
 end)
 
-local Button = Section.NewButton("Auto Farm 1",function()
+local Section = Tab.NewSection("Auto Farm")
+
+local EnabledToggle = Section.NewToggle("Auto Farm 1",function(bool)
 getgenv().autofarm = true
 
 while wait(0.00001) do
@@ -80,18 +86,17 @@ end
 end
 end
 end
-end)
+end,true) -- "true" is the default value of toggle
 
-
-local Button = Section.NewButton("OFF Auto Farm 1",function()
+local DisabledToggle = Section.NewToggle("OFF Auto Farm 1",function(bool)
 getgenv().autofarm = false
-end)
+end,false) -- "false" is the default value of toggle
 
 local Tab = Window.NewTab("Silent Aim")
 
 local Section = Tab.NewSection("Silent Aim")
 
-local Button = Section.NewButton("Silent Aim 1",function()
+local EnabledToggle = Section.NewToggle("Silent Aim 1",function(bool)
 getgenv().silentaim_settings = {
    fov = 150,
    hitbox = "Head",
@@ -160,9 +165,9 @@ local Old; Old = hookmetamethod(game, "__namecall", function(Self, ...)
 
    return Old(Self, unpack(Args))
 end)
-end)
+end,true)
 
-local Button = Section.NewButton("Rainbow Fov",function()
+local EnabledToggle = Section.NewToggle("Rainbow Fov",function(bool)
 getgenv().silentaim_settings = {
    fov = 0,
    hitbox = "1",
@@ -236,9 +241,14 @@ local Old; Old = hookmetamethod(game, "__namecall", function(Self, ...)
 
    return Old(Self, unpack(Args))
 end)
-end)
+end,true)
 
-local Button = Section.NewButton("Fov 10000",function()
+local EnabledToggle = Section.NewToggle("FOV 10k",function(bool)
+getgenv().silentaim_settings = {
+   fov = 0,
+   hitbox = "1",
+   fovcircle = false,
+}
 getgenv().silentaim_settings = {
    fov = 10000,
    hitbox = "Head",
@@ -307,16 +317,16 @@ local Old; Old = hookmetamethod(game, "__namecall", function(Self, ...)
 
    return Old(Self, unpack(Args))
 end)
-end)
+end,true)
 
 
-local Button = Section.NewButton("OFF Silent Aim 1",function()
+local EnabledToggle = Section.NewToggle("OFF Silent Aim 1",function(bool)
 getgenv().silentaim_settings = {
    fov = 0,
    hitbox = "1",
    fovcircle = false,
 }
-end)
+end,false)
 
 local Tab = Window.NewTab("Aim Bot")
 
@@ -581,112 +591,17 @@ players.PlayerAdded:connect(function()
 end)
 end)
 
-local Tab = Window.NewTab("Walk Speed")
-
-local Section = Tab.NewSection("Walk Speed")
-
-local Button = Section.NewButton("Reset Walk Speed",function()
-    game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 16
-end)
-
-local Button = Section.NewButton("Only This W.S. Works In KAT",function()
-while game:GetService("RunService").RenderStepped:wait() do
-    game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 27
-end
-end)
-
-local Button = Section.NewButton("WalkSpeed 50",function()
-    game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 50
-end)
-
-local Button = Section.NewButton("WalkSpeed 100",function()
-    game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 100
-end)
-
-local Button = Section.NewButton("WalkSpeed 150",function()
-    game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 150
-end)
-
-local Button = Section.NewButton("WalkSpeed 200",function()
-    game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 200
-end)
-
-local Button = Section.NewButton("WalkSpeed 250",function()
-    game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 250
-end)
-
-local Button = Section.NewButton("WalkSpeed 300",function()
-    game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 300
-end)
-
-local Button = Section.NewButton("WalkSpeed 350",function()
-    game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 350
-end)
-
-local Button = Section.NewButton("WalkSpeed 400",function()
-    game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 400
-end)
-
-local Button = Section.NewButton("WalkSpeed 450",function()
-    game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 450
-end)
-
-local Button = Section.NewButton("WalkSpeed 500",function()
-    game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 500
-end)
-
-local Tab = Window.NewTab("Jump Power")
-
-local Section = Tab.NewSection("Jump Power")
-
-local Button = Section.NewButton("Reset Jump Power",function()
-    game.Players.LocalPlayer.Character.Humanoid.JumpPower = 50
-end)
-
-local Button = Section.NewButton("Only This J.P. Works",function()
-    game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 27
-end)
-
-local Button = Section.NewButton("Jump Power 100",function()
-    game.Players.LocalPlayer.Character.Humanoid.JumpPower = 100
-end)
-
-local Button = Section.NewButton("Jump Power 150",function()
-    game.Players.LocalPlayer.Character.Humanoid.JumpPower = 150
-end)
-
-local Button = Section.NewButton("Jump Power 200",function()
-    game.Players.LocalPlayer.Character.Humanoid.JumpPower = 200
-end)
-
-local Button = Section.NewButton("Jump Power 250",function()
-    game.Players.LocalPlayer.Character.Humanoid.JumpPower = 250
-end)
-
-local Button = Section.NewButton("Jump Power 300",function()
-    game.Players.LocalPlayer.Character.Humanoid.JumpPower = 300
-end)
-
-local Button = Section.NewButton("Jump Power 350",function()
-    game.Players.LocalPlayer.Character.Humanoid.JumpPower = 350
-end)
-
-local Button = Section.NewButton("Jump Power 400",function()
-    game.Players.LocalPlayer.Character.Humanoid.JumpPower = 400
-end)
-
-local Button = Section.NewButton("Jump Power 450",function()
-    game.Players.LocalPlayer.Character.Humanoid.JumpPower = 450
-end)
-
-local Button = Section.NewButton("Jump Power 500",function()
-    game.Players.LocalPlayer.Character.Humanoid.JumpPower = 500
-end)
-
-
 local Tab = Window.NewTab("Player")
 
 local Section = Tab.NewSection("Player")
+
+local Slider = Section.NewSlider("Walk Speed",16,500,true,function(value)
+    game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = value
+end,16)
+
+local Slider = Section.NewSlider("Jump Power",50,500,true,function(value)
+    game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = value
+end,50)
 
 local Button = Section.NewButton("Anti Afk",function()
 while wait(0.000001) do
