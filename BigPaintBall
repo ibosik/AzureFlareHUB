@@ -618,11 +618,15 @@ local Tab = Window.NewTab("Player")
 local Section = Tab.NewSection("Player")
 
 local Slider = Section.NewSlider("Walk Speed",16,500,true,function(value)
+while game:GetService('RunService').RenderStepped:Wait() do
     game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = value
+end
 end,16)
 
 local Slider = Section.NewSlider("Jump Power",50,500,true,function(value)
-    game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = value
+while game:GetService('RunService').RenderStepped:Wait() do
+    game.Players.LocalPlayer.Character.Humanoid.JumpPower = value
+end
 end,50)
 
 local Button = Section.NewButton("Anti Afk",function()
