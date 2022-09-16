@@ -234,6 +234,14 @@ local Button = Section.NewButton("Aim Bot 1",function()
     loadstring(game:HttpGet("https://raw.githubusercontent.com/ibosik/ok/main/ok"))()
 end)
 
+local Button = Section.NewButton("Aim Bot 1 (OFF TeamCheck)",function()
+local teamCheck = false
+end)
+
+local Button = Section.NewButton("Aim Bot 1 (ON TeamCheck)",function()
+local teamCheck = true
+end)
+
 local Button = Section.NewButton("Aim Bot 1 (FOV 10000)",function()
 local teamCheck = true
 local fov = 10000
