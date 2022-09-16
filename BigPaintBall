@@ -220,6 +220,18 @@ while RS.RenderStepped:Wait() and _G.active do
 end
 end)
 
+local Button = Section.NewButton("Auto Farm 2",function()
+getgenv().Enabled = true
+loadstring(game:HttpGet("https://raw.githubusercontent.com/WetCheezit/Releases/main/Big-Paintball/KillAll.lua"))()
+end)
+
+local Button = Section.NewButton("OFF Auto Farm 2 (Rejoin)",function()
+			local tpservice= game:GetService("TeleportService")
+			local plr = game.Players.LocalPlayer
+
+			tpservice:Teleport(game.PlaceId, plr)
+end)
+
 
 local DisabledToggle = Section.NewToggle("OFF Auto Farm 1",function(bool)
 	_G.active = false
@@ -670,10 +682,6 @@ end)
 
 task.wait(20)
 noClipConnect:Disconnect()
-end)
-
-local Button = Section.NewButton("Off Noclip",function()
-local noClip = false
 end)
 
 local Button = Section.NewButton("CTRL Click-TP",function()
