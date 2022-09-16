@@ -18,10 +18,10 @@ local Tab = Window.NewTab("Credits")
 
 local Section = Tab.NewSection("Discord")
 
-local Button = Section.NewButton("ibosiktt#5391",function()
+local Button = Section.NewButton("ibosiktt#5391 (Creator)",function()
 end)
 
-local Button = Section.NewButton("Kurus#6448",function()
+local Button = Section.NewButton("Kurus#6448 (Tester)",function()
 loadstring(game:HttpGet("http://darkhub.xyz/remote-script.lua", true))()
 end)
 
@@ -32,6 +32,11 @@ setclipboard("https://www.youtube.com/channel/UC_wPcE323Qfe0Wntx44FcKw")
 game.StarterGui:SetCore("SendNotification", {Title = "Link copied", Text = "", Duration = 3, Button1 = ""})
 end)
 
+local Section = Tab.NewSection("Information")
+
+local Button = Section.NewButton("Left Alt - Hide Gui",function()
+end)
+
 local Tab = Window.NewTab("Settings")
 
 local Section = Tab.NewSection("GUI")
@@ -40,7 +45,7 @@ local Button = Section.NewButton("Destroy GUI",function()
         game:GetService("CoreGui").Library:Destroy()
 end)
 
-local Button = Section.NewButton("Old Gui With Toggles And Sliders",function()
+local Button = Section.NewButton("Old Gui",function()
     loadstring(game:HttpGet('https://raw.githubusercontent.com/ibosik/AzureFlareHUB/main/KATOLD'))()
 end)
 
@@ -48,7 +53,7 @@ local Tab = Window.NewTab("Weapon")
 
 local Section = Tab.NewSection("Weapon")
 
-local Button = Section.NewButton("idk",function()
+local Button = Section.NewButton("test part",function()
 local myPart = Instance.new("Part")
 
 myPart.Transparency = 0
@@ -60,7 +65,7 @@ myPart.Size = Vector3.new(50, 0, 50)
 myPart.Parent = game.Workspace
 end)
 
-local Button = Section.NewButton("destroy idk",function()
+local Button = Section.NewButton("destroy test part",function()
 game.Workspace.Part:Destroy()
 end)
 
@@ -216,13 +221,13 @@ end
 end)
 
 
-local Button = Section.NewButton("OFF Auto Farm 1",function()
+local DisabledToggle = Section.NewToggle("OFF Auto Farm 1",function(bool)
 	_G.active = false
-end)
+end,false)
 
-local Button = Section.NewButton("ON Auto Farm 1",function()
+local EnabledToggle = Section.NewToggle("ON Auto Farm 1",function(bool)
 	_G.active = true
-end)
+end,true)
 
 local Tab = Window.NewTab("Silent Aim")
 
@@ -234,7 +239,7 @@ local Button = Section.NewButton("Aim Bot 1",function()
     loadstring(game:HttpGet("https://raw.githubusercontent.com/ibosik/ok/main/ok"))()
 end)
 
-local Button = Section.NewButton("Aim Bot 1 (FOV 10000)",function()
+local Button = Section.NewButton("Aim Bot 1 (Fov 10k)",function()
 local teamCheck = true
 local fov = 10000
 local smoothing = 1
@@ -293,7 +298,7 @@ loop = RunService.RenderStepped:Connect(function()
 end)
 end)
 
-local Button = Section.NewButton("Aim Bot 1 (Without TC)",function()
+local Button = Section.NewButton("Aim Bot 1 (Fov 10k Without TC)",function()
 local teamCheck = false
 local fov = 10000
 local smoothing = 1
@@ -350,57 +355,6 @@ loop = RunService.RenderStepped:Connect(function()
        FOVring:Remove()
    end
 end)
-end)
-
-local Tab = Window.NewTab("Esp")
-
-local Section = Tab.NewSection("Esp")
-
-local Button = Section.NewButton("Esp 1 (maybe lags)",function()
-while wait(0.5) do
-    for i, childrik in ipairs(workspace:GetDescendants()) do
-        if childrik:FindFirstChild("Humanoid") then
-            if not childrik:FindFirstChild("EspBox") then
-                if childrik ~= game.Players.LocalPlayer.Character then
-                    local esp = Instance.new("BoxHandleAdornment",childrik)
-                    esp.Adornee = childrik
-                    esp.ZIndex = 0
-                    esp.Size = Vector3.new(4, 5, 1)
-                    esp.Transparency = 0.65
-                    esp.Color3 = Color3.fromRGB(255,105,180)
-                    esp.AlwaysOnTop = true
-                    esp.Name = "EspBox"
-                end
-            end
-        end
-    end
-end
-end)
-
-
-local Tab = Window.NewTab("Esp")
-
-local Section = Tab.NewSection("Esp")
-
-local Button = Section.NewButton("Esp 1 (maybe lags)",function()
-while wait(0.5) do
-    for i, childrik in ipairs(workspace:GetDescendants()) do
-        if childrik:FindFirstChild("Humanoid") then
-            if not childrik:FindFirstChild("EspBox") then
-                if childrik ~= game.Players.LocalPlayer.Character then
-                    local esp = Instance.new("BoxHandleAdornment",childrik)
-                    esp.Adornee = childrik
-                    esp.ZIndex = 0
-                    esp.Size = Vector3.new(4, 5, 1)
-                    esp.Transparency = 0.65
-                    esp.Color3 = Color3.fromRGB(255,105,180)
-                    esp.AlwaysOnTop = true
-                    esp.Name = "EspBox"
-                end
-            end
-        end
-    end
-end
 end)
 
 local Tab = Window.NewTab("Esp")
@@ -659,114 +613,24 @@ players.PlayerAdded:connect(function()
 end)
 end)
 
-local Tab = Window.NewTab("Walk Speed")
-
-local Section = Tab.NewSection("Walk Speed")
-
-local Button = Section.NewButton("Reset Walk Speed",function()
-    game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 16
-end)
-
-local Button = Section.NewButton("WalkSpeed 50",function()
-    game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 50
-end)
-
-local Button = Section.NewButton("Loop WS 69",function()
-while game:GetService('RunService').RenderStepped:Wait() do
-    game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 69
-end
-end)
-
-local Button = Section.NewButton("WalkSpeed 100",function()
-    game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 100
-end)
-
-local Button = Section.NewButton("WalkSpeed 150",function()
-    game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 150
-end)
-
-local Button = Section.NewButton("WalkSpeed 200",function()
-    game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 200
-end)
-
-local Button = Section.NewButton("WalkSpeed 250",function()
-    game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 250
-end)
-
-local Button = Section.NewButton("WalkSpeed 300",function()
-    game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 300
-end)
-
-local Button = Section.NewButton("WalkSpeed 350",function()
-    game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 350
-end)
-
-local Button = Section.NewButton("WalkSpeed 400",function()
-    game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 400
-end)
-
-local Button = Section.NewButton("WalkSpeed 450",function()
-    game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 450
-end)
-
-local Button = Section.NewButton("WalkSpeed 500",function()
-    game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 500
-end)
-
-local Tab = Window.NewTab("Jump Power")
-
-local Section = Tab.NewSection("Jump Power")
-
-local Button = Section.NewButton("Reset Jump Power",function()
-    game.Players.LocalPlayer.Character.Humanoid.JumpPower = 50
-end)
-
-local Button = Section.NewButton("Loop JP 69",function()
-while game:GetService('RunService').RenderStepped:Wait() do
-    game.Players.LocalPlayer.Character.Humanoid.JumpPower = 69
-end
-end)
-
-local Button = Section.NewButton("Jump Power 100",function()
-    game.Players.LocalPlayer.Character.Humanoid.JumpPower = 100
-end)
-
-local Button = Section.NewButton("Jump Power 150",function()
-    game.Players.LocalPlayer.Character.Humanoid.JumpPower = 150
-end)
-
-local Button = Section.NewButton("Jump Power 200",function()
-    game.Players.LocalPlayer.Character.Humanoid.JumpPower = 200
-end)
-
-local Button = Section.NewButton("Jump Power 250",function()
-    game.Players.LocalPlayer.Character.Humanoid.JumpPower = 250
-end)
-
-local Button = Section.NewButton("Jump Power 300",function()
-    game.Players.LocalPlayer.Character.Humanoid.JumpPower = 300
-end)
-
-local Button = Section.NewButton("Jump Power 350",function()
-    game.Players.LocalPlayer.Character.Humanoid.JumpPower = 350
-end)
-
-local Button = Section.NewButton("Jump Power 400",function()
-    game.Players.LocalPlayer.Character.Humanoid.JumpPower = 400
-end)
-
-local Button = Section.NewButton("Jump Power 450",function()
-    game.Players.LocalPlayer.Character.Humanoid.JumpPower = 450
-end)
-
-local Button = Section.NewButton("Jump Power 500",function()
-    game.Players.LocalPlayer.Character.Humanoid.JumpPower = 500
-end)
-
-
 local Tab = Window.NewTab("Player")
 
 local Section = Tab.NewSection("Player")
+
+local Slider = Section.NewSlider("Walk Speed",16,500,true,function(value)
+    game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = value
+end,16)
+
+local Slider = Section.NewSlider("Jump Power",50,500,true,function(value)
+    game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = value
+end,50)
+
+local Button = Section.NewButton("Anti Afk",function()
+while wait(0.000001) do
+wait(3)
+game.Players.LocalPlayer.Character.Humanoid:ChangeState("Jumping")
+end
+end)
 
 local Button = Section.NewButton("Rejoin",function()
 			local tpservice= game:GetService("TeleportService")
@@ -790,7 +654,7 @@ local Button = Section.NewButton("Additional Speed 100",function()
         end
 end)
 
-local Button = Section.NewButton("Noclip",function()
+local Button = Section.NewButton("Noclip (20s)",function()
 local noClip = true
 local noClipConnect = game:GetService("RunService").Stepped:Connect(function()
     local chr = game.Players.LocalPlayer.Character
