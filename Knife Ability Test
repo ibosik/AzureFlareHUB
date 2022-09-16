@@ -320,7 +320,7 @@ end)
 end,true)
 
 
-local EnabledToggle = Section.NewToggle("OFF Silent Aim 1",function(bool)
+local DisabledToggle = Section.NewToggle("OFF Silent Aim 1",function(bool)
 getgenv().silentaim_settings = {
    fov = 0,
    hitbox = "1",
@@ -617,7 +617,7 @@ local Button = Section.NewButton("Rejoin",function()
 			tpservice:Teleport(game.PlaceId, plr)
 end)
 
-local Button = Section.NewButton("Noclip",function()
+local Button = Section.NewButton("Noclip (20s)",function()
 local noClip = true
 local noClipConnect = game:GetService("RunService").Stepped:Connect(function()
     local chr = game.Players.LocalPlayer.Character
@@ -629,10 +629,6 @@ end)
 
 task.wait(20)
 noClipConnect:Disconnect()
-end)
-
-local Button = Section.NewButton("Off Noclip",function()
-local noClip = false
 end)
 
 local Button = Section.NewButton("CTRL Click-TP",function()
