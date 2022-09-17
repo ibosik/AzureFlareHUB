@@ -157,7 +157,7 @@ local Tab = Window.NewTab("Car")
 
 local Section = Tab.NewSection("Car")
 
-local Button = Section.NewButton("Car speed 5",function()
+--[[local Button = Section.NewButton("Car speed 5",function()
 local value = 299
 local seat = game.GetService.{"Players"}.LocalPlayer.Character.Humanoid.SeatPart
 if seat ~= nil then
@@ -173,7 +173,7 @@ if seat ~= nil then
 else
     game.StarterGui:SetCore("SendNotification", {Title = "Error!", Text = "You have to be sitting in a car", Icon = "", Duration = 2.5})
 end
-end)         
+end)]]         
 
 local Tab = Window.NewTab("Wood")
 
