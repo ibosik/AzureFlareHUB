@@ -395,7 +395,22 @@ noClipConnect:Disconnect()
 end)
 
 local Button = Section.NewButton("CTRL Click-TP",function()
-    loadstring(game:HttpGet("https://raw.githubusercontent.com/ibosik/AzureFlareHUB/main/CTRLClickTP"))()
+local Imput = game:GetService("UserInputService")
+local Plr = game.Players.LocalPlayer
+local Mouse = Plr:GetMouse()
+ 
+function To(position)
+   local Chr = Plr.Character
+   if Chr ~= nil then
+       Chr:MoveTo(position)
+   end
+end
+ 
+Imput.InputBegan:Connect(function(input)
+   if input.UserInputType == Enum.UserInputType.MouseButton1 and Imput:IsKeyDown(Enum.KeyCode.LeftControl) then
+       To(Mouse.Hit.p)
+   end
+end)
 end)
 
 local Button = Section.NewButton("Fling",function()
@@ -438,17 +453,17 @@ wait(1)
 game.Players.LocalPlayer.Character.Humanoid.Health = 0
 end)
 
-local Button = Section.NewButton("Walk On Water",function()
+local EnabledToggle = Section.NewToggle("Walk On Water",function(bool)
             for _,v in pairs(game.Workspace.Water:GetChildren()) do
                 v.CanCollide = true
                 end
-end)
+end,true)
 
-local Button = Section.NewButton("OFF Walk On Water",function()
+local DisabledToggle = Section.NewToggle("OFF Walk On Water",function(bool)
             for _,v in pairs(game.Workspace.Water:GetChildren()) do
                 v.CanCollide = false
                 end
-end)
+end,false)
 
 --local SliderPrecise = section.NewSlider("Walk Speed",0,500,true,function(value)
 --    game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = s
