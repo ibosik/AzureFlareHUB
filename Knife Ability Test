@@ -96,7 +96,7 @@ local Tab = Window.NewTab("Silent Aim")
 
 local Section = Tab.NewSection("Silent Aim")
 
-local EnabledToggle = Section.NewToggle("Silent Aim 1",function(bool)
+local EnabledToggle = Section.NewToggle("Silent Aim",function(bool)
 getgenv().silentaim_settings = {
    fov = 150,
    hitbox = "Head",
