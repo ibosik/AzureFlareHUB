@@ -14,10 +14,10 @@ local Tab = Window.NewTab("Credits")
 
 local Section = Tab.NewSection("Discord")
 
-local Button = Section.NewButton("ibosiktt#5391",function()
+local Button = Section.NewButton("ibosiktt#5391 - Script",function()
 end)
 
-local Button = Section.NewButton("Kurus#6448",function()
+local Button = Section.NewButton("Kurus#6448 - Tester",function()
 end)
 
 local Section = Tab.NewSection("Youtube")
@@ -35,7 +35,7 @@ local Button = Section.NewButton("Destroy GUI",function()
         game:GetService("CoreGui").Library:Destroy()
 end)
 
-local Button = Section.NewButton("Old Azure Flare Hub",function()
+local Button = Section.NewButton("Old Gui",function()
 loadstring(game:HttpGet('https://raw.githubusercontent.com/ibosik/AzureFlareHUB/main/LT2OLD'))()
 end)
 
@@ -157,7 +157,7 @@ local Tab = Window.NewTab("Car")
 
 local Section = Tab.NewSection("Car")
 
---[[local Button = Section.NewButton("Car speed 5",function()
+local Button = Section.NewButton("Car speed 5",function()
 local value = 299
 local seat = game.GetService.{"Players"}.LocalPlayer.Character.Humanoid.SeatPart
 if seat ~= nil then
@@ -173,7 +173,7 @@ if seat ~= nil then
 else
     game.StarterGui:SetCore("SendNotification", {Title = "Error!", Text = "You have to be sitting in a car", Icon = "", Duration = 2.5})
 end
-end)]]--
+end)         
 
 local Tab = Window.NewTab("Wood")
 
@@ -340,101 +340,28 @@ for index,value in pairs(game:GetService("ReplicatedStorage").Purchasables.Struc
 end
 end)
 
-local Tab = Window.NewTab("Walk Speed")
-
-local Section = Tab.NewSection("Walk Speed")
-
-local Button = Section.NewButton("Reset Walk Speed",function()
-    game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 16
-end)
-
-local Button = Section.NewButton("WalkSpeed 50",function()
-    game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 50
-end)
-
-local Button = Section.NewButton("WalkSpeed 100",function()
-    game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 100
-end)
-
-local Button = Section.NewButton("WalkSpeed 150",function()
-    game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 150
-end)
-
-local Button = Section.NewButton("WalkSpeed 200",function()
-    game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 200
-end)
-
-local Button = Section.NewButton("WalkSpeed 250",function()
-    game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 250
-end)
-
-local Button = Section.NewButton("WalkSpeed 300",function()
-    game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 300
-end)
-
-local Button = Section.NewButton("WalkSpeed 350",function()
-    game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 350
-end)
-
-local Button = Section.NewButton("WalkSpeed 400",function()
-    game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 400
-end)
-
-local Button = Section.NewButton("WalkSpeed 450",function()
-    game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 450
-end)
-
-local Button = Section.NewButton("WalkSpeed 500",function()
-    game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 500
-end)
-
-local Tab = Window.NewTab("Jump Power")
-
-local Section = Tab.NewSection("Jump Power")
-
-local Button = Section.NewButton("Reset Jump Power",function()
-    game.Players.LocalPlayer.Character.Humanoid.JumpPower = 50
-end)
-
-local Button = Section.NewButton("Jump Power 100",function()
-    game.Players.LocalPlayer.Character.Humanoid.JumpPower = 100
-end)
-
-local Button = Section.NewButton("Jump Power 150",function()
-    game.Players.LocalPlayer.Character.Humanoid.JumpPower = 150
-end)
-
-local Button = Section.NewButton("Jump Power 200",function()
-    game.Players.LocalPlayer.Character.Humanoid.JumpPower = 200
-end)
-
-local Button = Section.NewButton("Jump Power 250",function()
-    game.Players.LocalPlayer.Character.Humanoid.JumpPower = 250
-end)
-
-local Button = Section.NewButton("Jump Power 300",function()
-    game.Players.LocalPlayer.Character.Humanoid.JumpPower = 300
-end)
-
-local Button = Section.NewButton("Jump Power 350",function()
-    game.Players.LocalPlayer.Character.Humanoid.JumpPower = 350
-end)
-
-local Button = Section.NewButton("Jump Power 400",function()
-    game.Players.LocalPlayer.Character.Humanoid.JumpPower = 400
-end)
-
-local Button = Section.NewButton("Jump Power 450",function()
-    game.Players.LocalPlayer.Character.Humanoid.JumpPower = 450
-end)
-
-local Button = Section.NewButton("Jump Power 500",function()
-    game.Players.LocalPlayer.Character.Humanoid.JumpPower = 500
-end)
-
 local Tab = Window.NewTab("Player")
 
 local Section = Tab.NewSection("Player")
+
+local Slider = Section.NewSlider("Walk Speed",16,500,true,function(value)
+while game:GetService('RunService').RenderStepped:Wait() do
+    game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = value
+end
+end,16)
+
+local Slider = Section.NewSlider("Jump Power",50,500,true,function(value)
+while game:GetService('RunService').RenderStepped:Wait() do
+    game.Players.LocalPlayer.Character.Humanoid.JumpPower = value
+end
+end,50)
+
+local Button = Section.NewButton("Anti Afk",function()
+while wait(0.000001) do
+wait(3)
+game.Players.LocalPlayer.Character.Humanoid:ChangeState("Jumping")
+end
+end)
 
 local Button = Section.NewButton("Rejoin",function()
 			local tpservice= game:GetService("TeleportService")
@@ -453,7 +380,7 @@ local Button = Section.NewButton("OFF Full Bright",function()
     _G.FullBrightExecuted = false
 end)
 
-local Button = Section.NewButton("Noclip",function()
+local Button = Section.NewButton("Noclip (20s)",function()
 local noClip = true
 local noClipConnect = game:GetService("RunService").Stepped:Connect(function()
     local chr = game.Players.LocalPlayer.Character
@@ -467,10 +394,6 @@ task.wait(20)
 noClipConnect:Disconnect()
 end)
 
-local Button = Section.NewButton("Off Noclip",function()
-local noClip = false
-end)
-
 local Button = Section.NewButton("CTRL Click-TP",function()
     loadstring(game:HttpGet("https://raw.githubusercontent.com/ibosik/AzureFlareHUB/main/CTRLClickTP"))()
 end)
@@ -482,13 +405,6 @@ end)
 
 local Button = Section.NewButton("Delete Sit Permissions",function()
 game.Players.LocalPlayer.PlayerScripts.SitPermissions:Remove()
-end)
-
-local Button = Section.NewButton("Anti Afk",function()
-while wait(0.000001) do
-wait(3)
-game.Players.LocalPlayer.Character.Humanoid:ChangeState("Jumping")
-end
 end)
 
 local Button = Section.NewButton("Btools",function()
