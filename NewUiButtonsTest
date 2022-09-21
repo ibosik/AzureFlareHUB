@@ -1,0 +1,30 @@
+local player = game.Players.LocalPlayer
+
+if player then
+
+local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/slf0Dev/Ocerium_Project/main/Library.lua"))()
+
+Window = Library.Main("Your Text","LeftAlt") -- change "LeftAlt" to key that you want will hide gui
+
+local Nofitication = Window.Nofitication(""..player.Name.."")
+end
+
+--//tab
+
+local Tab = Window.NewTab("Your Tab Text")
+
+--//section
+local Section = Tab.NewSection("Section Text")
+
+local DisabledToggle = Section.NewToggle("Enabled Toggle",function(bool)
+print("2")
+end,false) -- "true" is the default value of toggle
+
+
+local Dropdown = Section.NewDropdown("Button Text",function()
+
+end)
+
+local Button = Section.NewButton("Button Text",function()
+
+end)
