@@ -2,13 +2,16 @@ local player = game.Players.LocalPlayer
 
 if player then
 
-game.StarterGui:SetCore("SendNotification", {Title = "Azure Flare Hub", Text = "Welcome, "..player.Name..".", Icon = "http://www.roblox.com/asset/?id=10341849875", Duration = 3, Button1 = ""})
-end
+--game.StarterGui:SetCore("SendNotification", {Title = "Azure Flare Hub", Text = "Welcome, "..player.Name..".", Icon = "http://www.roblox.com/asset/?id=10341849875", Duration = 3, Button1 = ""})
+
 
 local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/slf0Dev/Ocerium_Project/main/Library.lua"))()
 
 Window = Library.Main("Azure Flare Hub | KAT","LeftAlt") -- change "LeftAlt" to key that you want will hide gui
 
+local Nofitication = Window.Nofitication("Welcome To Azure Flare Hub ..player.Name..",function()
+end)
+end
 
 local Tab = Window.NewTab("Credits")
 
