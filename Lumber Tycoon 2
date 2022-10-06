@@ -42,7 +42,7 @@ local Button = Section.NewButton("Old Gui",function()
 loadstring(game:HttpGet('https://raw.githubusercontent.com/ibosik/AzureFlareHUB/main/LT2OLD'))()
 end)
 
-local Tab = Window.NewTab("Dupe")
+local Tab = Window.NewTab("Dupe (Fixed)")
 
 local Section = Tab.NewSection("Axe")
 
@@ -154,117 +154,20 @@ if v:IsA("Motor") then
 v:Remove()
 end
 end)
+end)    
+
+local Tab = Window.NewTab("V2207 LEAK")
+
+local Section = Tab.NewSection("Items")
+
+local Button = Section.NewButton("SOON",function()
 end)
 
-local Tab = Window.NewTab("Car")
+local Section = Tab.NewSection("Idk")
 
-local Section = Tab.NewSection("Car")
-
---[[local Button = Section.NewButton("Car speed 5",function()
-local value = 299
-local seat = game.GetService.{"Players"}.LocalPlayer.Character.Humanoid.SeatPart
-if seat ~= nil then
-    if seat.Name == "DriveSeat" then
-        if seat.Parent:FindFirstChild("Configuration") then
-            if seat.Patent.Configuration:FindFirstChild("MaxSpeed") then
-                seat.Parent.Configuration.MaxSpeed.Value = value
-            end
-        end
-    else
-        game.StarterGui:SetCore("SendNotification", {Title = "Error!", Text = "You have to be in the driverseat", Icon = "", Duration = 2.5})
-    end
-else
-    game.StarterGui:SetCore("SendNotification", {Title = "Error!", Text = "You have to be sitting in a car", Icon = "", Duration = 2.5})
-end
-end)]]         
-
-local Tab = Window.NewTab("Wood")
-
-local Section = Tab.NewSection("Wood ( all fixed ;(( )")
-
-local Button = Section.NewButton("Sell Logs (Tree)",function()
-        for _, Log in pairs(workspace.LogModels:GetChildren()) do
-    if Log.Name:sub(1, 6) == "Loose_" and Log:findFirstChild("Owner") then
-        if Log.Owner.Value == game.Players.LocalPlayer then
-            for i,v in pairs(Log:GetChildren()) do
-                if v.Name=="WoodSection" then
-                    spawn(function()
-                        for i=1,10 do
-                            wait()
-                            v.CFrame=CFrame.new(Vector3.new(315, -0.296, 85.791))*CFrame.Angles(math.rad(90),0,0)
-                        end
-                    end)
-                end
-            end
-            spawn(function()
-                for i=1,20 do
-                    wait()
-                    game.ReplicatedStorage.Interaction.ClientIsDragging:FireServer(Log)
-                end
-            end)
-        end
-    end
-end
-end)
-
-local Button = Section.NewButton("Sell Planks",function()
-    for _, Plank in pairs(game.Workspace.PlayerModels:GetChildren()) do
-		if Plank.Name=="Plank" and Plank:findFirstChild("Owner") then
-			if Plank.Owner.Value == game.Players.LocalPlayer then
-				for i,v in pairs(Plank:GetChildren()) do
-					if v.Name=="WoodSection" then
-						spawn(function()
-							for i=1,10 do
-								wait()
-								v.CFrame=CFrame.new(Vector3.new(315, -0.296, 85.791))*CFrame.Angles(math.rad(90),0,0)
-							end
-						end)
-					end
-				end
-				spawn(function()
-					for i=1,20 do
-						wait()
-						game.ReplicatedStorage.Interaction.ClientIsDragging:FireServer(Plank)
-					end
-				end)
-			end
-		end
-	end
-end)
-
-local Button = Section.NewButton("TP Wood",function()
-    for _, Log in pairs(game.Workspace.LogModels:GetChildren()) do
-        if Log.Name:sub(1, 6) == "Loose_" and Log:findFirstChild("Owner") then
-            if Log.Owner.Value == game.Players.LocalPlayer then
-                Log:MoveTo(game.Players.LocalPlayer.Character.HumanoidRootPart.Position + Vector3.new(0, 20, 0))
-                for i=1,100 do
-                    game.ReplicatedStorage.Interaction.ClientIsDragging:FireServer(Log)
-                end
-            end
-        end
-    end
-end)
-local Button = Section.NewButton("TP Planks",function()
-    for _, Plank in pairs(game.Workspace.PlayerModels:GetChildren()) do
-		if Plank.Name=="Plank" and Plank:findFirstChild("Owner") then
-			if Plank.Owner.Value == game.Players.LocalPlayer then
-				local sendNotice = game.ReplicatedStorage.Notices.SendUserNotice
-				sendNotice:Fire("Click where you want ALL the Planks to TP to")
-				local ButtonPress
-				ButtonPress = game.Players.LocalPlayer:GetMouse().Button1Down:Connect(function()
-					local Square = game.Players.LocalPlayer:GetMouse().Target
-					if (Square.Name == "OriginSquare" or Square.Name == "Square") then
-						ButtonPress:Disconnect()
-						Plank:MoveTo(Square.Position)
-						for i=1,100 do
-							game.ReplicatedStorage.Interaction.ClientIsDragging:FireServer(Plank)
-						end
-					end
-				end)
-			end
-		end
-	end
-end)
+local Button = Section.NewButton("Mary",function()
+    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game.Workspace.Region_Plains.Mary.Mary.CFrame
+    end)
 
 local Tab = Window.NewTab("Slot")
 
