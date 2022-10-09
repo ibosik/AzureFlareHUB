@@ -1,0 +1,103 @@
+--loadstring(game:HttpGet('https://raw.githubusercontent.com/ibosik/AzureFlareHUB/main/AzureFlareHUB'))()
+
+--loadstring(game:HttpGet("https://raw.githubusercontent.com/ibosik/AzureFlareHUB/main/FindTheMarkers"))()
+
+local player = game.Players.LocalPlayer
+
+if player then
+
+--game.StarterGui:SetCore("SendNotification", {Title = "Azure Flare Hub", Text = "Welcome, "..player.Name..".", Icon = "http://www.roblox.com/asset/?id=10341849875", Duration = 3, Button1 = ""})
+
+
+local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/slf0Dev/Ocerium_Project/main/Library.lua"))()
+
+Window = Library.Main("Azure Flare Hub | FTM","LeftAlt") -- change "LeftAlt" to key that you want will hide gui
+
+local Nofitication = Window.Nofitication("Welcome To Azure Flare Hub "..player.Name.."",function()
+end)
+end
+
+local Tab = Window.NewTab("Credits")
+
+local Section = Tab.NewSection("Discord")
+
+local Button = Section.NewButton("ibosiktt#5391 - Script",function()
+end)
+
+local Button = Section.NewButton("Kurus#6448 - Tester",function()
+loadstring(game:HttpGet("http://darkhub.xyz/remote-script.lua", true))()
+end)
+
+local Section = Tab.NewSection("Youtube")
+
+local Button = Section.NewButton("IbosikYT",function()
+setclipboard("https://www.youtube.com/channel/UC_wPcE323Qfe0Wntx44FcKw")
+game.StarterGui:SetCore("SendNotification", {Title = "Link copied", Text = "", Duration = 3, Button1 = ""})
+end)
+
+local Section = Tab.NewSection("Information")
+
+local Button = Section.NewButton("Left Alt - Hide Gui",function()
+end)
+
+local Tab = Window.NewTab("Settings")
+
+local Section = Tab.NewSection("GUI")
+
+local Button = Section.NewButton("Destroy GUI",function()
+        game:GetService("CoreGui").Library:Destroy()
+end)
+
+local Tab = Window.NewTab("Auto Farm")
+
+local Section = Tab.NewSection("Auto Farm Markers")
+
+local Button = Section.NewButton("Collect All Markers (Very slow)",function()
+workspace.Gravity = 0
+
+game:GetService('RunService').Stepped:Connect(function()
+    if game.Players.LocalPlayer.Character and game.Players.LocalPlayer.Character:FindFirstChildOfClass('Humanoid') then
+       game.Players.LocalPlayer.Character.Humanoid:ChangeState(11)
+    end
+end)
+
+for k, v in next, workspace:GetDescendants() do
+    if v.ClassName == 'TouchTransmitter' and v:FindFirstAncestorOfClass('Model') and v:FindFirstAncestorOfClass('Model').Name:find('Marker') then
+        
+        for i =  1, 65 do
+            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.Parent.CFrame + Vector3.new(0, -1, 0)
+            task.wait(0.1)
+            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.Parent.CFrame + Vector3.new(0, 1, 0)
+        end
+
+    end
+end
+
+workspace.Gravity = 196
+end)
+
+local Button = Section.NewButton("Collect All Markers",function()
+    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game:GetService("Workspace")["Ball Marker"]["Color 1"].CFrame
+wait(0.1)
+    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game:GetService("Workspace")["Purple Marker"]["Color 2"].CFrame
+wait(0.1)
+    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game:GetService("Workspace")["Bee Marker"].Union.CFrame
+end)
+
+local Section = Tab.NewSection("Easy")
+
+local Button = Section.NewButton("Ball Marker",function()
+    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game:GetService("Workspace")["Ball Marker"]["Color 1"].CFrame
+end)
+
+local Button = Section.NewButton("Purple Marker",function()
+    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game:GetService("Workspace")["Purple Marker"]["Color 2"].CFrame
+end)
+
+local Button = Section.NewButton("Bee Marker",function()
+    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game:GetService("Workspace")["Bee Marker"].Union.CFrame
+end)
+
+local Button = Section.NewButton("Baby Marker",function()
+    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game:GetService("Workspace")["baby marker"]["Color 2"].CFrame
+end)
