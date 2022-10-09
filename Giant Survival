@@ -7,7 +7,7 @@ end
 
 local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/slf0Dev/Ocerium_Project/main/Library.lua"))()
 
-Window = Library.Main("Azure Flare Hub | KAT","LeftAlt") -- change "LeftAlt" to key that you want will hide gui
+Window = Library.Main("Azure Flare Hub | GS","LeftAlt") -- change "LeftAlt" to key that you want will hide gui
 
 
 local Tab = Window.NewTab("Credits")
