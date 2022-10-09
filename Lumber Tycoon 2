@@ -246,6 +246,13 @@ for index,value in pairs(game:GetService("ReplicatedStorage").Purchasables.Struc
 end
 end)
 
+local Tab = Window.NewTab("Esp")
+
+local Section = Tab.NewSection("Esp")
+
+local Button = Section.NewButton("Esp (Kurus-Ware)",function()
+end)
+
 local Tab = Window.NewTab("Player")
 
 local Section = Tab.NewSection("Player")
