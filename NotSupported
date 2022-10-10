@@ -41,9 +41,6 @@ end)
 local Button = Section.NewButton("Zombie Uprising (SOON)",function()
 end)
 
-local Button = Section.NewButton("Funky Friday (SOON)",function()
-end)
-
 local Tab = Window.NewTab("Credits")
 
 local Section = Tab.NewSection("Discord")
