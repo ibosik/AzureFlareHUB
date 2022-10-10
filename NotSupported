@@ -32,16 +32,16 @@ end)
 local Button = Section.NewButton("Build A Boat For Treasure",function()
 end)
 
-local Button = Section.NewButton("Giant Survival"function()
+local Button = Section.NewButton("Giant Survival",function()
 end)
 
-local Button = Section.NewButton("Find Markers"function()
+local Button = Section.NewButton("Find Markers",function()
 end)
 
-local Button = Section.NewButton("Zombie Uprising (SOON)"function()
+local Button = Section.NewButton("Zombie Uprising (SOON)",function()
 end)
 
-local Button = Section.NewButton("Funky Friday (SOON)"function()
+local Button = Section.NewButton("Funky Friday (SOON)",function()
 end)
 
 local Tab = Window.NewTab("Credits")
