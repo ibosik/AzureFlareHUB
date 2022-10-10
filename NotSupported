@@ -7,13 +7,13 @@ if player then
 
 local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/slf0Dev/Ocerium_Project/main/Library.lua"))()
 
-Window = Library.Main("Azure Flare Hub | ?","LeftAlt") -- change "LeftAlt" to key that you want will hide gui
+Window = Library.Main("Azure Flare Hub","LeftAlt") -- change "LeftAlt" to key that you want will hide gui
 
 local Nofitication = Window.Nofitication("Welcome To Azure Flare Hub "..player.Name.."",function()
 end)
 end
 
-local Tab = Window.NewTab("!!!")
+local Tab = Window.NewTab("NOT SUPPORTED GAME")
 
 local Section = Tab.NewSection("This Game Is Not Supported")
 
@@ -29,10 +29,19 @@ end)
 local Button = Section.NewButton("BIG Paintball",function()
 end)
 
-local Button = Section.NewButton("Build A Boat For Treasure (SOON)",function()
+local Button = Section.NewButton("Build A Boat For Treasure",function()
 end)
 
-local Button = Section.NewButton("Giant Survival (SOON)",function()
+local Button = Section.NewButton("Giant Survival"function()
+end)
+
+local Button = Section.NewButton("Find Markers"function()
+end)
+
+local Button = Section.NewButton("Zombie Uprising (SOON)"function()
+end)
+
+local Button = Section.NewButton("Funky Friday (SOON)"function()
 end)
 
 local Tab = Window.NewTab("Credits")
