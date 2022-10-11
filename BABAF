@@ -1,12 +1,4 @@
-game.Workspace.Part:Destroy()
-game.Workspace.Part:Destroy()
-game.Workspace.Part:Destroy()
-game.Workspace.Part:Destroy()
-game.Workspace.Part:Destroy()
-game.Workspace.Part:Destroy()
-game.Workspace.Part:Destroy()
-game.Workspace.Part:Destroy()
-game.Workspace.Part:Destroy()
+
 --loadstring(game:HttpGet('https://raw.githubusercontent.com/ibosik/AzureFlareHUB/main/AzureFlareHUB'))()
 --1 location               -------------
 local myPart = Instance.new("Part")
