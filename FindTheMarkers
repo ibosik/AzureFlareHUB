@@ -101,3 +101,11 @@ end)
 local Button = Section.NewButton("Baby Marker",function()
     game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game:GetService("Workspace")["baby marker"]["Color 2"].CFrame
 end)
+
+local Button = Section.NewButton("Black Marker",function()
+    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game:GetService("Workspace")["Black Marker"]["Color 2"].CFrame
+end)
+
+local Button = Section.NewButton("Bone Marker",function()
+    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game:GetService("Workspace")["Bone Marker"].Face.CFrame
+end)
