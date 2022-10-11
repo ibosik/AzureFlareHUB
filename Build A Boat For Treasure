@@ -50,6 +50,8 @@ end)
 
 local Tab = Window.NewTab("Auto Farm")
 
+local Section = Tab.NewSection("Auto Farm")
+
 local Button = Section.NewButton("Auto Farm 1",function()
     loadstring(game:HttpGet('https://raw.githubusercontent.com/ibosik/AzureFlareHUB/main/BABAF'))()
 end)
