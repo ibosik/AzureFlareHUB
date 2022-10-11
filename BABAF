@@ -1,0 +1,159 @@
+game.Workspace.Part:Destroy()
+game.Workspace.Part:Destroy()
+game.Workspace.Part:Destroy()
+game.Workspace.Part:Destroy()
+game.Workspace.Part:Destroy()
+game.Workspace.Part:Destroy()
+game.Workspace.Part:Destroy()
+game.Workspace.Part:Destroy()
+game.Workspace.Part:Destroy()
+--loadstring(game:HttpGet('https://raw.githubusercontent.com/ibosik/AzureFlareHUB/main/AzureFlareHUB'))()
+--1 location               -------------
+local myPart = Instance.new("Part")
+
+myPart.Transparency = 0
+myPart.Anchored = true
+
+myPart.Position = Vector3.new(-55.6257133, 115.76918, 1466.86157)
+myPart.Size = Vector3.new(2, 0.5, 2)
+
+myPart.Parent = game.Workspace
+
+--2 location               -------------
+
+local myPart = Instance.new("Part")
+
+myPart.Transparency = 0
+myPart.Anchored = true
+
+myPart.Position = Vector3.new(-55.6257133, 115.76918, 2166.86157)
+myPart.Size = Vector3.new(2, 0.5, 2)
+
+myPart.Parent = game.Workspace
+
+--3 location               -------------
+
+local myPart = Instance.new("Part")
+
+myPart.Transparency = 0
+myPart.Anchored = true
+
+myPart.Position = Vector3.new(-55.6257133, 115.76918, 2966.86157)
+myPart.Size = Vector3.new(2, 0.5, 2)
+
+myPart.Parent = game.Workspace
+
+--4 location               -------------
+
+local myPart = Instance.new("Part")
+
+myPart.Transparency = 0
+myPart.Anchored = true
+
+myPart.Position = Vector3.new(-55.6257133, 115.76918, 3766.86157)
+myPart.Size = Vector3.new(2, 0.5, 2)
+
+myPart.Parent = game.Workspace
+
+--5 location               -------------
+
+local myPart = Instance.new("Part")
+
+myPart.Transparency = 0
+myPart.Anchored = true
+
+myPart.Position = Vector3.new(-55.6257133, 115.76918, 4566.86157)
+myPart.Size = Vector3.new(2, 0.5, 2)
+
+myPart.Parent = game.Workspace
+
+--6 location               -------------
+
+local myPart = Instance.new("Part")
+
+myPart.Transparency = 0
+myPart.Anchored = true
+
+myPart.Position = Vector3.new(-55.6257133, 115.76918, 5366.86157)
+myPart.Size = Vector3.new(2, 0.5, 2)
+
+myPart.Parent = game.Workspace
+
+--7 location               -------------
+
+local myPart = Instance.new("Part")
+
+myPart.Transparency = 0
+myPart.Anchored = true
+
+myPart.Position = Vector3.new(-55.6257133, 115.76918, 6166.86157)
+myPart.Size = Vector3.new(2, 0.5, 2)
+
+myPart.Parent = game.Workspace
+
+--8 location               -------------
+
+local myPart = Instance.new("Part")
+
+myPart.Transparency = 0
+myPart.Anchored = true
+
+myPart.Position = Vector3.new(-55.6257133, 115.76918, 6966.86157)
+myPart.Size = Vector3.new(2, 0.5, 2)
+
+myPart.Parent = game.Workspace
+
+--9 location               -------------
+
+local myPart = Instance.new("Part")
+
+myPart.Transparency = 0
+myPart.Anchored = true
+
+myPart.Position = Vector3.new(-55.6257133, 115.76918, 7866.86157)
+myPart.Size = Vector3.new(2, 0.5, 2)
+
+myPart.Parent = game.Workspace
+
+while true do
+
+game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-55.6257133, 118.76918, 1466.86157)
+
+wait(1.3)
+
+game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-55.6257133, 118.76918, 2166.86157)
+
+wait(1.5)
+
+game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-55.6257133, 118.76918, 2966.86157)
+
+wait(1.6)
+
+game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-55.6257133, 118.76918, 3766.86157)
+
+wait(1.5)
+
+game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-55.6257133, 118.76918, 4566.86157)
+
+wait(1.6)
+
+game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-55.6257133, 118.76918, 5366.86157)
+
+wait(1.6)
+
+game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-55.6257133, 118.76918, 6166.86157)
+
+wait(1.6)
+
+game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-55.6257133, 118.76918, 6966.86157)
+
+wait(1.6)
+
+game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-55.6257133, 118.76918, 7866.86157)
+
+wait(1.6)
+
+game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-57.5484619, -360.023529, 9490.47266)
+wait(18)
+game.Players.LocalPlayer.Character.Humanoid:ChangeState("Jumping")
+end
