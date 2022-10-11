@@ -13,7 +13,7 @@ local Nofitication = Window.Nofitication("Welcome To Azure Flare Hub "..player.N
 end)
 end
 
-local Tab = Window.NewTab("NOT SUPPORTED GAME")
+local Tab = Window.NewTab("NOT SUPPORTED")
 
 local Section = Tab.NewSection("This Game Is Not Supported")
 
@@ -35,11 +35,40 @@ end)
 local Button = Section.NewButton("Giant Survival",function()
 end)
 
-local Button = Section.NewButton("Find Markers",function()
+local Button = Section.NewButton("Find Markers (UPD SOON)",function()
 end)
 
 local Button = Section.NewButton("Zombie Uprising (SOON)",function()
 end)
+
+local Tab = Window.NewTab("SUPPORTED EX.")
+
+local Section = Tab.NewSection("Supported Free Executors")
+
+local Button = Section.NewButton("KRNL",function()
+end)
+
+local Button = Section.NewButton("Fluxus",function()
+end)
+
+local Button = Section.NewButton("Evon",function()
+end)
+
+--[[
+local Button = Section.NewButton("Electron",function()
+end)
+
+local Button = Section.NewButton("Comet",function()
+end)
+
+local Section = Tab.NewSection("Supported Paid Executors")
+
+local Button = Section.NewButton("Synapse X",function()
+end)
+
+local Button = Section.NewButton("Script-Ware",function()
+end)
+]]
 
 local Tab = Window.NewTab("Credits")
 
