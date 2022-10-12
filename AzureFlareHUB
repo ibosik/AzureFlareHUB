@@ -35,3 +35,8 @@ if game.PlaceId == 4003872968 then
         game:GetService("CoreGui").Library:Destroy()
     loadstring(game:HttpGet("https://raw.githubusercontent.com/ibosik/AzureFlareHUB/main/Giant%20Survival"))()
     end
+
+if game.PlaceId == 8232438881 then
+        game:GetService("CoreGui").Library:Destroy()
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/ibosik/AzureFlareHUB/main/Thief%20Simulator"))()
+    end
