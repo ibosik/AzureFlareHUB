@@ -13,12 +13,11 @@ local Nofitication = Window.Nofitication("Welcome To Azure Flare Hub "..player.N
 end)
 end
 
-local Tab = Window.NewTab("NOT SUPPORTED")
+local Tab = Window.NewTab("NOT SUPPORTED GAME")
 
 local Section = Tab.NewSection("This Game Is Not Supported")
 
-local Button = Section.NewButton("Supported Games:",function()
-end)
+local Section = Tab.NewSection("Supported Games: 7")
 
 local Button = Section.NewButton("Lumber Tycoon 2",function()
 end)
@@ -35,13 +34,16 @@ end)
 local Button = Section.NewButton("Giant Survival",function()
 end)
 
+local Button = Section.NewButton("Thief Simulator",function()
+end)
+
 local Button = Section.NewButton("Find Markers (UPD SOON)",function()
 end)
 
 local Button = Section.NewButton("Zombie Uprising (SOON)",function()
 end)
 
-local Tab = Window.NewTab("SUPPORTED EX.")
+local Tab = Window.NewTab("SUPPORTED EXECUTORS")
 
 local Section = Tab.NewSection("Supported Free Executors")
 
