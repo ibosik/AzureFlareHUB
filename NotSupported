@@ -56,13 +56,28 @@ end)
 local Button = Section.NewButton("Evon",function()
 end)
 
---[[
 local Button = Section.NewButton("Electron",function()
+end)
+
+local Button = Section.NewButton("Comet 3",function()
+end)
+
+local Button = Section.NewButton("Dansploit",function()
 end)
 
 local Button = Section.NewButton("Comet",function()
 end)
 
+local Button = Section.NewButton("Kiwi x",function()
+end)
+
+local Button = Section.NewButton("Nihon",function()
+end)
+
+local Button = Section.NewButton("TRX",function()
+end)
+
+--[[
 local Section = Tab.NewSection("Supported Paid Executors")
 
 local Button = Section.NewButton("Synapse X",function()
