@@ -68,9 +68,6 @@ end)
 local Button = Section.NewButton("Comet",function()
 end)
 
-local Button = Section.NewButton("Kiwi x",function()
-end)
-
 local Button = Section.NewButton("Nihon",function()
 end)
 
