@@ -132,7 +132,7 @@ local Button = Section.NewButton("Sell",function()
     end)
 
 local Button = Section.NewButton("Loop Sell",function()
-while wait (2) do
+while game:GetService('RunService').RenderStepped:Wait() do
     firetouchinterest(game:GetService("Workspace").Sells.World1.Sell,game:GetService("Players").LocalPlayer.Character.HumanoidRootPart,0)
 end
     end)
