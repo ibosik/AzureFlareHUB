@@ -50,7 +50,7 @@ end)
 
 local Tab = Window.NewTab("Auto Farm")
 
-local Section = Tab.NewSection("Auto Farm")
+local Section = Tab.NewSection("Auto Farm Money/Items")
 
 local Button = Section.NewButton("Rob Once",function()
     for _, x in pairs(game:GetService("Workspace"):GetChildren()) do
@@ -85,6 +85,8 @@ local Button = Section.NewButton("Rob All Once",function()
     end
     bv = 0
 end)
+
+local Section = Tab.NewSection("''OFF Loop Rob All'' Will Work When U Rob Everyone")
 
 local Button = Section.NewButton("OFF Loop Rob All",function()
 game:GetService("Workspace").Part:Destroy()
@@ -122,6 +124,8 @@ while game:GetService("Workspace").Part do
 wait(2)
 end
 end)
+
+local Section = Tab.NewSection("Sell Items")
 
 local Button = Section.NewButton("Sell",function()
     firetouchinterest(game:GetService("Workspace").Sells.World1.Sell,game:GetService("Players").LocalPlayer.Character.HumanoidRootPart,0)
@@ -177,20 +181,6 @@ local Button = Section.NewButton("Rejoin",function()
 			local plr = game.Players.LocalPlayer
 
 			tpservice:Teleport(game.PlaceId, plr)
-end)
-
-local Button = Section.NewButton("Noclip (20s)",function()
-local noClip = true
-local noClipConnect = game:GetService("RunService").Stepped:Connect(function()
-    local chr = game.Players.LocalPlayer.Character
-    if chr:FindFirstChild'Torso' and chr:FindFirstChild'Head' then
-        chr:FindFirstChild'Torso'.CanCollide = not noClip
-        chr:FindFirstChild'Head'.CanCollide = not noClip
-    end
-end)
-
-task.wait(20)
-noClipConnect:Disconnect()
 end)
 
 local Button = Section.NewButton("CTRL Click-TP",function()
