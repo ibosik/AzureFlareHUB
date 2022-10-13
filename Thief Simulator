@@ -157,6 +157,16 @@ local Button = Section.NewButton("Teleport To Rebirth Manager",function()
 game:GetService("TeleportService"):Teleport(10782149835,FromChar)
 end)
 
+local Section = Tab.NewSection("1 World")
+
+local Button = Section.NewButton("Delete Zone 2 Barrier",function()
+game:GetService("Workspace")["Zone 2"]:Destroy()
+end)
+
+local Button = Section.NewButton("Delete Zone 3 Barrier",function()
+game:GetService("Workspace")["Zone 3"]:Destroy()
+end)
+
 local Tab = Window.NewTab("Player")
 
 local Section = Tab.NewSection("Player")
