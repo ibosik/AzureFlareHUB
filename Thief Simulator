@@ -153,6 +153,10 @@ local Button = Section.NewButton("Teleport To 3 World",function()
 game:GetService("TeleportService"):Teleport(10782148786,FromChar)
 end)
 
+local Button = Section.NewButton("Teleport To Rebirth Manager",function()
+game:GetService("TeleportService"):Teleport(10782149835,FromChar)
+end)
+
 local Tab = Window.NewTab("Player")
 
 local Section = Tab.NewSection("Player")
