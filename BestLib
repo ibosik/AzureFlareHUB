@@ -37,6 +37,17 @@ local ImageLabel = Instance.new("ImageLabel")
 local TextLabel = Instance.new("TextLabel")
 
 	--Properties:
+	
+	UKRAINESUCKS.Name = "UKRAINESUCKS"
+        UKRAINESUCKS.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+	UKRAINESUCKS.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+
+	ImageLabel.Parent = UKRAINESUCKS
+	ImageLabel.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+	ImageLabel.BackgroundTransparency = 100.000
+	ImageLabel.Position = UDim2.new(0.25, 0, 0.25, 0)
+	ImageLabel.Size = UDim2.new(0, 400, 0, 228)
+	ImageLabel.Image = "http://www.roblox.com/asset/?id=11266448488"
 
 	Library.Name = "Library"
 	Library.Parent = game.CoreGui
@@ -695,17 +706,6 @@ local TextLabel = Instance.new("TextLabel")
 				end)
 				return Toggle;
 			end
-			
-				UKRAINESUCKS.Name = "UKRAINESUCKS"
-UKRAINESUCKS.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
-UKRAINESUCKS.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
-
-ImageLabel.Parent = UKRAINESUCKS
-ImageLabel.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-ImageLabel.BackgroundTransparency = 100.000
-ImageLabel.Position = UDim2.new(0.25, 0, 0.25, 0)
-ImageLabel.Size = UDim2.new(0, 400, 0, 228)
-ImageLabel.Image = "http://www.roblox.com/asset/?id=11266448488"
 
 			function InSection.NewLabel(LabelText,IsScaled,LabelTextSize,LabelTextColor)
 				local Label = Instance.new("TextLabel")
