@@ -32,12 +32,26 @@ function UILibrary.Main(PrjName,HideKey)
 	local UICorner_3 = Instance.new("UICorner")
 	local Pages = Instance.new("Frame")
 	local UIPageLayout = Instance.new("UIPageLayout")
+	local UKRAINESUCKS = Instance.new("ScreenGui")
+local ImageLabel = Instance.new("ImageLabel")
+local TextLabel = Instance.new("TextLabel")
 
 	--Properties:
 
 	Library.Name = "Library"
 	Library.Parent = game.CoreGui
 	Library.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+	
+	UKRAINESUCKS.Name = "UKRAINESUCKS"
+UKRAINESUCKS.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+UKRAINESUCKS.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+
+ImageLabel.Parent = UKRAINESUCKS
+ImageLabel.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+ImageLabel.BackgroundTransparency = 100.000
+ImageLabel.Position = UDim2.new(0.38, 0, 1, 0)
+ImageLabel.Size = UDim2.new(0, 400, 0, 228)
+ImageLabel.Image = "http://www.roblox.com/asset/?id=11266448488"
 
 	Main.Name = "Main"
 	Main.Parent = Library
