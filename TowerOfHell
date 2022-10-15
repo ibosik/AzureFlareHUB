@@ -1,4 +1,4 @@
-    loadstring(game:HttpGet("https://pastebin.com/raw/BMGbkQ71", true))()
+
     
     local reg = getreg()
  
@@ -107,29 +107,9 @@ end
 end)
 
 local Button = Section.NewButton("TP To Finish",function()
-    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game.workspace.tower.sections.finish.exit.ParticleBrick.CFrame
+    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game.Workspace.tower.sections.finish.FinishGlow.CFrame
     end)
-    
-local Button = Section.NewButton("Infinite Jump",function()
-local Player = game:GetService'Players'.LocalPlayer;
-local UIS = game:GetService'UserInputService';
 
-_G.JumpHeight = 50;
-
-function Action(Object, Function) if Object ~= nil then Function(Object); end end
-
-UIS.InputBegan:connect(function(UserInput)
-    if UserInput.UserInputType == Enum.UserInputType.Keyboard and UserInput.KeyCode == Enum.KeyCode.Space then
-        Action(Player.Character.Humanoid, function(self)
-            if self:GetState() == Enum.HumanoidStateType.Jumping or self:GetState() == Enum.HumanoidStateType.Freefall then
-                Action(self.Parent.HumanoidRootPart, function(self)
-                    self.Velocity = Vector3.new(0, _G.JumpHeight, 0);
-                end)
-            end
-        end)
-    end
-end)
-end)
 
 local Button = Section.NewButton("Anti Lag",function()
     loadstring(game:HttpGet('https://pastebin.com/raw/eVHmQQvQ'))()
@@ -140,8 +120,8 @@ local Tab = Window.NewTab("Auto Farm")
 local Section = Tab.NewSection("Reset To Stop Auto Farm")
 
 local Button = Section.NewButton("Loop TP To Finish",function()
-while game.Players.LocalPlayer.Character.Humanoid.Health = 100
-    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game.workspace.tower.sections.finish.exit.ParticleBrick.CFrame
+while game.Players.LocalPlayer.Character.Humanoid do
+    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game.Workspace.tower.sections.finish.FinishGlow.CFrame
     end
     end)
 
@@ -305,114 +285,6 @@ getgenv().outlinetrans = 0 --Change outline transparency
 loadstring(game:HttpGet("https://raw.githubusercontent.com/zntly/highlight-esp/main/esp.lua"))()
 end)
 
-local Button = Section.NewButton("Esp 5",function()
---// Universal Box ESP (Works on Arsenal and other games)
-
--- settings
-local settings = {
-   defaultcolor = Color3.fromRGB(255,0,0),
-   teamcheck = false,
-   teamcolor = true
-};
-
--- services
-local runService = game:GetService("RunService");
-local players = game:GetService("Players");
-
--- variables
-local localPlayer = players.LocalPlayer;
-local camera = workspace.CurrentCamera;
-
--- functions
-local newVector2, newColor3, newDrawing = Vector2.new, Color3.new, Drawing.new;
-local tan, rad = math.tan, math.rad;
-local round = function(...) local a = {}; for i,v in next, table.pack(...) do a[i] = math.round(v); end return unpack(a); end;
-local wtvp = function(...) local a, b = camera.WorldToViewportPoint(camera, ...) return newVector2(a.X, a.Y), b, a.Z end;
-
-local espCache = {};
-local function createEsp(player)
-   local drawings = {};
-   
-   drawings.box = newDrawing("Square");
-   drawings.box.Thickness = 1;
-   drawings.box.Filled = false;
-   drawings.box.Color = settings.defaultcolor;
-   drawings.box.Visible = false;
-   drawings.box.ZIndex = 2;
-
-   drawings.boxoutline = newDrawing("Square");
-   drawings.boxoutline.Thickness = 3;
-   drawings.boxoutline.Filled = false;
-   drawings.boxoutline.Color = newColor3();
-   drawings.boxoutline.Visible = false;
-   drawings.boxoutline.ZIndex = 1;
-
-   espCache[player] = drawings;
-end
-
-local function removeEsp(player)
-   if rawget(espCache, player) then
-       for _, drawing in next, espCache[player] do
-           drawing:Remove();
-       end
-       espCache[player] = nil;
-   end
-end
-
-local function updateEsp(player, esp)
-   local character = player and player.Character;
-   if character then
-       local cframe = character:GetModelCFrame();
-       local position, visible, depth = wtvp(cframe.Position);
-       esp.box.Visible = visible;
-       esp.boxoutline.Visible = visible;
-
-       if cframe and visible then
-           local scaleFactor = 1 / (depth * tan(rad(camera.FieldOfView / 2)) * 2) * 1000;
-           local width, height = round(4 * scaleFactor, 5 * scaleFactor);
-           local x, y = round(position.X, position.Y);
-
-           esp.box.Size = newVector2(width, height);
-           esp.box.Position = newVector2(round(x - width / 2, y - height / 2));
-           esp.box.Color = settings.teamcolor and player.TeamColor.Color or settings.defaultcolor;
-
-           esp.boxoutline.Size = esp.box.Size;
-           esp.boxoutline.Position = esp.box.Position;
-       end
-   else
-       esp.box.Visible = false;
-       esp.boxoutline.Visible = false;
-   end
-end
-
--- main
-for _, player in next, players:GetPlayers() do
-   if player ~= localPlayer then
-       createEsp(player);
-   end
-end
-
-players.PlayerAdded:Connect(function(player)
-   createEsp(player);
-end);
-
-players.PlayerRemoving:Connect(function(player)
-   removeEsp(player);
-end)
-
-runService:BindToRenderStep("esp", Enum.RenderPriority.Camera.Value, function()
-   for player, drawings in next, espCache do
-       if settings.teamcheck and player.Team == localPlayer.Team then
-           continue;
-       end
-
-       if drawings and player ~= localPlayer then
-           updateEsp(player, drawings);
-       end
-   end
-end)
-end)
-
 local Button = Section.NewButton("Esp 6",function()
 _G.FriendColor = Color3.fromRGB(0, 0, 255)
 _G.EnemyColor = Color3.fromRGB(255, 0, 0)
@@ -518,107 +390,6 @@ end
             end
         end
     end)
-end)
-
-local Button = Section.NewButton("Tracer 2",function()
-
-end)
-
-local Tab = Window.NewTab("Chams")
-
-local Section = Tab.NewSection("Chams")
-
-local Button = Section.NewButton("Chams 1",function()
---// Chams ESP | CSGO Style
- 
- client = game.Players.LocalPlayer
-local players = game:GetService("Players")
-local rs = game:GetService("RunService")
- 
-local function clonePart(part, model, character)
-   if part:IsA("BasePart") then
-local head = character:WaitForChild("Head")
-local clone = part:Clone()
-for i, v in ipairs(clone:GetChildren()) do
-if not v:IsA("SpecialMesh") then
-v:Destroy()
-continue
-end
-v.TextureId = ""
-end
-clone.Color = Color3.fromRGB(0, 255, 0)
-pcall(function()clone.Size = clone.Size * 0.7 clone.CanCollide = false end)
-clone.Parent = model
-rs.RenderStepped:connect(function()
-if head:IsDescendantOf(workspace) then
-clone.CFrame = part.CFrame
-clone.Size = part.Size
-else
-model:Destroy()
-return
-end
-end)
-end
-end
-local function chams(character)
-   local model = Instance.new("Model")
-   model.Name = character.Name
-   model.Parent = workspace
-   local cham = Instance.new("Highlight",model)
-   cham.Name = "cham"
-   cham.DepthMode = Enum.HighlightDepthMode.AlwaysOnTop  
-   cham.OutlineColor = Color3.fromRGB(0,0,0)
-   cham.FillColor = Color3.fromRGB(255,0,0)
-   cham.FillTransparency = 0
-   cham.OutlineTransparency = 1
-   local new = cham:Clone()
-   new.Parent = character
-   new.FillColor = Color3.fromRGB(0,255,0)
-   new.DepthMode = Enum.HighlightDepthMode.Occluded  
-   for i,v in ipairs(character:GetChildren()) do
--- if character has a head then
-       if character:FindFirstChild("Head") then
-           clonePart(v, model, character)
-       end
-   end
-end
-for i,v in ipairs(players:GetPlayers()) do
-   if v~= client then
-       if v.Character then
-           chams(v.Character)
-       end
-   end
-   v.CharacterAdded:connect(function()wait(0.1)chams(v.Character)end)
-end
-players.PlayerAdded:connect(function()
-   if v~= client then
-       if v.Character then
-           chams(v.Character)
-       end
-   end
-   v.CharacterAdded:connect(function()wait(0.1)chams(v.Character)end)
-end)
-end)
-
-local Button = Section.NewButton("Chams 2 (Press R)",function()
-plr = game.Players.LocalPlayer
-mouse = plr:GetMouse()
-mouse.KeyDown:connect(function(key)
-
-if key == "r" then
-local players = game.Players:GetPlayers()
-
-for i,v in pairs(players) do
- local esp = Instance.new("Highlight")
- esp.Name = v.Name
- esp.FillTransparency = 0
- esp.FillColor = Color3.new(1, 0.666667, 0)
- esp.OutlineColor = Color3.new(1, 0.333333, 1)
- esp.OutlineTransparency = 0
- esp.Parent = v.Character
-end
-end
-end)
 end)
 
 local Tab = Window.NewTab("Player")
