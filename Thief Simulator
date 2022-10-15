@@ -141,7 +141,7 @@ local Section = Tab.NewSection("CFrame Sell Items (Only 1 World)")
 
 local Button = Section.NewButton("Sell",function()
 game.Players.LocalPlayer.Character.Humanoid:ChangeState("Jumping")
-game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-7.26455021, 131.882996, 484.513062, -0.591136873, -3.56567256e-08, 0.806571245, -1.27078268e-08, 1, 3.48941995e-08, -0.806571245, 1.03774811e-08, -0.591136873)
+game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game:GetService("Workspace").Sells.World1.Sell.CFrame
 end)
 
 local Button = Section.NewButton("OFF Loop Sell",function()
@@ -165,7 +165,7 @@ myPart.Size = Vector3.new(1, 0.5, 2)
 myPart.Parent = game.Workspace.Chests
 while game:GetService("Workspace").Chests.Part do
 game.Players.LocalPlayer.Character.Humanoid:ChangeState("Jumping")
-game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-7.26455021, 131.882996, 484.513062, -0.591136873, -3.56567256e-08, 0.806571245, -1.27078268e-08, 1, 3.48941995e-08, -0.806571245, 1.03774811e-08, -0.591136873)
+game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game:GetService("Workspace").Sells.World1.Sell.CFrame
 wait(1.3)
 end
 end)
@@ -198,6 +198,26 @@ end)
 
 local Button = Section.NewButton("Delete Zone 3 Barrier",function()
 game:GetService("Workspace")["Zone 3"]:Destroy()
+end)
+
+local Section = Tab.NewSection("2 World")
+
+local Button = Section.NewButton("Delete Zone 4 Barrier",function()
+game:GetService("Workspace")["Zone 4"]:Destroy()
+end)
+
+local Button = Section.NewButton("Delete Zone 5 Barrier",function()
+game:GetService("Workspace")["Zone 5"]:Destroy()
+end)
+
+local Section = Tab.NewSection("3 World")
+
+local Button = Section.NewButton("Delete Zone 4 Barrier",function()
+game:GetService("Workspace")["Zone 6"]:Destroy()
+end)
+
+local Button = Section.NewButton("Delete Zone 5 Barrier",function()
+game:GetService("Workspace")["Zone 7"]:Destroy()
 end)
 
 local Tab = Window.NewTab("Player")
