@@ -40,9 +40,6 @@ end)
 local Button = Section.NewButton("Tower Of Hell (SOON)",function()
 end)
 
-local Button = Section.NewButton("YouTube Life! (SOON)",function()
-end)
-
 local Button = Section.NewButton("Find Markers (UPD SOON)",function()
 end)
 
