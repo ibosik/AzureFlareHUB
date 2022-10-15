@@ -88,16 +88,11 @@ local Tab = Window.NewTab("Misc")
 local Section = Tab.NewSection("Misc")
 
 local Button = Section.NewButton("God Mode",function()
---God mode xdxd
-
-function f()
-   game.Players.LocalPlayer.Character.KillScript:Destroy()
-end
-hookfunction(f, function()
-   game.Players.LocalPlayer.Character.KillScript:Destroy()
-end)
-
-f()
+    for i,v in pairs(game:GetService("Workspace").tower:GetDescendants()) do
+        if v:IsA("BoolValue") and v.Name == "kills" then
+            v.Parent:Destroy()
+        end
+    end
 end)
 
 local Button = Section.NewButton("Give All Items",function()
