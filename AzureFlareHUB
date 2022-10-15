@@ -54,6 +54,11 @@ if game.PlaceId == 10782148786 then
         game:GetService("CoreGui").Library:Destroy()
     loadstring(game:HttpGet("https://raw.githubusercontent.com/ibosik/AzureFlareHUB/main/Thief%20Simulator"))()
     end
+    
+if game.PlaceId == 1962086868 then
+        game:GetService("CoreGui").Library:Destroy()
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/ibosik/AzureFlareHUB/main/TowerOfHell"))()
+    end
 
 --else
 --  game:service('Players').LocalPlayer:Kick('Not Whitelisted | ibosiktt#5391')
