@@ -52,7 +52,7 @@ local Tab = Window.NewTab("Auto Farm")
 
 local Section = Tab.NewSection("Auto Farm Markers")
 
-local Button = Section.NewButton("Collect All Markers (Very slow)",function()
+local Button = Section.NewButton("Collect All Markers",function()
 workspace.Gravity = 0
 
 game:GetService('RunService').Stepped:Connect(function()
@@ -75,7 +75,7 @@ end
 
 workspace.Gravity = 196
 end)
-
+--[[
 local Button = Section.NewButton("Collect All Markers",function()
     game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game:GetService("Workspace")["Ball Marker"]["Color 1"].CFrame
 wait(0.1)
@@ -108,7 +108,7 @@ end)
 
 local Button = Section.NewButton("Bone Marker",function()
     game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game:GetService("Workspace")["Bone Marker"].Face.CFrame
-end)
+end)]]
 
 local Tab = Window.NewTab("Player")
 
