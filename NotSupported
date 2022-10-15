@@ -37,10 +37,10 @@ end)
 local Button = Section.NewButton("Thief Simulator",function()
 end)
 
-local Button = Section.NewButton("Tower Of Hell (SOON)",function()
+local Button = Section.NewButton("Tower Of Hell",function()
 end)
 
-local Button = Section.NewButton("Find Markers (UPD SOON)",function()
+local Button = Section.NewButton("Find Markers",function()
 end)
 
 local Button = Section.NewButton("Zombie Uprising (SOON)",function()
