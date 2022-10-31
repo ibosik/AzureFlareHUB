@@ -65,21 +65,16 @@ end)
 local Button = Section.NewButton("TRX",function()
 end)
 
---[[
 local Section = Tab.NewSection("Supported Paid Executors")
 
 local Button = Section.NewButton("Synapse X",function()
 end)
 
-local Button = Section.NewButton("Script-Ware",function()
-end)
-]]
-
 local Tab = Window.NewTab("Credits")
 
 local Section = Tab.NewSection("Discord")
 
-local Button = Section.NewButton("ibosiktt#5391 - Script",function()
+local Button = Section.NewButton("zxcibosik#9669 - Script",function()
 end)
 
 local Button = Section.NewButton("Kurus#6448 - Tester",function()
