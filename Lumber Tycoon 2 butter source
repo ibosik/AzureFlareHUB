@@ -1,3 +1,22 @@
+function TeleportToBase(Plr)
+	for i,v in next, game:GetService("Workspace").Properties:GetChildren() do
+		if v:FindFirstChild("Owner") and tostring(v.Owner.Value) == Plr then
+			game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.OriginSquare.CFrame + Vector3.new(0,2,0)
+			break
+		end
+	end
+	end
+	
+	function TeleportToPlayer(Plr)
+	for i,v in next, game.Players:GetPlayers() do
+		if tostring(v.Name) == Plr then
+			game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(v.Character.HumanoidRootPart.CFrame.p)
+			print("Teleported")
+			break
+		end
+	end
+	end
+
 --bad ADADWS
 
 --1.10 test
