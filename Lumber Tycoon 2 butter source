@@ -19,7 +19,7 @@ function TeleportToBase(Plr)
 
 --bad ADADWS
 
---1.10 test
+--[[1.10 test
 local MaxAxeAmt = "butterisgood" -- new key var
 
 if not isfolder("Butter Key") then
@@ -36,7 +36,7 @@ if not isfile("Butter Key/key.txt") then
 file = readfile("Butter Key/key.txt")
 if file ~= MaxAxeAmt then
 loadstring(game:HttpGet('https://raw.githubusercontent.com/Butterisgood/butter-hub/main/key.txt'))()
-else
+else]]
 
 function hasi(v,p)
 	local x = v[p]
