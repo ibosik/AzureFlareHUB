@@ -19,7 +19,7 @@ local Tab = Window.NewTab("Credits")
 
 local Section = Tab.NewSection("Discord")
 
-local Button = Section.NewButton("ibosiktt#5391 - Script",function()
+local Button = Section.NewButton("zxcibosik#9669 - Script",function()
 end)
 
 local Button = Section.NewButton("Kurus#6448 - Tester",function()
@@ -44,7 +44,7 @@ local Button = Section.NewButton("Old Gui",function()
 loadstring(game:HttpGet('https://raw.githubusercontent.com/ibosik/AzureFlareHUB/main/LT2OLD'))()
 end)
 
-local Tab = Window.NewTab("Dupe")
+local Tab = Window.NewTab("Dupe (SOON)")
 
 local Section = Tab.NewSection("Axe")
 
@@ -167,6 +167,116 @@ local Section = Tab.NewSection("TP To...")
 local Button = Section.NewButton("Mary",function()
     game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game.Workspace.Region_Plains.Mary.Mary.CFrame
     end)
+
+local Tab = Window.NewTab("Auto Buy")
+
+local Section = Tab.NewSection("Auto Buy")
+
+local Button = Section.NewButton("Toll Bridge",function()
+Pay(15)
+end)
+
+local Button = Section.NewButton("Ferry Ticket",function()
+Pay(5)
+end)
+
+local Button = Section.NewButton("Power Of Ease",function()
+Pay(3)
+end)
+
+local Tab = Window.NewTab("Wood")
+
+local Section = Tab.NewSection("Bring")
+
+local DisabledToggle = Section.NewToggle("Wood Lasso",function(bool)
+    _G.lassoTp = bool
+    WOODlassoTpcheck()
+    end)
+
+local Button = Section.NewButton("Tp Selected Wood",function()
+    WoodSelectionTp(WoodDirection, TpToWoodAfterFinished)
+    end)
+
+local DisabledToggle = Section.NewToggle("Wood Selection tool",function(bool)
+    _G.Woodselectionv2 = bool
+    WOODselectionv2(game.Players.LocalPlayer.Character.Name)
+    end)
+
+local DisabledToggle = Section.NewToggle("Wood click to teleport",function(bool)
+        WoodClickTp = bool
+    WOODClickToTP()
+    end,false)
+
+		WoodDirection = "Upwards"
+local DisabledToggle = Section.NewToggle("Wood Tp Direction",function(bool)
+if bool == true then
+		WoodDirection = "Upwards"
+        else
+        WoodDirection = "Sideways"
+end
+    end,false)
+
+local DisabledToggle = Section.NewToggle("Tp To Wood When Finished",function(bool)
+	TpToWoodAfterFinished = bool
+    end)
+
+local DisabledToggle = Section.NewToggle("Auto Deselect 2",function(bool)
+    _G.aftertpdeselect = bool
+end,false)
+
+local DisabledToggle = Section.NewToggle("Auto Deselect",function(bool)
+    _G.Autodeselect2 = bool
+    end,false)
+
+local Button = Section.NewButton("Deselect Wood",function()
+            for i,v in pairs(game.Workspace.PlayerModels:GetChildren()) do
+                if v:FindFirstChild("WoodSection") then
+                    if v.WoodSection:FindFirstChild("Selection") then
+                    v.WoodSection.Selection:Destroy()
+                end
+            end
+        end
+        end)
+
+local Button = Section.NewButton("Bring All Logs",function()
+    BringAllLogs()
+    end)
+
+local Button = Section.NewButton("Sell All Logs",function()
+SellAllLogs()
+end)
+
+local Button = Section.NewButton("Bring All Planks",function()
+    BringAllPlanks()
+    end)
+
+local Button = Section.NewButton("Sell All Planks",function()
+SellAllPlanks()
+end)
+
+
+local Section = Tab.NewSection("Dont work, idk why")
+
+local Button = Section.NewButton("Bring Tree",function()
+    for i = 1,sdasdsad do 
+        wait()
+        bringTree(getTree)
+        end
+end)
+
+local Section = Tab.NewSection("Settings")
+
+local Slider = Section.NewSlider("Amount",1,30,true,function(value)
+    sdasdsad = value
+    end,1)
+
+local Button = Section.NewButton("Generic",function()
+    getTree = Generic
+end)
+
+local Button = Section.NewButton("Walnut",function()
+    getTree = Walnut
+end)
 
 local Tab = Window.NewTab("Item")
 
