@@ -1,3 +1,5 @@
+loadstring(game:HttpGet("https://raw.githubusercontent.com/ibosik/AzureFlareHUB/main/Lumber%20Tycoon%202%20butter%20source"))()
+
 local player = game.Players.LocalPlayer
 
 if player then
@@ -62,7 +64,8 @@ end)
 
 local Section = Tab.NewSection("Items")
 
-local Button = Section.NewButton("Fixed ;(((((",function()
+--[[
+local Button = Section.NewButton("Fixed ;(",function()
 end)
 
 local Button = Section.NewButton("Suicide",function()
@@ -154,16 +157,12 @@ if v:IsA("Motor") then
 v:Remove()
 end
 end)
-end)    
+end)   
+]] 
 
 local Tab = Window.NewTab("V2207 LEAK")
 
-local Section = Tab.NewSection("Items")
-
-local Button = Section.NewButton("SOON",function()
-end)
-
-local Section = Tab.NewSection("Idk")
+local Section = Tab.NewSection("TP To...")
 
 local Button = Section.NewButton("Mary",function()
     game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game.Workspace.Region_Plains.Mary.Mary.CFrame
@@ -256,6 +255,95 @@ end)
 local Tab = Window.NewTab("Player")
 
 local Section = Tab.NewSection("Player")
+
+local Button = Section.NewButton("Flight",function()
+local Nofitication = Window.Nofitication("Press ''Q''.",function()
+local FlyingEnabled = false
+local maxspeed = 150 
+function BetterFly()
+	repeat wait() until game.Players.LocalPlayer and game.Players.LocalPlayer.Character and game.Players.LocalPlayer.Character:findFirstChild("Head") and game.Players.LocalPlayer.Character:findFirstChild("Humanoid") 
+	local mouse = game.Players.LocalPlayer:GetMouse() 
+	repeat wait() until mouse
+	local plr = game.Players.LocalPlayer 
+	local torso = plr.Character.Head 
+	local flying = false
+	local deb = true 
+	local ctrl = {f = 0, b = 0, l = 0, r = 0} 
+	local lastctrl = {f = 0, b = 0, l = 0, r = 0}
+	local speed = 5000 
+	 
+	function Fly() 
+	local bg = Instance.new("BodyGyro", torso) 
+	bg.P = 9e4 
+	bg.maxTorque = Vector3.new(9e9, 9e9, 9e9) 
+	bg.cframe = torso.CFrame 
+	local bv = Instance.new("BodyVelocity", torso) 
+	bv.velocity = Vector3.new(0,0.1,0) 
+	bv.maxForce = Vector3.new(9e9, 9e9, 9e9) 
+	repeat wait() 
+	plr.Character.Humanoid.PlatformStand = true 
+	if ctrl.l + ctrl.r ~= 0 or ctrl.f + ctrl.b ~= 0 then 
+	speed = maxspeed
+	elseif not (ctrl.l + ctrl.r ~= 0 or ctrl.f + ctrl.b ~= 0) and speed ~= 0 then 
+		speed = 0 
+	end 
+	if (ctrl.l + ctrl.r) ~= 0 or (ctrl.f + ctrl.b) ~= 0 then 
+	bv.velocity = ((game.Workspace.CurrentCamera.CoordinateFrame.lookVector * (ctrl.f+ctrl.b)) + ((game.Workspace.CurrentCamera.CoordinateFrame * CFrame.new(ctrl.l+ctrl.r,(ctrl.f+ctrl.b)*.2,0).p) - game.Workspace.CurrentCamera.CoordinateFrame.p))*speed 
+	lastctrl = {f = ctrl.f, b = ctrl.b, l = ctrl.l, r = ctrl.r} 
+	elseif (ctrl.l + ctrl.r) == 0 and (ctrl.f + ctrl.b) == 0 and speed ~= 0 then 
+	bv.velocity = ((game.Workspace.CurrentCamera.CoordinateFrame.lookVector * (lastctrl.f+lastctrl.b)) + ((game.Workspace.CurrentCamera.CoordinateFrame * CFrame.new(lastctrl.l+lastctrl.r,(lastctrl.f+lastctrl.b)*0.2,0).p) - game.Workspace.CurrentCamera.CoordinateFrame.p))*speed 
+	else 
+	bv.velocity = Vector3.new(0,0,0) 
+	end 
+	bg.cframe = game.Workspace.CurrentCamera.CoordinateFrame * CFrame.Angles(-math.rad((ctrl.f+ctrl.b)*speed/maxspeed),0,0) 
+	until not flying 
+	ctrl = {f = 0, b = 0, l = 0, r = 0} 
+	lastctrl = {f = 0, b = 0, l = 0, r = 0} 
+	speed = 0 
+	bg:Destroy() 
+	bv:Destroy() 
+	plr.Character.Humanoid.PlatformStand = false 
+	end 
+	mouse.KeyDown:connect(function(key) 
+	if key:lower() == "q" and FlyingEnabled == true then 
+	if flying then flying = false 
+	else 
+	flying = true 
+	Fly() 
+	end 
+	elseif key:lower() == "w" then 
+	ctrl.f = 1 
+	elseif key:lower() == "s" then 
+	ctrl.b = -1 
+	elseif key:lower() == "a" then 
+	ctrl.l = -1 
+	elseif key:lower() == "d" then 
+	ctrl.r = 1 
+	end 
+	end) 
+	mouse.KeyUp:connect(function(key) 
+	if key:lower() == "w" then 
+	ctrl.f = 0 
+	elseif key:lower() == "s" then 
+	ctrl.b = 0 
+	elseif key:lower() == "a" then 
+	ctrl.l = 0 
+	elseif key:lower() == "d" then 
+	ctrl.r = 0 
+	end 
+	end)
+	Fly()
+end
+game.Players.LocalPlayer.CharacterAdded:Connect(BetterFly)
+BetterFly()
+
+	FlyingEnabled = true
+    end)
+	end)
+
+local Slider = Section.NewSlider("FOV",70,120,true,function(value)
+		game:GetService("TweenService"):Create(workspace.Camera, TweenInfo.new(1, Enum.EasingStyle.Quint), {FieldOfView = value}):Play()
+end,70)
 
 local Slider = Section.NewSlider("Walk Speed",16,500,true,function(value)
 while game:GetService('RunService').RenderStepped:Wait() do
@@ -451,6 +539,33 @@ local DisabledToggle = Section.NewToggle("OFF Walk On Water",function(bool)
                 v.CanCollide = false
                 end
 end,false)
+
+local EnabledToggle = Section.NewToggle("Infinite Jump",function(bool)
+InfiniteJump(true)
+end,true)
+
+local DisabledToggle = Section.NewToggle("OFF Infinite Jump",function(bool)
+InfiniteJump(false)
+end,false)
+
+local EnabledToggle = Section.NewToggle("Light",function(bool)
+Light(true)
+end,true)
+
+local DisabledToggle = Section.NewToggle("OFF Light",function(bool)
+Light(false)
+end,false)
+
+local Tab = Window.NewTab("World")
+
+local Section = Tab.NewSection("World Scripts")
+
+local Button = Section.NewButton("Spawn",function()
+end)
+
+local Button = Section.NewButton("Safe Death",function()
+    game.Players.LocalPlayer.Character.Head:Remove()
+    end)
 
 --local SliderPrecise = section.NewSlider("Walk Speed",0,500,true,function(value)
 --    game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = s
