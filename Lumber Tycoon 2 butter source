@@ -20,7 +20,6 @@ function TeleportToBase(Plr)
 --bad ADADWS
 
 --1.10 test
---[[
 local MaxAxeAmt = "butterisgood" -- new key var
 
 if not isfolder("Butter Key") then
@@ -37,7 +36,7 @@ if not isfile("Butter Key/key.txt") then
 file = readfile("Butter Key/key.txt")
 if file ~= MaxAxeAmt then
 loadstring(game:HttpGet('https://raw.githubusercontent.com/Butterisgood/butter-hub/main/key.txt'))()
-else ]]
+else
 
 function hasi(v,p)
 	local x = v[p]
@@ -1423,3 +1422,555 @@ if _G.Autodeselect == true then
 end
 end
 end
+
+local ScreenGui = Instance.new("ScreenGui")
+local Frame = Instance.new("Frame")
+
+ScreenGui.Parent = game.CoreGui
+ScreenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+
+Frame.Parent = ScreenGui
+Frame.BackgroundColor3 = Color3.new(0.098, 0.459, 1)
+Frame.BackgroundTransparency = 0.8
+Frame.BorderColor3 = Color3.new(0.09, 0.137, 0.776)
+Frame.BorderSizePixel = 2
+Frame.Position = UDim2.new(0, 0, 0, 0)
+Frame.Size = UDim2.new(0, 0, 0, 0)
+
+local Mouse = game.Players.LocalPlayer:GetMouse()
+local Run = game:GetService("RunService")
+local Player = game.Players.LocalPlayer
+local userinputservice = game:GetService("UserInputService")
+local camera = game.Workspace.CurrentCamera
+function zigzag(X) return math.acos(math.cos(X*math.pi))/math.pi end
+local counter = 0
+
+local selected = {}
+
+task.spawn(function()
+	while wait(0.1) do
+		counter = counter + 0.01
+	end
+end)
+
+local run = userinputservice.InputBegan:Connect(function(input)
+    if not _G.sssaaaaaaaaaa then return end
+    if input.UserInputType == Enum.UserInputType.MouseButton1 then
+        Frame.Visible = true
+        Frame.Position = UDim2.new(0, Mouse.X, 0, Mouse.Y)
+        while userinputservice:IsMouseButtonPressed(Enum.UserInputType.MouseButton1) do
+            Run.RenderStepped:wait()
+            if _G.strictdeselectmode == true then
+            for i,v in pairs(game.Workspace.PlayerModels:GetChildren()) do
+                if v:FindFirstChild("Main") then
+                    if v.Main:FindFirstChild("Selection") then
+                        v.Main.Selection:Destroy()
+                    end
+                end
+                end
+            end
+            
+            Frame.Size = UDim2.new(0, Mouse.X, 0, Mouse.Y) - Frame.Position
+
+            for i, v in pairs(game.Workspace.PlayerModels:GetChildren()) do
+                if v:FindFirstChild("Main") then
+                    local screenpos, visible = camera:WorldToScreenPoint(v.Main.CFrame.p)
+                    if visible then
+                        if is_in_frame(screenpos, Frame) then
+                            if v.Main:FindFirstChild("Selection") then continue end
+
+                            local bob = Instance.new("SelectionBox", v.Main)
+                            bob.Name = "Selection"
+                            bob.Adornee = bob.Parent
+                            --a.AlwaysOnTop = true
+                            bob.SurfaceTransparency = 0.5
+                            bob.LineThickness = 0.09
+                            bob.SurfaceColor3 = Color3.fromRGB(0, 0, 0)
+							task.spawn(function()
+								while wait(0.1) do
+								bob.Color3 = Color3.fromHSV(zigzag(counter),1,1)
+								end
+							end)
+                        end
+                    end
+                end
+            end
+        end
+        Frame.Size = UDim2.new(0, 1, 0, 1)
+        Frame.Visible = false
+    end
+end)
+
+function lassoTpcheck()
+    function is_in_frame(screenpos, frame)
+        local xPos = frame.AbsolutePosition.X
+        local yPos = frame.AbsolutePosition.Y
+
+        local xSize = frame.AbsoluteSize.X
+        local ySize = frame.AbsoluteSize.Y
+
+        local check1 = screenpos.X >= xPos and screenpos.X <= xPos + xSize
+        local check2 = screenpos.X <= xPos and screenpos.X >= xPos + xSize
+
+        local check3 = screenpos.Y >= yPos and screenpos.Y <= yPos + ySize
+        local check4 = screenpos.Y <= yPos and screenpos.Y >= yPos + ySize
+
+        local finale = (check1 and check3) or (check2 and check3) or (check1 and check4) or (check2 and check4)
+
+        return finale
+    end
+end
+
+--GUI
+
+local function SendNotification(Title,Text,Duration) -- Sends Notification in the bottom right of the screen
+    game.StarterGui:SetCore("SendNotification", {
+        Title = Title;
+        Text = Text;
+        Icon = nil;
+        Duration = Duration
+    })
+end
+
+function Notify(titletxt, text, time)
+    local ScreenGui = Instance.new("ScreenGui")
+    local Frame = Instance.new("Frame")
+    local UICorner = Instance.new("UICorner")
+    local TextLabel = Instance.new("TextLabel")
+    local TextLabel_2 = Instance.new("TextLabel")
+    local UICorner_2 = Instance.new("UICorner")
+    
+    --Properties:
+    
+    ScreenGui.Parent = game.CoreGui
+    
+    Frame.Parent = ScreenGui
+    Frame.BackgroundColor3 = Color3.fromRGB(52, 52, 52)
+    Frame.Position = UDim2.new(0, -500, 0, 0)
+    Frame.Size = UDim2.new(0, 291, 0, 108)
+    
+    UICorner.Parent = Frame
+    
+    TextLabel.Parent = Frame
+    TextLabel.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+    TextLabel.BackgroundTransparency = 1.000
+    TextLabel.Position = UDim2.new(0.0432195365, 0, 0.0870083869, 0)
+    TextLabel.Size = UDim2.new(0, 265, 0, 43)
+    TextLabel.Font = Enum.Font.LuckiestGuy
+    TextLabel.Text = "Butters"
+    TextLabel.TextColor3 = Color3.fromRGB(5, 158, 175)
+    TextLabel.TextSize = 34.000
+    
+    TextLabel_2.Parent = Frame
+    TextLabel_2.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+    TextLabel_2.BackgroundTransparency = 0.950
+    TextLabel_2.Position = UDim2.new(0.0260701478, 0, 0.417686313, 0)
+    TextLabel_2.Size = UDim2.new(0, 275, 0, 56)
+    TextLabel_2.Font = Enum.Font.LuckiestGuy
+    TextLabel_2.Text = "Version 1.10 beta"
+    TextLabel_2.TextColor3 = Color3.fromRGB(5, 158, 175)
+    TextLabel_2.TextSize = 29.000
+    
+    UICorner_2.Parent = TextLabel_2
+    
+    wait(0.1)
+    Frame:TweenPosition(UDim2.new(1, -1020, 0, 400), "Out", "Sine", 0.5)
+    wait(time)
+    Frame:TweenPosition(UDim2.new(1, 5, 0, 50), "Out", "Sine", 0.5)
+    wait(0.6)
+    ScreenGui:Destroy();
+        end
+
+        function SellAllLogs()
+            OldPos = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame
+            repeat
+                for i,v in next, game:GetService("Workspace").LogModels:GetChildren() do
+                    if v:FindFirstChild("Owner") and v.Owner.Value == game.Players.LocalPlayer then
+                        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(v:FindFirstChild("WoodSection").CFrame.p)
+                        if not v.PrimaryPart then
+                            v.PrimaryPart = v:FindFirstChild("WoodSection")  
+                        end
+                        spawn(function()
+                            for i = 1,50 do
+                                game.ReplicatedStorage.Interaction.ClientIsDragging:FireServer(v)
+                                v:SetPrimaryPartCFrame(CFrame.new(314, -0.5, 86.822))
+                                task.wait()
+                            end
+                        end)
+                    end
+                    task.wait()
+                end
+                task.wait()
+            until CheckForLogs() == false
+            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = OldPos
+            end
+
+            local Mouse = game.Players.LocalPlayer:GetMouse()
+            ClickTp = true
+
+            function WOODClickToTP()
+            if WoodClickTp == false then ClickToSellMouseVal:Disconnect() return print("Test") end
+            ClickToSellMouseVal = Mouse.Button1Up:Connect(function()
+                local target = Mouse.Target.Parent
+                if target:FindFirstChild("Owner") and target:FindFirstChild("WoodSection") then
+                   for i,v in pairs(game.Workspace.PlayerModels:GetChildren()) do
+                    if Mouse.Target:FindFirstChild("Selection") then
+                    else
+                    local bob = Instance.new("SelectionBox", target.WoodSection)
+                    bob.Name = "Selection"
+                    bob.Adornee = bob.Parent
+                    --a.AlwaysOnTop = true
+                    bob.SurfaceTransparency = 0.5
+                    bob.LineThickness = 0.09
+                    bob.SurfaceColor3 = Color3.fromRGB(0,0,0)
+                    bob.Color3 = Color3.fromRGB(0,240,44)
+                    end
+                   end
+            end
+            end)
+        end
+        function WoodSelectionTp(direction,tp)
+			if direction == "Sideways" then
+			OldHumanCFrameSpot = game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart").CFrame
+        	OldWoodPlace1 = game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart").CFrame * CFrame.Angles(math.rad(90), 0, 0) + Vector3.new(0, -5, 0),1000,game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart").CFrame
+            elseif direction == "Upwards" then	
+				OldHumanCFrameSpot = game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart").CFrame
+				OldWoodPlace1 = game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart").CFrame
+			end
+			for i,v in next, game.Workspace.PlayerModels:GetDescendants() do
+                if v:FindFirstChild("Selection") then
+                    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(v:FindFirstChild("Selection").Parent.CFrame.p) * CFrame.new(5,0,0)
+                    if not v.Parent.PrimaryPart then
+                    v.Parent.PrimaryPart = v:FindFirstChild("Selection").Parent
+                    end
+                    
+                    for a = 1,25,1 do
+                        game:GetService("ReplicatedStorage").Interaction.ClientIsDragging:FireServer(v.Parent)
+                        v.Parent:SetPrimaryPartCFrame(OldWoodPlace1)
+                        task.wait()
+                    end
+                    if _G.aftertpdeselect == true then
+                        v.Selection:Destroy()
+                    end
+                end
+            end
+            task.wait(0.5)
+            if tp == true then
+            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = OldHumanCFrameSpot
+
+            if _G.Autodeselect2 == true then
+                for i,v in pairs(game.Workspace.PlayerModels:GetChildren()) do
+                    if v:FindFirstChild("WoodSection") then
+                        if v.WoodSection:FindFirstChild("Selection") then
+                        v.WoodSection.Selection:Destroy()
+                    end
+                end
+            end
+        end
+	end
+ end
+
+
+            local Mouse = game.Players.LocalPlayer:GetMouse()
+
+function WOODselectionv2(PLY)
+if _G.Woodselectionv2 == false then Betterselection:Disconnect() return print("Test") end
+        Betterselection = Mouse.Button1Up:Connect(function()
+            for i,v in pairs(game.Workspace.PlayerModels:GetChildren()) do
+            --local target = Mouse.Target.Parent
+            if v:FindFirstChild("WoodSection") then
+            if v.TreeClass.Value == Mouse.Target.Parent.TreeClass.Value then
+            if Mouse.Target.Parent:FindFirstChild("Owner") and tostring(v.Owner.Value) == PLY then
+            if v.WoodSection:FindFirstChild("Selection") then
+            else
+            local bobv2 = Instance.new("SelectionBox", v.WoodSection)
+            bobv2.Name = "Selection"
+            bobv2.Adornee = bobv2.Parent
+            --a.AlwaysOnTop = true
+            bobv2.SurfaceTransparency = 0.5
+            bobv2.LineThickness = 0.09
+            bobv2.SurfaceColor3 = Color3.fromRGB(0,0,0)
+            bobv2.Color3 = Color3.fromRGB(0,240,44)
+        end
+            
+        end
+    end
+end
+ end
+--end
+end)
+end
+
+
+
+
+
+        function WOODlassoTpcheck()
+
+
+            function is_in_frame(screenpos, frame)
+                return screenpos.X >= frame.AbsolutePosition.X and screenpos.X <= frame.AbsolutePosition.X + frame.AbsoluteSize.X and screenpos.Y >= frame.AbsolutePosition.Y and screenpos.Y <= frame.AbsolutePosition.Y + frame.AbsoluteSize.Y 
+            end
+            
+            local selected = {}
+            if _G.lassoTp == true then
+                
+                
+            local run = userinputservice.InputBegan:connect(function(input)
+                if input.UserInputType == Enum.UserInputType.MouseButton1 then
+                    if _G.lassoTp == true then
+                    Frame.Visible = true
+                    Frame.Position = UDim2.new(0,Mouse.X,0,Mouse.Y)
+                    while userinputservice:IsMouseButtonPressed(Enum.UserInputType.MouseButton1) do
+                        Run.RenderStepped:wait()
+                        if _G.lassoTp == true then
+                            
+                         Frame.Size = UDim2.new(0,Mouse.X,0,Mouse.Y) - Frame.Position
+                         
+                         else
+                            
+                        Frame.Size = UDim2.new(0,1,0,1)
+                        
+                        end
+                        for i,v in pairs(game.Workspace.PlayerModels:GetChildren()) do
+                            if v:FindFirstChild("WoodSection") then
+                                local screenpos, visible = camera:WorldToScreenPoint(v.WoodSection.CFrame.p)
+                                if visible then
+                                    if is_in_frame(screenpos, Frame) then
+                                        if v.WoodSection:FindFirstChild("Selection") then continue end
+            
+                                        local bob = Instance.new("SelectionBox", v.WoodSection)
+                                        bob.Name = "Selection"
+                                        bob.Adornee = bob.Parent
+                                        --a.AlwaysOnTop = true
+                                        bob.SurfaceTransparency = 0.5
+                                        bob.LineThickness = 0.09
+                                        bob.SurfaceColor3 = Color3.fromRGB(0,0,0)
+                                        bob.Color3 = Color3.fromRGB(0,240,44)
+                                    end
+                                end
+                            end
+                        end
+                    end
+                    end
+                    Frame.Size = UDim2.new(0,1,0,1)
+                    Frame.Visible = false
+                end
+            end)
+            end
+        end
+        
+        function Dupe(Slot,Amount,timewhit)
+            for i = 1,Amount do
+                if not game:GetService("ReplicatedStorage").LoadSaveRequests.ClientMayLoad:InvokeServer(game.Players.LocalPlayer) then
+                    repeat task.wait() until game:GetService("ReplicatedStorage").LoadSaveRequests.ClientMayLoad:InvokeServer(game.Players.LocalPlayer)
+                end
+                
+                game.Players.LocalPlayer.Character.Head:Remove()
+                wait(timewhit)
+                repeat task.wait() until not game.Players.LocalPlayer.Character:FindFirstChild("Head")
+                game:GetService("ReplicatedStorage").LoadSaveRequests.RequestLoad:InvokeServer(Slot,game.Players.LocalPlayer)
+                repeat task.wait() until game.Players.LocalPlayer.CurrentlySavingOrLoading.Value ~= true
+                task.wait()
+            end
+            print("Duped Axes")
+        end
+        
+
+local Mouse = game.Players.LocalPlayer:GetMouse()
+function selectionv2(PLY)
+if _G.selectionv2 == false then Betterselection:Disconnect() return print("Test") end
+        Betterselection = Mouse.Button1Up:Connect(function()
+            for i,v in pairs(game.Workspace.PlayerModels:GetChildren()) do
+            --local target = Mouse.Target.Parent
+            if v:FindFirstChild("Main") then
+            if v.Main.Parent.Name == Mouse.Target.Parent.Name then
+            if Mouse.Target.Parent:FindFirstChild("Owner") and tostring(v.Owner.Value) == PLY then
+            if v.Main:FindFirstChild("Selection") then
+            else
+            local bobv2 = Instance.new("SelectionBox", v.Main)
+            bobv2.Name = "Selection"
+            bobv2.Adornee = bobv2.Parent
+            --a.AlwaysOnTop = true
+            bobv2.SurfaceTransparency = 0.5
+            bobv2.LineThickness = 0.09
+            bobv2.SurfaceColor3 = Color3.fromRGB(0,0,0)
+            bobv2.Color3 = Color3.fromRGB(0,240,44)
+        end
+            
+        end
+    end
+end
+ end
+--end
+end)
+end
+
+local Plr = game:GetService("Players").LocalPlayer
+
+local PS = game:GetService("ReplicatedStorage").PlaceStructure
+local CPS = PS.ClientPlacedStructure
+local CPB = PS.ClientPlacedBlueprint
+
+local Plr = game:GetService("Players").LocalPlayer
+
+local function Place(v, CFrame)
+    local Name = (v:FindFirstChild("PurchasedBoxItemName") and v.PurchasedBoxItemName.Value) or (v:FindFirstChild("ItemName") and v.ItemName.Value) 
+    
+    if v:FindFirstChild("Owner") and v.Owner.Value == Plr and v:FindFirstChild("Type") and Name then
+        if v.Type.Value ~= "Blueprint" then
+            CPS.FireServer(CPS, Name or nil, CFrame, Plr, (v:FindFirstChild("BlueprintWoodClass") and v.BlueprintWoodClass.Value) or nil, v, true)
+        else
+            CPB.FireServer(CPB, Name or nil, CFrame, Plr, v, true) 
+        end
+    end
+end
+
+local function GD(Vec1, Vec2)
+    local Value = Vec1 - Vec2
+    
+    local X = (Value.X < 0 and -Value.X) or (Value.X > 0 and Value.X) or 0
+    local Z = (Value.Z < 0 and -Value.Z) or (Value.Z > 0 and Value.Z) or 0
+    
+    return (X <= 20 and Z <= 20)
+end
+
+local function GetPos(Plank)
+    local MyBase
+    for _, Property in pairs(game:GetService("Workspace").Properties:GetChildren()) do
+        local Own = Property.Owner.Value
+            for i, v in pairs(Property:GetChildren()) do
+                if v:IsA("Part") and v.Parent.Owner.Value then
+                    if GD(Plank.WoodSection.Position, v.Position) and (Own == Plr) then
+                        return true
+                    end
+                end
+            end
+        end
+    return false
+end
+
+local function GetWoods(Value)
+    local Planks = {}
+    for i, v in pairs(game:GetService("Workspace").PlayerModels:GetChildren()) do
+        if v:FindFirstChild("Owner") and v.Owner.Value == Plr and v:FindFirstChild("TreeClass") then 
+            local WS = v.WoodSection.Size
+            if v.TreeClass.Value == Value and GetPos(v) and (WS.X * WS.Y * WS.Z) >= 1 and WS.Y <= 5 then
+                Planks[#Planks+1] = v
+            end
+        end
+    end
+    return Planks
+end
+
+local function FillBP(Wood)
+if not game:GetService("Players").LocalPlayer:WaitForChild("SuperBlueprint").Value then return end
+local Woods = GetWoods(Wood)
+local TempW
+local Info = {}
+local Count = 0
+local Errors = 0
+local ToBreak = game:GetService("Workspace").PlayerModels.ChildAdded:Connect(function(v)
+    if v:WaitForChild("Owner") and v.Owner.Value == Plr and v:WaitForChild("BlueprintWoodClass", .7) and v:WaitForChild("MainCFrame") and v:WaitForChild("ItemName") then
+        local Pos = v.MainCFrame.Value
+        local Floor = tostring(Vector3.new(math.round(Pos.X), math.round(Pos.Y), math.round(Pos.Z)))
+        local Name = v.ItemName.Value
+        local NewInfo = Info[Name]
+        
+        if NewInfo[Floor] then
+                for i = 1, 25 do 
+                    if v and v.Parent and NewInfo[Floor] then 
+                        Place(v, NewInfo[Floor]) wait(.1)
+                    end 
+                end
+            NewInfo[Floor] = nil
+            Count = Count - 1
+        end
+    elseif v:WaitForChild("Owner") and v.Owner.Value == Plr and v:WaitForChild("Type", 10) and v.Type.Value == "Blueprint" and v:WaitForChild("ItemName") and v:WaitForChild("Main") then
+        if not v then return end
+        local Pos = v.Main.CFrame
+        local Name = v.ItemName.Value
+        local Floor = tostring(Vector3.new(math.round(Pos.X), math.round(Pos.Y), math.round(Pos.Z)))
+        local NewInfo = Info[Name]
+        local ToSave = NewInfo[Floor]
+        if v and ToSave then Errors = Errors + 1
+            if not TempW then TempW = GetWoods(Wood) end
+            local LPlank = TempW[math.min(Errors, #TempW)]
+            if LPlank then
+                Info[Name][Floor] = nil
+                local LCF = LPlank.WoodSection.CFrame
+                
+                Info[v.ItemName.Value][tostring(Vector3.new(math.round(LCF.X), math.round(LCF.Y), math.round(LCF.Z)))] = ToSave
+                for i = 1, 10 do 
+                    if v and v.Parent then 
+                        Place(v, LCF) wait(.1)
+                    end 
+                end
+            elseif not LPlank then
+                Place(v, NewInfo[Floor])
+                NewInfo[Floor] = nil
+            end
+        end
+    end
+end)
+
+local ToStop = false
+if #Woods == 0 then ToStop = true ToBreak:Disconnect() end
+    for i, v in pairs(game:GetService("Workspace").PlayerModels:GetChildren()) do
+        if v:FindFirstChild("Owner") and v.Owner.Value == Plr and v:FindFirstChild("Type") and v.Type.Value == "Blueprint"and #Woods >= 1 then
+        local Plank = Woods[#Woods] 
+        local Pos = Plank.WoodSection.CFrame
+        table.remove(Woods, #Woods)
+        Count = Count + 1
+        if not Info[v.ItemName.Value] then Info[v.ItemName.Value] = {} end
+            Info[v.ItemName.Value][tostring(Vector3.new(math.round(Pos.X), math.round(Pos.Y), math.round(Pos.Z)))] = v.Main.CFrame
+            Place(v, CFrame.new(Pos.Position))
+        end
+    end
+    
+    wait() ToBreak:Disconnect()
+end
+
+
+
+
+function DEVVVVV()
+wait(1) 
+game.Players.LocalPlayer.Character.Head:Remove()
+end
+
+function Dragger()
+game.Workspace.ChildAdded:connect(function(a)
+	if a.Name == "Dragger" then
+		local bg = a:WaitForChild("BodyGyro")
+		local bp = a:WaitForChild("BodyPosition")
+		repeat
+			if CustomDragger then
+				task.wait()
+				bp.P = 120000
+				bp.D = 1000
+				bp.maxForce = Vector3.new(math.huge,math.huge,math.huge)
+				bg.maxTorque = Vector3.new(math.huge, math.huge, math.huge)
+			else
+				wait()
+				bp.P = 10000
+				bp.D = 800
+				bp.maxForce = Vector3.new(17000, 17000, 17000)
+				bg.maxTorque = Vector3.new(200, 200, 200)
+			end
+		until not a
+	end
+end)
+end
+
+function DDupe(Slot,Amount,timewhit)
+    for i = 1,Amount do
+    if not game:GetService("ReplicatedStorage").LoadSaveRequests.ClientMayLoad:InvokeServer(game.Players.LocalPlayer) then
+    repeat task.wait() until game:GetService("ReplicatedStorage").LoadSaveRequests.ClientMayLoad:InvokeServer(game.Players.LocalPlayer)
+    end
+    game:GetService("ReplicatedStorage").LoadSaveRequests.RequestLoad:InvokeServer(Slot,game.Players.LocalPlayer)
+    repeat task.wait() until game.Players.LocalPlayer.CurrentlySavingOrLoading.Value ~= true
+    task.wait()
+    end
+    print("Duped Axes")
+    end
