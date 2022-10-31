@@ -13,7 +13,7 @@ Window = Library.Main("Azure Flare Hub | LT2","LeftAlt") -- change "LeftAlt" to 
 
 local Nofitication = Window.Nofitication("Welcome To Azure Flare Hub "..player.Name.."",function()
 end)
-end
+
 
 local Tab = Window.NewTab("Credits")
 
@@ -44,7 +44,7 @@ local Button = Section.NewButton("Old Gui",function()
 loadstring(game:HttpGet('https://raw.githubusercontent.com/ibosik/AzureFlareHUB/main/LT2OLD'))()
 end)
 
-local Tab = Window.NewTab("Dupe (Fixed)")
+local Tab = Window.NewTab("Dupe")
 
 local Section = Tab.NewSection("Axe")
 
@@ -168,9 +168,41 @@ local Button = Section.NewButton("Mary",function()
     game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game.Workspace.Region_Plains.Mary.Mary.CFrame
     end)
 
+local Tab = Window.NewTab("Item")
+
+local Section = Tab.NewSection("Item")
+
+local DisabledToggle = Section.NewToggle("Lasso",function(bool)
+    _G.sssaaaaaaaaaa = bool
+    lassoTpcheck()
+end,false)
+
+local Button = Section.NewButton("TP Selected Items",function()
+    SelectionTp(25)
+end)
+
+local Button = Section.NewButton("Deselect Items",function()
+        for i,v in pairs(game.Workspace.PlayerModels:GetChildren()) do
+        if v:FindFirstChild("Main") then
+            if v.Main:FindFirstChild("Selection") then
+            v.Main.Selection:Destroy()
+        end
+    end
+end
+end)
+
+local DisabledToggle = Section.NewToggle("Autodeselect items when done teleporting",function(bool)
+    _G.Autodeselect = bool
+end)
+
+local DisabledToggle = Section.NewToggle("Click TP",function(bool)
+    ClickTp = bool
+    ClickToTP()
+end,false)
+
 local Tab = Window.NewTab("Slot")
 
-local Section = Tab.NewSection("Slot")
+local Section = Tab.NewSection("Land")
 
 local Button = Section.NewButton("Free Land",function()
 for a,b in pairs(workspace.Properties:GetChildren()) do 
@@ -245,6 +277,71 @@ for index,value in pairs(game:GetService("ReplicatedStorage").Purchasables.Struc
 end
 end)
 
+local Button = Section.NewButton("Sell Sold Sign",function()
+    SellSoldSign()
+    end)
+
+local Section = Tab.NewSection("Auto (Cant OFF)")
+
+local Button = Section.NewButton("Auto BlackList",function()
+    AutoBlacklistAll = true
+    AutoBlacklist()
+end)
+
+local Button = Section.NewButton("Auto WhiteList",function()
+    AutoWhitelistAll = Value
+    AutoWhiteList()
+end)
+
+local Tab = Window.NewTab("Vehicle")
+
+local Section = Tab.NewSection("Vehicle")
+
+local DisabledToggle = Section.NewToggle("Vehicle Fly",function(bool)
+      if bool == true then
+		player = game.Players.LocalPlayer
+		humanoid = player.Character.Humanoid
+		if humanoid.Seated then
+		local CurrentSeat = player.Character.Humanoid.SeatPart
+			if CurrentSeat and CurrentSeat.Parent.Type.Value == "Vehicle" then
+        NOFLY()
+	wait()
+	sFLY(true)
+		end
+		end
+      else
+        NOFLY()
+      end
+      end,false)
+
+local Slider = Section.NewSlider("Vehicle Fly Speed",1,100,true,function(value)
+		iyflyspeed = value
+		vehicleflyspeed = value
+        end,1)
+
+local Slider = Section.NewSlider("Vehicle Speed",1,5,true,function(value)
+    VehicleSpeed(value)
+    end,1)
+
+--[[
+local Button = Section.NewButton("TP Car To...",function()
+carTP(DIMASIO_7787.Character.HumanoidRootPart.CFrame)
+end)
+]]
+
+local Button = Section.NewButton("Flip Vehicle",function()
+    FlipVehcile()
+    end)
+
+--[[local Button = Section.NewButton("Spawn Pink Vehicle",function()
+        VehicleSpawner("Hot Pink")
+end)
+
+local Button = Section.NewButton("Abort Spawn Vehicle",function()
+    AbortVehicleSpawner = true
+end)]]
+end
+
 local Tab = Window.NewTab("Esp")
 
 local Section = Tab.NewSection("Esp")
@@ -252,98 +349,42 @@ local Section = Tab.NewSection("Esp")
 local Button = Section.NewButton("Esp (Kurus-Ware)",function()
 end)
 
+function CountAxes(TESTPLER)
+    Amount = 0
+        for a,b in pairs(game.Players:FindFirstChild(TESTPLER).ToolFolder:GetChildren()) do
+            if b.Name ~= "BlueprintTool" and b.Name == "Tool" then
+                Amount = Amount + 1
+            end
+        end
+        game.StarterGui:SetCore("SendNotification", {Title = "Azure Flare Hub", Text = "There is " ..Amount.." Axes in ".. TESTPLER .. "'s Backpack","Axe Amount", Icon = "http://www.roblox.com/asset/?id=10341849875", Duration = 3, Button1 = ""})
+        end
+
 local Tab = Window.NewTab("Player")
 
-local Section = Tab.NewSection("Player")
+local Section = Tab.NewSection("Player Scripts")
+
+--[[local Button = Section.NewButton("Count Axes",function()
+    CountAxes(game.Players.LocalPlayer.Name)
+    end)]]
+
+--[[local Button = Section.NewButton("TP To Your Plot",function()
+TeleportToBase(zxcibosik_dupeditems)
+end)
+end]]
 
 local Button = Section.NewButton("Flight",function()
 local Nofitication = Window.Nofitication("Press ''Q''.",function()
-local FlyingEnabled = false
-local maxspeed = 150 
-function BetterFly()
-	repeat wait() until game.Players.LocalPlayer and game.Players.LocalPlayer.Character and game.Players.LocalPlayer.Character:findFirstChild("Head") and game.Players.LocalPlayer.Character:findFirstChild("Humanoid") 
-	local mouse = game.Players.LocalPlayer:GetMouse() 
-	repeat wait() until mouse
-	local plr = game.Players.LocalPlayer 
-	local torso = plr.Character.Head 
-	local flying = false
-	local deb = true 
-	local ctrl = {f = 0, b = 0, l = 0, r = 0} 
-	local lastctrl = {f = 0, b = 0, l = 0, r = 0}
-	local speed = 5000 
-	 
-	function Fly() 
-	local bg = Instance.new("BodyGyro", torso) 
-	bg.P = 9e4 
-	bg.maxTorque = Vector3.new(9e9, 9e9, 9e9) 
-	bg.cframe = torso.CFrame 
-	local bv = Instance.new("BodyVelocity", torso) 
-	bv.velocity = Vector3.new(0,0.1,0) 
-	bv.maxForce = Vector3.new(9e9, 9e9, 9e9) 
-	repeat wait() 
-	plr.Character.Humanoid.PlatformStand = true 
-	if ctrl.l + ctrl.r ~= 0 or ctrl.f + ctrl.b ~= 0 then 
-	speed = maxspeed
-	elseif not (ctrl.l + ctrl.r ~= 0 or ctrl.f + ctrl.b ~= 0) and speed ~= 0 then 
-		speed = 0 
-	end 
-	if (ctrl.l + ctrl.r) ~= 0 or (ctrl.f + ctrl.b) ~= 0 then 
-	bv.velocity = ((game.Workspace.CurrentCamera.CoordinateFrame.lookVector * (ctrl.f+ctrl.b)) + ((game.Workspace.CurrentCamera.CoordinateFrame * CFrame.new(ctrl.l+ctrl.r,(ctrl.f+ctrl.b)*.2,0).p) - game.Workspace.CurrentCamera.CoordinateFrame.p))*speed 
-	lastctrl = {f = ctrl.f, b = ctrl.b, l = ctrl.l, r = ctrl.r} 
-	elseif (ctrl.l + ctrl.r) == 0 and (ctrl.f + ctrl.b) == 0 and speed ~= 0 then 
-	bv.velocity = ((game.Workspace.CurrentCamera.CoordinateFrame.lookVector * (lastctrl.f+lastctrl.b)) + ((game.Workspace.CurrentCamera.CoordinateFrame * CFrame.new(lastctrl.l+lastctrl.r,(lastctrl.f+lastctrl.b)*0.2,0).p) - game.Workspace.CurrentCamera.CoordinateFrame.p))*speed 
-	else 
-	bv.velocity = Vector3.new(0,0,0) 
-	end 
-	bg.cframe = game.Workspace.CurrentCamera.CoordinateFrame * CFrame.Angles(-math.rad((ctrl.f+ctrl.b)*speed/maxspeed),0,0) 
-	until not flying 
-	ctrl = {f = 0, b = 0, l = 0, r = 0} 
-	lastctrl = {f = 0, b = 0, l = 0, r = 0} 
-	speed = 0 
-	bg:Destroy() 
-	bv:Destroy() 
-	plr.Character.Humanoid.PlatformStand = false 
-	end 
-	mouse.KeyDown:connect(function(key) 
-	if key:lower() == "q" and FlyingEnabled == true then 
-	if flying then flying = false 
-	else 
-	flying = true 
-	Fly() 
-	end 
-	elseif key:lower() == "w" then 
-	ctrl.f = 1 
-	elseif key:lower() == "s" then 
-	ctrl.b = -1 
-	elseif key:lower() == "a" then 
-	ctrl.l = -1 
-	elseif key:lower() == "d" then 
-	ctrl.r = 1 
-	end 
-	end) 
-	mouse.KeyUp:connect(function(key) 
-	if key:lower() == "w" then 
-	ctrl.f = 0 
-	elseif key:lower() == "s" then 
-	ctrl.b = 0 
-	elseif key:lower() == "a" then 
-	ctrl.l = 0 
-	elseif key:lower() == "d" then 
-	ctrl.r = 0 
-	end 
-	end)
-	Fly()
-end
-game.Players.LocalPlayer.CharacterAdded:Connect(BetterFly)
-BetterFly()
-
 	FlyingEnabled = true
-    end)
 	end)
+    end)
 
-local Slider = Section.NewSlider("FOV",70,120,true,function(value)
-		game:GetService("TweenService"):Create(workspace.Camera, TweenInfo.new(1, Enum.EasingStyle.Quint), {FieldOfView = value}):Play()
-end,70)
+local DisabledToggle = Section.NewToggle("FOV",function(bool)
+if bool == true then
+		game:GetService("TweenService"):Create(workspace.Camera, TweenInfo.new(1, Enum.EasingStyle.Quint), {FieldOfView = 120}):Play()
+else
+		game:GetService("TweenService"):Create(workspace.Camera, TweenInfo.new(1, Enum.EasingStyle.Quint), {FieldOfView = 70}):Play()
+end
+end,false)
 
 local Slider = Section.NewSlider("Walk Speed",16,500,true,function(value)
 while game:GetService('RunService').RenderStepped:Wait() do
@@ -357,12 +398,12 @@ while game:GetService('RunService').RenderStepped:Wait() do
 end
 end,50)
 
-local Button = Section.NewButton("Anti Afk",function()
-while wait(0.000001) do
+local DisabledToggle = Section.NewToggle("Anti Afk",function(bool)
+repeat
 wait(3)
 game.Players.LocalPlayer.Character.Humanoid:ChangeState("Jumping")
-end
-end)
+until bool == false
+end,false)
 
 local Button = Section.NewButton("Rejoin",function()
 			local tpservice= game:GetService("TeleportService")
@@ -371,17 +412,8 @@ local Button = Section.NewButton("Rejoin",function()
 			tpservice:Teleport(game.PlaceId, plr)
 end)
 
-local Button = Section.NewButton("Full Bright",function()
-    loadstring(game:HttpGet("https://pastebin.com/raw/06iG6YkU", true))();
-    _G.FullBrightExecuted = true
-end)
-
-local Button = Section.NewButton("OFF Full Bright",function()
-    loadstring(game:HttpGet("https://pastebin.com/raw/06iG6YkU", true))();
-    _G.FullBrightExecuted = false
-end)
-
-local Button = Section.NewButton("Noclip (20s)",function()
+local DisabledToggle = Section.NewToggle("NoClip",function(bool)
+if bool == true then
 local noClip = true
 local noClipConnect = game:GetService("RunService").Stepped:Connect(function()
     local chr = game.Players.LocalPlayer.Character
@@ -391,9 +423,10 @@ local noClipConnect = game:GetService("RunService").Stepped:Connect(function()
     end
 end)
 
-task.wait(20)
+else
 noClipConnect:Disconnect()
-end)
+end
+end,false)
 
 local Button = Section.NewButton("Server Hop",function()
 local PlaceID = game.PlaceId
@@ -501,14 +534,6 @@ local Button = Section.NewButton("Btools",function()
     loadstring(game:HttpGetAsync("https://pastebin.com/raw/Lf1ySa1m"))()
 end)
 
-local Button = Section.NewButton("No Fog",function()
-    game.Lighting.Changed:Connect(function()
-        game.Lighting.TimeOfDay = "12:00:00"
-        game.Lighting.FogEnd = 9999
-        game.Lighting.Brightness = 2
-    end)
-end)
-
 local Button = Section.NewButton("Delete Water",function()
 game.Workspace.Water.Water:Destroy()
 game.Workspace.Water.Water:Destroy()
@@ -528,44 +553,106 @@ wait(1)
 game.Players.LocalPlayer.Character.Humanoid.Health = 0
 end)
 
-local EnabledToggle = Section.NewToggle("Walk On Water",function(bool)
+local DisabledToggle = Section.NewToggle("Walk On Water",function(bool)
+if bool == true then
             for _,v in pairs(game.Workspace.Water:GetChildren()) do
                 v.CanCollide = true
                 end
-end,true)
-
-local DisabledToggle = Section.NewToggle("OFF Walk On Water",function(bool)
+else
             for _,v in pairs(game.Workspace.Water:GetChildren()) do
                 v.CanCollide = false
                 end
+                end
 end,false)
 
-local EnabledToggle = Section.NewToggle("Infinite Jump",function(bool)
+
+local DisabledToggle = Section.NewToggle("Infinite Jump",function(bool)
+if bool == true then
 InfiniteJump(true)
-end,true)
-
-local DisabledToggle = Section.NewToggle("OFF Infinite Jump",function(bool)
+else
 InfiniteJump(false)
+end
 end,false)
 
-local EnabledToggle = Section.NewToggle("Light",function(bool)
-Light(true)
-end,true)
-
-local DisabledToggle = Section.NewToggle("OFF Light",function(bool)
+local DisabledToggle = Section.NewToggle("Light",function(bool)
+if bool == true then
 Light(false)
+else
+Light(true)
+end
 end,false)
+
+local Button = Section.NewButton("Safe Death",function()
+    game.Players.LocalPlayer.Character.Head:Remove()
+    end)
 
 local Tab = Window.NewTab("World")
 
 local Section = Tab.NewSection("World Scripts")
 
-local Button = Section.NewButton("Spawn",function()
+local Button = Section.NewButton("Better Graphics",function()
+    local light = game.Lighting
+    light:ClearAllChildren()
+    local color = Instance.new("ColorCorrectionEffect",light)
+    local bloom = Instance.new("BloomEffect",light)
+    local sun = Instance.new("SunRaysEffect",light)
+    local blur = Instance.new("BlurEffect",light)
+    local config = {ColorCorrection = true;Sun = true;Lighting = true;BloomEffect = true;}
+    color.Enabled = true
+    color.Contrast = 0.15
+    color.Brightness = 0.1
+    color.Saturation = 0.25
+    color.TintColor = Color3.fromRGB(255, 222, 211)
+    sun.Enabled = true
+    sun.Intensity = 0.2
+    sun.Spread = 1
+    bloom.Enabled = true
+    bloom.Intensity = 1
+    bloom.Size = 32
+    bloom.Threshold = 1
+    blur.Enabled = true
+    blur.Size = 3
+    light.Ambient = Color3.fromRGB(0, 0, 0)
+    light.ColorShift_Bottom = Color3.fromRGB(0, 0, 0)
+    light.ColorShift_Top = Color3.fromRGB(0, 0, 0)
+    light.ExposureCompensation = 0
+    light.GlobalShadows = true
+    light.OutdoorAmbient = Color3.fromRGB(112, 117, 128)
+    light.Outlines = false  
 end)
 
-local Button = Section.NewButton("Safe Death",function()
-    game.Players.LocalPlayer.Character.Head:Remove()
+local DisabledToggle = Section.NewToggle("Full Bright",function(bool)
+if bool == true then
+    loadstring(game:HttpGet("https://pastebin.com/raw/06iG6YkU", true))();
+    _G.FullBrightExecuted = true
+else
+    _G.FullBrightExecuted = false
+end
+end,false)
+
+local Button = Section.NewButton("No Fog",function()
+    game.Lighting.Changed:Connect(function()
+        game.Lighting.TimeOfDay = "12:00:00"
+        game.Lighting.FogEnd = 9999
+        game.Lighting.Brightness = 2
     end)
+end)
+
+local Button = Section.NewButton("Day",function()
+    Day = true
+    end)
+
+local Button = Section.NewButton("Night",function()
+    Night = true
+    end)
+
+local Button = Section.NewButton("Spook",function()
+    game:GetService("Lighting").Spook.Value = true
+    end)
+
+local Button = Section.NewButton("OFF Shadows",function()
+    game:GetService("Lighting").GlobalShadows = true
+end)
 
 --local SliderPrecise = section.NewSlider("Walk Speed",0,500,true,function(value)
 --    game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = s
@@ -712,7 +799,7 @@ local Button = Section.NewButton("FE Flip",function()
     loadstring(game:HttpGet("https://raw.githubusercontent.com/ibosik/AzureFlareHUB/main/feFlip", true))()
 end)
 
-local Button = Section.NewButton("Mastrubation",function()
+local Button = Section.NewButton("Masturbation",function()
 --Created By Armut 7#8860 Discord : https://discord.gg/q9e6W3NRSU--
 function rmesh(a)
 if not (workspace[game.Players.LocalPlayer.Name][a].Handle:FindFirstChild('Mesh') or workspace[game.Players.LocalPlayer.Name][a].Handle:FindFirstChild('SpecialMesh')) then return end
