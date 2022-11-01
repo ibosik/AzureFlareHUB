@@ -1,0 +1,64 @@
+local GameLibrary = require(game:GetService("ReplicatedStorage"):WaitForChild("Framework"):WaitForChild("Library"))
+local Network = GameLibrary.Network
+local Run_Service = game:GetService("RunService")
+local rs = Run_Service.RenderStepped
+local check = checklists
+local lib = require(game:GetService("ReplicatedStorage"):WaitForChild("Framework"):WaitForChild("Library"))
+local Library = require(game:GetService("ReplicatedStorage"):WaitForChild("Framework"):WaitForChild("Library"))
+local GameLibrary = require(game:GetService("ReplicatedStorage"):WaitForChild("Framework"):WaitForChild("Library"))
+workspace.__THINGS.__REMOTES.MAIN:FireServer("b", "join coin")
+workspace.__THINGS.__REMOTES.MAIN:FireServer("a", "farm coin")
+local CoreGui = game:GetService("StarterGui")
+if workspace.__THINGS.__REMOTES:FindFirstChild("buy area") then 
+    buyarea = workspace.__THINGS.__REMOTES["buy area"]
+end
+
+local ID = {}
+local Name = {}
+for i,v in pairs(Library.Directory.Pets ) do
+    ID[i] = v.name
+    Name[v.name] = i
+end   
+
+  
+local Closestcoin =  425
+function BringCoins()
+    local Returntable = {}
+    local ListCoins = game.workspace['__THINGS']['__REMOTES']["get coins"]:InvokeServer({})[1]
+    for i,v in pairs(ListCoins) do
+        if (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - v.p).Magnitude < Closestcoin then
+            local Coin = v
+            Coin["index"] = i
+            table.insert(Returntable, Coin)
+            Closestcoin = (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - v.p).Magnitude
+        end
+    end
+    return Returntable
+end
+
+
+ local firsteggtable = {};
+ for i,v in pairs(Library.Directory.Pets) do
+  for i,v in pairs(v) do
+      if i == "name" then
+          table.insert(firsteggtable, v)
+      end
+  end
+end
+
+Eggs = {}
+for i,v in pairs(game.ReplicatedStorage.Game.Eggs:GetChildren()) do 
+    for i2,SecondEggTable in pairs(v:GetChildren()) do 
+        table.insert(Eggs, SecondEggTable.Name)
+    end 
+end
+
+function FindPlayersPets()
+    local returntable = {}
+    for i,v in pairs(GameLibrary.Save.Get().Pets) do
+        if v.e then 
+            table.insert(returntable, v.uid)
+        end
+    end
+    return returntable
+ end
