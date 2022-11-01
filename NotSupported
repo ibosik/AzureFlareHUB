@@ -43,7 +43,7 @@ end)
 local Button = Section.NewButton("Find Markers",function()
 end)
 
-local Button = Section.NewButton("Pet Simulator X (SOON)",function()
+local Button = Section.NewButton("Pet Simulator X",function()
 end)
 
 local Button = Section.NewButton("Zombie Uprising (idk when)",function()
