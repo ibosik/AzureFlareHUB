@@ -15,7 +15,7 @@ local Tab = Window.NewTab("Credits")
 
 local Section = Tab.NewSection("Discord")
 
-local Button = Section.NewButton("ibosiktt#5391",function()
+local Button = Section.NewButton("zxcibosik#9669",function()
 end)
 
 local Button = Section.NewButton("Kurus#6448",function()
