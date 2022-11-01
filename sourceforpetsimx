@@ -62,3 +62,420 @@ function FindPlayersPets()
     end
     return returntable
  end
+ 
+ spawn(function()
+    game.Players.PlayerAdded:Connect(function(newPlayer)
+        if newPlayer:IsInGroup(5060810) and getgenv().antiMod then                    
+           game.Players.LocalPlayer:Kick("\n Big Games Staff Joined \n!")
+        end
+     end)
+ end)
+
+ getgenv().ListOFRaritys = {
+   ['Basic'] = true,
+   ['Rare'] = true,
+   ['Epic'] = true,
+   ['Legendary'] = true,
+   ['Mythical'] = true,
+   ['Exclusive'] = true,
+}
+
+
+
+
+    repeat wait() until game:GetService("Players")
+    repeat wait() until game:GetService("Players").LocalPlayer
+    repeat wait() until game:GetService("Players").LocalPlayer:WaitForChild("PlayerGui"):WaitForChild("Loading"):WaitForChild("Black").BackgroundTransparency == 1
+    repeat wait() until game:GetService("Players").LocalPlayer.Character:FindFirstChild("HumanoidRootPart")
+
+
+    local ID = {}
+    local PetRarity = {}
+    for i,v in pairs(Library.Directory.Pets) do
+     ID[i] = v.name
+     PetRarity[i] = v.rarity
+    end
+    
+    function ThumbNail(id, type)
+     local nailname = (type == 'Normal' or type == 'Rainbow' and 'thumbnail') or (type == 'Gold' and 'goldenThumbnail') or (type == 'Dark Matter' and 'darkMatterThumbnail')
+     local eeee = Library.Directory.Pets[tostring(id)][nailname] or Library.Directory.Pets[tostring(id)]["thumbnail"] 
+     local AssetID = eeee:gsub("rbxassetid%:%/%/", "")
+     local Link = "https://www.roblox.com/item-thumbnails?params=[{assetId:"..AssetID.."}]"
+	 local Response = game:GetService("HttpService"):JSONDecode(game:HttpGet(Link))
+     return Response[1].thumbnailUrl
+    end
+    
+    function Send(Name, Nickname, Strength, Rarity, Thumbnail, Formation, Color, NewPowers, nth)
+        local Webhook = getgenv().Webhook
+        local msg = {
+            ["username"] = "Project Sinister",
+            ["Icon"] = "https://media.discordapp.net/attachments/993598696774189058/1016185794454618142/unknown.png",
+            ["embeds"] = {
+                {
+                    ["color"] = tonumber(tostring("0x" .. Color)),
+                    ["title"] = "*" .. Rarity .. "* " .. Name,
+                    ["thumbnail"] = {
+                        ["url"] = Thumbnail
+                    },
+                    ["fields"] = {
+                        {
+                            ["name"] = "Nickname",
+                            ["value"] = Nickname,
+                            ["inline"] = true
+                        },
+                        {
+                            ["name"] = "Formation",
+                            ["value"] = Formation,
+                            ["inline"] = true
+                        },
+                        {
+                            ["name"] = "Strength",
+                            ["value"] = Strength,
+                            ["inline"] = true
+                        },
+                    },
+                    ["author"] = {},
+                    ['timestamp'] = os.date("%Y-%m-%dT%X.000Z"),
+                }
+            }
+        }
+        for qq,bb in pairs(NewPowers) do
+            local thingy = {
+                ["name"] = "Enchantment "..tostring(qq),
+                ["value"] = bb,
+                ["inline"] = true
+            }
+            table.insert(msg["embeds"][1]["fields"], thingy)
+        end
+        request = http_request or request or HttpPost or syn.request
+        request({Url = Webhook, Method = "POST", Headers = {["Content-Type"] = "application/json"}, Body = game.HttpService:JSONEncode(msg)})
+    end
+    
+    function SendPetToWebhook(uid)
+    for i,v in pairs(Library.Save.Get().Pets) do
+         if v.uid == uid and getgenv().ListOFRaritys[PetRarity[v.id]] then
+             local ThingyThingyTempTypeThing = (v.g and 'Gold') or (v.r and 'Rainbow') or (v.dm and 'Dark Matter') or 'Normal'
+             local Formation = (v.g and ':crown: Gold') or (v.r and ':rainbow: Rainbow') or (v.dm and ':milky_way: Dark Matter') or ':roll_of_paper: Normal'
+             local Thumbnail = ThumbNail(v.id, ThingyThingyTempTypeThing)
+             local Name = ID[v.id]
+             local Nickname = v.nk
+             local nth = v.idt
+             local Strength = v.s
+             local Powers = v.powers or {}
+             local Rarity = PetRarity[v.id]
+             local Color = (Rarity == 'Exclusive' and "e676ff") or (Rarity == 'Mythical' and "ff8c00") or (Rarity == 'Legendary' and "ff45f6") or (Rarity == 'Epic' and "ffea47") or (Rarity == 'Rare' and "42ff5e") or (Rarity == 'Basic' and "b0b0b0")
+             local NewPowers = {}
+             for a,b in pairs(Powers) do
+                 local eeeeeeee = tostring(b[1] .. " " .. b[2])
+                 table.insert(NewPowers, eeeeeeee)
+             end
+             Send(Name, Nickname, Library.Functions.Commas(Strength), Rarity, Thumbnail, Formation, Color, NewPowers, nth)
+         end
+     end
+    end
+    
+    if getgenv().Connection then getgenv().Connection:Disconnect() end
+    getgenv().Connection = game:GetService("Players").LocalPlayer.PlayerGui.Inventory.Frame.Main.Pets.ChildAdded:Connect(function(child)
+        if StartWebhookTracking then
+        SendPetToWebhook(child.Name)
+        end
+    end)
+
+
+    spawn(function()
+        while task.wait(.7) do
+            if game:GetService("Workspace")["__THINGS"].Orbs:FindFirstChildOfClass("Part") and (getgenv().FarmNearest) then
+                local TweenService = game:GetService("TweenService")
+
+                for i,v in pairs(game:GetService("Workspace")["__THINGS"].Orbs:GetChildren()) do
+                    if v:IsA("Part") and v:FindFirstChild("Orb") then
+                        v.Orb.Sunray:Destroy()
+                        TweenService:Create(
+                            v,
+                            TweenInfo.new(.3, Enum.EasingStyle.Linear),
+                            {CFrame = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame}
+                        ):Play()
+                    end
+                end
+            end
+        end
+    end)
+
+  spawn(function()
+      while game:GetService("RunService").Heartbeat:wait() do
+          if getgenv().FarmNearest then
+              pcall(function()
+  
+                  function FarmCoins(CoinID, PetID)
+                      game.workspace['__THINGS']['__REMOTES']["join coin"]:InvokeServer({[1] = CoinID, [2] = {[1] = PetID}})
+                      game.workspace['__THINGS']['__REMOTES']["farm coin"]:FireServer({[1] = CoinID, [2] = PetID})                
+                  end
+  
+                  function FindPets()
+                      local Returntable = {}
+                          for i,v in pairs(game:GetService("Players").LocalPlayer.PlayerGui.Inventory.Frame.Main.Pets:GetChildren()) do
+                              if v.ClassName == "TextButton" and v.Equipped.Visible then
+                                  table.insert(Returntable, v.Name)
+                              end
+                          end
+                      return Returntable
+                  end
+  
+                  local Closestcoin = tonumber(425)
+                  function BringCoins()
+                      local Returntable = {}
+                
+                      local ListCoins = game.workspace['__THINGS']['__REMOTES']["get coins"]:InvokeServer({})[1]
+                      for i,v in pairs(ListCoins) do
+                          if (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - v.p).Magnitude < Closestcoin then
+                              local Coin = v
+                              Coin["index"] = i
+                              table.insert(Returntable, Coin)
+                              Closestcoin = (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - v.p).Magnitude
+                          end
+                      end
+                      return Returntable
+                  end
+  
+                  local petthingy = FindPets()
+  
+                  local cointhiny = BringCoins()
+  
+                  for i = 1, #cointhiny do
+                      coroutine.wrap(function()
+                          FarmCoins(cointhiny[i].index, petthingy[i%#petthingy+1])
+                      end)()
+                  end
+              end)
+          end
+      end
+     end)
+
+function GrabPlayersOets()
+    local returntable = {}
+    for i,v in pairs(game:GetService("Players").LocalPlayer.PlayerGui.Inventory.Frame.Main.Pets:GetChildren()) do
+        if v.ClassName == 'TextButton' and v.Equipped.Visible then
+            table.insert(returntable, v.Name)
+        end
+    end
+    return returntable
+ end
+ 
+ local FindPlayersPets = GrabPlayersOets()
+
+function FarmCoins4(CoinID, PetID)
+    game.workspace["__THINGS"]["__REMOTES"]["join coin"]:InvokeServer({[1] = CoinID, [2] = {[1] = PetID}})
+    game.workspace["__THINGS"]["__REMOTES"]["farm coin"]:FireServer({[1] = CoinID, [2] = PetID})
+end
+
+
+spawn(function()
+    while task.wait() do
+        if getgenv().FarmGems then 
+            for i,v in pairs(FindPlayersPets) do
+                pcall(function()
+                    FarmCoins4(FindGems(), v)
+                end)
+                 end
+        function FindGems()
+            for i,v in pairs(game:GetService("Workspace")["__THINGS"].Coins:GetDescendants()) do
+                if v:IsA"MeshPart" then
+                    if v.MeshId == 'rbxassetid://7041620873' or v.MeshId == 'rbxassetid://7041621431' or v.MeshId == 'rbxassetid://7041621329' or v.MeshId == 'rbxassetid://7041620873' then
+                        a = v.Parent.Name
+                    end
+                end
+            end
+            return a
+        end
+    end
+end
+end)
+
+
+timetosend = 15
+
+game.Players.PlayerAdded:Connect(function(plr)
+    local character = plr.Character or plr.CharacterAdded:Wait()
+        end)
+       
+        local webhookcheck =
+        is_sirhurt_closure and "s" or pebc_execute and "p" or syn and "s" or
+        secure_load and "s" or
+        KRNL_LOADED and "k" or
+        SONA_LOADED and "s" or
+        "e"
+ 
+     local url = StatWebhook
+ 
+     local data = {
+        ["content"] = "",
+             ["embeds"] = {{
+                 ["title"] = "__**Project Sinister Stat Tracker**__",
+                 ["description"] = "Blackouts Watching U...", 
+                 ["type"] = "rich",
+                 ["color"] = tonumber(0x0E980E),
+                },
+            }
+        
+    }
+local newdata = game:GetService("HttpService"):JSONEncode(data)
+
+local headers = {
+   ["content-type"] = "application/json"
+}
+request = http_request or request or HttpPost or syn.request
+local abcdef = {Url = url, Body = newdata, Method = "POST", Headers = headers}
+request(abcdef)
+    
+
+        _G.Tracking = 'Fantasy Coins' 
+        _G.trackD = 'Diamonds'
+        _G.trackC = 'Coins'
+        _G.trackT = 'Tech Coins'
+       
+
+        local waitTime = timetosend
+        local currentTime = 0
+        local startc; local endc; local coin; local difc; local tablec = {};
+        local startd; local endd; local diamondc; local difd; local tabled = {};
+        local startfc; local endfc; local fantasyc; local diffc; local tablefc = {};
+        local startT; local endT; local tech; local dift; local tablet = {};
+        
+        
+        local function add(table)
+            local value = 0
+            for i, v in next, table do
+                value = value + v
+            end
+            return value
+        end
+        local function comma_Value(amount)
+            local formatted = amount
+            while true do
+                formatted, k = string.gsub(formatted, "^(-?%d+)(%d%d%d)", "%1,%2")
+                if (k == 0) then
+                    break
+                end
+            end
+            return formatted
+        end
+        local username = game:GetService("Players").LocalPlayer.Name
+        local egg1 = 2970000000
+        local egg2 = 330000000
+
+ 
+        
+        local function start()
+            startfc = string.gsub(game.Players.LocalPlayer.PlayerGui.Main.Right[_G.Tracking].Amount.Text, ",", "")
+            startd = string.gsub(game.Players.LocalPlayer.PlayerGui.Main.Right[_G.trackD].Amount.Text, ",", "")
+            startc = string.gsub(game.Players.LocalPlayer.PlayerGui.Main.Right[_G.trackC].Amount.Text, ",", "")
+            startT = string.gsub(game.Players.LocalPlayer.PlayerGui.Main.Right[_G.trackT].Amount.Text, ",", "")
+            
+        end
+        local function ending()
+            endfc = string.gsub(game.Players.LocalPlayer.PlayerGui.Main.Right[_G.Tracking].Amount.Text, ",", "")
+            endd = string.gsub(game.Players.LocalPlayer.PlayerGui.Main.Right[_G.trackD].Amount.Text, ",", "")
+            endc = string.gsub(game.Players.LocalPlayer.PlayerGui.Main.Right[_G.trackC].Amount.Text, ",", "")
+            endT = string.gsub(game.Players.LocalPlayer.PlayerGui.Main.Right[_G.trackT].Amount.Text, ",", "")
+             
+        end
+        local function initialvalue()
+            coin = string.gsub(game.Players.LocalPlayer.PlayerGui.Main.Right.Coins.Amount.Text, ",", "")
+            diamondc = string.gsub(game.Players.LocalPlayer.PlayerGui.Main.Right.Diamonds.Amount.Text, ",", "")
+            fantasyc = string.gsub(game.Players.LocalPlayer.PlayerGui.Main.Right["Fantasy Coins"].Amount.Text, ",", "")
+            tech = string.gsub(game.Players.LocalPlayer.PlayerGui.Main.Right["Tech Coins"].Amount.Text, ",", "")
+           
+            costofegg2 = tech / egg1
+            costofegg = tech / egg2
+            enchants = diamondc / 10000
+            rank = string.gsub(game.Players.LocalPlayer.PlayerGui.Main.Right.Rank.RankName.Text, ",", "")
+        end
+        local function dif()
+            diffc = tonumber(endfc) - tonumber(startfc)
+            difd = tonumber(endd) - tonumber(startd)
+            difc = tonumber(endc) - tonumber(startc)
+            dift = tonumber(endT) - tonumber(startT) 
+         
+
+            table.insert(tablec, difc)
+            table.insert(tabled, difd)
+            table.insert(tablefc, diffc)
+            table.insert(tablet, dift)
+           
+        end
+
+        while not getgenv().stop do
+            
+
+            initialvalue()
+            start()
+            wait(timetosend)
+        
+            currentTime = currentTime + timetosend
+        
+        ending()
+        dif()
+        local webhookcheck =
+       is_sirhurt_closure and "s" or pebc_execute and "p" or syn and "s" or
+       secure_load and "s" or
+       KRNL_LOADED and "k" or
+       SONA_LOADED and "s" or
+       "e"
+
+    local url = StatWebhook
+
+    local data = {
+       ["content"] = "",
+            ["embeds"] = {{
+                ["title"] = "--**Project Sinister Stat Tracker**--",
+                ["description"] = "Project Sinister", 
+                ["type"] = "rich",
+                ["color"] = tonumber(e676ff),
+                ["fields"] = {
+                    {
+                        ["name"] = "--Username--",
+                        ["value"] = ("||%s||"):format(username),
+                        ["inline"] = true
+                    },
+                    {
+                        ["name"] = "--Rank--",
+                        ["value"] = ("%s"):format(rank),
+                        ["inline"] = true
+                    },
+                    {
+                        ["name"] = "--Tech Coins--",
+                        ["value"] = ("%s"):format(comma_Value(endT)),
+                        ["inline"] = true
+                    },
+                    {
+                        ["name"] = "--Coins--",
+                        ["value"] = ("%s"):format(comma_Value(endc)),
+                        ["inline"] = true
+                    },
+                    {
+                        ["name"] = "--Fantasy Coins--",
+                        ["value"] = ("%s"):format(comma_Value(endfc)),
+                        ["inline"] = true
+                    },
+                    {
+                        ["name"] = "--Diamonds--",
+                        ["value"] = ("%s"):format(comma_Value(endd)),
+                        ["inline"] = true
+                    },
+                    {
+                        ["name"] = "--Enchant Purchases--",
+                        ["value"] = ("%s"):format(comma_Value(math.round(enchants))),
+                        ["inline"] = true
+                    }
+                },
+            },
+        }}
+    local newdata = game:GetService("HttpService"):JSONEncode(data)
+
+    local headers = {
+       ["content-type"] = "application/json"
+    }
+    request = http_request or request or HttpPost or syn.request
+    local abcdef = {Url = url, Body = newdata, Method = "POST", Headers = headers}
+    request(abcdef)
+        end
