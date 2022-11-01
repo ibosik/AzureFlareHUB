@@ -59,7 +59,28 @@ if game.PlaceId == 1962086868 then
         game:GetService("CoreGui").Library:Destroy()
     loadstring(game:HttpGet("https://raw.githubusercontent.com/ibosik/AzureFlareHUB/main/TowerOfHell"))()
     end
+    
+    -- PSX HardCore
+    
+if game.PlaceId == 10321372166 then
+        game:GetService("CoreGui").Library:Destroy()
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/ibosik/AzureFlareHUB/main/Pet%20Simulator%20X"))()
+    end
+    
+    -- PSX Normal
+    
+if game.PlaceId == 10321372166 then
+        game:GetService("CoreGui").Library:Destroy()
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/ibosik/AzureFlareHUB/main/Pet%20Simulator%20X"))()
+    end
+
+    -- PSX Trading Plaza
+    
+if game.PlaceId == 7722306047then
+    game:GetService("CoreGui").Library:Destroy()
+loadstring(game:HttpGet("https://raw.githubusercontent.com/ibosik/AzureFlareHUB/main/Pet%20Simulator%20X"))()
+end
 
 --else
---  game:service('Players').LocalPlayer:Kick('Not Whitelisted | ibosiktt#5391')
+--  game:service('Players').LocalPlayer:Kick('Not Whitelisted | zxcibosik#9669')
 --end
