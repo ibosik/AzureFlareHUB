@@ -700,6 +700,10 @@ local Tab = Window.NewTab("World")
 
 local Section = Tab.NewSection("World Scripts")
 
+local DisabledToggle = Section.NewToggle("Hard Dragger",function(bool)
+CustomDragger = bool
+end,false)
+
 local Button = Section.NewButton("Better Graphics",function()
     local light = game.Lighting
     light:ClearAllChildren()
