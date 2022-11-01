@@ -319,3 +319,154 @@ game.Players.PlayerAdded:Connect(function(plr)
         
     }
 local newdata = game:GetService("HttpService"):JSONEncode(data)
+
+local Network = GameLibrary.Network
+local Run_Service = game:GetService("RunService")
+local rs = Run_Service.RenderStepped
+local CurrencyOrder = {"Rainbow Coins", "Tech Coins", "Fantasy Coins", "Coins", "Diamonds"}
+
+local IMightKillMyselfCauseOfThis = {
+            --Misc
+            ['VIP'] = {'VIP'};
+            --Spawn
+            ['Town'] = {'Town', 'Town FRONT'}; ['Forest'] = {'Forest', 'Forest FRONT'}; ['Beach'] = {'Beach', 'Beach FRONT'}; ['Mine'] = {'Mine', 'Mine FRONT'}; ['Winter'] = {'Winter', 'Winter FRONT'}; ['Glacier'] = {'Glacier', 'Glacier Lake'}; ['Desert'] = {'Desert', 'Desert FRONT'}; ['Volcano'] = {'Volcano', 'Volcano FRONT'};
+            -- Fantasy init
+            ['Enchanted Forest'] = {'Enchanted Forest', 'Enchanted Forest FRONT'}; ['Ancient'] = {'Ancient Island'}; ['Samurai'] = {'Samurai Island', 'Samurai Island FRONT'}; ['Candy'] = {'Candy Island'}; ['Haunted'] = {'Haunted Island', 'Haunted Island FRONT'}; ['Hell'] = {'Hell Island'}; ['Heaven'] = {'Heaven Island'};
+            -- Tech
+            ['Ice Tech'] = {'Ice Tech'}; ['Tech City'] = {'Tech City'; 'Tech City FRONT'}; ['Dark Tech'] = {'Dark Tech'; 'Dark Tech FRONT'}; ['Steampunk'] = {'Steampunk'; 'Steampunk FRONT'}, ['Alien Forest'] = {"Alien Forest"; "Alien Forest FRONT"}, ['Alien Lab'] = {"Alien Lab"; "Alien Lab FRONT"}, ['Glitch'] = {"Glitch"; "Glitch FRONT"}; ['Hacker Portal'] = {"Hacker Portal", "Hacker Portal FRONT"};
+            -- Axolotl
+            ['Axolotl Ocean'] = {'Axolotl Ocean', 'Axolotl Ocean FRONT'}; ['Axolotl Deep Ocean'] = {'Axolotl Deep Ocean', 'Axolotl Deep Ocean FRONT'}; ['Axolotl Cave'] = {'Axolotl Cave', 'Axolotl Cave FRONT'};
+            -- Minecraft
+            ['Pixel Forest'] = {'Pixel Forest', 'Pixel Forest FRONT'}; ['Pixel Kyoto'] = {'Pixel Kyoto', 'Pixel Kyoto FRONT'}; ['Pixel Alps'] = {'Pixel Alps', 'Pixel Alps FRONT'} ; ['Pixel Vault'] = {'Pixel Vault', 'Pixel Vault FRONT'};
+        }
+
+        local AreaList = { --These match the IMightKillMyselfCuaseOfThis table
+            'VIP';
+            'Town'; 'Forest'; 'Beach'; 'Mine'; 'Winter'; 'Glacier'; 'Desert'; 'Volcano';
+            'Enchanted Forest'; 'Ancient'; 'Samurai'; 'Candy'; 'Haunted'; 'Hell'; 'Heaven';
+            'Ice Tech'; 'Tech City'; 'Dark Tech'; 'Steampunk'; 'Alien Lab'; 'Alien Forest'; 'Glitch'; "Hacker Portal";
+            'Axolotl Ocean'; 'Axolotl Deep Ocean'; 'Axolotl Cave';
+            'Pixel Forest'; 'Pixel Kyoto'; 'Pixel Alps'; 'Pixel Vault';
+        }
+
+        local Chests = {
+            -- Spawn
+            "Magma Chest",
+            -- Fantasy
+            "Enchanted Chest", "Hell Chest", "Haunted Chest", "Angel Chest", "Grand Heaven Chest",
+            -- Tech
+            "Giant Tech Chest"; "Giant Steampunk Chest"; "Giant Alien Chest"; "Giant Hacker Chest";
+            -- exolot
+           "Giant Ocean Chest";
+           -- Minecraft
+           "Giant Pixel Chest";
+        }
+
+
+workspace.__THINGS.__REMOTES.MAIN:FireServer("b", "buy egg")
+workspace.__THINGS.__REMOTES.MAIN:FireServer("b", "join coin")
+workspace.__THINGS.__REMOTES.MAIN:FireServer("a", "farm coin")
+workspace.__THINGS.__REMOTES.MAIN:FireServer("a", "claim orbs")
+workspace.__THINGS.__REMOTES.MAIN:FireServer("a", "change pet target")
+
+--Farms a coin. It seems to work. That's fun
+function FarmCoin(CoinID, PetID)
+    game.workspace['__THINGS']['__REMOTES']["join coin"]:InvokeServer({[1] = CoinID, [2] = {[1] = PetID}})
+    game.workspace['__THINGS']['__REMOTES']["farm coin"]:FireServer({[1] = CoinID, [2] = PetID})
+end
+
+function GetMyPets()
+   local returntable = {}
+   for i,v in pairs(GameLibrary.Save.Get().Pets) do
+       if v.e then 
+           table.insert(returntable, v.uid)
+       end
+   end
+   return returntable
+end
+
+--returns all coins within the given area (area must be a table of conent)
+function GetCoins(area)
+    local returntable = {}
+    local ListCoins = game.workspace['__THINGS']['__REMOTES']["get coins"]:InvokeServer({})[1]
+    for i,v in pairs(ListCoins) do
+        if MainWindow.flags.FarmingArea == 'All' or table.find(IMightKillMyselfCauseOfThis[MainWindow.flags.FarmingArea], v.a) then
+            local shit = v
+            shit["index"] = i
+            table.insert(returntable, shit)
+         end
+    end
+    return returntable
+end
+
+--Sexy man ( wYn#0001 ) made this for me. It works, not sure how, it does.
+function GetCoinTable(area)
+    local CoinTable = GetCoins(area)
+    function getKeysSortedByValue(tbl, sortFunction)
+        local keys = {}
+        for key in pairs(tbl) do
+            table.insert(keys, key)
+        end
+        table.sort(
+            keys,
+            function(a, b)
+                return sortFunction(tbl[a].h, tbl[b].h)
+            end
+        )
+        return keys
+    end
+    local sortedKeys = getKeysSortedByValue(CoinTable, function(a, b) return a > b end)
+    local newCoinTable = {}
+
+    for i,v in pairs(sortedKeys) do
+        table.insert(newCoinTable, CoinTable[v])
+    end
+    
+    return newCoinTable
+end
+
+--Not sure exactly why I did this
+local AreaWorldTable = {}
+for _, v in pairs(game:GetService("ReplicatedStorage").Game.Coins:GetChildren()) do
+    for _, b in pairs(v:GetChildren()) do
+        table.insert(AreaWorldTable, b.Name)
+    end
+    table.insert(AreaWorldTable, v.Name)
+end
+
+--Returns all the currently alive chests in the game  the same was getcoins does
+function AllChests()
+    local returntable = {}
+    local ListCoins = game.workspace['__THINGS']['__REMOTES']["get coins"]:InvokeServer({})[1]
+    for i,v in pairs(ListCoins) do
+        local shit = v
+        shit.index = i
+        for aa,bb in pairs(AreaWorldTable) do
+            if string.find(v.n, bb) or  string.find(v.n, "Giant") then
+                local thing = string.gsub(v.n, bb.." ", "")
+                if table.find(Chests, thing) then
+                    shit.n = thing
+                    table.insert(returntable, shit)
+                end
+            end
+        end
+    end
+    return returntable
+end
+
+--[[
+--the remote works like this. I'm too scared to test anything else out
+function CollectOrbs()
+    local ohTable1 = {[1] = {}}
+    for i,v in pairs(game.workspace['__THINGS'].Orbs:GetChildren()) do
+        ohTable1[1][i] = v.Name
+    end
+    game.workspace['__THINGS']['__REMOTES']["claim orbs"]:FireServer(ohTable1)
+end
+]]
+
+if _G.MyConnection then _G.MyConnection:Disconnect() end
+_G.MyConnection = game.Workspace.__THINGS.Orbs.ChildAdded:Connect(function(Orb)
+    game.Workspace.__THINGS.__REMOTES["claim orbs"]:FireServer({{Orb.Name}})
+end)
+
