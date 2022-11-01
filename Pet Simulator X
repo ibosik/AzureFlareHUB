@@ -1,69 +1,4 @@
-local GameLibrary = require(game:GetService("ReplicatedStorage"):WaitForChild("Framework"):WaitForChild("Library"))
-local Network = GameLibrary.Network
-local Run_Service = game:GetService("RunService")
-local rs = Run_Service.RenderStepped
-local check = checklists
-local lib = require(game:GetService("ReplicatedStorage"):WaitForChild("Framework"):WaitForChild("Library"))
-local Library = require(game:GetService("ReplicatedStorage"):WaitForChild("Framework"):WaitForChild("Library"))
-local GameLibrary = require(game:GetService("ReplicatedStorage"):WaitForChild("Framework"):WaitForChild("Library"))
-workspace.__THINGS.__REMOTES.MAIN:FireServer("b", "join coin")
-workspace.__THINGS.__REMOTES.MAIN:FireServer("a", "farm coin")
-local CoreGui = game:GetService("StarterGui")
-if workspace.__THINGS.__REMOTES:FindFirstChild("buy area") then 
-    buyarea = workspace.__THINGS.__REMOTES["buy area"]
-end
-
-local ID = {}
-local Name = {}
-for i,v in pairs(Library.Directory.Pets ) do
-    ID[i] = v.name
-    Name[v.name] = i
-end   
-
-  
-local Closestcoin =  425
-function BringCoins()
-    local Returntable = {}
-    local ListCoins = game.workspace['__THINGS']['__REMOTES']["get coins"]:InvokeServer({})[1]
-    for i,v in pairs(ListCoins) do
-        if (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - v.p).Magnitude < Closestcoin then
-            local Coin = v
-            Coin["index"] = i
-            table.insert(Returntable, Coin)
-            Closestcoin = (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - v.p).Magnitude
-        end
-    end
-    return Returntable
-end
-
-
- local firsteggtable = {};
- for i,v in pairs(Library.Directory.Pets) do
-  for i,v in pairs(v) do
-      if i == "name" then
-          table.insert(firsteggtable, v)
-      end
-  end
-end
-
-Eggs = {}
-for i,v in pairs(game.ReplicatedStorage.Game.Eggs:GetChildren()) do 
-    for i2,SecondEggTable in pairs(v:GetChildren()) do 
-        table.insert(Eggs, SecondEggTable.Name)
-    end 
-end
-
-function FindPlayersPets()
-    local returntable = {}
-    for i,v in pairs(GameLibrary.Save.Get().Pets) do
-        if v.e then 
-            table.insert(returntable, v.uid)
-        end
-    end
-    return returntable
- end
-
-loadstring(game:HttpGet("https://raw.githubusercontent.com/ibosik/AzureFlareHUB/main/Lumber%20Tycoon%202%20butter%20source"))()
+loadstring(game:HttpGet("https://raw.githubusercontent.com/ibosik/AzureFlareHUB/main/sourceforpetsimx"))()
 
 local player = game.Players.LocalPlayer
 
@@ -113,12 +48,94 @@ local Tab = Window.NewTab("Misc")
 
 local Section = Tab.NewSection("Miscellaneous")
 
+local Dropdown = Section.NewDropdown("Select Pet",table,function(petname--[[string,bool]])
+    PetNamehere = petname
+end,true)
+
+local Button = Section.NewButton("Hatch Pet",function()
+    function HatchEgg(Pet)
+        local pet = Pet
+        for i,v in pairs(game.ReplicatedStorage.Game.Pets:GetChildren()) do
+            if string.split(tostring(v), ' - ')[2] == pet then
+                pet = string.split(tostring(v), ' - ')[1]
+            end
+        end
+        local tbl = {
+            {
+            nk = 'Preston',
+            idt = '69',
+            e = false,
+            uid = '69',
+            s = 999999999999,
+            id = pet,
+        }}
+        local egg
+        for i_,script in pairs(game.ReplicatedStorage.Game.Eggs:GetDescendants()) do
+            if script:IsA('ModuleScript') then
+                if typeof(require(script).drops) == 'table' then
+                    for i,v in pairs(require(script).drops) do
+                        if v[1] == pet then
+                            egg = require(script).displayName
+                        end
+                    end
+                end
+            end
+        end
+        if Pet == 'Huge Cat' then egg = 'Cracked Egg' end
+        for i,v in pairs(getgc(true)) do
+            if (typeof(v) == 'table' and rawget(v, 'OpenEgg')) then
+                v.OpenEgg(egg, tbl)
+            end
+        end
+     end
+     HatchEgg(PetNamehere)
+     end)
+
+local Button = Section.NewButton("Make All Pets Banana",function()
+    for i,v in pairs(game:GetService("Workspace")["__THINGS"].Pets:GetChildren()) do
+        v.Mesh.MeshId = "rbxassetid://6931518265"
+        v.Mesh.TextureId = "rbxassetid://6931530387"
+        v.Mesh.Scale = Vector3.new(1, 1, 1)
+        v.Mesh.CFrame = CFrame.new(spos.X, spos.Y + 40, spos.Z)
+    end
+    end)
+
+local Button = Section.NewButton("Make All Pets Huge Easter Cat",function()
+    for i,v in pairs(game:GetService("Workspace")["__THINGS"].Pets:GetChildren()) do
+        v.Mesh.MeshId = "rbxassetid://9387212590"
+        v.Mesh.TextureId = "rbxassetid://9387212450"
+        v.Mesh.Scale = Vector3.new(3, 3, 3)
+        v.Mesh.CFrame = CFrame.new(spos.X, spos.Y + 40, spos.Z)
+    end
+    end)
+
+local Button = Section.NewButton("Visual Dupe Gems",function()
+    function comma_value(amount)
+        local formatted = amount
+       while true do  
+          formatted, k = string.gsub(formatted, "^(-?%d+)(%d%d%d)", '%1,%2')
+          if (k == 0) then
+            break
+          end
+        end
+        return formatted
+      end
+  
+      local diamonds = game.Players.LocalPlayer.PlayerGui.Main.Right.Diamonds.Amount
+      local old = diamonds.Text
+      local oldNumber = string.gsub(old, ",", "")
+      local newNumber = oldNumber * 10000
+      local new = comma_value(newNumber)
+      local newString = tostring(new)
+      diamonds.Text = newString
+      end)
+--[[
 local Button = Section.NewButton("Get All Gamepasses",function()
     local pass = require(game:GetService("ReplicatedStorage").Framework.Client["5 | Gamepasses"])
 
     pass.Owns = function() return true end
     end)
-
+]]
 local Button = Section.NewButton("No Coin Animation",function()
     game:GetService("Players").LocalPlayer.PlayerScripts.Scripts.GUIs["Coin Rewards HUD"].Disabled = true
     if game:GetService("Workspace"):FindFirstChild("__DEBRIS") then
@@ -221,7 +238,7 @@ local Section = Tab.NewSection("Collect")
 
 local Toggle = Section.NewToggle("Auto Collect Orbs & Bags",function(bool)
     getgenv().AutoCoin = bool
-        while getgenv().AutoCoin do task.wait() 
+        while getgenv().AutoCoin == false do task.wait() 
             for i,v in pairs(game:GetService("Workspace")["__THINGS"].Orbs:GetChildren()) do
                 v.CFrame = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame + Vector3.new(0,0,0)
                 for i,v in pairs(game:GetService("Workspace")["__THINGS"].Lootbags:GetChildren()) do
@@ -266,8 +283,29 @@ local Toggle = Section.NewToggle("Auto Buy Worlds",function(bool)
         end
 end,false)
 
-local Toggle = Section.NewToggle("Auto Buy Worlds",function(bool)
+local Toggle = Section.NewToggle("Use Tripple Egg (Have Tripple Egg Gamepass)",function(bool)
+     getgenv().TrippleEgg = bool
+end)
 
+local Toggle = Section.NewToggle("Open Egg",function(bool)
+     getgenv().AutoOpenEgg = bool
+        while task.wait() and getgenv().AutoOpenEgg do 
+            for i,v in pairs(care_packages) do 
+                local args = {[1] = {[1] = getgenv().selectPett,[2] = getgenv().TrippleEgg}}
+                workspace.__THINGS.__REMOTES:FindFirstChild("buy egg"):InvokeServer(unpack(args))
+            end
+            end
+        end,false)
+
+local ScriptPathh = game.Players.LocalPlayer.PlayerScripts.Scripts.Game['Open Eggs']
+local OldFunction = getsenv(ScriptPathh).OpenEgg
+
+local Toggle = Section.NewToggle("No Egg Animation",function(bool)
+            if bool == true then 
+        getsenv(ScriptPathh).OpenEgg = function() return end 
+    else
+        getsenv(ScriptPathh).OpenEgg = OldFunction
+    end
 end,false)
 
 local Tab = Window.NewTab("Player")
@@ -515,3 +553,4 @@ end
 end)()
 --Created using Nexo Animator V4
 end)
+end
