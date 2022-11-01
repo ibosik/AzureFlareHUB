@@ -44,6 +44,11 @@ local Button = Section.NewButton("Old Gui",function()
 loadstring(game:HttpGet('https://raw.githubusercontent.com/ibosik/AzureFlareHUB/main/LT2OLD'))()
 end)
 
+local Tab = Window.NewTab("Dupe")
+
+local Section = Tab.NewSection("Dupe Pets")
+
+
 local Tab = Window.NewTab("Misc")
 
 local Section = Tab.NewSection("Miscellaneous")
@@ -154,12 +159,12 @@ function Teleport()
 end
 Teleport()
 end)
-
-local Dropdown = Section.NewDropdown("Select Pet",table,function(petname--[[string,bool]])
+--[[
+local Dropdown = Section.NewDropdown("Select Pet",table,function(petname,string,bool)
     PetNamehere = petname
-end,true)
+end,true)]]
 
-local Button = Section.NewButton("Hatch Pet",function()
+local Button = Section.NewButton("Hatch Huge Easter Cat",function()
     function HatchEgg(Pet)
         local pet = Pet
         for i,v in pairs(game.ReplicatedStorage.Game.Pets:GetChildren()) do
@@ -189,13 +194,14 @@ local Button = Section.NewButton("Hatch Pet",function()
             end
         end
         if Pet == 'Huge Cat' then egg = 'Cracked Egg' end
+        if Pet == 'Huge Monkey' then egg = 'Cursed Egg' end
         for i,v in pairs(getgc(true)) do
             if (typeof(v) == 'table' and rawget(v, 'OpenEgg')) then
                 v.OpenEgg(egg, tbl)
             end
         end
      end
-     HatchEgg(PetNamehere)
+     HatchEgg(Huge Easter Cat)
      end)
 
 local Button = Section.NewButton("Make All Pets Banana",function()
