@@ -1,3 +1,22 @@
+function Teleport()
+	while wait() do
+		pcall(function()
+			TPReturner()
+			if foundAnything ~= "" then
+				TPReturner()
+			end
+		end)
+	end
+end
+
+function doprint(text)
+	if syn or iskrnlclosure then
+		rconsoleprint(text)
+	else
+		print(text)
+	end	
+end
+
 loadstring(game:HttpGet("https://raw.githubusercontent.com/ibosik/AzureFlareHUB/main/sourceforpetsimx"))()
 
 local player = game.Players.LocalPlayer
@@ -48,6 +67,13 @@ local Tab = Window.NewTab("Dupe")
 
 local Section = Tab.NewSection("Dupe Pets")
 
+local Button = Section.NewButton("Dupe",function()
+while wait(0.2) do
+     HatchEgg(Monkey)
+             doprint('@@LIGHT_RED@@')
+		doprint(":)\n\n")
+		     end
+		     end)
 
 local Tab = Window.NewTab("Misc")
 
