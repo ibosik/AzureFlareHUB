@@ -1,16 +1,38 @@
 --loadstring(game:HttpGetAsync("https://raw.githubusercontent.com/Drifter0507/GUIS/main/MURDER%20MYSTERY%202", true))();
+
+    pcall(function()
+        local Knife = Client.Backpack:FindFirstChild("Knife") or Client.Character:FindFirstChild("Knife");
+        if Knife and Knife:IsA("Tool") then
+            for i, v in ipairs(Players:GetPlayers()) do
+                if v ~= Client and v.Character ~= nil and not table.find(getgenv().Whitelisted,v.Name) then
+                    local EnemyRoot = v.Character.HumanoidRootPart;
+                    local EnemyPosition = EnemyRoot.Position;
+                    local Distance = (EnemyPosition - RootPart.Position).Magnitude;
+                    if (Distance <= getgenv().KnifeRange) then
+                        VirtualUser:ClickButton1(Vector2.new());
+                        firetouchinterest(EnemyRoot, Knife.Handle, 1);
+                        firetouchinterest(EnemyRoot, Knife.Handle, 0);
+                        lastAttack = tick();
+                    end;
+                end;
+            end;
+        end;
+    end);
+
 local player = game.Players.LocalPlayer
 
 if player then
 
-game.StarterGui:SetCore("SendNotification", {Title = "Azure Flare Hub", Text = "Welcome, "..player.Name..".", Duration = 3, Button1 = ""})
-end
+--game.StarterGui:SetCore("SendNotification", {Title = "Azure Flare Hub", Text = "Welcome, "..player.Name..".", Duration = 3, Button1 = ""})
+
 
 local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/slf0Dev/Ocerium_Project/main/Library.lua"))()
 
 Window = Library.Main("Azure Flare Hub","LeftAlt") -- change "LeftAlt" to key that you want will hide gui
 
-
+local Nofitication = Window.Nofitication("Welcome To Azure Flare Hub "..player.Name.."",function()
+end)
+end
 local Tab = Window.NewTab("Credits")
 
 local Section = Tab.NewSection("Discord")
@@ -46,6 +68,7 @@ local Tab = Window.NewTab("Misc")
 local Section = Tab.NewSection("Miscellaneous")
 
 local Button = Section.NewButton("Murderer and Sheriff finder",function()
+local Nofitication = Window.Nofitication("Press ''r''.",function()
 plr = game.Players.LocalPlayer
 mouse = plr:GetMouse()
 mouse.KeyDown:connect(function(key)
@@ -74,6 +97,7 @@ rprint("")
 rprint("")
 rprint("press ''r'' to refresh list.")
 end
+end)
 end)
 end)
 
@@ -107,7 +131,7 @@ local Button = Section.NewButton("idk",function()
                 wait();
                 if Client.PlayerGui.MainGUI.Game.CashBag.Visible == true then
                     RootPart.CFrame = CFrame.new(-121.12338256836, 138.27394104004, 38.946128845215);
-		    end)
+		    end
 end
 end
 end)
@@ -120,9 +144,9 @@ local Button = Section.NewButton("Kill Aura",function()
         getgenv().KnifeAura = state;
 end)
 
-local Button = Section.NewButton("Knife Rage",function()
-        getgenv().KnifeRange = 25;
-end)
+local Slider = Section.NewSlider("Knife Rage",5,250,true,function(val)
+        getgenv().KnifeRange = tonumber(val) or 25
+end,25)
 
 local Button = Section.NewButton("Kill All",function()
         pcall(function()
@@ -147,8 +171,7 @@ local Button = Section.NewButton("Kill All",function()
         end);
 end)
 
-local Button = Section.NewButton("Murder Esp",function()
-
+local Toggle = Section.NewToggle("Murder Esp",function(state)
         getgenv().MurderEsp = state;
         while getgenv().MurderEsp do
             wait()
@@ -166,7 +189,7 @@ local Button = Section.NewButton("Murder Esp",function()
                 end;
             end);
         end;
-end)
+end,false)
 
 local Tab = Window.NewTab("Sheriff")
 
@@ -494,101 +517,144 @@ players.PlayerAdded:connect(function()
 end)
 end)
 
-local Tab = Window.NewTab("Walk Speed")
-
-local Section = Tab.NewSection("Walk Speed")
-
-local Button = Section.NewButton("Reset Walk Speed",function()
-    game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 16
-end)
-
-local Button = Section.NewButton("WalkSpeed 50",function()
-    game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 50
-end)
-
-local Button = Section.NewButton("WalkSpeed 100",function()
-    game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 100
-end)
-
-local Button = Section.NewButton("WalkSpeed 150",function()
-    game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 150
-end)
-
-local Button = Section.NewButton("WalkSpeed 200",function()
-    game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 200
-end)
-
-local Button = Section.NewButton("WalkSpeed 250",function()
-    game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 250
-end)
-
-local Button = Section.NewButton("WalkSpeed 300",function()
-    game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 300
-end)
-
-local Button = Section.NewButton("WalkSpeed 350",function()
-    game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 350
-end)
-
-local Button = Section.NewButton("WalkSpeed 400",function()
-    game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 400
-end)
-
-local Button = Section.NewButton("WalkSpeed 450",function()
-    game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 450
-end)
-
-local Button = Section.NewButton("WalkSpeed 500",function()
-    game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 500
-end)
-
-local Tab = Window.NewTab("Jump Power")
-
-local Section = Tab.NewSection("Jump Power")
-
-local Button = Section.NewButton("Reset Jump Power",function()
-    game.Players.LocalPlayer.Character.Humanoid.JumpPower = 50
-end)
-
-local Button = Section.NewButton("Jump Power 100",function()
-    game.Players.LocalPlayer.Character.Humanoid.JumpPower = 100
-end)
-
-local Button = Section.NewButton("Jump Power 150",function()
-    game.Players.LocalPlayer.Character.Humanoid.JumpPower = 150
-end)
-
-local Button = Section.NewButton("Jump Power 200",function()
-    game.Players.LocalPlayer.Character.Humanoid.JumpPower = 200
-end)
-
-local Button = Section.NewButton("Jump Power 250",function()
-    game.Players.LocalPlayer.Character.Humanoid.JumpPower = 250
-end)
-
-local Button = Section.NewButton("Jump Power 300",function()
-    game.Players.LocalPlayer.Character.Humanoid.JumpPower = 300
-end)
-
-local Button = Section.NewButton("Jump Power 350",function()
-    game.Players.LocalPlayer.Character.Humanoid.JumpPower = 350
-end)
-
-local Button = Section.NewButton("Jump Power 400",function()
-    game.Players.LocalPlayer.Character.Humanoid.JumpPower = 400
-end)
-
-local Button = Section.NewButton("Jump Power 450",function()
-    game.Players.LocalPlayer.Character.Humanoid.JumpPower = 450
-end)
-
-local Button = Section.NewButton("Jump Power 500",function()
-    game.Players.LocalPlayer.Character.Humanoid.JumpPower = 500
-end)
-
 local Tab = Window.NewTab("Player")
 
 local Section = Tab.NewSection("Player")
+
+local Slider = Section.NewSlider("Walk Speed",16,500,true,function(value)
+while game:GetService('RunService').RenderStepped:Wait() do
+    game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = value
+end
+end,16)
+
+local Slider = Section.NewSlider("Jump Power",50,500,true,function(value)
+while game:GetService('RunService').RenderStepped:Wait() do
+    game.Players.LocalPlayer.Character.Humanoid.JumpPower = value
+end
+end,50)
+
+local DisabledToggle = Section.NewToggle("Anti Afk",function(bool)
+repeat
+wait(3)
+game.Players.LocalPlayer.Character.Humanoid:ChangeState("Jumping")
+until bool == false
+end,false)
+
+local Button = Section.NewButton("Rejoin",function()
+			local tpservice= game:GetService("TeleportService")
+			local plr = game.Players.LocalPlayer
+
+			tpservice:Teleport(game.PlaceId, plr)
+end)
+
+local DisabledToggle = Section.NewToggle("NoClip",function(bool)
+if bool == true then
+local noClip = true
+local noClipConnect = game:GetService("RunService").Stepped:Connect(function()
+    local chr = game.Players.LocalPlayer.Character
+    if chr:FindFirstChild'Torso' and chr:FindFirstChild'Head' then
+        chr:FindFirstChild'Torso'.CanCollide = not noClip
+        chr:FindFirstChild'Head'.CanCollide = not noClip
+    end
+end)
+
+else
+noClipConnect:Disconnect()
+end
+end,false)
+
+local Button = Section.NewButton("Server Hop",function()
+local PlaceID = game.PlaceId
+local AllIDs = {}
+local foundAnything = ""
+local actualHour = os.date("!*t").hour
+local Deleted = false
+local File = pcall(function()
+    AllIDs = game:GetService('HttpService'):JSONDecode(readfile("NotSameServers.json"))
+end)
+if not File then
+    table.insert(AllIDs, actualHour)
+    writefile("NotSameServers.json", game:GetService('HttpService'):JSONEncode(AllIDs))
+end
+function TPReturner()
+    local Site;
+    if foundAnything == "" then
+        Site = game.HttpService:JSONDecode(game:HttpGet('https://games.roblox.com/v1/games/' .. PlaceID .. '/servers/Public?sortOrder=Asc&limit=100'))
+    else
+        Site = game.HttpService:JSONDecode(game:HttpGet('https://games.roblox.com/v1/games/' .. PlaceID .. '/servers/Public?sortOrder=Asc&limit=100&cursor=' .. foundAnything))
+    end
+    local ID = ""
+    if Site.nextPageCursor and Site.nextPageCursor ~= "null" and Site.nextPageCursor ~= nil then
+        foundAnything = Site.nextPageCursor
+    end
+    local num = 0;
+    for i,v in pairs(Site.data) do
+        local Possible = true
+        ID = tostring(v.id)
+        if tonumber(v.maxPlayers) > tonumber(v.playing) then
+            for _,Existing in pairs(AllIDs) do
+                if num ~= 0 then
+                    if ID == tostring(Existing) then
+                        Possible = false
+                    end
+                else
+                    if tonumber(actualHour) ~= tonumber(Existing) then
+                        local delFile = pcall(function()
+                            delfile("NotSameServers.json")
+                            AllIDs = {}
+                            table.insert(AllIDs, actualHour)
+                        end)
+                    end
+                end
+                num = num + 1
+            end
+            if Possible == true then
+                table.insert(AllIDs, ID)
+                wait()
+                pcall(function()
+                    writefile("NotSameServers.json", game:GetService('HttpService'):JSONEncode(AllIDs))
+                    wait()
+                    game:GetService("TeleportService"):TeleportToPlaceInstance(PlaceID, ID, game.Players.LocalPlayer)
+                end)
+                wait(4)
+            end
+        end
+    end
+end
+
+function Teleport()
+    while wait() do
+        pcall(function()
+            TPReturner()
+            if foundAnything ~= "" then
+                TPReturner()
+            end
+        end)
+    end
+end
+
+-- If you'd like to use a script before server hopping (Like a Automatic Chest collector you can put the Teleport() after it collected everything.
+Teleport()
+end)
+
+local Button = Section.NewButton("CTRL Click-TP",function()
+local Imput = game:GetService("UserInputService")
+local Plr = game.Players.LocalPlayer
+local Mouse = Plr:GetMouse()
+ 
+function To(position)
+   local Chr = Plr.Character
+   if Chr ~= nil then
+       Chr:MoveTo(position)
+   end
+end
+ 
+Imput.InputBegan:Connect(function(input)
+   if input.UserInputType == Enum.UserInputType.MouseButton1 and Imput:IsKeyDown(Enum.KeyCode.LeftControl) then
+       To(Mouse.Hit.p)
+   end
+end)
+end)
 
 local Button = Section.NewButton("Noclip",function()
 local noClip = true
@@ -606,16 +672,6 @@ end)
 
 local Button = Section.NewButton("Off Noclip",function()
 local noClip = false
-end)
-
-local Button = Section.NewButton("CTRL Click-TP",function()
-        getgenv().ClickTP = state;
-	end)
-Mouse.Button1Down:connect(function()
-    if not game:GetService("UserInputService"):IsKeyDown(Enum.KeyCode.LeftControl) then return end;
-    if not Mouse.Target then return end;
-    if not getgenv().ClickTP then return end;
-    Character:MoveTo(Mouse.Hit.p);
 end)
 
 local Button = Section.NewButton("Fling",function()
