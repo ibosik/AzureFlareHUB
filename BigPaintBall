@@ -1,31 +1,24 @@
---loadstring(game:HttpGet('https://raw.githubusercontent.com/ibosik/AzureFlareHUB/main/AzureFlareHUB'))()
-
---loadstring(game:HttpGet("https://raw.githubusercontent.com/ibosik/AzureFlareHUB/main/BigPaintBall"))()
-
+--loadstring(game:HttpGetAsync("https://raw.githubusercontent.com/Drifter0507/GUIS/main/MURDER%20MYSTERY%202", true))();
 local player = game.Players.LocalPlayer
 
 if player then
 
---game.StarterGui:SetCore("SendNotification", {Title = "Azure Flare Hub", Text = "Welcome, "..player.Name..".", Icon = "http://www.roblox.com/asset/?id=10341849875", Duration = 3, Button1 = ""})
-
+game.StarterGui:SetCore("SendNotification", {Title = "Azure Flare Hub", Text = "Welcome, "..player.Name..".", Duration = 3, Button1 = ""})
+end
 
 local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/slf0Dev/Ocerium_Project/main/Library.lua"))()
 
-Window = Library.Main("Azure Flare Hub | BPB","LeftAlt") -- change "LeftAlt" to key that you want will hide gui
+Window = Library.Main("Azure Flare Hub","LeftAlt") -- change "LeftAlt" to key that you want will hide gui
 
-local Nofitication = Window.Nofitication("Welcome To Azure Flare Hub "..player.Name.."",function()
-end)
-end
 
 local Tab = Window.NewTab("Credits")
 
 local Section = Tab.NewSection("Discord")
 
-local Button = Section.NewButton("zxcibosik#9669 - Script",function()
+local Button = Section.NewButton("zxcibosik#9669",function()
 end)
 
-local Button = Section.NewButton("Kurus#6448 - Tester",function()
-loadstring(game:HttpGet("http://darkhub.xyz/remote-script.lua", true))()
+local Button = Section.NewButton("Kurus#6448",function()
 end)
 
 local Section = Tab.NewSection("Youtube")
@@ -33,11 +26,6 @@ local Section = Tab.NewSection("Youtube")
 local Button = Section.NewButton("IbosikYT",function()
 setclipboard("https://www.youtube.com/channel/UC_wPcE323Qfe0Wntx44FcKw")
 game.StarterGui:SetCore("SendNotification", {Title = "Link copied", Text = "", Duration = 3, Button1 = ""})
-end)
-
-local Section = Tab.NewSection("Information")
-
-local Button = Section.NewButton("Left Alt - Hide Gui",function()
 end)
 
 local Tab = Window.NewTab("Settings")
@@ -48,216 +36,195 @@ local Button = Section.NewButton("Destroy GUI",function()
         game:GetService("CoreGui").Library:Destroy()
 end)
 
-local Button = Section.NewButton("Old Gui",function()
-    loadstring(game:HttpGet('https://raw.githubusercontent.com/ibosik/AzureFlareHUB/main/KATOLD'))()
-end)
+local Tab = Window.NewTab("Misc")
 
-local Tab = Window.NewTab("Weapon")
+local Section = Tab.NewSection("Miscellaneous")
 
-local Section = Tab.NewSection("Weapon")
+local Button = Section.NewButton("Murderer and Sheriff finder",function()
+plr = game.Players.LocalPlayer
+mouse = plr:GetMouse()
+mouse.KeyDown:connect(function(key)
 
-local Button = Section.NewButton("test part",function()
-local myPart = Instance.new("Part")
-
-myPart.Transparency = 0
-myPart.Anchored = true
-
-myPart.Position = Vector3.new(48.2695, 590.262, -606.339)
-myPart.Size = Vector3.new(50, 0, 50)
-
-myPart.Parent = game.Workspace
-end)
-
-local Button = Section.NewButton("destroy test part",function()
-game.Workspace.Part:Destroy()
-end)
-
-local Button = Section.NewButton("Cum Gun",function()
-        for i,v in pairs(game:GetService("ReplicatedStorage").Framework.Modules["1 | Directory"].Guns:GetChildren()) do
-            pcall(function()
-                require(v)[tostring(i)].velocity = 0
-            end)
-        end
-end)
-
-local Button = Section.NewButton("Bullet Velocity",function()
-        for i,v in pairs(game:GetService("ReplicatedStorage").Framework.Modules["1 | Directory"].Guns:GetChildren()) do
-            pcall(function()
-                require(v)[tostring(i)].velocity = 99999999
-            end)
-        end
-end)
-
-local Button = Section.NewButton("Increased Fire Rate",function()
-        for i,v in pairs(game:GetService("ReplicatedStorage").Framework.Modules["1 | Directory"].Guns:GetChildren()) do
-            pcall(function()
-                require(v)[tostring(i)].firerate = -math.huge
-            end)
-        end
-end)
-
-local Button = Section.NewButton("Automatic Fire Rate",function()
-        for i,v in pairs(game:GetService("ReplicatedStorage").Framework.Modules["1 | Directory"].Guns:GetChildren()) do
-            pcall(function()
-                require(v)[tostring(i)].automatic = value
-            end)
-        end
-end)
-
-local Button = Section.NewButton("Additional Speed 100",function()
-        for i,v in pairs(game:GetService("ReplicatedStorage").Framework.Modules["1 | Directory"].Guns:GetChildren()) do
-            pcall(function()
-                require(v)[tostring(i)].additionalSpeed = 100
-            end)
-        end
-end)
-
-local Tab = Window.NewTab("Unlock")
-
-local Section = Tab.NewSection("Unlock")
-
-local Button = Section.NewButton("Unlock All Guns",function()
-local library = require(game:GetService("ReplicatedStorage").Framework.Library)
- 
-local env = getsenv(game:GetService("Players").LocalPlayer.PlayerScripts.Scripts.Game["First Person Controller"])
- 
-local unlock_all = true
- 
---// Gun Bypass
-local old_fire = library.Network.Fire
-library.Network.Fire = newcclosure(function(self, ...)
-   local args = {...}
- 
-   if unlock_all and tostring(self) == "Request Respawn" then
-       args[1] = "1"
-   end
- 
-   return old_fire(self, unpack(args))
-end)
- 
-local old_own = env.DoesOwnGun
-env.DoesOwnGun = function(...)
-   return (unlock_all and true) or old_own(...)
+if key == "r" then
+if rconsolewarn then
+	rconsoleclear()
+	rprint = rconsolewarn
+else
+	rprint = print
 end
---
- 
---// Unlock All
-local old_own_gun = library.GunCmds.DoesOwnGun
-library.GunCmds.DoesOwnGun = newcclosure(function(self, ...)
-   return (unlock_all and true) or old_own_gun(self, ...)
-end)
---
- 
---// Unlock Offsale
-for _, gun in next, library.Directory.Guns do
-   gun["offsale"] = false
+for i,v in pairs(game:GetService("Players"):GetChildren()) do
+    local items = v.Backpack
+    if items:FindFirstChild("Knife") then
+        rprint(v.Name .. " Is the murder              MURDER")
+    else if items:FindFirstChild("Gun") then
+        rprint(v.Name .. " Is the sheriff             SHERIFF")
+    else
+        rprint(v.Name .. " Is innocent")
+    end
+    end
 end
+
+rprint("")
+rprint("")
+rprint("")
+rprint("press ''r'' to refresh list.")
+end
+end)
 end)
 
 local Tab = Window.NewTab("Auto Farm")
 
 local Section = Tab.NewSection("Auto Farm")
 
-local Button = Section.NewButton("Safe Zone",function()
-game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-54.7965088, 106.498009, 4353.1665)
-end)
-
-local Button = Section.NewButton("Safe Zone Loop",function()
-while game:GetService('RunService').RenderStepped:Wait() do
-game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-54.7965088, 106.498009, 4353.1665)
+local Button = Section.NewButton("idk",function()
+        getgenv().Autofarm = state;
+        if not getgenv().AutofarmMethod then return end;
+        if getgenv().AutofarmMethod == "Coins" then
+            while getgenv().Autofarm do
+                task.wait();
+                local CoinContainer = Workspace:FindFirstChild("CoinContainer", true);
+                if CoinContainer and Client.PlayerGui.MainGUI.Game.CashBag.Visible == true then
+                    local coin = CoinContainer:FindFirstChild("Coin_Server");
+                    if coin then
+                        repeat
+                            RootPart.CFrame = CFrame.new(coin.Position - Vector3.new(0, 2.5, 0)) * CFrame.Angles(0, 0, math.rad(180));
+                            RunService.Stepped:Wait();
+                            if not getgenv().Autofarm then break end;
+                        until not coin:IsDescendantOf(Workspace) or coin.Name ~= "Coin_Server";
+                        task.wait(1.8);
+                    end;
+                else
+                    task.wait(1.5);
+                end;
+            end;
+        else
+            while getgenv().Autofarm do
+                wait();
+                if Client.PlayerGui.MainGUI.Game.CashBag.Visible == true then
+                    RootPart.CFrame = CFrame.new(-121.12338256836, 138.27394104004, 38.946128845215);
+		    end
+end
 end
 end)
 
-local Button = Section.NewButton("Auto Respawn",function()
-while game:GetService('RunService').RenderStepped:Wait() do
--- Script generated by SimpleSpy - credits to exx#9394
+local Tab = Window.NewTab("Murder")
 
-local args = {
-    [1] = {
-        [1] = "1"
-    }
-}
+local Section = Tab.NewSection("Murder")
 
-workspace.__THINGS.__REMOTES:FindFirstChild("request respawn"):FireServer(unpack(args))
-end
+local Button = Section.NewButton("Kill Aura",function()
+        getgenv().KnifeAura = state;
 end)
 
-local Button = Section.NewButton("Auto Farm 1",function()
-if _G.active == nil then 
-	_G.active = true
-end
-
-local plr = game:GetService("Players").LocalPlayer
-local round_type = game:GetService("Workspace")["__VARIABLES"].RoundType
-local guns_folder = game:GetService("Workspace")["__DEBRIS"].Guns
-local RS = game:GetService("RunService")
-
-local function getPlayer()
-	local char = plr.Character or plr.CharacterAdded:Wait()
-	local humr = char:WaitForChild("HumanoidRootPart")
-
-	return char, humr
-end
-
-local function get_target_players()
-	local current_guns = guns_folder:GetChildren()
-	local target_players = {}
-
-		for i,v in next, current_guns do 
-			local player = game:GetService("Players"):FindFirstChild(v.Name)
-
-			if player then 
-				if round_type.Value:lower():match("tdm") and player.Team ~= plr.Team then 
-					table.insert(target_players, player)
-				elseif round_type.Value:lower():match("ffa") and player.UserId ~= plr.UserId then 
-					table.insert(target_players, player)
-				end
-			end
-		end
-
-	return target_players
-end
-
-while RS.RenderStepped:Wait() and _G.active do 
-	local targets = get_target_players()
-
-	for i,v in next, targets do 
-		local cam = workspace.CurrentCamera
-
-		repeat
-			local char, humr = getPlayer()
-			local target_char = v.Character if not target_char then break end
-			local target_humr = target_char:WaitForChild("HumanoidRootPart")
-
-			humr.CFrame = target_humr.CFrame - target_humr.CFrame.lookVector * 5
-			cam.CFrame = CFrame.new(cam.CFrame.p, target_humr.Position)
-			RS.RenderStepped:Wait()
-		until not guns_folder:FindFirstChild(v.Name) or not _G.active
-	end
-end
+local Button = Section.NewButton("Knife Rage",function()
+        getgenv().KnifeRange = 25;
 end)
 
-local DisabledToggle = Section.NewToggle("OFF Auto Farm 1",function(bool)
-	_G.active = false
-end,false)
-
-local EnabledToggle = Section.NewToggle("ON Auto Farm 1",function(bool)
-	_G.active = true
-end,true)
-
-local Button = Section.NewButton("Auto Farm 2",function()
-getgenv().Enabled = true
-loadstring(game:HttpGet("https://raw.githubusercontent.com/WetCheezit/Releases/main/Big-Paintball/KillAll.lua"))()
+local Button = Section.NewButton("Kill All",function()
+        pcall(function()
+            local Knife = Client.Backpack:FindFirstChild("Knife") or Client.Character:FindFirstChild("Knife");
+            if Knife.Parent.Name == "Backpack" then
+                Humanoid:EquipTool(Knife);
+            end;
+            if Knife then
+                if Knife:IsA("Tool") then
+                    for i, v in ipairs(Players:GetPlayers()) do
+                        if v ~= Client and v.Character ~= nil and not table.find(getgenv().Whitelisted,v.Name) then
+                            local EnemyRoot = v.Character.HumanoidRootPart;
+                            local EnemyPosition = EnemyRoot.Position;
+                            VirtualUser:ClickButton1(Vector2.new());
+                            firetouchinterest(EnemyRoot, Knife.Handle, 1);
+                            firetouchinterest(EnemyRoot, Knife.Handle, 0);
+                            lastAttack = tick();
+                        end;
+                    end;
+                end;
+            end;
+        end);
 end)
 
-local Button = Section.NewButton("OFF Auto Farm 2 (Rejoin)",function()
-			local tpservice= game:GetService("TeleportService")
-			local plr = game.Players.LocalPlayer
+local Button = Section.NewButton("Murder Esp",function()
 
-			tpservice:Teleport(game.PlaceId, plr)
+        getgenv().MurderEsp = state;
+        while getgenv().MurderEsp do
+            wait()
+            pcall(function()
+                for i, v in pairs(folder:GetChildren()) do
+                    if v:IsA("BillboardGui") and Players[tostring(v.Name)] then
+                        if Players[tostring(v.Name)].Character:FindFirstChild("Knife") or Players[tostring(v.Name)].Backpack:FindFirstChild("Knife")  then
+                            if getgenv().MurderEsp then
+                                v.Enabled = true;
+                            else
+                                v.Enabled = false;
+                            end;
+                        end
+                    end;
+                end;
+            end);
+        end;
 end)
 
-local Tab = Window.NewTab("Silent Aim")
+local Tab = Window.NewTab("Sheriff")
+
+local Section = Tab.NewSection("Sheriff")
+
+local Button = Section.NewButton("Get Gun",function()
+        if not CanGrab then return end
+        local gundrop = Workspace:FindFirstChild("GunDrop");
+        if gundrop and not lastCFrame then
+            lastCFrame = RootPart.CFrame;
+            pcall(function()
+                repeat
+                    RootPart.CFrame = gundrop.CFrame;
+                    RunService.Stepped:Wait();
+                until not gundrop:IsDescendantOf(Workspace);
+                RootPart.CFrame = lastCFrame;
+                lastCFrame = false;
+            end);
+        end;
+end)
+
+local Button = Section.NewButton("Gun Esp",function()
+getgenv().GunESP = state;
+
+coroutine.wrap(function()
+    RunService.RenderStepped:Connect(function()
+        pcall(function()
+            if getgenv().GunESP then
+                local gundrop = Workspace:FindFirstChild("GunDrop");
+                GunHighlight.Adornee = gundrop;
+                GunHandleAdornment.Adornee = gundrop;
+                if gundrop then 
+                    GunHandleAdornment.Size = gundrop.Size + Vector3.new(0.05, 0.05, 0.05) ;
+                end;
+        
+                GunHighlight.Enabled = getgenv().GunESP;
+                GunHandleAdornment.Visible = getgenv().GunESP;
+            end
+        end)
+    end)
+end)
+end)
+
+local Button = Section.NewButton("Sheriff Esp",function()
+
+        getgenv().SheriffEsp = state;
+        while getgenv().SheriffEsp do
+            wait()
+            pcall(function()
+                for i, v in pairs(folder:GetChildren()) do
+                    if v:IsA("BillboardGui") and Players[tostring(v.Name)] then
+                        if Players[tostring(v.Name)].Character:FindFirstChild("Gun") or Players[tostring(v.Name)].Backpack:FindFirstChild("Gun")  then
+                            if getgenv().SheriffEsp then
+                                v.Enabled = true;
+                            else
+                                v.Enabled = false;
+                            end;
+                        end
+                    end;
+                end;
+            end);
+        end;
+end)
 
 local Tab = Window.NewTab("Aim Bot")
 
@@ -267,129 +234,11 @@ local Button = Section.NewButton("Aim Bot 1",function()
     loadstring(game:HttpGet("https://raw.githubusercontent.com/ibosik/ok/main/ok"))()
 end)
 
-local Button = Section.NewButton("Aim Bot 1 (Fov 10k)",function()
-local teamCheck = true
-local fov = 10000
-local smoothing = 1
-
-local RunService = game:GetService("RunService")
-
-local FOVring = Drawing.new("Circle")
-FOVring.Visible = true
-FOVring.Thickness = 1.5
-FOVring.Radius = fov
-FOVring.Transparency = 1
-FOVring.Color = Color3.fromRGB(255, 128, 128)
-FOVring.Position = workspace.CurrentCamera.ViewportSize/2
-
-local function getClosest(cframe)
-   local ray = Ray.new(cframe.Position, cframe.LookVector).Unit
-   
-   local target = nil
-   local mag = math.huge
-   
-   for i,v in pairs(game.Players:GetPlayers()) do
-       if v.Character and v.Character:FindFirstChild("Head") and v.Character:FindFirstChild("Humanoid") and v.Character:FindFirstChild("HumanoidRootPart") and v ~= game.Players.LocalPlayer and (v.Team ~= game.Players.LocalPlayer.Team or (not teamCheck)) then
-           local magBuf = (v.Character.Head.Position - ray:ClosestPoint(v.Character.Head.Position)).Magnitude
-           
-           if magBuf < mag then
-               mag = magBuf
-               target = v
-           end
-       end
-   end
-   
-   return target
-end
-
-loop = RunService.RenderStepped:Connect(function()
-   local UserInputService = game:GetService("UserInputService")
-   local pressed = --[[UserInputService:IsKeyDown(Enum.KeyCode.E)]] UserInputService:IsMouseButtonPressed(Enum.UserInputType.MouseButton2) --Enum.UserInputType.MouseButton2
-   local localPlay = game.Players.localPlayer.Character
-   local cam = workspace.CurrentCamera
-   local zz = workspace.CurrentCamera.ViewportSize/2
-   
-   if pressed then
-       local Line = Drawing.new("Line")
-       local curTar = getClosest(cam.CFrame)
-       local ssHeadPoint = cam:WorldToScreenPoint(curTar.Character.Head.Position)
-       ssHeadPoint = Vector2.new(ssHeadPoint.X, ssHeadPoint.Y)
-       if (ssHeadPoint - zz).Magnitude < fov then
-           workspace.CurrentCamera.CFrame = workspace.CurrentCamera.CFrame:Lerp(CFrame.new(cam.CFrame.Position, curTar.Character.Head.Position), smoothing)
-       end
-   end
-   
-   if UserInputService:IsKeyDown(Enum.KeyCode.Delete) then
-       loop:Disconnect()
-       FOVring:Remove()
-   end
-end)
-end)
-
-local Button = Section.NewButton("Aim Bot 1 (Fov 10k Without TC)",function()
-local teamCheck = false
-local fov = 10000
-local smoothing = 1
-
-local RunService = game:GetService("RunService")
-
-local FOVring = Drawing.new("Circle")
-FOVring.Visible = true
-FOVring.Thickness = 1.5
-FOVring.Radius = fov
-FOVring.Transparency = 1
-FOVring.Color = Color3.fromRGB(255, 128, 128)
-FOVring.Position = workspace.CurrentCamera.ViewportSize/2
-
-local function getClosest(cframe)
-   local ray = Ray.new(cframe.Position, cframe.LookVector).Unit
-   
-   local target = nil
-   local mag = math.huge
-   
-   for i,v in pairs(game.Players:GetPlayers()) do
-       if v.Character and v.Character:FindFirstChild("Head") and v.Character:FindFirstChild("Humanoid") and v.Character:FindFirstChild("HumanoidRootPart") and v ~= game.Players.LocalPlayer and (v.Team ~= game.Players.LocalPlayer.Team or (not teamCheck)) then
-           local magBuf = (v.Character.Head.Position - ray:ClosestPoint(v.Character.Head.Position)).Magnitude
-           
-           if magBuf < mag then
-               mag = magBuf
-               target = v
-           end
-       end
-   end
-   
-   return target
-end
-
-loop = RunService.RenderStepped:Connect(function()
-   local UserInputService = game:GetService("UserInputService")
-   local pressed = --[[UserInputService:IsKeyDown(Enum.KeyCode.E)]] UserInputService:IsMouseButtonPressed(Enum.UserInputType.MouseButton2) --Enum.UserInputType.MouseButton2
-   local localPlay = game.Players.localPlayer.Character
-   local cam = workspace.CurrentCamera
-   local zz = workspace.CurrentCamera.ViewportSize/2
-   
-   if pressed then
-       local Line = Drawing.new("Line")
-       local curTar = getClosest(cam.CFrame)
-       local ssHeadPoint = cam:WorldToScreenPoint(curTar.Character.Head.Position)
-       ssHeadPoint = Vector2.new(ssHeadPoint.X, ssHeadPoint.Y)
-       if (ssHeadPoint - zz).Magnitude < fov then
-           workspace.CurrentCamera.CFrame = workspace.CurrentCamera.CFrame:Lerp(CFrame.new(cam.CFrame.Position, curTar.Character.Head.Position), smoothing)
-       end
-   end
-   
-   if UserInputService:IsKeyDown(Enum.KeyCode.Delete) then
-       loop:Disconnect()
-       FOVring:Remove()
-   end
-end)
-end)
-
 local Tab = Window.NewTab("Esp")
 
 local Section = Tab.NewSection("Esp")
 
-local Button = Section.NewButton("Esp 1",function()
+local Button = Section.NewButton("Esp 1 (maybe lags)",function()
 while wait(0.5) do
     for i, childrik in ipairs(workspace:GetDescendants()) do
         if childrik:FindFirstChild("Humanoid") then
@@ -410,8 +259,7 @@ while wait(0.5) do
 end
 end)
 
-
-local Button = Section.NewButton("Esp 2",function()
+local Button = Section.NewButton("Esp 2 (VERY BAD esp, but without lags)",function()
 function CreateSG(name,parent,face)
     local SurfaceGui = Instance.new("SurfaceGui",parent)
     SurfaceGui.Parent = parent
@@ -522,196 +370,6 @@ while game:GetService('RunService').RenderStepped:Wait() do -- loop this process
 		end
 	end
 end
-end)
-
-local Button = Section.NewButton("Esp 4",function()
-getgenv().enabled = true --Toggle on/off
-getgenv().filluseteamcolor = false --Toggle fill color using player team color on/off
-getgenv().outlineuseteamcolor = false --Toggle outline color using player team color on/off
-getgenv().fillcolor = Color3.new(255, 192, 203) --Change fill color, no need to edit if using team color
-getgenv().outlinecolor = Color3.new(1, 1, 1) --Change outline color, no need to edit if using team color
-getgenv().filltrans = 0 --Change fill transparency
-getgenv().outlinetrans = 0 --Change outline transparency
-
-loadstring(game:HttpGet("https://raw.githubusercontent.com/zntly/highlight-esp/main/esp.lua"))()
-end)
-
-local Button = Section.NewButton("Esp 5",function()
---// Universal Box ESP (Works on Arsenal and other games)
-
--- settings
-local settings = {
-   defaultcolor = Color3.fromRGB(255,0,0),
-   teamcheck = false,
-   teamcolor = true
-};
-
--- services
-local runService = game:GetService("RunService");
-local players = game:GetService("Players");
-
--- variables
-local localPlayer = players.LocalPlayer;
-local camera = workspace.CurrentCamera;
-
--- functions
-local newVector2, newColor3, newDrawing = Vector2.new, Color3.new, Drawing.new;
-local tan, rad = math.tan, math.rad;
-local round = function(...) local a = {}; for i,v in next, table.pack(...) do a[i] = math.round(v); end return unpack(a); end;
-local wtvp = function(...) local a, b = camera.WorldToViewportPoint(camera, ...) return newVector2(a.X, a.Y), b, a.Z end;
-
-local espCache = {};
-local function createEsp(player)
-   local drawings = {};
-   
-   drawings.box = newDrawing("Square");
-   drawings.box.Thickness = 1;
-   drawings.box.Filled = false;
-   drawings.box.Color = settings.defaultcolor;
-   drawings.box.Visible = false;
-   drawings.box.ZIndex = 2;
-
-   drawings.boxoutline = newDrawing("Square");
-   drawings.boxoutline.Thickness = 3;
-   drawings.boxoutline.Filled = false;
-   drawings.boxoutline.Color = newColor3();
-   drawings.boxoutline.Visible = false;
-   drawings.boxoutline.ZIndex = 1;
-
-   espCache[player] = drawings;
-end
-
-local function removeEsp(player)
-   if rawget(espCache, player) then
-       for _, drawing in next, espCache[player] do
-           drawing:Remove();
-       end
-       espCache[player] = nil;
-   end
-end
-
-local function updateEsp(player, esp)
-   local character = player and player.Character;
-   if character then
-       local cframe = character:GetModelCFrame();
-       local position, visible, depth = wtvp(cframe.Position);
-       esp.box.Visible = visible;
-       esp.boxoutline.Visible = visible;
-
-       if cframe and visible then
-           local scaleFactor = 1 / (depth * tan(rad(camera.FieldOfView / 2)) * 2) * 1000;
-           local width, height = round(4 * scaleFactor, 5 * scaleFactor);
-           local x, y = round(position.X, position.Y);
-
-           esp.box.Size = newVector2(width, height);
-           esp.box.Position = newVector2(round(x - width / 2, y - height / 2));
-           esp.box.Color = settings.teamcolor and player.TeamColor.Color or settings.defaultcolor;
-
-           esp.boxoutline.Size = esp.box.Size;
-           esp.boxoutline.Position = esp.box.Position;
-       end
-   else
-       esp.box.Visible = false;
-       esp.boxoutline.Visible = false;
-   end
-end
-
--- main
-for _, player in next, players:GetPlayers() do
-   if player ~= localPlayer then
-       createEsp(player);
-   end
-end
-
-players.PlayerAdded:Connect(function(player)
-   createEsp(player);
-end);
-
-players.PlayerRemoving:Connect(function(player)
-   removeEsp(player);
-end)
-
-runService:BindToRenderStep("esp", Enum.RenderPriority.Camera.Value, function()
-   for player, drawings in next, espCache do
-       if settings.teamcheck and player.Team == localPlayer.Team then
-           continue;
-       end
-
-       if drawings and player ~= localPlayer then
-           updateEsp(player, drawings);
-       end
-   end
-end)
-end)
-
-local Button = Section.NewButton("Esp 6",function()
-_G.FriendColor = Color3.fromRGB(0, 0, 255)
-_G.EnemyColor = Color3.fromRGB(255, 0, 0)
-_G.UseTeamColor = false
-
---------------------------------------------------------------------
-
-if _G.Reantheajfdfjdgse then
-    return
-end
-
-_G.Reantheajfdfjdgse = "susan"
-
-local coregui = game:GetService("CoreGui")
-local players = game:GetService("Players")
-local plr = players.LocalPlayer
-
-local highlights = {}
-
-function esp(target, color)
-    pcall(function()
-        if target.Character then
-            if not highlights[target] then
-                local highlight = Instance.new("Highlight", coregui)
-                highlight.Name = target.Name
-                highlight.Adornee = target.Character
-                highlight.DepthMode = Enum.HighlightDepthMode.AlwaysOnTop
-                highlight.FillColor = color
-                highlights[target] = highlight
-            else
-                highlights[target].FillColor = color
-            end
-        end
-    end)
-end
-
-players.PlayerAdded:Connect(function(v)
-    v.CharacterAdded:Connect(function()
-        esp(v, _G.UseTeamColor and v.TeamColor.Color or ((plr.TeamColor == v.TeamColor) and _G.FriendColor or _G.EnemyColor))
-    end)
-end)
-
-players.PlayerRemoving:Connect(function(v)
-    if highlights[v] then
-        highlights[v]:Destroy()
-        highlights[v] = nil
-    end
-end)
-
-for i, v in pairs(players:GetPlayers()) do
-    if v ~= plr then
-        local color = _G.UseTeamColor and v.TeamColor.Color or ((plr.TeamColor == v.TeamColor) and _G.FriendColor or _G.EnemyColor)
-        v.CharacterAdded:Connect(function()
-            local color = _G.UseTeamColor and v.TeamColor.Color or ((plr.TeamColor == v.TeamColor) and _G.FriendColor or _G.EnemyColor)
-            esp(v, color)
-        end)
-        
-        esp(v, color)
-    end
-end
-
-while task.wait() do
-    for i, v in pairs(highlights) do
-        local color = _G.UseTeamColor and i.TeamColor.Color or ((plr.TeamColor == i.TeamColor) and _G.FriendColor or _G.EnemyColor)
-        v.FillColor = color
-    end
-end
-
 end)
 
 local Tab = Window.NewTab("Tracer")
@@ -831,73 +489,103 @@ players.PlayerAdded:connect(function()
 end)
 end)
 
-local Button = Section.NewButton("Chams 2 (Press R)",function()
-plr = game.Players.LocalPlayer
-mouse = plr:GetMouse()
-mouse.KeyDown:connect(function(key)
+local Tab = Window.NewTab("Walk Speed")
 
-if key == "r" then
-local players = game.Players:GetPlayers()
+local Section = Tab.NewSection("Walk Speed")
 
-for i,v in pairs(players) do
- local esp = Instance.new("Highlight")
- esp.Name = v.Name
- esp.FillTransparency = 0
- esp.FillColor = Color3.new(1, 0.666667, 0)
- esp.OutlineColor = Color3.new(1, 0.333333, 1)
- esp.OutlineTransparency = 0
- esp.Parent = v.Character
-end
-end
+local Button = Section.NewButton("Reset Walk Speed",function()
+    game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 16
 end)
+
+local Button = Section.NewButton("WalkSpeed 50",function()
+    game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 50
+end)
+
+local Button = Section.NewButton("WalkSpeed 100",function()
+    game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 100
+end)
+
+local Button = Section.NewButton("WalkSpeed 150",function()
+    game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 150
+end)
+
+local Button = Section.NewButton("WalkSpeed 200",function()
+    game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 200
+end)
+
+local Button = Section.NewButton("WalkSpeed 250",function()
+    game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 250
+end)
+
+local Button = Section.NewButton("WalkSpeed 300",function()
+    game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 300
+end)
+
+local Button = Section.NewButton("WalkSpeed 350",function()
+    game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 350
+end)
+
+local Button = Section.NewButton("WalkSpeed 400",function()
+    game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 400
+end)
+
+local Button = Section.NewButton("WalkSpeed 450",function()
+    game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 450
+end)
+
+local Button = Section.NewButton("WalkSpeed 500",function()
+    game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 500
+end)
+
+local Tab = Window.NewTab("Jump Power")
+
+local Section = Tab.NewSection("Jump Power")
+
+local Button = Section.NewButton("Reset Jump Power",function()
+    game.Players.LocalPlayer.Character.Humanoid.JumpPower = 50
+end)
+
+local Button = Section.NewButton("Jump Power 100",function()
+    game.Players.LocalPlayer.Character.Humanoid.JumpPower = 100
+end)
+
+local Button = Section.NewButton("Jump Power 150",function()
+    game.Players.LocalPlayer.Character.Humanoid.JumpPower = 150
+end)
+
+local Button = Section.NewButton("Jump Power 200",function()
+    game.Players.LocalPlayer.Character.Humanoid.JumpPower = 200
+end)
+
+local Button = Section.NewButton("Jump Power 250",function()
+    game.Players.LocalPlayer.Character.Humanoid.JumpPower = 250
+end)
+
+local Button = Section.NewButton("Jump Power 300",function()
+    game.Players.LocalPlayer.Character.Humanoid.JumpPower = 300
+end)
+
+local Button = Section.NewButton("Jump Power 350",function()
+    game.Players.LocalPlayer.Character.Humanoid.JumpPower = 350
+end)
+
+local Button = Section.NewButton("Jump Power 400",function()
+    game.Players.LocalPlayer.Character.Humanoid.JumpPower = 400
+end)
+
+local Button = Section.NewButton("Jump Power 450",function()
+    game.Players.LocalPlayer.Character.Humanoid.JumpPower = 450
+end)
+
+local Button = Section.NewButton("Jump Power 500",function()
+    game.Players.LocalPlayer.Character.Humanoid.JumpPower = 500
 end)
 
 local Tab = Window.NewTab("Player")
 
 local Section = Tab.NewSection("Player")
 
-local Slider = Section.NewSlider("Walk Speed",16,500,true,function(value)
-while game:GetService('RunService').RenderStepped:Wait() do
-    game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = value
-end
-end,16)
-
-local Slider = Section.NewSlider("Jump Power",50,500,true,function(value)
-while game:GetService('RunService').RenderStepped:Wait() do
-    game.Players.LocalPlayer.Character.Humanoid.JumpPower = value
-end
-end,50)
-
-local Button = Section.NewButton("Anti Afk",function()
-while wait(0.000001) do
-wait(3)
-game.Players.LocalPlayer.Character.Humanoid:ChangeState("Jumping")
-end
-end)
-
-local Button = Section.NewButton("Rejoin",function()
-			local tpservice= game:GetService("TeleportService")
-			local plr = game.Players.LocalPlayer
-
-			tpservice:Teleport(game.PlaceId, plr)
-end)
-
-local Button = Section.NewButton("INF Jump",function()
-end)
-
-local Button = Section.NewButton("For Bhop (auto jump)",function()
-loadstring(game:HttpGet('https://raw.githubusercontent.com/GhostPlayer352/Test4/main/Auto%20Jump'))()
-end)
-
-local Button = Section.NewButton("Additional Speed 100",function()
-        for i,v in pairs(game:GetService("ReplicatedStorage").Framework.Modules["1 | Directory"].Guns:GetChildren()) do
-            pcall(function()
-                require(v)[tostring(i)].additionalSpeed = 100
-            end)
-        end
-end)
-
-local Button = Section.NewButton("Noclip (20s)",function()
+local Button = Section.NewButton("Noclip",function()
 local noClip = true
 local noClipConnect = game:GetService("RunService").Stepped:Connect(function()
     local chr = game.Players.LocalPlayer.Character
@@ -911,23 +599,18 @@ task.wait(20)
 noClipConnect:Disconnect()
 end)
 
-local Button = Section.NewButton("CTRL Click-TP",function()
-local Imput = game:GetService("UserInputService")
-local Plr = game.Players.LocalPlayer
-local Mouse = Plr:GetMouse()
- 
-function To(position)
-   local Chr = Plr.Character
-   if Chr ~= nil then
-       Chr:MoveTo(position)
-   end
-end
- 
-Imput.InputBegan:Connect(function(input)
-   if input.UserInputType == Enum.UserInputType.MouseButton1 and Imput:IsKeyDown(Enum.KeyCode.LeftControl) then
-       To(Mouse.Hit.p)
-   end
+local Button = Section.NewButton("Off Noclip",function()
+local noClip = false
 end)
+
+local Button = Section.NewButton("CTRL Click-TP",function()
+        getgenv().ClickTP = state;
+	end)
+Mouse.Button1Down:connect(function()
+    if not game:GetService("UserInputService"):IsKeyDown(Enum.KeyCode.LeftControl) then return end;
+    if not Mouse.Target then return end;
+    if not getgenv().ClickTP then return end;
+    Character:MoveTo(Mouse.Hit.p);
 end)
 
 local Button = Section.NewButton("Fling",function()
@@ -963,152 +646,10 @@ local Button = Section.NewButton("Invisible",function()
     loadstring(game:HttpGet("https://raw.githubusercontent.com/ibosik/AzureFlareHUB/main/Invisible"))()
 end)
 
-local Button = Section.NewButton("Ultimate Admin",function()
+Section:NewButton("Ultimate Admin", "Write commands in chat", function()
     loadstring(game:HttpGet("https://pastebin.com/raw/bVjM0xCS", true))()
 end)
 
-local Button = Section.NewButton("FE Flip",function()
+Section:NewButton("FE Flip", "yes", function()
     loadstring(game:HttpGet("https://raw.githubusercontent.com/ibosik/AzureFlareHUB/main/feFlip", true))()
-end)
-
-local Button = Section.NewButton("Mastrubation",function()
---Created By Armut 7#8860 Discord : https://discord.gg/q9e6W3NRSU--
-function rmesh(a)
-if not (workspace[game.Players.LocalPlayer.Name][a].Handle:FindFirstChild('Mesh') or workspace[game.Players.LocalPlayer.Name][a].Handle:FindFirstChild('SpecialMesh')) then return end
-old=game.Players.LocalPlayer.Character
-game.Players.LocalPlayer.Character=workspace[game.Players.LocalPlayer.Name]
-for i,v in next, workspace[game.Players.LocalPlayer.Name]:FindFirstChild(a).Handle:GetDescendants() do
-if v:IsA('Mesh') or v:IsA('SpecialMesh') then
-v:Remove()
-end
-end
-for i = 1 , 2 do
-game.Players.LocalPlayer.Character=old
-end
-end
-
-HumanDied = false for i,v in next, game:GetService("Players").LocalPlayer.Character:GetDescendants() do if v:IsA("BasePart") then  _G.netless=game:GetService("RunService").Heartbeat:connect(function() v.AssemblyLinearVelocity = Vector3.new(-30,0,0) sethiddenproperty(game.Players.LocalPlayer,"MaximumSimulationRadius",math.huge) sethiddenproperty(game.Players.LocalPlayer,"SimulationRadius",999999999) end) end end  local plr = game.Players.LocalPlayer local char = plr.Character local srv = game:GetService('RunService') local ct = {}  char.Archivable = true local reanim = char:Clone() reanim.Name = 'Nexo '..plr.Name..'' fl=Instance.new('Folder',char) fl.Name ='Nexo' reanim.Animate.Disabled=true char.HumanoidRootPart:Destroy() char.Humanoid:ChangeState(16)  for i,v in next, char.Humanoid:GetPlayingAnimationTracks() do v:Stop() end char.Animate:Remove()  function create(part, parent, p, r) Instance.new("Attachment",part) Instance.new("AlignPosition",part) Instance.new("AlignOrientation",part) Instance.new("Attachment",parent) part.Attachment.Name = part.Name parent.Attachment.Name = part.Name part.AlignPosition.Attachment0 = part[part.Name] part.AlignOrientation.Attachment0 = part[part.Name] part.AlignPosition.Attachment1 = parent[part.Name] part.AlignOrientation.Attachment1 = parent[part.Name] parent[part.Name].Position = p or Vector3.new() part[part.Name].Orientation = r or Vector3.new() part.AlignPosition.MaxForce = 999999999 part.AlignPosition.MaxVelocity = math.huge part.AlignPosition.ReactionForceEnabled = false part.AlignPosition.Responsiveness = math.huge part.AlignOrientation.Responsiveness = math.huge part.AlignPosition.RigidityEnabled = false part.AlignOrientation.MaxTorque = 999999999 end  for i,v in next, char:GetDescendants() do if v:IsA('Accessory') then v.Handle:BreakJoints() create(v.Handle,reanim[v.Name].Handle) end end  char.Torso['Left Shoulder']:Destroy() char.Torso['Right Shoulder']:Destroy() char.Torso['Left Hip']:Destroy() char.Torso['Right Hip']:Destroy()  create(char['Torso'],reanim['Torso']) create(char['Left Arm'],reanim['Left Arm']) create(char['Right Arm'],reanim['Right Arm']) create(char['Left Leg'],reanim['Left Leg']) create(char['Right Leg'],reanim['Right Leg'])  for i,v in next, reanim:GetDescendants() do if v:IsA('BasePart') or v:IsA('Decal') then v.Transparency = 1 end end  reanim.Parent = fl  for i,v in next, reanim:GetDescendants() do if v:IsA('BasePart') then table.insert(ct,srv.RenderStepped:Connect(function() v.CanCollide = false end)) end end  for i,v in next, char:GetDescendants() do if v:IsA('BasePart') then table.insert(ct,srv.RenderStepped:Connect(function() v.CanCollide = false end)) end end  for i,v in next, reanim:GetDescendants() do if v:IsA('BasePart') then table.insert(ct,srv.Stepped:Connect(function() v.CanCollide = false end)) end end  for i,v in next, char:GetDescendants() do if v:IsA('BasePart') then table.insert(ct,srv.Stepped:Connect(function() v.CanCollide = false end)) end end  table.insert(ct,reanim.Humanoid.Died:Connect(function() plr.Character = char char:BreakJoints() reanim:Destroy() game.Players:Chat('-gr') _G.netless:Disconnect() HumanDied = true for _,v in pairs(ct) do v:Disconnect() end end))  plr.Character = reanim workspace.CurrentCamera.CameraSubject = reanim.Humanoid
-
-IT = Instance.new
-CF = CFrame.new
-VT = Vector3.new
-RAD = math.rad
-C3 = Color3.new
-UD2 = UDim2.new
-BRICKC = BrickColor.new
-ANGLES = CFrame.Angles
-EULER = CFrame.fromEulerAnglesXYZ
-COS = math.cos
-ACOS = math.acos
-SIN = math.sin
-ASIN = math.asin
-ABS = math.abs
-MRANDOM = math.random
-FLOOR = math.floor
-
-speed = 1
-sine = 1
-srv = game:GetService('RunService')
-
-reanim = game.Players.LocalPlayer.Character
-
-function hat(h,p,c1,c0,m)
-reanim[h].Handle.AccessoryWeld.Part1=reanim[p]
-reanim[h].Handle.AccessoryWeld.C1=c1 or CFrame.new()
-reanim[h].Handle.AccessoryWeld.C0=reanim[h].Handle.AccessoryWeld.C0:Lerp(c0 or CFrame.new(),1)
-if m == true then
-rmesh(h)
-end
-end
-
-m=game.Players.LocalPlayer:GetMouse()
-RJ = reanim.HumanoidRootPart.RootJoint
-RS = reanim.Torso['Right Shoulder']
-LS = reanim.Torso['Left Shoulder']
-RH = reanim.Torso['Right Hip']
-LH = reanim.Torso['Left Hip']
-Root = reanim.HumanoidRootPart
-NECK = reanim.Torso.Neck
-NECK.C0 = CF(0,1,0)*ANGLES(RAD(0),RAD(0),RAD(0))
-NECK.C1 = CF(0,-0.5,0)*ANGLES(RAD(0),RAD(0),RAD(0))
-RJ.C1 = CF(0,-1,0)*ANGLES(RAD(0),RAD(0),RAD(0))
-RJ.C0 = CF(0,0,0)*ANGLES(RAD(0),RAD(0),RAD(0))
-RS.C1 = CF(0,0.5,0)*ANGLES(RAD(0),RAD(0),RAD(0))
-LS.C1 = CF(0,0.5,0)*ANGLES(RAD(0),RAD(0),RAD(0))
-RH.C1 = CF(0,1,0)*ANGLES(RAD(0),RAD(0),RAD(0))
-LH.C1 = CF(0,1,0)*ANGLES(RAD(0),RAD(0),RAD(0))
-RH.C0 = CF(0,0,0)*ANGLES(RAD(0),RAD(0),RAD(0))
-LH.C0 = CF(0,0,0)*ANGLES(RAD(0),RAD(0),RAD(0))
-RS.C0 = CF(0,0,0)*ANGLES(RAD(0),RAD(0),RAD(0))
-LS.C0 = CF(0,0,0)*ANGLES(RAD(0),RAD(0),RAD(0))
-
--- for modes u can go in this link : https://Nexo.notxeneon15.repl.co/nexo/modes.lua
-
-coroutine.wrap(function()
-while true do -- anim changer
-if HumanDied then break end
-sine = sine + speed
-local rlegray = Ray.new(reanim["Right Leg"].Position + Vector3.new(0, 0.5, 0), Vector3.new(0, -2, 0))
-local rlegpart, rlegendPoint = workspace:FindPartOnRay(rlegray, char)
-local llegray = Ray.new(reanim["Left Leg"].Position + Vector3.new(0, 0.5, 0), Vector3.new(0, -2, 0))
-local llegpart, llegendPoint = workspace:FindPartOnRay(llegray, char)
-local rightvector = (Root.Velocity * Root.CFrame.rightVector).X + (Root.Velocity * Root.CFrame.rightVector).Z
-local lookvector = (Root.Velocity * Root.CFrame.lookVector).X + (Root.Velocity * Root.CFrame.lookVector).Z
-if lookvector > reanim.Humanoid.WalkSpeed then
-lookvector = reanim.Humanoid.WalkSpeed
-end
-if lookvector < -reanim.Humanoid.WalkSpeed then
-lookvector = -reanim.Humanoid.WalkSpeed
-end
-if rightvector > reanim.Humanoid.WalkSpeed then
-rightvector = reanim.Humanoid.WalkSpeed
-end
-if rightvector < -reanim.Humanoid.WalkSpeed then
-rightvector = -reanim.Humanoid.WalkSpeed
-end
-local lookvel = lookvector / reanim.Humanoid.WalkSpeed
-local rightvel = rightvector / reanim.Humanoid.WalkSpeed
-if reanim.Humanoid.Jump then -- jump
-NECK.C0=NECK.C0:Lerp(CFrame.new(0+0*math.cos(sine/10),1+0*math.cos(sine/10),0+0*math.cos(sine/10))*CFrame.Angles(math.rad(0+0*math.cos(sine/10)),math.rad(0+0*math.cos(sine/10)),math.rad(0+0*math.cos(sine/10))),.2) 
-RJ.C0=RJ.C0:Lerp(CFrame.new(0+0*math.cos(sine/10),-1+0*math.cos(sine/10),0+0*math.cos(sine/10))*CFrame.Angles(math.rad(0+0*math.cos(sine/10)),math.rad(0+0*math.cos(sine/10)),math.rad(0+0*math.cos(sine/10))),.2) 
-RS.C0=RS.C0:Lerp(CFrame.new(1+0*math.cos(sine/10),-0.2+1*math.cos(sine/5),-1+0*math.cos(sine/1))*CFrame.Angles(math.rad(30+0*math.cos(sine/10)),math.rad(-30+0*math.sin(sine/10)),math.rad(-20+0*math.cos(sine/10))),.2) 
-LS.C0=LS.C0:Lerp(CFrame.new(-1.5+0*math.cos(sine/10),0.5+0*math.cos(sine/10),0+0*math.cos(sine/10))*CFrame.Angles(math.rad(0+0*math.cos(sine/10)),math.rad(0+0*math.cos(sine/10)),math.rad(0+0*math.cos(sine/10))),.2) 
-RH.C0=RH.C0:Lerp(CFrame.new(0.5+0*math.cos(sine/10),-1+0*math.cos(sine/10),0+0*math.cos(sine/10))*CFrame.Angles(math.rad(0+0*math.cos(sine/10)),math.rad(0+0*math.cos(sine/10)),math.rad(0+0*math.cos(sine/10))),.2) 
-LH.C0=LH.C0:Lerp(CFrame.new(-0.5+0*math.cos(sine/10),-1+0*math.cos(sine/10),0+0*math.cos(sine/10))*CFrame.Angles(math.rad(0+0*math.cos(sine/10)),math.rad(0+0*math.cos(sine/10)),math.rad(0+0*math.cos(sine/10))),.2)
-elseif Root.Velocity.y < -1 and reanim.Humanoid.Jump then -- fall
-NECK.C0=NECK.C0:Lerp(CFrame.new(0+0*math.cos(sine/10),1+0*math.cos(sine/10),0+0*math.cos(sine/10))*CFrame.Angles(math.rad(0+0*math.cos(sine/10)),math.rad(0+0*math.cos(sine/10)),math.rad(0+0*math.cos(sine/10))),.2) 
-RJ.C0=RJ.C0:Lerp(CFrame.new(0+0*math.cos(sine/10),-1+0*math.cos(sine/10),0+0*math.cos(sine/10))*CFrame.Angles(math.rad(0+0*math.cos(sine/10)),math.rad(0+0*math.cos(sine/10)),math.rad(0+0*math.cos(sine/10))),.2) 
-RS.C0=RS.C0:Lerp(CFrame.new(1+0*math.cos(sine/10),-0.2+1*math.cos(sine/5),-1+0*math.cos(sine/1))*CFrame.Angles(math.rad(30+0*math.cos(sine/10)),math.rad(-30+0*math.sin(sine/10)),math.rad(-20+0*math.cos(sine/10))),.2) 
-LS.C0=LS.C0:Lerp(CFrame.new(-1.5+0*math.cos(sine/10),0.5+0*math.cos(sine/10),0+0*math.cos(sine/10))*CFrame.Angles(math.rad(0+0*math.cos(sine/10)),math.rad(0+0*math.cos(sine/10)),math.rad(0+0*math.cos(sine/10))),.2) 
-RH.C0=RH.C0:Lerp(CFrame.new(0.5+0*math.cos(sine/10),-1+0*math.cos(sine/10),0+0*math.cos(sine/10))*CFrame.Angles(math.rad(0+0*math.cos(sine/10)),math.rad(0+0*math.cos(sine/10)),math.rad(0+0*math.cos(sine/10))),.2) 
-LH.C0=LH.C0:Lerp(CFrame.new(-0.5+0*math.cos(sine/10),-1+0*math.cos(sine/10),0+0*math.cos(sine/10))*CFrame.Angles(math.rad(0+0*math.cos(sine/10)),math.rad(0+0*math.cos(sine/10)),math.rad(0+0*math.cos(sine/10))),.2)
-elseif Root.Velocity.Magnitude < 2 then -- idle
-hat('Pal Hair','Torso',CFrame.new(0,0,0),CFrame.new(0+0*math["cos"](sine/10),1.5+0*math["cos"](sine/10),1.5+0.2*math["cos"](sine/1))*CFrame.Angles(math.rad(0+0*math["cos"](sine/10)),math.rad(0+0*math["cos"](sine/10)),math.rad(0+0*math["sin"](sine/1))),true)
-NECK.C0=NECK.C0:Lerp(CFrame.new(0+0*math.cos(sine/10),1+0*math.cos(sine/10),0+0*math.cos(sine/10))*CFrame.Angles(math.rad(0+0*math.cos(sine/10)),math.rad(0+0*math.cos(sine/10)),math.rad(0+0*math.cos(sine/10))),.2) 
-RJ.C0=RJ.C0:Lerp(CFrame.new(0+0*math.cos(sine/10),-1+0*math.cos(sine/10),0+0*math.cos(sine/10))*CFrame.Angles(math.rad(0+0*math.cos(sine/10)),math.rad(0+0*math.cos(sine/10)),math.rad(0+0*math.cos(sine/10))),.2) 
-RS.C0=RS.C0:Lerp(CFrame.new(1+0*math.cos(sine/10),-0.2+1*math.cos(sine/5),-1+0*math.cos(sine/1))*CFrame.Angles(math.rad(30+0*math.cos(sine/10)),math.rad(-30+0*math.sin(sine/10)),math.rad(-20+0*math.cos(sine/10))),.2) 
-LS.C0=LS.C0:Lerp(CFrame.new(-1.5+0*math.cos(sine/10),0.5+0*math.cos(sine/10),0+0*math.cos(sine/10))*CFrame.Angles(math.rad(0+0*math.cos(sine/10)),math.rad(0+0*math.cos(sine/10)),math.rad(0+0*math.cos(sine/10))),.2) 
-RH.C0=RH.C0:Lerp(CFrame.new(0.5+0*math.cos(sine/10),-1+0*math.cos(sine/10),0+0*math.cos(sine/10))*CFrame.Angles(math.rad(0+0*math.cos(sine/10)),math.rad(0+0*math.cos(sine/10)),math.rad(0+0*math.cos(sine/10))),.2) 
-LH.C0=LH.C0:Lerp(CFrame.new(-0.5+0*math.cos(sine/10),-1+0*math.cos(sine/10),0+0*math.cos(sine/10))*CFrame.Angles(math.rad(0+0*math.cos(sine/10)),math.rad(0+0*math.cos(sine/10)),math.rad(0+0*math.cos(sine/10))),.2)
-elseif Root.Velocity.Magnitude < 20 then -- walk
-hat('Pal Hair','Torso',CFrame.new(0,0,0),CFrame.new(0+0*math["cos"](sine/10),1.5+0*math["cos"](sine/10),1.5+0.2*math["cos"](sine/1))*CFrame.Angles(math.rad(0+0*math["cos"](sine/10)),math.rad(0+0*math["cos"](sine/10)),math.rad(0+0*math["sin"](sine/1))),true)
-NECK.C0=NECK.C0:Lerp(CFrame.new(0+0*math.cos(sine/10),1+0*math.cos(sine/10),0+0*math.cos(sine/10))*CFrame.Angles(math.rad(0+0*math.cos(sine/10)),math.rad(0+0*math.cos(sine/10)),math.rad(0+0*math.cos(sine/10))),.2) 
-RJ.C0=RJ.C0:Lerp(CFrame.new(0+0*math.cos(sine/10),-1+0*math.cos(sine/10),0+0*math.cos(sine/10))*CFrame.Angles(math.rad(0+0*math.cos(sine/10)),math.rad(0+0*math.cos(sine/10)),math.rad(0+0*math.cos(sine/10))),.2) 
-RS.C0=RS.C0:Lerp(CFrame.new(1+0*math.cos(sine/10),-0.2+1*math.cos(sine/5),-1+0*math.cos(sine/1))*CFrame.Angles(math.rad(30+0*math.cos(sine/10)),math.rad(-30+0*math.sin(sine/10)),math.rad(-20+0*math.cos(sine/10))),.2) 
-LS.C0=LS.C0:Lerp(CFrame.new(-1.5+0*math.cos(sine/10),0.5+0*math.cos(sine/10),0+0*math.cos(sine/10))*CFrame.Angles(math.rad(0+50*math.cos(sine/9)),math.rad(0+0*math.cos(sine/10)),math.rad(0+0*math.cos(sine/10))),.2) 
-RH.C0=RH.C0:Lerp(CFrame.new(0.5+0*math.cos(sine/10),-1+0*math.cos(sine/10),0+0*math.cos(sine/10))*CFrame.Angles(math.rad(0+60*math.cos(sine/9)),math.rad(0+0*math.cos(sine/10)),math.rad(0+0*math.cos(sine/10))),.2) 
-LH.C0=LH.C0:Lerp(CFrame.new(-0.5+0*math.cos(sine/10),-1+0*math.cos(sine/10),0+0*math.cos(sine/10))*CFrame.Angles(math.rad(0+60*math.sin(sine/9)),math.rad(0+0*math.cos(sine/10)),math.rad(0+0*math.cos(sine/10))),.2)
-elseif Root.Velocity.Magnitude > 20 then -- run
-hat('Pal Hair','Torso',CFrame.new(0,0,0),CFrame.new(0+0*math["cos"](sine/10),1.5+0*math["cos"](sine/10),1.5+0.2*math["cos"](sine/1))*CFrame.Angles(math.rad(0+0*math["cos"](sine/10)),math.rad(0+0*math["cos"](sine/10)),math.rad(0+0*math["sin"](sine/1))),true)
-NECK.C0=NECK.C0:Lerp(CFrame.new(0+0*math.cos(sine/10),1+0*math.cos(sine/10),0+0*math.cos(sine/10))*CFrame.Angles(math.rad(0+0*math.cos(sine/10)),math.rad(0+0*math.cos(sine/10)),math.rad(0+0*math.cos(sine/10))),.2) 
-RJ.C0=RJ.C0:Lerp(CFrame.new(0+0*math.cos(sine/10),-1+0*math.cos(sine/10),0+0*math.cos(sine/10))*CFrame.Angles(math.rad(0+0*math.cos(sine/10)),math.rad(0+0*math.cos(sine/10)),math.rad(0+0*math.cos(sine/10))),.2) 
-RS.C0=RS.C0:Lerp(CFrame.new(1+0*math.cos(sine/10),-0.2+1*math.cos(sine/5),-1+0*math.cos(sine/1))*CFrame.Angles(math.rad(30+0*math.cos(sine/10)),math.rad(-30+0*math.sin(sine/10)),math.rad(-20+0*math.cos(sine/10))),.2) 
-LS.C0=LS.C0:Lerp(CFrame.new(-1.5+0*math.cos(sine/10),0.5+0*math.cos(sine/10),0+0*math.cos(sine/10))*CFrame.Angles(math.rad(0+50*math.cos(sine/9)),math.rad(0+0*math.cos(sine/10)),math.rad(0+0*math.cos(sine/10))),.2) 
-RH.C0=RH.C0:Lerp(CFrame.new(0.5+0*math.cos(sine/10),-1+0*math.cos(sine/10),0+0*math.cos(sine/10))*CFrame.Angles(math.rad(0+60*math.cos(sine/9)),math.rad(0+0*math.cos(sine/10)),math.rad(0+0*math.cos(sine/10))),.2) 
-LH.C0=LH.C0:Lerp(CFrame.new(-0.5+0*math.cos(sine/10),-1+0*math.cos(sine/10),0+0*math.cos(sine/10))*CFrame.Angles(math.rad(0+60*math.sin(sine/9)),math.rad(0+0*math.cos(sine/10)),math.rad(0+0*math.cos(sine/10))),.2)
-end
-srv.RenderStepped:Wait()
-end
-end)()
---Created using Nexo Animator V4
 end)
