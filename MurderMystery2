@@ -8,7 +8,7 @@ end
 
 local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/slf0Dev/Ocerium_Project/main/Library.lua"))()
 
-Window = Library.Main("Azure Flare Hub | KAT","LeftAlt") -- change "LeftAlt" to key that you want will hide gui
+Window = Library.Main("Azure Flare Hub","LeftAlt") -- change "LeftAlt" to key that you want will hide gui
 
 
 local Tab = Window.NewTab("Credits")
@@ -41,10 +41,47 @@ local Button = Section.NewButton("Old Gui With Toggles And Sliders",function()
     loadstring(game:HttpGet('https://raw.githubusercontent.com/ibosik/AzureFlareHUB/main/KATOLD'))()
 end)
 
---[[local Tab = Window.NewTab("Auto Farm")
+local Tab = Window.NewTab("Misc")
+
+local Section = Tab.NewSection("Miscellaneous")
+
+local Button = Section.NewButton("Murderer and Sheriff finder",function()
+plr = game.Players.LocalPlayer
+mouse = plr:GetMouse()
+mouse.KeyDown:connect(function(key)
+
+if key == "r" then
+if rconsolewarn then
+	rconsoleclear()
+	rprint = rconsolewarn
+else
+	rprint = print
+end
+for i,v in pairs(game:GetService("Players"):GetChildren()) do
+    local items = v.Backpack
+    if items:FindFirstChild("Knife") then
+        rprint(v.Name .. " Is the murder              MURDER")
+    else if items:FindFirstChild("Gun") then
+        rprint(v.Name .. " Is the sheriff             SHERIFF")
+    else
+        rprint(v.Name .. " Is innocent")
+    end
+    end
+end
+
+rprint("")
+rprint("")
+rprint("")
+rprint("press ''r'' to refresh list.")
+end
+end)
+end)
+
+local Tab = Window.NewTab("Auto Farm")
 
 local Section = Tab.NewSection("Auto Farm")
 
+local Button = Section.NewButton("idk",function()
         getgenv().Autofarm = state;
         if not getgenv().AutofarmMethod then return end;
         if getgenv().AutofarmMethod == "Coins" then
@@ -70,9 +107,10 @@ local Section = Tab.NewSection("Auto Farm")
                 wait();
                 if Client.PlayerGui.MainGUI.Game.CashBag.Visible == true then
                     RootPart.CFrame = CFrame.new(-121.12338256836, 138.27394104004, 38.946128845215);
+		    end)
 end
 end
-end) ]]--
+end)
 
 local Tab = Window.NewTab("Murder")
 
