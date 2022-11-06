@@ -44,16 +44,14 @@ local Button = Section.NewButton("Destroy GUI",function()
         game:GetService("CoreGui").Library:Destroy()
 end)
 
-local Button = Section.NewButton("Old Gui",function()
-    loadstring(game:HttpGet('https://raw.githubusercontent.com/ibosik/AzureFlareHUB/main/KATOLD'))()
-end)
 
 local Tab = Window.NewTab("Auto Farm")
 
 local Section = Tab.NewSection("Click")
 
-local Button = Section.NewButton("Auto Clicker",function()
-while wait() do
+local Toggle = Section.NewToggle("Auto Clicker",function(state)
+_G.AutoClicker = state
+while _G.AutoClicker == true do
 game:GetService("ReplicatedStorage").Click:FireServer()
 wait(0.0811)
 game:GetService("ReplicatedStorage").Click:FireServer()
@@ -63,7 +61,7 @@ wait(0.0811)
 game:GetService("ReplicatedStorage").Click:FireServer()
 wait(0.0811)
 game:GetService("ReplicatedStorage").Click:FireServer()
-wait(0.0813)
+wait(0.0820)
 game:GetService("ReplicatedStorage").Click:FireServer()
 wait(0.0815)
 game:GetService("ReplicatedStorage").Click:FireServer()
@@ -73,12 +71,13 @@ wait(0.0819)
 game:GetService("ReplicatedStorage").Click:FireServer()
 wait(0.0821)
 game:GetService("ReplicatedStorage").Click:FireServer()
-wait(0.0823)
+wait(0.0830)
 end
 end)
 
-local Button = Section.NewButton("Auto Mega Clicker",function()
-while wait() do
+local Toggle = Section.NewToggle("Auto Mega Clicker",function(state)
+_G.AutoMegaClicker = state
+while _G.AutoMegaClicker == true do
 game:GetService("ReplicatedStorage").MegaClick:FireServer()
 wait(30.1)
 end
@@ -88,8 +87,9 @@ local Tab = Window.NewTab("Auto Buy")
 
 local Section = Tab.NewSection("Turtle")
 
-local Button = Section.NewButton("Auto Buy Turtle",function()
-while wait() do
+local Toggle = Section.NewToggle("Auto Buy Turtle",function(state)
+_G.AutoBuy3 = state
+while _G.AutoBuy3 == true do wait(0.1)
     local args = {
     [1] = 1
 }
@@ -98,8 +98,9 @@ game:GetService("ReplicatedStorage").IncomeEvent:FireServer(unpack(args))
         end
 end)
 
-local Button = Section.NewButton("Auto Buy MegaTurtle",function()
-while wait() do
+local Toggle = Section.NewToggle("Auto Buy MegaTurtle",function(state)
+_G.AutoBuy1 = state
+while _G.AutoBuy1 == true do wait(0.1)
 local args = {
     [1] = 2
 }
@@ -108,8 +109,9 @@ game:GetService("ReplicatedStorage").IncomeEvent:FireServer(unpack(args))
         end
 end)
 
-local Button = Section.NewButton("Auto Buy NativeTurtle",function()
-while wait() do
+local Toggle = Section.NewToggle("Auto Buy NativeTurtle",function(state)
+_G.AutoBuy2 = state
+while _G.AutoBuy2 == true do wait(0.1)
 local args = {
     [1] = 3
 }
@@ -118,9 +120,39 @@ game:GetService("ReplicatedStorage").IncomeEvent:FireServer(unpack(args))
         end
 end)
 
+local Section = Tab.NewSection("Upgrade")
+
+local Toggle = Section.NewToggle("Auto Upgrade",function(state)
+_G.AutoUpgrade1 = state
+while _G.AutoUpgrade1 == true do wait(0.1)
+local args = {
+    [1] = game:GetService("Players").LocalPlayer.PlayerGui.GameGui.Upgrade
+}
+
+game:GetService("ReplicatedStorage").ClickUpgrade:InvokeServer(unpack(args))
+end
+end)
+
+local Toggle = Section.NewToggle("Auto Mega Upgrade",function(state)
+_G.AutoUpgrade2 = state
+while _G.AutoUpgrade2 == true do wait(0.1)
+    local args = {
+    [1] = game:GetService("Players").LocalPlayer.PlayerGui.GameGui.Mega
+}
+
+game:GetService("ReplicatedStorage").ClickUpgrade2:InvokeServer(unpack(args))
+end
+end)
+
 local Tab = Window.NewTab("Player")
 
 local Section = Tab.NewSection("Player")
+
+local Button = Section.NewButton("Remove Camera",function()
+game:GetService("Workspace").Camera:Remove()
+game:GetService("Workspace").GameCamera:Remove()
+game:GetService("StarterGui").GameGui.StartCamera:Remove()
+end)
 
 local Slider = Section.NewSlider("Walk Speed",16,500,true,function(value)
 while game:GetService('RunService').RenderStepped:Wait() do
