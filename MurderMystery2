@@ -1,6 +1,6 @@
 --loadstring(game:HttpGetAsync("https://raw.githubusercontent.com/Drifter0507/GUIS/main/MURDER%20MYSTERY%202", true))();
 
-    pcall(function()
+--[[  pcall(function()
         local Knife = Client.Backpack:FindFirstChild("Knife") or Client.Character:FindFirstChild("Knife");
         if Knife and Knife:IsA("Tool") then
             for i, v in ipairs(Players:GetPlayers()) do
@@ -17,7 +17,7 @@
                 end;
             end;
         end;
-    end);
+    end);]]
 
 local player = game.Players.LocalPlayer
 
@@ -59,21 +59,17 @@ local Button = Section.NewButton("Destroy GUI",function()
         game:GetService("CoreGui").Library:Destroy()
 end)
 
-local Button = Section.NewButton("Old Gui With Toggles And Sliders",function()
-    loadstring(game:HttpGet('https://raw.githubusercontent.com/ibosik/AzureFlareHUB/main/KATOLD'))()
-end)
-
 local Tab = Window.NewTab("Misc")
 
 local Section = Tab.NewSection("Miscellaneous")
 
 local Button = Section.NewButton("Murderer and Sheriff finder",function()
-local Nofitication = Window.Nofitication("Press ''r''.",function()
+--[[local Nofitication = Window.Nofitication("Press ''r''.",function()
 plr = game.Players.LocalPlayer
 mouse = plr:GetMouse()
 mouse.KeyDown:connect(function(key)
 
-if key == "r" then
+if key == "r" then]]
 if rconsolewarn then
 	rconsoleclear()
 	rprint = rconsolewarn
@@ -91,20 +87,71 @@ for i,v in pairs(game:GetService("Players"):GetChildren()) do
     end
     end
 end
+end)
 
-rprint("")
-rprint("")
-rprint("")
-rprint("press ''r'' to refresh list.")
-end
-end)
-end)
-end)
+local Tab = Window.NewTab("TP")
+
+local Section = Tab.NewSection("Teleport To...")
+
+local Button = Section.NewButton("Spawn",function()
+    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-0.0356388316, 160.70784, 10.8358479)
+    end)
+
+local Button = Section.NewButton("Murder",function()
+    for i,v in pairs(game:GetService("Players"):GetChildren()) do
+    local items = v.Backpack
+    if items:FindFirstChild("Knife") then
+            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game.Players.v.Name.Head.CFrame
+    end
+    end
+    end)
 
 local Tab = Window.NewTab("Auto Farm")
 
 local Section = Tab.NewSection("Auto Farm")
 
+local Button = Section.NewButton("Farm Coin And Tp To Spawn",function()
+_G.farmcoinandtptospawn = true
+end)
+
+local Button = Section.NewButton("OFF To Spawn",function()
+_G.farmcoinandtptospawn = false
+end)
+
+local Button = Section.NewButton("FarmHouse Coin Farm",function()
+    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game:GetService("Workspace").Farmhouse.CoinContainer["Coin_Server"].CFrame
+game.Players.LocalPlayer.Character.Humanoid:ChangeState("Jumping")
+wait(0.1) if _G.farmcoinandtptospawn == true then game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-0.0356388316, 160.70784, 10.8358479)
+end    end)
+
+local Button = Section.NewButton("MilBase Coin Farm",function()
+    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game:GetService("Workspace").MilBase.CoinContainer["Coin_Server"].CFrame
+if _G.farmcoinandtptospawn == true then game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-0.0356388316, 160.70784, 10.8358479)
+end    end)
+
+local Button = Section.NewButton("House2 Coin Farm",function()
+    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game:GetService("Workspace").House2.CoinContainer["Coin_Server"].CFrame
+if _G.farmcoinandtptospawn == true then game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-0.0356388316, 160.70784, 10.8358479)
+end    end)
+
+local Button = Section.NewButton("Mansion2 Coin Farm",function()
+    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game:GetService("Workspace").Mansion2.CoinContainer["Coin_Server"].CFrame
+if _G.farmcoinandtptospawn == true then game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-0.0356388316, 160.70784, 10.8358479)
+end    end)
+
+local Button = Section.NewButton("Hotel Coin Farm",function()
+    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game:GetService("Workspace").Hotel.CoinContainer["Coin_Server"].CFrame
+if _G.farmcoinandtptospawn == true then game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-0.0356388316, 160.70784, 10.8358479)
+end    end)
+
+local Button = Section.NewButton("Factory Coin Farm",function()
+    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game:GetService("Workspace").Factory.CoinContainer["Coin_Server"].CFrame
+game.Players.LocalPlayer.Character.Humanoid:ChangeState("Jumping")
+wait(0.1) if _G.farmcoinandtptospawn == true then game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-0.0356388316, 160.70784, 10.8358479)
+end    end)
+
+
+--[[
 local Button = Section.NewButton("idk",function()
         getgenv().Autofarm = state;
         if not getgenv().AutofarmMethod then return end;
@@ -134,13 +181,13 @@ local Button = Section.NewButton("idk",function()
 		    end
 end
 end
-end)
+end)]]
 
 local Tab = Window.NewTab("Murder")
 
 local Section = Tab.NewSection("Murder")
 
-local Button = Section.NewButton("Kill Aura",function()
+local Button = Section.NewButton("Kill Aura",function(state)
         getgenv().KnifeAura = state;
 end)
 
@@ -266,7 +313,7 @@ local Tab = Window.NewTab("Esp")
 
 local Section = Tab.NewSection("Esp")
 
-local Button = Section.NewButton("Esp 1 (maybe lags)",function()
+local Button = Section.NewButton("Esp 1",function()
 while wait(0.5) do
     for i, childrik in ipairs(workspace:GetDescendants()) do
         if childrik:FindFirstChild("Humanoid") then
@@ -287,7 +334,7 @@ while wait(0.5) do
 end
 end)
 
-local Button = Section.NewButton("Esp 2 (VERY BAD esp, but without lags)",function()
+local Button = Section.NewButton("Esp 2",function()
 function CreateSG(name,parent,face)
     local SurfaceGui = Instance.new("SurfaceGui",parent)
     SurfaceGui.Parent = parent
@@ -435,10 +482,6 @@ end
             end
         end
     end)
-end)
-
-local Button = Section.NewButton("Tracer 2",function()
-
 end)
 
 local Tab = Window.NewTab("Chams")
