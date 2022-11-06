@@ -1,4 +1,103 @@
 --loadstring(game:HttpGetAsync("https://raw.githubusercontent.com/Drifter0507/GUIS/main/MURDER%20MYSTERY%202", true))();
+local GunHook
+GunHook = hookmetamethod(game, "__namecall", function(self, ...)
+	local method = getnamecallmethod()
+	local args = { ... }
+	if not checkcaller() then
+		if typeof(self) == "Instance" then
+			if self.Name == "ShootGun" and method == "InvokeServer" then
+				if getgenv().SheriffAim and getgenv().GunAccuracy then
+					if Murderer then
+						local Root = Players[tostring(Murderer)].Character.PrimaryPart;
+						local Veloc = Root.AssemblyLinearVelocity;
+						local Pos = Root.Position + (Veloc * Vector3.new(getgenv().GunAccuracy / 200, 0, getgenv().GunAccuracy/ 200));
+						args[2] = Pos;
+					end;
+				end;
+			end;
+		end;
+	end;
+	return GunHook(self, unpack(args));
+end);
+
+local FlyingEnabled = false
+local maxspeed = 150 
+function BetterFly()
+	repeat wait() until game.Players.LocalPlayer and game.Players.LocalPlayer.Character and game.Players.LocalPlayer.Character:findFirstChild("Head") and game.Players.LocalPlayer.Character:findFirstChild("Humanoid") 
+	local mouse = game.Players.LocalPlayer:GetMouse() 
+	repeat wait() until mouse
+	local plr = game.Players.LocalPlayer 
+	local torso = plr.Character.Head 
+	local flying = false
+	local deb = true 
+	local ctrl = {f = 0, b = 0, l = 0, r = 0} 
+	local lastctrl = {f = 0, b = 0, l = 0, r = 0}
+	local speed = 5000 
+	 
+	function Fly() 
+	local bg = Instance.new("BodyGyro", torso) 
+	bg.P = 9e4 
+	bg.maxTorque = Vector3.new(9e9, 9e9, 9e9) 
+	bg.cframe = torso.CFrame 
+	local bv = Instance.new("BodyVelocity", torso) 
+	bv.velocity = Vector3.new(0,0.1,0) 
+	bv.maxForce = Vector3.new(9e9, 9e9, 9e9) 
+	repeat wait() 
+	plr.Character.Humanoid.PlatformStand = true 
+	if ctrl.l + ctrl.r ~= 0 or ctrl.f + ctrl.b ~= 0 then 
+	speed = maxspeed
+	elseif not (ctrl.l + ctrl.r ~= 0 or ctrl.f + ctrl.b ~= 0) and speed ~= 0 then 
+		speed = 0 
+	end 
+	if (ctrl.l + ctrl.r) ~= 0 or (ctrl.f + ctrl.b) ~= 0 then 
+	bv.velocity = ((game.Workspace.CurrentCamera.CoordinateFrame.lookVector * (ctrl.f+ctrl.b)) + ((game.Workspace.CurrentCamera.CoordinateFrame * CFrame.new(ctrl.l+ctrl.r,(ctrl.f+ctrl.b)*.2,0).p) - game.Workspace.CurrentCamera.CoordinateFrame.p))*speed 
+	lastctrl = {f = ctrl.f, b = ctrl.b, l = ctrl.l, r = ctrl.r} 
+	elseif (ctrl.l + ctrl.r) == 0 and (ctrl.f + ctrl.b) == 0 and speed ~= 0 then 
+	bv.velocity = ((game.Workspace.CurrentCamera.CoordinateFrame.lookVector * (lastctrl.f+lastctrl.b)) + ((game.Workspace.CurrentCamera.CoordinateFrame * CFrame.new(lastctrl.l+lastctrl.r,(lastctrl.f+lastctrl.b)*0.2,0).p) - game.Workspace.CurrentCamera.CoordinateFrame.p))*speed 
+	else 
+	bv.velocity = Vector3.new(0,0,0) 
+	end 
+	bg.cframe = game.Workspace.CurrentCamera.CoordinateFrame * CFrame.Angles(-math.rad((ctrl.f+ctrl.b)*speed/maxspeed),0,0) 
+	until not flying 
+	ctrl = {f = 0, b = 0, l = 0, r = 0} 
+	lastctrl = {f = 0, b = 0, l = 0, r = 0} 
+	speed = 0 
+	bg:Destroy() 
+	bv:Destroy() 
+	plr.Character.Humanoid.PlatformStand = false 
+	end 
+	mouse.KeyDown:connect(function(key) 
+	if key:lower() == "q" and FlyingEnabled == true then 
+	if flying then flying = false 
+	else 
+	flying = true 
+	Fly() 
+	end 
+	elseif key:lower() == "w" then 
+	ctrl.f = 1 
+	elseif key:lower() == "s" then 
+	ctrl.b = -1 
+	elseif key:lower() == "a" then 
+	ctrl.l = -1 
+	elseif key:lower() == "d" then 
+	ctrl.r = 1 
+	end 
+	end) 
+	mouse.KeyUp:connect(function(key) 
+	if key:lower() == "w" then 
+	ctrl.f = 0 
+	elseif key:lower() == "s" then 
+	ctrl.b = 0 
+	elseif key:lower() == "a" then 
+	ctrl.l = 0 
+	elseif key:lower() == "d" then 
+	ctrl.r = 0 
+	end 
+	end)
+	Fly()
+end
+game.Players.LocalPlayer.CharacterAdded:Connect(BetterFly)
+BetterFly()
 
 --[[  pcall(function()
         local Knife = Client.Backpack:FindFirstChild("Knife") or Client.Character:FindFirstChild("Knife");
@@ -19,6 +118,7 @@
         end;
     end);]]
 
+_G.HideGui = "LeftAlt"
 local player = game.Players.LocalPlayer
 
 if player then
@@ -28,7 +128,7 @@ if player then
 
 local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/slf0Dev/Ocerium_Project/main/Library.lua"))()
 
-Window = Library.Main("Azure Flare Hub","LeftAlt") -- change "LeftAlt" to key that you want will hide gui
+Window = Library.Main("Azure Flare Hub",_G.HideGui) -- change "LeftAlt" to key that you want will hide gui
 
 local Nofitication = Window.Nofitication("Welcome To Azure Flare Hub "..player.Name.."",function()
 end)
@@ -63,6 +163,33 @@ local Tab = Window.NewTab("Misc")
 
 local Section = Tab.NewSection("Miscellaneous")
 
+local Button = Section.NewButton("God Mode",function()
+local accessories = {}
+function GodMode()
+    if game.Players.LocalPlayer.Character then
+        if game.Players.LocalPlayer.Character:FindFirstChild("Humanoid") then
+            for _, accessory in pairs(game.Players.LocalPlayer.Character.Humanoid:GetAccessories()) do
+                table.insert(accessories, accessory:Clone())
+            end
+            game.Players.LocalPlayer.Character.Humanoid.Name = "boop"
+        end
+        local v = game.Players.LocalPlayer.Character["boop"]:Clone()
+        v.Parent = game.Players.LocalPlayer.Character
+        v.Name = "Humanoid"
+        wait(0.1)
+        game.Players.LocalPlayer.Character["boop"]:Destroy()
+        workspace.CurrentCamera.CameraSubject = game.Players.LocalPlayer.Character.Humanoid
+        for _, accessory in pairs(accessories) do
+            game.Players.LocalPlayer.Character.Humanoid:AddAccessory(accessory)
+        end
+        game.Players.LocalPlayer.Character.Animate.Disabled = true
+        wait(0.1)
+        game.Players.LocalPlayer.Character.Animate.Disabled = false
+    end
+end
+GodMode()
+end)
+
 local Button = Section.NewButton("Murderer and Sheriff finder (r)",function()
 plr = game.Players.LocalPlayer
 mouse = plr:GetMouse()
@@ -85,15 +212,15 @@ for i,v in pairs(game:GetService("Players"):GetChildren()) do
         rprint(v.Name .. " Is innocent")
     end
     end
+    end
     rprint("")
     rprint("")
     rprint("Press ''r'' To Refresh List.")
-end
-end
+    end
 end)
 end)
 
-local Tab = Window.NewTab("TP")
+local Tab = Window.NewTab("Teleports")
 
 local Section = Tab.NewSection("Teleport To...")
 
@@ -129,16 +256,15 @@ while _G.farmcoins == true do
                     local coin = CoinContainer:FindFirstChild("Coin_Server");
                     if coin then
                             game.Workspace.zxcibosik.HumanoidRootPart.CFrame = coin.CFrame
-                    end
-game.Players.LocalPlayer.Character.Humanoid:ChangeState("Jumping")
-wait(0.1) if _G.farmcoinandtptospawn == true then game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-0.0356388316, 160.70784, 10.8358479)
-end end wait(1.8)                  end)
+wait(0.25) game.Players.LocalPlayer.Character.Humanoid:ChangeState("Jumping")
+ if _G.farmcoinandtptospawn == true then game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-0.0356388316, 160.70784, 10.8358479)
+end end wait(1.8)            end      end)
 
 local Button = Section.NewButton("Press If Toggle Dont Work",function()
 _G.farmcoins = false
 end)
 
-local Section = Tab.NewSection("Tp To Coins")
+local Section = Tab.NewSection("Tp To Coins Once")
 
 local Button = Section.NewButton("FarmHouse Coin Farm",function()
     game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game:GetService("Workspace").Farmhouse.CoinContainer["Coin_Server"].CFrame
@@ -262,25 +388,27 @@ end,false)
 
 local Tab = Window.NewTab("Sheriff")
 
-local Section = Tab.NewSection("Sheriff")
+local Section = Tab.NewSection("Sheriff Scripts")
 
-local Button = Section.NewButton("Get Gun",function()
-        if not CanGrab then return end
-        local gundrop = Workspace:FindFirstChild("GunDrop");
-        if gundrop and not lastCFrame then
-            lastCFrame = RootPart.CFrame;
-            pcall(function()
-                repeat
-                    RootPart.CFrame = gundrop.CFrame;
-                    RunService.Stepped:Wait();
-                until not gundrop:IsDescendantOf(Workspace);
-                RootPart.CFrame = lastCFrame;
-                lastCFrame = false;
-            end);
-        end;
+local Slider = Section.NewSlider("Gun Accuracy",1,100,true,function(value)
+getgenv().GunAccuracy = value
+end,100)
+
+local Toggle = Section.NewToggle("Silent Aim",function(state)
+getgenv().SheriffAim = state;
+print(getgenv().SheriffAim);
 end)
 
-local Button = Section.NewButton("Gun Esp",function()
+local Toggle = Section.NewToggle("Get Gun And Tp To Spawn",function(state)
+_G.GetGunAndTpToSpawn = state
+end)
+
+local Button = Section.NewButton("Get Gun",function()
+    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game:GetService("Workspace").GunDrop.CFrame
+wait(0.25) if _G.GetGunAndTpToSpawn == true then game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-0.0356388316, 160.70784, 10.8358479) end
+end)
+
+local Toggle = Section.NewToggle("Gun Esp",function(state)
 getgenv().GunESP = state;
 
 coroutine.wrap(function()
@@ -302,8 +430,7 @@ coroutine.wrap(function()
 end)
 end)
 
-local Button = Section.NewButton("Sheriff Esp",function()
-
+local Toggle = Section.NewToggle("Sheriff Esp",function(state)
         getgenv().SheriffEsp = state;
         while getgenv().SheriffEsp do
             wait()
@@ -584,7 +711,25 @@ end)
 
 local Tab = Window.NewTab("Player")
 
-local Section = Tab.NewSection("Player")
+local Section = Tab.NewSection("Player Scripts")
+
+local Slider = Section.NewSlider("Flight Speed",1,500,true,function(value)
+maxspeed = value
+end,150)
+
+local Button = Section.NewButton("Flight",function()
+local Nofitication = Window.Nofitication("Press ''Q''.",function()
+	end)
+	FlyingEnabled = true
+    end)
+
+local DisabledToggle = Section.NewToggle("FOV",function(bool)
+if bool == true then
+		game:GetService("TweenService"):Create(workspace.Camera, TweenInfo.new(1, Enum.EasingStyle.Quint), {FieldOfView = 120}):Play()
+else
+		game:GetService("TweenService"):Create(workspace.Camera, TweenInfo.new(1, Enum.EasingStyle.Quint), {FieldOfView = 70}):Play()
+end
+end,false)
 
 local Slider = Section.NewSlider("Walk Speed",16,500,true,function(value)
 while game:GetService('RunService').RenderStepped:Wait() do
