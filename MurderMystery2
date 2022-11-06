@@ -853,13 +853,13 @@ end)
 
 local Tab = Window.NewTab("Aim")
 
-local Section = Tab.NewSection("Aim Bot")
+local Section = Tab.NewSection("Aim Scripts")
 
 local Button = Section.NewButton("Aim Bot",function()
     loadstring(game:HttpGet("https://raw.githubusercontent.com/ibosik/ok/main/ok"))()
 end)
 
-local Button = Section.NewButton("Aim Bot 2",function()
+local Button = Section.NewButton("Silent Aim",function()
 local Nofitication = Window.Nofitication("Press ''g''.",function()
 end)
 Services.ContextActionService:BindAction('AIMBind', EventFunctions.ContextActionService_G, false, Enum.KeyCode.G)
