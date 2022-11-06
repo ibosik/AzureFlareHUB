@@ -63,13 +63,12 @@ local Tab = Window.NewTab("Misc")
 
 local Section = Tab.NewSection("Miscellaneous")
 
-local Button = Section.NewButton("Murderer and Sheriff finder",function()
---[[local Nofitication = Window.Nofitication("Press ''r''.",function()
+local Button = Section.NewButton("Murderer and Sheriff finder (r)",function()
 plr = game.Players.LocalPlayer
 mouse = plr:GetMouse()
 mouse.KeyDown:connect(function(key)
 
-if key == "r" then]]
+if key == "r" then
 if rconsolewarn then
 	rconsoleclear()
 	rprint = rconsolewarn
@@ -86,7 +85,12 @@ for i,v in pairs(game:GetService("Players"):GetChildren()) do
         rprint(v.Name .. " Is innocent")
     end
     end
+    rprint("")
+    rprint("")
+    rprint("Press ''r'' To Refresh List.")
 end
+end
+end)
 end)
 
 local Tab = Window.NewTab("TP")
@@ -108,15 +112,33 @@ local Button = Section.NewButton("Murder",function()
 
 local Tab = Window.NewTab("Auto Farm")
 
-local Section = Tab.NewSection("Auto Farm")
+local Section = Tab.NewSection("Auto Farm Coins")
 
-local Button = Section.NewButton("Farm Coin And Tp To Spawn",function()
-_G.farmcoinandtptospawn = true
+local Toggle = Section.NewToggle("Farm Coin And Tp To Spawn",function(state)
+_G.farmcoinandtptospawn = state
 end)
 
-local Button = Section.NewButton("OFF To Spawn",function()
+--[[local Button = Section.NewButton("OFF Tp To Spawn",function()
 _G.farmcoinandtptospawn = false
+end)]]
+
+local Toggle = Section.NewToggle("Auto Farm Coins",function(state)
+_G.farmcoins = state
+while _G.farmcoins == true do
+                local CoinContainer = Workspace:FindFirstChild("CoinContainer", true);
+                    local coin = CoinContainer:FindFirstChild("Coin_Server");
+                    if coin then
+                            game.Workspace.zxcibosik.HumanoidRootPart.CFrame = coin.CFrame
+                    end
+game.Players.LocalPlayer.Character.Humanoid:ChangeState("Jumping")
+wait(0.1) if _G.farmcoinandtptospawn == true then game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-0.0356388316, 160.70784, 10.8358479)
+end end wait(1.8)                  end)
+
+local Button = Section.NewButton("Press If Toggle Dont Work",function()
+_G.farmcoins = false
 end)
+
+local Section = Tab.NewSection("Tp To Coins")
 
 local Button = Section.NewButton("FarmHouse Coin Farm",function()
     game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game:GetService("Workspace").Farmhouse.CoinContainer["Coin_Server"].CFrame
@@ -576,12 +598,12 @@ while game:GetService('RunService').RenderStepped:Wait() do
 end
 end,50)
 
-local DisabledToggle = Section.NewToggle("Anti Afk",function(bool)
-repeat
-wait(3)
+local Toggle = Section.NewToggle("Anti Afk",function(state)
+while state == true do
 game.Players.LocalPlayer.Character.Humanoid:ChangeState("Jumping")
-until bool == false
-end,false)
+wait(3)
+end
+end)
 
 local Button = Section.NewButton("Rejoin",function()
 			local tpservice= game:GetService("TeleportService")
@@ -590,8 +612,8 @@ local Button = Section.NewButton("Rejoin",function()
 			tpservice:Teleport(game.PlaceId, plr)
 end)
 
-local DisabledToggle = Section.NewToggle("NoClip",function(bool)
-if bool == true then
+local Toggle = Section.NewToggle("NoClip",function(state)
+while state == true do
 local noClip = true
 local noClipConnect = game:GetService("RunService").Stepped:Connect(function()
     local chr = game.Players.LocalPlayer.Character
@@ -601,10 +623,11 @@ local noClipConnect = game:GetService("RunService").Stepped:Connect(function()
     end
 end)
 
-else
+end
+while state == false do
 noClipConnect:Disconnect()
 end
-end,false)
+end)
 
 local Button = Section.NewButton("Server Hop",function()
 local PlaceID = game.PlaceId
@@ -725,11 +748,6 @@ local Tab = Window.NewTab("Fun")
 
 local Section = Tab.NewSection("Fun Scripts")
 
-
-local Button = Section.NewButton("Default Dance",function()
-    loadstring(game:HttpGet('https://raw.githubusercontent.com/ibosik/AzureFlareHUB/main/DefaultDance'))()
-end)
-
 local Button = Section.NewButton("Universal Hub",function()
     loadstring(game:HttpGet('https://raw.githubusercontent.com/Dvrknvss/UniversalFEScriptHub/main/Script'))()
 end)
@@ -740,10 +758,6 @@ end)
 
 local Button = Section.NewButton("Chat Art",function()
     loadstring(game:HttpGet("https://raw.githubusercontent.com/ibosik/AzureFlareHUB/main/ChatArt"))()
-end)
-
-local Button = Section.NewButton("Bang",function()
-    loadstring(game:HttpGet("https://raw.githubusercontent.com/ibosik/AzureFlareHUB/main/Bang"))()
 end)
 
 local Button = Section.NewButton("Invisible",function()
