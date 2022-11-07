@@ -1,0 +1,417 @@
+loadstring(game:HttpGet("https://raw.githubusercontent.com/ibosik/AzureFlareHUB/main/Lumber%20Tycoon%202%20butter%20source"))()
+function CountLand(owner)
+    land = {}
+    for i,v in pairs(game:GetService("Workspace").Properties:GetDescendants()) do
+        if v:IsA("ObjectValue") then
+            if v.Value == game.Players:FindFirstChild(owner) then
+for i,v in pairs(v.Parent:GetChildren()) do
+    if v:IsA("Part") and v.Name == "Square" or v.Name == "OriginSquare" then
+        if not table.find(land,v) then
+            table.insert(land,v)
+
+        end
+    end
+end
+
+Flux:Notification(game.Players:FindFirstChild(owner).Name .. " has " ..tostring(#land).." land slots","Land Amount")
+land = {}
+end
+
+end
+end
+end
+local Flux = loadstring(game:HttpGet"https://raw.githubusercontent.com/dawid-scripts/UI-Libs/main/fluxlib.txt")()
+
+local win = Flux:Window("AzurEZ Hub", "Lumber Tycoon 2", Color3.fromRGB(160, 0, 160), Enum.KeyCode.LeftControl)
+local tab = win:Tab("Credits", "http://www.roblox.com/asset/?id=6022668888")
+tab:Label("Discord")
+tab:Line()
+tab:Button("zxcibosik#9669", "Script", function()
+setclipboard("zxcibosik#9669")
+Flux:Notification("Copied To Clipboard.", "Alright")
+end)
+tab:Button("Kurus#6448", "Tester", function()
+setclipboard("https://pastebin.com/raw/S6YH0kZ3")
+Flux:Notification("Copied To Clipboard.", "Alright")
+end)
+local tab = win:Tab("Settings", "http://www.roblox.com/asset/?id=6034989541")
+tab:Label("Gui")
+tab:Line()
+tab:Button("Destroy Gui", "Destroy Gui.", function()
+game:GetService("CoreGui").FluxLib:Destroy()
+end)
+tab:Button("AzurEZ V1", "First Version Of AzurEZ Hub.", function()
+loadstring(game:HttpGet('https://raw.githubusercontent.com/ibosik/AzureFlareHUB/main/LT2OLD'))()
+end)
+
+tab:Button("AzurEZ V2", "Second Version Of AzurEZ Hub.", function()
+loadstring(game:HttpGet('https://raw.githubusercontent.com/ibosik/AzureFlareHUB/main/Lumber%20Tycoon%202'))()
+end)
+
+local tab = win:Tab("Dupe", "http://www.roblox.com/asset/?id=6031754538")
+tab:Label("Dupe Axes")
+tab:Line()
+tab:Button("Dupe Axes OLD", "Hold Axe", function()
+local OldPos
+function DupeInv(Amount)
+    if not game.Players.LocalPlayer.Character:FindFirstChild("Tool") then return end
+    OldPos = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame
+        game:GetService("ReplicatedStorage").Interaction.ClientInteracted:FireServer(game.Players.LocalPlayer.Character:FindFirstChild("Tool"),"Drop tool",game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame + Vector3.new(3,1,0))
+        game.Players.LocalPlayer.Character.Head:Remove()
+    wait()
+    repeat task.wait() until game.Players.LocalPlayer.Character:FindFirstChild("Head") and game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart")
+    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = OldPos
+end
+DupeInv()
+end)
+tab:Line()
+tab:Label("Dupe Items")
+tab:Line()
+tab:Slider("Manual Dupe Slot number", "Manual", 1, 6,1,function(t)
+    Mslotnumberr = t
+end)
+tab:Button("Dupe", "Manual", function()
+    DDupe(Mslotnumberr,1,3)
+    end)
+tab:Button("Safe Death", "Manual", function()
+    game.Players.LocalPlayer.Character.Head:Remove()
+    end)
+local tab = win:Tab("Auto Buy", "http://www.roblox.com/asset/?id=6034439652")
+tab:Label("Auto Buy Items")
+tab:Line()
+tab:Slider("Amount", "Auto Buy Amount.", 1, 100,1,function(t)
+AutoBuyAmount = t
+end)
+local ShopItems = {}
+for i,v in pairs(game:GetService("Workspace").Stores:GetChildren()) do
+if v.Name == "ShopItems" then
+	for i,v in pairs(v:GetChildren()) do
+		if v.Type.Value ~= "Blueprint" then
+			if not table.find(ShopItems,v.BoxItemName.Value) then
+				table.insert(ShopItems,v.BoxItemName.Value)
+			end
+		end
+	end
+end
+end
+tab:Dropdown("Select Item", ShopItems, function(t)
+ItemToBuy = t
+end)
+tab:Button("Phurchase Selected Item(s)", "Phurchase Selected Item(s).", function()
+    AutoBuy(ItemToBuy,AutoBuyAmount)
+    end)
+tab:Button("Abort Phurchasing", "Abort Phurchasing.", function()
+    AbortAutoBuy = true
+    end)
+tab:Line()
+tab:Label("Other")
+tab:Line()
+tab:Button("Toll Bridge", "Auto Buy Toll Bridge.", function()
+Pay(15)
+end)
+tab:Button("Ferry Ticket", "Auto Buy Ferry Ticket.", function()
+Pay(5)
+end)
+tab:Button("Power Of Ease", "Auto Buy Power Of Ease.", function()
+Pay(3)
+end)
+local tab = win:Tab("Wood", "http://www.roblox.com/asset/?id=6034503369")
+tab:Label("Bring Tree")
+tab:Line()
+tab:Dropdown("Select Tree", {"Generic", "Walnut", "Cherry", "SnowGlow", "Oak", "Birch", "Koa", "Fir", "Volcano", "GreenSwampy", "CaveCrawler", "Palm", "GoldSwampy", "Frost", "Spooky", "SpookyNeon",}, function(t)
+    getTree = t
+end)
+tab:Slider("Amount", "Bring ... Trees.", 1, 30,1,function(t)
+    sdasdsad = t
+end)
+tab:Button("Bring Tree", "Bring Tree.", function()
+    for i = 1,sdasdsad do 
+        wait()
+        bringTree(getTree)
+        end
+        end)
+tab:Line()
+tab:Label("Bring Wood")
+tab:Line()
+tab:Toggle("Wood Click To Teleport", "", function(t)
+    WoodClickTp = t
+    WOODClickToTP()
+    end)
+tab:Toggle("Wood Lasso", "Select Your Wood And Teleport Him.", function(t)
+    _G.lassoTp = t
+    WOODlassoTpcheck()
+    end)
+tab:Button("Teleport Selected Wood", "Teleport Selected Wood.", function()
+    WoodSelectionTp(WoodDirection, TpToWoodAfterFinished)
+    end)
+tab:Toggle("Wood Selection Tool", "Select Your Wood And Teleport Him.", function(t)
+    _G.Woodselectionv2 = t
+    WOODselectionv2(game.Players.LocalPlayer.Character.Name)
+    end)
+tab:Dropdown("Wood Tp Direction", {"Upwards","Sideways"}, function(t)
+WoodDirection = t
+end)
+tab:Button("Deselect Wood", "Deselect Wood.", function()
+            for i,v in pairs(game.Workspace.PlayerModels:GetChildren()) do
+                if v:FindFirstChild("WoodSection") then
+                    if v.WoodSection:FindFirstChild("Selection") then
+                    v.WoodSection.Selection:Destroy()
+                end
+            end
+        end
+    end)
+tab:Button("Bring All Logs", "Bring All Logs", function()
+    BringAllLogs()
+    end)
+tab:Button("Sell All Logs", "Sell All Logs", function()
+    SellAllLogs()
+    end)
+tab:Button("Bring All Planks", "Bring All Planks", function()
+    BringAllPlanks()
+    end)
+tab:Button("Sell All Planks", "Sell All Planks", function()
+    SellAllPlanks()
+    end)
+local tab = win:Tab("Items", "http://www.roblox.com/asset/?id=6031079158")
+tab:Label("Teleport Items")
+tab:Line()
+tab:Toggle("Lasso", "", function(t)
+    _G.sssaaaaaaaaaa = t
+    lassoTpcheck()
+end)
+tab:Button("Teleport Selected Items", "Teleport Selected Items.", function()
+    SelectionTp(25)
+end)
+tab:Button("Deselect Items", "Deselect Items.", function()
+        for i,v in pairs(game.Workspace.PlayerModels:GetChildren()) do
+        if v:FindFirstChild("Main") then
+            if v.Main:FindFirstChild("Selection") then
+            v.Main.Selection:Destroy()
+        end
+    end
+end
+end)
+tab:Toggle("Auto Deselect Items", "Auto Deselect Items.", function(t)
+    _G.Autodeselect = t
+end)
+tab:Toggle("Click Tp Items", "Click To Item And That Item Will Tp To You", function(t)
+    ClickTp = t
+    ClickToTP()
+end)
+local tab = win:Tab("Slot", "http://www.roblox.com/asset/?id=6022668899")
+tab:Label("Land")
+tab:Line()
+tab:Button("Free Land", "Free Land.", function()
+for a,b in pairs(workspace.Properties:GetChildren()) do 
+    if b:FindFirstChild("Owner") and b:FindFirstChild("OriginSquare") and b.Owner.Value == nil then 
+        game.ReplicatedStorage.PropertyPurchasing.ClientPurchasedProperty:FireServer(b, b.OriginSquare.OriginCFrame.Value.p + Vector3.new(0,3,0))
+ wait(0.5)
+        Instance.new('RemoteEvent', game:service'ReplicatedStorage'.Interaction).Name = "Ban"
+	for i,v in pairs(game.Workspace.Properties:GetChildren()) do
+		if v.Owner.Value == game.Players.LocalPlayer then
+    game.Players.LocalPlayer.Character.Humanoid.Jump = true
+    wait(0.1)
+			game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.OriginSquare.CFrame + Vector3.new(0,10,0)
+    game.Players.LocalPlayer.Character.Humanoid.Jump = true
+    wait(0.1)
+		end
+	end
+    end
+end
+end)
+tab:Button("Max Land", "Max Land.", function()
+    for i, v in pairs(game:GetService("Workspace").Properties:GetChildren()) do
+        if v:FindFirstChild("Owner") and v.Owner.Value == game.Players.LocalPlayer then
+            base = v
+            square = v.OriginSquare
+            end
+        end
+    function makebase(pos)
+        local Event = game:GetService("ReplicatedStorage").PropertyPurchasing.ClientExpandedProperty
+        Event:FireServer(base, pos)
+        end
+    local spos = square.Position
+    makebase(CFrame.new(spos.X + 40, spos.Y, spos.Z))
+    makebase(CFrame.new(spos.X - 40, spos.Y, spos.Z))
+    makebase(CFrame.new(spos.X, spos.Y, spos.Z + 40))
+    makebase(CFrame.new(spos.X, spos.Y, spos.Z - 40))
+    makebase(CFrame.new(spos.X + 40, spos.Y, spos.Z + 40))
+    makebase(CFrame.new(spos.X + 40, spos.Y, spos.Z - 40))
+    makebase(CFrame.new(spos.X - 40, spos.Y, spos.Z + 40))
+    makebase(CFrame.new(spos.X - 40, spos.Y, spos.Z - 40))
+    makebase(CFrame.new(spos.X + 80, spos.Y, spos.Z))
+    makebase(CFrame.new(spos.X - 80, spos.Y, spos.Z))
+    makebase(CFrame.new(spos.X, spos.Y, spos.Z + 80))
+    makebase(CFrame.new(spos.X, spos.Y, spos.Z - 80))
+--Corners--
+    makebase(CFrame.new(spos.X + 80, spos.Y, spos.Z + 80))
+    makebase(CFrame.new(spos.X + 80, spos.Y, spos.Z - 80))
+    makebase(CFrame.new(spos.X - 80, spos.Y, spos.Z + 80))
+    makebase(CFrame.new(spos.X - 80, spos.Y, spos.Z - 80))
+--Corners--
+    makebase(CFrame.new(spos.X + 40, spos.Y, spos.Z + 80))
+    makebase(CFrame.new(spos.X - 40, spos.Y, spos.Z + 80))
+    makebase(CFrame.new(spos.X + 80, spos.Y, spos.Z + 40))
+    makebase(CFrame.new(spos.X + 80, spos.Y, spos.Z - 40))
+    makebase(CFrame.new(spos.X - 80, spos.Y, spos.Z + 40))
+    makebase(CFrame.new(spos.X - 80, spos.Y, spos.Z - 40))
+    makebase(CFrame.new(spos.X + 40, spos.Y, spos.Z - 80))
+    makebase(CFrame.new(spos.X - 40, spos.Y, spos.Z - 80))
+    end)
+tab:Button("Sell Sold Sign", "Sell Sold Sign.", function()
+    SellSoldSign()
+    end)
+tab:Line()
+tab:Label("Other")
+tab:Line()
+tab:Button("All Blueprints", "Get All Blueprints.", function()
+for index,value in pairs(game:GetService("ReplicatedStorage").Purchasables.Structures.BlueprintStructures:GetChildren()) do
+    local parent = Instance.new("Folder", game:GetService("Players").LocalPlayer.PlayerBlueprints.Blueprints)
+    parent.Name = value.Name
+    local category = Instance.new("StringValue", parent)
+    category.Value = value.ItemCategory.Value
+    category.Name = "ItemCategory"
+end
+end)
+tab:Toggle("Auto Blacklist All", "Auto Blacklist All.", function(t)
+    AutoBlacklistAll = t
+    AutoBlacklist()
+    end)
+tab:Toggle("Auto Whitelist All", "Auto Whitelist All.", function(t)
+    AutoBlacklistAll = t
+    AutoBlacklist()
+    end)
+local tab = win:Tab("Vehicle", "http://www.roblox.com/asset/?id=6034754441")
+tab:Toggle("Vehicle Fly", "", function(t)
+      if t == true then
+		player = game.Players.LocalPlayer
+		humanoid = player.Character.Humanoid
+		if humanoid.Seated then
+		local CurrentSeat = player.Character.Humanoid.SeatPart
+			if CurrentSeat and CurrentSeat.Parent.Type.Value == "Vehicle" then
+        NOFLY()
+	wait()
+	sFLY(true)
+		end
+		end
+      else
+        NOFLY()
+      end
+      end)
+tab:Slider("Vehicle Fly Speed", "", 0.5, 100,3,function(t)
+		iyflyspeed = t
+		vehicleflyspeed = t
+end)
+tab:Slider("Vehicle Speed", "", 0.1, 50,2,function(t)
+    VehicleSpeed(t)
+end)
+tab:Button("Flip Vehicle", "", function()
+    FlipVehcile()
+    end)
+local tab = win:Tab("Player", "http://www.roblox.com/asset/?id=6023426915")
+tab:Button("Flight", "", function()
+	FlyingEnabled = true
+    end)
+tab:Dropdown("Teleport To Waypoints", {"The Den", "Lighthouse", "Safari", "Bridge", "Bob's Shack", "EndTimes Cave", "The Swamp", "The Cabin", "Volcano", "Boxed Cars", "Tiaga Peak", "Land Store", "Link's Logic", "Palm Island", "Palm Island 2", "Palm Island 3", "Fine Art Shop", "SnowGlow Biome", "Cave", "Shrine Of Sight", "Fancy Furnishings", "Docks", "Strange Man", "Wood Dropoff", "Snow Biome", "Wood RUs", "Green Box", "Spawn", "Cherry Meadow", "Bird Cave",}, function(t)
+_G.aaa123 = t
+end)
+tab:Button("Teleport To Waypoints", "", function()
+    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = WaypointsPositions[_G.aaa123]
+    end)
+local AllPlayers = {"Select Player"}
+for i,v in next,game.Players:GetPlayers() do
+if not table.find(AllPlayers,v.Name) then
+	table.insert(AllPlayers,v.Name)
+end
+end
+tab:Dropdown("Select Player", AllPlayers, function(t)
+_G.SelectedPlr = t
+end)
+tab:Button("Teleport To Player", "", function()
+    TeleportToPlayer(_G.SelectedPlr)
+    end)
+tab:Slider("FOV", "", 70, 120,70,function(t)
+		game:GetService("TweenService"):Create(workspace.Camera, TweenInfo.new(1, Enum.EasingStyle.Quint), {FieldOfView = t}):Play()
+end)
+tab:Button("B Tools", "", function()
+    BTools()
+    end)
+tab:Slider("WalkSpeed", "", 16, 500,16,function(t)
+while game:GetService('RunService').RenderStepped:Wait() do
+    game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = t
+end
+end)
+tab:Slider("JumpPower", "", 50, 500,50,function(t)
+while game:GetService('RunService').RenderStepped:Wait() do
+    game.Players.LocalPlayer.Character.Humanoid.JumpPower = t
+end
+end)
+tab:Toggle("Light", "", function(Value)
+Light(Value)
+end)
+tab:Toggle("Anti Afk", "", function(t)
+AntiAfk(t)
+end)
+tab:Toggle("NoClip", "", function(t)
+NoClip(t)
+end)
+tab:Button("CTRL Click Tp", "", function()
+local Imput = game:GetService("UserInputService")
+local Plr = game.Players.LocalPlayer
+local Mouse = Plr:GetMouse()
+ 
+function To(position)
+   local Chr = Plr.Character
+   if Chr ~= nil then
+       Chr:MoveTo(position)
+   end
+end
+ 
+Imput.InputBegan:Connect(function(input)
+   if input.UserInputType == Enum.UserInputType.MouseButton1 and Imput:IsKeyDown(Enum.KeyCode.LeftControl) then
+       To(Mouse.Hit.p)
+   end
+end)
+end)
+tab:Button("Rejoin", "", function()
+			local tpservice= game:GetService("TeleportService")
+			local plr = game.Players.LocalPlayer
+
+			tpservice:Teleport(game.PlaceId, plr)
+            end)
+local tab = win:Tab("Tab 1", "http://www.roblox.com/asset/?id=6023426915")
+tab:Button("Kill all", "This function may not work sometimes and you can get banned.", function()
+Flux:Notification("Killed all players successfully!", "Alright")
+end)
+tab:Label("This is just a label.")
+tab:Line()
+tab:Toggle("Auto-Farm Coins", "Automatically collects coins for you!", function(t)
+print(t)
+end)
+tab:Slider("Walkspeed", "Makes your faster.", 0, 100,16,function(t)
+print(t)
+end)
+tab:Dropdown("Part to aim at", {"Torso","Head","Penis"}, function(t)
+print(t)
+end)
+tab:Colorpicker("ESP Color", Color3.fromRGB(255,1,1), function(t)
+print(t)
+end)
+tab:Textbox("Gun Power", "This textbox changes your gun power, so you can kill everyone faster and easier.", true, function(t)
+print(t)
+end)
+tab:Bind("Kill Bind", Enum.KeyCode.Q, function(v)
+_G.HideGUIBind = v
+end)
+
+local player = game.Players.LocalPlayer
+if player then
+Flux:Notification("Welcome To Azure Flare Hub, "..player.Name.."", ":D")
+end
+--[[
+if _G.idkk == true then 
+   if game.CoreGui.FluxLib then game:GetService("CoreGui").FluxLib:Destroy()
+end end
+
+_G.idkk = true
+]]
