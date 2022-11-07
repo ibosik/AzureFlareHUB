@@ -1,4 +1,85 @@
 loadstring(game:HttpGet("https://raw.githubusercontent.com/ibosik/AzureFlareHUB/main/Lumber%20Tycoon%202%20butter%20source"))()
+local WaypointsPositions = {["The Den"] = CFrame.new(323, 49, 1930), ["Lighthouse"] = CFrame.new(1464.8, 356.3, 3257.2), ["Safari"] = CFrame.new(111.853, 11.0005, -998.805), ["Bridge"] = CFrame.new(112.308, 11.0005, -782.358), ["Bob's Shack"] = CFrame.new(260, 8, -2542), ["EndTimes Cave"] = CFrame.new(113, -214, -951), ["The Swamp"] = CFrame.new(-1209, 132, -801), ["The Cabin"] = CFrame.new(1244, 66, 2306), ["Volcano"] = CFrame.new(-1585, 625, 1140), ["Boxed Cars"] = CFrame.new(509, 5.2, -1463), ["Tiaga Peak"] = CFrame.new(1560, 410, 3274), ["Land Store"] = CFrame.new(258, 5, -99), ["Link's Logic"] = CFrame.new(4605, 3, -727), ["Palm Island"] = CFrame.new(2549, -5, -42), ["Palm Island 2"] = CFrame.new(1960, -5.900, -1501), ["Palm Island 3"] = CFrame.new(4344, -5.900, -1813), ["Fine Art Shop"] = CFrame.new(5207, -166, 719), ["SnowGlow Biome"] = CFrame.new(-1086.85, -5.89978, -945.316), ["Cave"] = CFrame.new(3581, -179, 430), ["Shrine Of Sight"] = CFrame.new(-1600, 195, 919), ["Fancy Furnishings"] = CFrame.new(491, 13, -1720), ["Docks"] = CFrame.new(1114, 3.2, -197), ["Strange Man"] = CFrame.new(1061, 20, 1131), ["Wood Dropoff"] = CFrame.new(323.406, -2.8, 134.734), ["Snow Biome"] = CFrame.new(889.955, 59.7999, 1195.55), ["Wood RUs"] = CFrame.new(265, 5, 57), ["Green Box"] = CFrame.new(-1668.05, 351.174, 1475.39), ["Spawn"] = CFrame.new(172, 2, 74), ["Cherry Meadow"] = CFrame.new(220.9, 59.8, 1305.8), ["Bird Cave"] = CFrame.new(4813.1, 33.5, -978.8),}
+
+local FlyingEnabled = false
+local maxspeed = 150 
+function BetterFly()
+	repeat wait() until game.Players.LocalPlayer and game.Players.LocalPlayer.Character and game.Players.LocalPlayer.Character:findFirstChild("Head") and game.Players.LocalPlayer.Character:findFirstChild("Humanoid") 
+	local mouse = game.Players.LocalPlayer:GetMouse() 
+	repeat wait() until mouse
+	local plr = game.Players.LocalPlayer 
+	local torso = plr.Character.Head 
+	local flying = false
+	local deb = true 
+	local ctrl = {f = 0, b = 0, l = 0, r = 0} 
+	local lastctrl = {f = 0, b = 0, l = 0, r = 0}
+	local speed = 5000 
+	 
+	function Fly() 
+	local bg = Instance.new("BodyGyro", torso) 
+	bg.P = 9e4 
+	bg.maxTorque = Vector3.new(9e9, 9e9, 9e9) 
+	bg.cframe = torso.CFrame 
+	local bv = Instance.new("BodyVelocity", torso) 
+	bv.velocity = Vector3.new(0,0.1,0) 
+	bv.maxForce = Vector3.new(9e9, 9e9, 9e9) 
+	repeat wait() 
+	plr.Character.Humanoid.PlatformStand = true 
+	if ctrl.l + ctrl.r ~= 0 or ctrl.f + ctrl.b ~= 0 then 
+	speed = maxspeed
+	elseif not (ctrl.l + ctrl.r ~= 0 or ctrl.f + ctrl.b ~= 0) and speed ~= 0 then 
+		speed = 0 
+	end 
+	if (ctrl.l + ctrl.r) ~= 0 or (ctrl.f + ctrl.b) ~= 0 then 
+	bv.velocity = ((game.Workspace.CurrentCamera.CoordinateFrame.lookVector * (ctrl.f+ctrl.b)) + ((game.Workspace.CurrentCamera.CoordinateFrame * CFrame.new(ctrl.l+ctrl.r,(ctrl.f+ctrl.b)*.2,0).p) - game.Workspace.CurrentCamera.CoordinateFrame.p))*speed 
+	lastctrl = {f = ctrl.f, b = ctrl.b, l = ctrl.l, r = ctrl.r} 
+	elseif (ctrl.l + ctrl.r) == 0 and (ctrl.f + ctrl.b) == 0 and speed ~= 0 then 
+	bv.velocity = ((game.Workspace.CurrentCamera.CoordinateFrame.lookVector * (lastctrl.f+lastctrl.b)) + ((game.Workspace.CurrentCamera.CoordinateFrame * CFrame.new(lastctrl.l+lastctrl.r,(lastctrl.f+lastctrl.b)*0.2,0).p) - game.Workspace.CurrentCamera.CoordinateFrame.p))*speed 
+	else 
+	bv.velocity = Vector3.new(0,0,0) 
+	end 
+	bg.cframe = game.Workspace.CurrentCamera.CoordinateFrame * CFrame.Angles(-math.rad((ctrl.f+ctrl.b)*speed/maxspeed),0,0) 
+	until not flying 
+	ctrl = {f = 0, b = 0, l = 0, r = 0} 
+	lastctrl = {f = 0, b = 0, l = 0, r = 0} 
+	speed = 0 
+	bg:Destroy() 
+	bv:Destroy() 
+	plr.Character.Humanoid.PlatformStand = false 
+	end 
+	mouse.KeyDown:connect(function(key) 
+	if key:lower() == "q" and FlyingEnabled == true then 
+	if flying then flying = false 
+	else 
+	flying = true 
+	Fly() 
+	end 
+	elseif key:lower() == "w" then 
+	ctrl.f = 1 
+	elseif key:lower() == "s" then 
+	ctrl.b = -1 
+	elseif key:lower() == "a" then 
+	ctrl.l = -1 
+	elseif key:lower() == "d" then 
+	ctrl.r = 1 
+	end 
+	end) 
+	mouse.KeyUp:connect(function(key) 
+	if key:lower() == "w" then 
+	ctrl.f = 0 
+	elseif key:lower() == "s" then 
+	ctrl.b = 0 
+	elseif key:lower() == "a" then 
+	ctrl.l = 0 
+	elseif key:lower() == "d" then 
+	ctrl.r = 0 
+	end 
+	end)
+	Fly()
+end
+game.Players.LocalPlayer.CharacterAdded:Connect(BetterFly)
+BetterFly()
+
 function CountLand(owner)
     land = {}
     for i,v in pairs(game:GetService("Workspace").Properties:GetDescendants()) do
@@ -33,7 +114,12 @@ end)
 tab:Button("Kurus#6448", "Tester", function()
 setclipboard("https://pastebin.com/raw/S6YH0kZ3")
 Flux:Notification("Copied To Clipboard.", "Alright")
-end)
+    end)
+--[[local tab = win:Tab("Key", "http://www.roblox.com/asset/?id=6035053304")
+tab:Label("Key")
+tab:Line()
+tab:Textbox("Write Key Here", "", true, function(t)
+if t == "Key" then]]
 local tab = win:Tab("Settings", "http://www.roblox.com/asset/?id=6034989541")
 tab:Label("Gui")
 tab:Line()
@@ -76,7 +162,7 @@ tab:Button("Dupe", "Manual", function()
 tab:Button("Safe Death", "Manual", function()
     game.Players.LocalPlayer.Character.Head:Remove()
     end)
-local tab = win:Tab("Auto Buy", "http://www.roblox.com/asset/?id=6034439652")
+local tab = win:Tab("Auto Buy", "http://www.roblox.com/asset/?id=6031289461")
 tab:Label("Auto Buy Items")
 tab:Line()
 tab:Slider("Amount", "Auto Buy Amount.", 1, 100,1,function(t)
@@ -133,21 +219,37 @@ tab:Button("Bring Tree", "Bring Tree.", function()
 tab:Line()
 tab:Label("Bring Wood")
 tab:Line()
-tab:Toggle("Wood Click To Teleport", "", function(t)
-    WoodClickTp = t
+tab:Button("Wood Click To Teleport", "", function()
+    WoodClickTp = true
     WOODClickToTP()
     end)
-tab:Toggle("Wood Lasso", "Select Your Wood And Teleport Him.", function(t)
-    _G.lassoTp = t
+tab:Button("OFF Wood Click To Teleport", "", function()
+    WoodClickTp = false
+    WOODClickToTP()
+    end)
+    tab:Line()
+tab:Button("Wood Lasso", "Select Your Wood And Teleport Him.", function()
+    _G.lassoTp = true
     WOODlassoTpcheck()
     end)
+tab:Button("OFF Wood Lasso", "Select Your Wood And Teleport Him.", function()
+    _G.lassoTp = false
+    WOODlassoTpcheck()
+    end)
+    tab:Line()
 tab:Button("Teleport Selected Wood", "Teleport Selected Wood.", function()
     WoodSelectionTp(WoodDirection, TpToWoodAfterFinished)
     end)
-tab:Toggle("Wood Selection Tool", "Select Your Wood And Teleport Him.", function(t)
-    _G.Woodselectionv2 = t
+    tab:Line()
+tab:Button("Wood Selection Tool", "Select Your Wood And Teleport Him.", function()
+    _G.Woodselectionv2 = true
     WOODselectionv2(game.Players.LocalPlayer.Character.Name)
     end)
+tab:Button("OFF Wood Selection Tool", "Select Your Wood And Teleport Him.", function()
+    _G.Woodselectionv2 = false
+    WOODselectionv2(game.Players.LocalPlayer.Character.Name)
+    end)
+    tab:Line()
 tab:Dropdown("Wood Tp Direction", {"Upwards","Sideways"}, function(t)
 WoodDirection = t
 end)
@@ -175,10 +277,15 @@ tab:Button("Sell All Planks", "Sell All Planks", function()
 local tab = win:Tab("Items", "http://www.roblox.com/asset/?id=6031079158")
 tab:Label("Teleport Items")
 tab:Line()
-tab:Toggle("Lasso", "", function(t)
-    _G.sssaaaaaaaaaa = t
+tab:Button("Lasso", "", function()
+    _G.sssaaaaaaaaaa = true
     lassoTpcheck()
 end)
+tab:Button("OFF Lasso", "", function()
+    _G.sssaaaaaaaaaa = false
+    lassoTpcheck()
+end)
+tab:Line()
 tab:Button("Teleport Selected Items", "Teleport Selected Items.", function()
     SelectionTp(25)
 end)
@@ -191,13 +298,23 @@ tab:Button("Deselect Items", "Deselect Items.", function()
     end
 end
 end)
-tab:Toggle("Auto Deselect Items", "Auto Deselect Items.", function(t)
-    _G.Autodeselect = t
+tab:Line()
+tab:Button("Auto Deselect Items", "Auto Deselect Items.", function()
+    _G.Autodeselect = true
 end)
-tab:Toggle("Click Tp Items", "Click To Item And That Item Will Tp To You", function(t)
-    ClickTp = t
+tab:Button("OFF Auto Deselect Items", "Auto Deselect Items.", function()
+    _G.Autodeselect = false
+end)
+tab:Line()
+tab:Button("Click Tp Items", "Click To Item And That Item Will Tp To You", function()
+    ClickTp = true
     ClickToTP()
 end)
+tab:Button("OFF Click Tp Items ( I HATE TOGGLES IN THIS UI LIBRARY )", "Click To Item And That Item Will Tp To You", function()
+    ClickTp = false
+    ClickToTP()
+end)
+tab:Line()
 local tab = win:Tab("Slot", "http://www.roblox.com/asset/?id=6022668899")
 tab:Label("Land")
 tab:Line()
@@ -273,18 +390,23 @@ for index,value in pairs(game:GetService("ReplicatedStorage").Purchasables.Struc
     category.Name = "ItemCategory"
 end
 end)
-tab:Toggle("Auto Blacklist All", "Auto Blacklist All.", function(t)
-    AutoBlacklistAll = t
+tab:Button("Auto Blacklist All", "Auto Blacklist All.", function()
+    AutoBlacklistAll = true
     AutoBlacklist()
     end)
-tab:Toggle("Auto Whitelist All", "Auto Whitelist All.", function(t)
-    AutoBlacklistAll = t
-    AutoBlacklist()
+tab:Button("Auto Whitelist All", "Auto Whitelist All.", function()
+    AutoWhitelistAll = true
+    AutoWhitelist()
     end)
+tab:Button("OFF Auto White & Black List", "", function()
+    AutoBlacklistAll = false
+        AutoWhitelistAll = false
+        end)
 local tab = win:Tab("Vehicle", "http://www.roblox.com/asset/?id=6034754441")
-tab:Toggle("Vehicle Fly", "", function(t)
-      if t == true then
-		player = game.Players.LocalPlayer
+tab:Label("Vehicle")
+tab:Line()
+tab:Bind("Vehicle Fly For 20s", Enum.KeyCode.V, function(v)
+        if game.Players.LocalPlayer then
 		humanoid = player.Character.Humanoid
 		if humanoid.Seated then
 		local CurrentSeat = player.Character.Humanoid.SeatPart
@@ -292,15 +414,11 @@ tab:Toggle("Vehicle Fly", "", function(t)
         NOFLY()
 	wait()
 	sFLY(true)
-		end
-		end
-      else
-        NOFLY()
-      end
+		end end
+        wait(20) NOFLY() end
       end)
 tab:Slider("Vehicle Fly Speed", "", 0.5, 100,3,function(t)
-		iyflyspeed = t
-		vehicleflyspeed = t
+maxspeed = t
 end)
 tab:Slider("Vehicle Speed", "", 0.1, 50,2,function(t)
     VehicleSpeed(t)
@@ -308,16 +426,21 @@ end)
 tab:Button("Flip Vehicle", "", function()
     FlipVehcile()
     end)
-local tab = win:Tab("Player", "http://www.roblox.com/asset/?id=6023426915")
+local tab = win:Tab("Miscellaneous", "http://www.roblox.com/asset/?id=6034287522")
+tab:Label("Miscellaneous")
+tab:Line()
 tab:Button("Flight", "", function()
 	FlyingEnabled = true
     end)
-tab:Dropdown("Teleport To Waypoints", {"The Den", "Lighthouse", "Safari", "Bridge", "Bob's Shack", "EndTimes Cave", "The Swamp", "The Cabin", "Volcano", "Boxed Cars", "Tiaga Peak", "Land Store", "Link's Logic", "Palm Island", "Palm Island 2", "Palm Island 3", "Fine Art Shop", "SnowGlow Biome", "Cave", "Shrine Of Sight", "Fancy Furnishings", "Docks", "Strange Man", "Wood Dropoff", "Snow Biome", "Wood RUs", "Green Box", "Spawn", "Cherry Meadow", "Bird Cave",}, function(t)
+--[[tab:Dropdown("Teleport To Waypoints", {"The Den", "Lighthouse", "Safari", "Bridge", "Bob's Shack", "EndTimes Cave", "The Swamp", "The Cabin", "Volcano", "Boxed Cars", "Tiaga Peak", "Land Store", "Link's Logic", "Palm Island", "Palm Island 2", "Palm Island 3", "Fine Art Shop", "SnowGlow Biome", "Cave", "Shrine Of Sight", "Fancy Furnishings", "Docks", "Strange Man", "Wood Dropoff", "Snow Biome", "Wood RUs", "Green Box", "Spawn", "Cherry Meadow", "Bird Cave",}, function(t)
 _G.aaa123 = t
 end)
 tab:Button("Teleport To Waypoints", "", function()
     game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = WaypointsPositions[_G.aaa123]
-    end)
+    end)]]
+tab:Dropdown("Teleport To Waypoints", {"The Den", "Lighthouse", "Safari", "Bridge", "Bob's Shack", "EndTimes Cave", "The Swamp", "The Cabin", "Volcano", "Boxed Cars", "Tiaga Peak", "Land Store", "Link's Logic", "Palm Island", "Palm Island 2", "Palm Island 3", "Fine Art Shop", "SnowGlow Biome", "Cave", "Shrine Of Sight", "Fancy Furnishings", "Docks", "Strange Man", "Wood Dropoff", "Snow Biome", "Wood RUs", "Green Box", "Spawn", "Cherry Meadow", "Bird Cave",}, function(t)
+    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = WaypointsPositions[t]
+end)
 local AllPlayers = {"Select Player"}
 for i,v in next,game.Players:GetPlayers() do
 if not table.find(AllPlayers,v.Name) then
@@ -325,11 +448,8 @@ if not table.find(AllPlayers,v.Name) then
 end
 end
 tab:Dropdown("Select Player", AllPlayers, function(t)
-_G.SelectedPlr = t
+    TeleportToPlayer(t)
 end)
-tab:Button("Teleport To Player", "", function()
-    TeleportToPlayer(_G.SelectedPlr)
-    end)
 tab:Slider("FOV", "", 70, 120,70,function(t)
 		game:GetService("TweenService"):Create(workspace.Camera, TweenInfo.new(1, Enum.EasingStyle.Quint), {FieldOfView = t}):Play()
 end)
@@ -346,15 +466,28 @@ while game:GetService('RunService').RenderStepped:Wait() do
     game.Players.LocalPlayer.Character.Humanoid.JumpPower = t
 end
 end)
-tab:Toggle("Light", "", function(Value)
-Light(Value)
+tab:Line()
+tab:Button("Light", "", function()
+Light(true)
 end)
-tab:Toggle("Anti Afk", "", function(t)
-AntiAfk(t)
+tab:Button("OFF Light", "", function()
+Light(false)
 end)
-tab:Toggle("NoClip", "", function(t)
-NoClip(t)
+tab:Line()
+tab:Button("Anti Afk", "", function()
+AntiAfk()
 end)
+tab:Button("OFF Anti Afk", "", function()
+AntiAfk(false)
+end)
+tab:Line()
+tab:Button("NoClip", "", function()
+NoClip()
+end)
+tab:Button("OFF NoClip", "", function()
+NoClip(false)
+end)
+tab:Line()
 tab:Button("CTRL Click Tp", "", function()
 local Imput = game:GetService("UserInputService")
 local Plr = game.Players.LocalPlayer
@@ -373,13 +506,89 @@ Imput.InputBegan:Connect(function(input)
    end
 end)
 end)
+tab:Button("Fling", "", function()
+loadstring(game:HttpGet(('https://raw.githubusercontent.com/NotFalxe/Roblox-Scripts/source-code/headfling.lua'),true))()
+game.WorkSpace.Effects:Destroy()
+end)
+tab:Button("Delete Sit Permissions", "", function()
+game.Players.LocalPlayer.PlayerScripts.SitPermissions:Remove()
+end)
+tab:Line()
+tab:Button("Infinite Jump", "", function()
+InfiniteJump(true)
+end)
+tab:Button("OFF Infinite Jump", "", function()
+InfiniteJump(false)
+end)
+tab:Line()
 tab:Button("Rejoin", "", function()
 			local tpservice= game:GetService("TeleportService")
 			local plr = game.Players.LocalPlayer
 
 			tpservice:Teleport(game.PlaceId, plr)
             end)
-local tab = win:Tab("Tab 1", "http://www.roblox.com/asset/?id=6023426915")
+tab:Line()
+tab:Label("World")
+tab:Line()
+tab:Button("Delete Water (You Need To Reset)", "", function()
+game.Workspace.Water.Water:Destroy()
+game.Workspace.Water.Water:Destroy()
+game.Workspace.Water.Water:Destroy()
+game.Workspace.Water.Water:Destroy()
+game.Workspace.Water.Water:Destroy()
+game.Workspace.Water.Water:Destroy()
+game.Workspace.Water.Water:Destroy()
+game.Workspace.Water.Water:Destroy()
+game.Workspace.Water.Water:Destroy()
+game.Workspace.Water.Water:Destroy()
+game.Workspace.Water.Water:Destroy()
+game.Workspace.Water.Water:Destroy()
+game.Workspace.Water.Water:Destroy()
+game.Workspace.Water.Water:Destroy()
+end)
+tab:Line()
+tab:Button("Walk On Water", "", function()
+            for _,v in pairs(game.Workspace.Water:GetChildren()) do
+                v.CanCollide = true
+                end
+                end)
+tab:Button("OFF Walk On Water", "", function()
+            for _,v in pairs(game.Workspace.Water:GetChildren()) do
+                v.CanCollide = false
+                end
+                end)
+                tab:Line()
+tab:Button("Better Graphics", "", function()
+    local light = game.Lighting
+    light:ClearAllChildren()
+    local color = Instance.new("ColorCorrectionEffect",light)
+    local bloom = Instance.new("BloomEffect",light)
+    local sun = Instance.new("SunRaysEffect",light)
+    local blur = Instance.new("BlurEffect",light)
+    local config = {ColorCorrection = true;Sun = true;Lighting = true;BloomEffect = true;}
+    color.Enabled = true
+    color.Contrast = 0.15
+    color.Brightness = 0.1
+    color.Saturation = 0.25
+    color.TintColor = Color3.fromRGB(255, 222, 211)
+    sun.Enabled = true
+    sun.Intensity = 0.2
+    sun.Spread = 1
+    bloom.Enabled = true
+    bloom.Intensity = 1
+    bloom.Size = 32
+    bloom.Threshold = 1
+    blur.Enabled = true
+    blur.Size = 3
+    light.Ambient = Color3.fromRGB(0, 0, 0)
+    light.ColorShift_Bottom = Color3.fromRGB(0, 0, 0)
+    light.ColorShift_Top = Color3.fromRGB(0, 0, 0)
+    light.ExposureCompensation = 0
+    light.GlobalShadows = true
+    light.OutdoorAmbient = Color3.fromRGB(112, 117, 128)
+    light.Outlines = false  
+    end)
+--[[local tab = win:Tab("Tab 1", "http://www.roblox.com/asset/?id=6023426915")
 tab:Button("Kill all", "This function may not work sometimes and you can get banned.", function()
 Flux:Notification("Killed all players successfully!", "Alright")
 end)
@@ -397,16 +606,16 @@ end)
 tab:Colorpicker("ESP Color", Color3.fromRGB(255,1,1), function(t)
 print(t)
 end)
-tab:Textbox("Gun Power", "This textbox changes your gun power, so you can kill everyone faster and easier.", true, function(t)
-print(t)
+tab:Textbox("чо", "", true, function(t)
+if t == "ok" then print("213") end 
 end)
 tab:Bind("Kill Bind", Enum.KeyCode.Q, function(v)
-_G.HideGUIBind = v
-end)
+print(v)
+end)]]
 
 local player = game.Players.LocalPlayer
 if player then
-Flux:Notification("Welcome To Azure Flare Hub, "..player.Name.."", ":D")
+Flux:Notification("Welcome To AzurEZ Hub V3, "..player.Name.."", ":D")
 end
 --[[
 if _G.idkk == true then 
