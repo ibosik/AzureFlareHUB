@@ -30,8 +30,6 @@ local Humanoid = Character:WaitForChild("Humanoid")
 local HumaoidRP = Character:WaitForChild("HumanoidRootPart")
 local UIS = game:GetService("UserInputService")
 local Mouse = Player:GetMouse()
-local NotifEvent = game:GetService("ReplicatedStorage").Framework.Modules["2 | Network"]["admin cmds notification"]
-local Popup = game:GetService("ReplicatedStorage").Framework.Modules["2 | Network"]["send message"];
 local UIList = {
 ["Golden"] = "Golden Machine";
 ["Rainbow"] = "Rainbow Machine";
@@ -48,11 +46,8 @@ local UIList = {
 ["Collection"] = "Pet Collection";
 ["Settings"] = "Game Settings"
 }
-local RainbowMachineInfo = game:GetService("Workspace")["__THINGS"]["__REMOTES"]["get rainbow machine info"]:InvokeServer({})
-local GoldenmachineInfo = game:GetService("Workspace")["__THINGS"]["__REMOTES"]["get golden machine info"]:InvokeServer({})
 local goldenMergeNum = 5
 local rainbowMergeNumber = 5
-local PetDatabase = require(game:GetService("ReplicatedStorage").Framework.Modules["1 | Directory"].Pets["Grab All Pets"])
 local TempPetDropdownDataBase = {}
 local SelectedEgg = "Cracked Egg"
 local LootbagsDropdown = {}
@@ -71,30 +66,11 @@ local Speed = 50
 local AutofarmChestsAlso = false
 local LegitFarmCoins = false
 Config = getgenv().kocmoc.toggles
-local notif = game:GetService("ReplicatedStorage").Framework.Modules["2 | Network"].notification
 
 --/--/--/--/--/--/--/--/--/--/--/--/--/--/--/--/--/
 --/--/--/--/--/--/--/ functions --/--/--/--/--/--/--/
 
 local funcs = {}
-
-local function loadRemoteEvent(name)
-    local Event = game:GetService("Workspace")["__THINGS"]["__REMOTES"]:FindFirstChild("MAIN")
-    if Event ~= nil then
-        Event:FireServer("b",name)
-    else
-        Player:Kick("A critical error occoured, please contact Boxking776#0001 with this message: \nERR_MAIN_REMOTE_EVENT_DOES_NOT_EXIST")
-    end
-end
-
-local function loadRemoteFunc(name)
-    local Event = game:GetService("Workspace")["__THINGS"]["__REMOTES"]:FindFirstChild("MAIN")
-    if Event ~= nil then
-        Event:FireServer("a",name)
-    else
-        Player:Kick("A critical error occoured, please contact Boxking776#0001 with this message: \nERR_MAIN_REMOTE_EVENT_DOES_NOT_EXIST")
-    end
-end
 
 local function Post(Text)
 	NotifEvent:Fire(Text)
@@ -633,7 +609,6 @@ end
 if workspace.__THINGS.__REMOTES:FindFirstChild("use golden machine") == nil then loadRemoteEvent("use golden machine") end
 if workspace.__THINGS.__REMOTES:FindFirstChild("collect bank interest") == nil then loadRemoteEvent("collect bank interest") end
 if workspace.__THINGS.__REMOTES:FindFirstChild("get rainbow machine info") == nil then loadRemoteEvent("get rainbow machine info") end
-if workspace.__THINGS.__REMOTES:FindFirstChild("get golden machine info") == nil then loadRemoteEvent("get golden machine info") end
 if workspace.__THINGS.__REMOTES:FindFirstChild("use golden machine") == nil then loadRemoteEvent("use golden machine") end
 if workspace.__THINGS.__REMOTES:FindFirstChild("get my banks") == nil then loadRemoteEvent("get my banks") end
 if workspace.__THINGS.__REMOTES:FindFirstChild("farm coin") == nil then loadRemoteFunc("farm coin") end
@@ -647,9 +622,5 @@ if workspace.__THINGS.__REMOTES:FindFirstChild("activate boost") == nil then loa
 if workspace.__THINGS.__REMOTES:FindFirstChild("redeem rank rewards") == nil then loadRemoteEvent("redeem rank rewards") end
 if workspace.__THINGS.__REMOTES:FindFirstChild("use rainbow machine") == nil then loadRemoteEvent("use rainbow machine") end
 if workspace.__THINGS.__REMOTES:FindFirstChild("performed teleport") == nil then loadRemoteFunc("performed teleport") end
-
-for i,v in pairs(require(game:GetService("ReplicatedStorage").Framework.Modules["1 | Directory"].Lootbags.Lootbags)) do
-table.insert(LootbagsDropdown,tostring(i))
-end
 
 --/--/--/--/--/--/--/--/--/--/--/--/--/--/--/--/--/
