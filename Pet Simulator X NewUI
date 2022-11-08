@@ -1,0 +1,622 @@
+loadstring(game:HttpGet("https://raw.githubusercontent.com/ibosik/AzureFlareHUB/main/sourceforpetsimx2"))()
+
+local FlyingEnabled = false
+local maxspeed = 150 
+function BetterFly()
+	repeat wait() until game.Players.LocalPlayer and game.Players.LocalPlayer.Character and game.Players.LocalPlayer.Character:findFirstChild("Head") and game.Players.LocalPlayer.Character:findFirstChild("Humanoid") 
+	local mouse = game.Players.LocalPlayer:GetMouse() 
+	repeat wait() until mouse
+	local plr = game.Players.LocalPlayer 
+	local torso = plr.Character.Head 
+	local flying = false
+	local deb = true 
+	local ctrl = {f = 0, b = 0, l = 0, r = 0} 
+	local lastctrl = {f = 0, b = 0, l = 0, r = 0}
+	local speed = 5000 
+	 
+	function Fly() 
+	local bg = Instance.new("BodyGyro", torso) 
+	bg.P = 9e4 
+	bg.maxTorque = Vector3.new(9e9, 9e9, 9e9) 
+	bg.cframe = torso.CFrame 
+	local bv = Instance.new("BodyVelocity", torso) 
+	bv.velocity = Vector3.new(0,0.1,0) 
+	bv.maxForce = Vector3.new(9e9, 9e9, 9e9) 
+	repeat wait() 
+	plr.Character.Humanoid.PlatformStand = true 
+	if ctrl.l + ctrl.r ~= 0 or ctrl.f + ctrl.b ~= 0 then 
+	speed = maxspeed
+	elseif not (ctrl.l + ctrl.r ~= 0 or ctrl.f + ctrl.b ~= 0) and speed ~= 0 then 
+		speed = 0 
+	end 
+	if (ctrl.l + ctrl.r) ~= 0 or (ctrl.f + ctrl.b) ~= 0 then 
+	bv.velocity = ((game.Workspace.CurrentCamera.CoordinateFrame.lookVector * (ctrl.f+ctrl.b)) + ((game.Workspace.CurrentCamera.CoordinateFrame * CFrame.new(ctrl.l+ctrl.r,(ctrl.f+ctrl.b)*.2,0).p) - game.Workspace.CurrentCamera.CoordinateFrame.p))*speed 
+	lastctrl = {f = ctrl.f, b = ctrl.b, l = ctrl.l, r = ctrl.r} 
+	elseif (ctrl.l + ctrl.r) == 0 and (ctrl.f + ctrl.b) == 0 and speed ~= 0 then 
+	bv.velocity = ((game.Workspace.CurrentCamera.CoordinateFrame.lookVector * (lastctrl.f+lastctrl.b)) + ((game.Workspace.CurrentCamera.CoordinateFrame * CFrame.new(lastctrl.l+lastctrl.r,(lastctrl.f+lastctrl.b)*0.2,0).p) - game.Workspace.CurrentCamera.CoordinateFrame.p))*speed 
+	else 
+	bv.velocity = Vector3.new(0,0,0) 
+	end 
+	bg.cframe = game.Workspace.CurrentCamera.CoordinateFrame * CFrame.Angles(-math.rad((ctrl.f+ctrl.b)*speed/maxspeed),0,0) 
+	until not flying 
+	ctrl = {f = 0, b = 0, l = 0, r = 0} 
+	lastctrl = {f = 0, b = 0, l = 0, r = 0} 
+	speed = 0 
+	bg:Destroy() 
+	bv:Destroy() 
+	plr.Character.Humanoid.PlatformStand = false 
+	end 
+	mouse.KeyDown:connect(function(key) 
+	if key:lower() == "q" and FlyingEnabled == true then 
+	if flying then flying = false 
+	else 
+	flying = true 
+	Fly() 
+	end 
+	elseif key:lower() == "w" then 
+	ctrl.f = 1 
+	elseif key:lower() == "s" then 
+	ctrl.b = -1 
+	elseif key:lower() == "a" then 
+	ctrl.l = -1 
+	elseif key:lower() == "d" then 
+	ctrl.r = 1 
+	end 
+	end) 
+	mouse.KeyUp:connect(function(key) 
+	if key:lower() == "w" then 
+	ctrl.f = 0 
+	elseif key:lower() == "s" then 
+	ctrl.b = 0 
+	elseif key:lower() == "a" then 
+	ctrl.l = 0 
+	elseif key:lower() == "d" then 
+	ctrl.r = 0 
+	end 
+	end)
+	Fly()
+end
+game.Players.LocalPlayer.CharacterAdded:Connect(BetterFly)
+BetterFly()
+local Flux = loadstring(game:HttpGet"https://raw.githubusercontent.com/dawid-scripts/UI-Libs/main/fluxlib.txt")()
+
+local win = Flux:Window("AzurEZ Hub", "Pet Simulator X", _G.GuiColor--[[Color3.fromRGB(160, 0, 160)]], Enum.KeyCode.LeftControl)
+local tab = win:Tab("Credits", "http://www.roblox.com/asset/?id=6022668888")
+tab:Label("Discord")
+tab:Line()
+tab:Button("zxcibosik#9669", "Script", function()
+setclipboard("zxcibosik#9669")
+Flux:Notification("Copied To Clipboard.", "Alright")
+end)
+tab:Button("Kurus#6448", "Tester", function()
+setclipboard("https://pastebin.com/raw/S6YH0kZ3")
+Flux:Notification("Copied To Clipboard.", "Alright")
+    end)
+--[[local tab = win:Tab("Key", "http://www.roblox.com/asset/?id=6035053304")
+tab:Label("Key")
+tab:Line()
+tab:Textbox("Write Key Here", "", true, function(t)
+if t == "Key" then]]
+local tab = win:Tab("Settings", "http://www.roblox.com/asset/?id=6034989541")
+tab:Label("Gui")
+tab:Line()
+tab:Colorpicker("Gui Color", Color3.fromRGB(255,1,1), function(t)
+while wait() do
+_G.GuiColor(t)
+    end
+end)
+tab:Button("Destroy Gui", "Destroy Gui.", function()
+game:GetService("CoreGui").FluxLib:Destroy()
+end)
+tab:Button("Press If Previous Gui Freezed", "", function()
+game:GetService("CoreGui").FluxLib:Destroy()
+game:GetService("CoreGui").FluxLib:Destroy()
+game:GetService("CoreGui").FluxLib:Destroy()
+game:GetService("CoreGui").FluxLib:Destroy()
+game:GetService("CoreGui").FluxLib:Destroy()
+end)
+
+tab:Button("AzurEZ V2", "Second Version Of AzurEZ Hub.", function()
+loadstring(game:HttpGet('https://raw.githubusercontent.com/ibosik/AzureFlareHUB/main/Pet%20Simulator%20X'))()
+end)
+    function HatchEgg(Pet)
+        local pet = Pet
+        for i,v in pairs(game.ReplicatedStorage.Game.Pets:GetChildren()) do
+            if string.split(tostring(v), ' - ')[2] == pet then
+                pet = string.split(tostring(v), ' - ')[1]
+            end
+        end
+        local tbl = {
+            {
+            nk = 'Preston',
+            idt = '69',
+            e = false,
+            uid = '69',
+            s = 999999999999,
+            id = pet,
+        }}
+        local egg
+        for i_,script in pairs(game.ReplicatedStorage.Game.Eggs:GetDescendants()) do
+            if script:IsA('ModuleScript') then
+                if typeof(require(script).drops) == 'table' then
+                    for i,v in pairs(require(script).drops) do
+                        if v[1] == pet then
+                            egg = require(script).displayName
+                        end
+                    end
+                end
+            end
+        end
+        if Pet == 'Huge Cat' then egg = 'Cracked Egg' end
+        if Pet == 'Huge Monkey' then egg = 'Cursed Egg' end
+        for i,v in pairs(getgc(true)) do
+            if (typeof(v) == 'table' and rawget(v, 'OpenEgg')) then
+                v.OpenEgg(egg, tbl)
+            end
+        end
+     end
+local tab = win:Tab("Dupe", "http://www.roblox.com/asset/?id=6031754538")
+tab:Label("Dupe")
+tab:Line()
+tab:Button("Dupe Pets", "", function()
+while wait(0.2) do
+if rconsolewarn then
+	rconsoleclear()
+	rprint = rconsolewarn
+else
+	rprint = print
+end
+
+rprint(":)")
+rprint(":)")
+rprint(":)")
+rprint(":)")
+rprint(":)")
+rprint(":)")
+rprint(":)")
+rprint(":)")
+rprint(":)")
+rprint(":)")
+rprint(":)")
+rprint(":)")
+rprint(":)")
+rprint(":)")
+rprint(":)")
+rprint(":)")
+rprint(":)")
+rprint(":)")
+rprint(":)")
+rprint(":)")
+rprint(":)")
+rprint(":)")
+rprint(":)")
+rprint(":)")
+rprint(":)")
+rprint(":)")
+rprint(":)")
+rprint(":)")
+rprint(":)")
+rprint(":)")
+rprint(":)")
+rprint(":)")
+rprint(":)")
+rprint(":)")
+rprint(":)")
+rprint(":)")
+rprint(":)")
+rprint(":)")
+rprint(":)")
+rprint(":)")
+rprint(":)")
+rprint(":)")
+rprint(":)")
+rprint(":)")
+rprint(":)")
+rprint(":)")
+rprint(":)")
+rprint(":)")
+rprint(":)")
+rprint(":)")
+rprint(":)")
+rprint(":)")
+rprint(":)")
+rprint(":)")
+rprint(":)")
+rprint(":)")
+rprint(":)")
+rprint(":)")
+rprint(":)")
+rprint(":)")
+rprint(":)")
+rprint(":)")
+rprint(":)")
+rprint(":)")
+rprint(":)")
+rprint(":)")
+rprint(":)")
+rprint(":)")
+rprint(":)")
+rprint(":)")
+rprint(":)")
+rprint(":)")
+rprint(":)")
+rprint(":)")
+rprint(":)")
+rprint(":)")
+rprint(":)")
+rprint(":)")
+     HatchEgg('Huge Monkey')
+
+		     end
+end)
+local tab = win:Tab("Miscellaneous", "http://www.roblox.com/asset/?id=6035047377")
+tab:Label("Miscellaneous")
+tab:Line()
+tab:Textbox("Custom Pop Up", "", true, function(t)
+local lib = require(game.ReplicatedStorage:WaitForChild('Framework'):WaitForChild('Library'))
+lib.Message.New(t)
+end)
+tab:Slider("Hoverboard Speed", "Makes your faster.", 1, 3,2,function(sel)
+if not slidersDisabled then 
+for i,v in pairs(game:GetService("ReplicatedStorage").Game.Hoverboards:GetChildren()) do
+    local modul = nil
+    for k,e in pairs(v:GetChildren()) do
+        if string.find(e.Name,"Data") then
+            modul = e
+        end
+    end
+    if modul ~= nil then
+        local s = require(modul)
+        s["speed"] = sel
+    else
+        warn("no module found lol")
+    end
+end
+
+workspace.__THINGS.__REMOTES:FindFirstChild("update hoverboard state"):FireServer({false})
+wait(0.1)
+workspace.__THINGS.__REMOTES:FindFirstChild("update hoverboard state"):FireServer({true})
+end
+end)
+tab:Button("Show Hidden Chances", "", function()
+workspace.__MAP.Eggs.DescendantAdded:Connect(function(a)
+   if a.Name == 'EggInfo' then
+       for i,v in pairs(a.Frame.Pets:GetChildren()) do
+           if v:IsA('Frame') and v.Thumbnail.Chance.Text == '??' then
+               local pet
+               for _,tbl in pairs(getgc(true)) do
+                   if (typeof(tbl) == 'table' and rawget(tbl, 'thumbnail')) then
+                       if tbl.thumbnail == v.Thumbnail.Image then
+                           pet = string.split(tostring(tbl.model.Parent), ' - ')[1]
+                       end
+                   end
+               end
+               for _,egg in pairs(game.ReplicatedStorage.Game.Eggs:GetDescendants()) do
+                   if egg:IsA('ModuleScript') and typeof(require(egg).drops) == 'table' then
+                       for _,drop in pairs(require(egg).drops) do
+                           if pet == '266' then v.Thumbnail.Chance.Text = '0.000002%' return end
+                           if drop[1] == pet then
+                               v.Thumbnail.Chance.Text = drop[2] .. '%'
+                           end
+                       end
+                   end
+               end
+           end
+       end
+   end
+end)
+local lib = require(game.ReplicatedStorage.Framework.Library)
+table.foreach(lib.Save.Get(), print)
+
+local oldworld = lib.Save.Get().World
+while wait(0.1) do
+   if lib.Save.Get().World ~= oldworld then
+       oldworld = lib.Save.Get().World
+       workspace.__MAP.Eggs.DescendantAdded:Connect(function(a)
+           if a.Name == 'EggInfo' then
+               for i,v in pairs(a.Frame.Pets:GetChildren()) do
+                   if v:IsA('Frame') and v.Thumbnail.Chance.Text == '??' then
+                       local pet
+                       for _,tbl in pairs(getgc(true)) do
+                           if (typeof(tbl) == 'table' and rawget(tbl, 'thumbnail')) then
+                               if tbl.thumbnail == v.Thumbnail.Image then
+                                   pet = string.split(tostring(tbl.model.Parent), ' - ')[1]
+                               end
+                           end
+                       end
+                       for _,egg in pairs(game.ReplicatedStorage.Game.Eggs:GetDescendants()) do
+                           if egg:IsA('ModuleScript') and typeof(require(egg).drops) == 'table' then
+                               for _,drop in pairs(require(egg).drops) do
+                                   if pet == '266' then v.Thumbnail.Chance.Text = '0.000002%' return end
+                                   if drop[1] == pet then
+                                       v.Thumbnail.Chance.Text = drop[2] .. '%'
+                                   end
+                               end
+                           end
+                       end
+                   end
+               end
+           end
+       end)
+   end
+end
+end)
+tab:Button("Hatch Huge Easter Cat", "", function()
+HatchEgg('Huge Easter Cat')
+end)
+tab:Button("Make All Pets Banana", "", function()
+    for i,v in pairs(game:GetService("Workspace")["__THINGS"].Pets:GetChildren()) do
+        v.Mesh.MeshId = "rbxassetid://6931518265"
+        v.Mesh.TextureId = "rbxassetid://6931530387"
+        v.Mesh.Scale = Vector3.new(1, 1, 1)
+        v.Mesh.CFrame = CFrame.new(spos.X, spos.Y + 40, spos.Z)
+    end
+end)
+tab:Button("Make All Pets Huge Easter Cat", "", function()
+    for i,v in pairs(game:GetService("Workspace")["__THINGS"].Pets:GetChildren()) do
+        v.Mesh.MeshId = "rbxassetid://9387212590"
+        v.Mesh.TextureId = "rbxassetid://9387212450"
+        v.Mesh.Scale = Vector3.new(3, 3, 3)
+        v.Mesh.CFrame = CFrame.new(spos.X, spos.Y + 40, spos.Z)
+    end
+end)
+tab:Button("Visual Dupe Gems", "", function()
+    function comma_value(amount)
+        local formatted = amount
+       while true do  
+          formatted, k = string.gsub(formatted, "^(-?%d+)(%d%d%d)", '%1,%2')
+          if (k == 0) then
+            break
+          end
+        end
+        return formatted
+      end
+  
+      local diamonds = game.Players.LocalPlayer.PlayerGui.Main.Right.Diamonds.Amount
+      local old = diamonds.Text
+      local oldNumber = string.gsub(old, ",", "")
+      local newNumber = oldNumber * 10000
+      local new = comma_value(newNumber)
+      local newString = tostring(new)
+      diamonds.Text = newString
+end)
+local tab = win:Tab("Auto Buy", "http://www.roblox.com/asset/?id=6031289461")
+tab:Label("Auto Buy")
+tab:Line()
+tab:Textbox("Enter Egg Name", "", true, function(sel84)
+    local SelectionText = string.upper(sel84)
+    local EggSelectionCorrected = nil
+    for i,v in pairs(game:GetService("ReplicatedStorage").Game.Eggs:GetDescendants()) do
+        if string.upper(v.Name) == SelectionText then
+            if v:FindFirstChild("Egg") then
+                EggSelectionCorrected = v.Name
+            end
+        end
+    end
+    if EggSelectionCorrected ~= nil then
+            SelectedEgg = EggSelectionCorrected
+            Flux:Notification("Selected "..SelectedEgg,"")
+    else
+        Flux:Notification("Invalid Egg Name","")
+    end
+    end)
+    local eggsdropdown = {}
+for i,v in pairs(game:GetService("ReplicatedStorage").Game.Eggs:GetDescendants()) do
+    if v:IsA("ModuleScript") then
+        local ojghf3y = require(v)
+        if ojghf3y.hatchable == true and ojghf3y.disabled == false then
+            table.insert(eggsdropdown,v.Name)
+        end
+    end
+end
+tab:Dropdown("Select Egg", eggsdropdown, function(selection)
+    SelectedEgg = selection
+end)
+tab:Button("Hatch Egg", "", function()
+    workspace.__THINGS.__REMOTES:FindFirstChild("buy egg"):InvokeServer({SelectedEgg,false})
+    end)
+tab:Dropdown("Auto Hatch Egg", {"Start Hatching","Stop Hatching"}, function(t)
+_G.AutoHatch33 = t
+while _G.AutoHatch33 == "Start Hatching" do
+    if _G.AutoHatch33 == "Stop Hatching" then repeat wait() until _G.AutoHatch33 == "Start Hatching" end
+    workspace.__THINGS.__REMOTES:FindFirstChild("buy egg"):InvokeServer({SelectedEgg,false})
+end
+end)
+tab:Dropdown("Skip Egg Hatching", {"Start Skip Hatching","Stop Skip Hatching"}, function(t)
+_G.SkipHatch33 = t
+while _G.SkipHatch33 == "Start Skip Hatching" do
+    if _G.SkipHatch33 == "Stop Skip Hatching" then
+for i,v in pairs(getgc(true)) do
+   if (typeof(v) == 'table' and rawget(v, 'OpenEgg')) then
+       v.OpenEgg = func
+		func = nil
+   end
+end
+for i,v in pairs(getgc(true)) do
+   if (typeof(v) == 'table' and rawget(v, 'OpenEgg')) then
+       func = v.OpenEgg
+       v.OpenEgg = function()
+           return true
+       end
+   end
+end
+end
+end
+end)
+local tab = win:Tab("Auto Farm", "http://www.roblox.com/asset/?id=6034837797")
+tab:Label("Auto Farm Coins")
+tab:Line()
+tab:Button("AutoFarm Coins", "", function()
+Stop = true
+end)
+tab:Button("OFF AutoFarm Coins", "", function()
+Stop = true
+end)
+tab:Line()
+tab:Button("Legit AutoFarm Coins", "", function()
+    LegitFarmCoins = true
+end)
+tab:Button("OFF Legit AutoFarm Coins", "", function()
+    LegitFarmCoins = true
+end)
+tab:Line()
+tab:Slider("AutoFarm Coin Range", "", 20, 500,120,function(choise)
+Maxmagnitude = choise
+end)
+
+local Chests = {
+    "Volcano Chest",
+    "Ancient Chest",
+    "Haunted Chest",
+    "Heaven's Gate Chest 1",
+    "Heaven's Gate Chest 2",
+    "Giant Heaven's Gate Chest",
+    "Tech Entry Chest",
+    "Giant Steampunk Chest",
+    "Giant Alien Chest",
+    "Giant Axolotl Chest",
+    "Giant Pixel Chest",
+}
+
+local ChestConversion = {
+    ["Volcano Chest"] = -2199.1033782958984,
+    ["Ancient Chest"] = 3149.397430419922,
+    ["Haunted Chest"] = 2231.8964233398438,
+    ["Heaven's Gate Chest 1"] = 4862.132736206055,
+    ["Heaven's Gate Chest 2"] = 4900.572708129883,
+    ["Giant Heaven's Gate Chest"] = 5290.193313598633,
+    ["Tech Entry Chest"] = -1188.5158386230469,
+    ["Giant Steampunk Chest"] = 2939.4519805908203,
+    ["Giant Alien Chest"] = 2150.534553527832,
+    ["Giant Axolotl Chest"] = 7800.039789199829,
+    ["Giant Pixel Chest"] = 5955.8543365597725,
+}
+tab:Line()
+tab:Dropdown("Select Chest To Farm", Chests, function(selection2)
+    SelectedChestToFarm = ChestConversion[selection2]
+    Flux:Notification("Selected "..selection2,"")
+end)
+tab:Button("AutoFarm Chest", "", function()
+    getgenv().start = true
+end)
+tab:Button("OFF AutoFarm Chest", "", function()
+    getgenv().start = false
+end)
+tab:Line()
+tab:Slider("Farming Speed", "", 1, 200,75,function(choise)
+Speed = choise
+end)
+tab:Line()
+tab:Button("Auto Collect Lootbags", "", function()
+    Config["AutoCollectLoot"]=true
+end)
+tab:Button("OFF Auto Collect Lootbags", "", function()
+    Config["AutoCollectLoot"]=false
+end)
+tab:Line()
+tab:Label("Other")
+tab:Line()
+tab:Dropdown("Auto Tripple Damage", {"Start Auto Tripple Damage","Stop Auto Tripple Damage"}, function(t)
+_G.AutoTripple33 = t
+if _G.AutoTripple33 == "Start Auto Tripple Damage" then
+    if _G.AutoTripple33 == "Stop Auto Tripple Damage" then repeat wait() until _G.AutoTripple33 == "Start Auto Tripple Damage" end
+    Config["AutoTripleDamage"] = _G.AutoTripple33
+end
+    end)
+tab:Dropdown("Auto Redeem Gifts", {"Start Auto Redeem Gifts","Stop Auto Redeem Gifts"}, function(t)
+_G.AutoTripple33 = t
+while _G.AutoTripple33 == "Start Auto Redeem Gifts" do
+    if _G.AutoTripple33 == "Stop Auto Redeem Gifts" then repeat wait() until _G.AutoTripple33 == "Start Auto Redeem Gifts" end
+    local thing = workspace.__THINGS.__REMOTES:FindFirstChild("redeem rank rewards"):InvokeServer({})
+thing()
+    if thing[1]==nil then
+        Flux:Notification("Error Redeeming","")
+    end
+end
+    end)
+
+tab:Button("Auto Collect Bank Interest", "", function()
+        local Bank = fetchBank()
+    if Bank ~= nil then
+        local Resp = workspace.__THINGS.__REMOTES:FindFirstChild("collect bank interest"):InvokeServer({Bank})
+        Flux:Notification(Resp[2]"","")
+    else
+        Flux:Notification("You don't own a bank","")
+    end
+    end)
+    function GetMyPets()
+   local returntable = {}
+   for i,v in pairs(game:GetService("Players").LocalPlayer.PlayerGui.Inventory.Frame.Main.Pets:GetChildren()) do
+       if v.ClassName == 'TextButton' and v.Equipped.Visible then
+           table.insert(returntable, v.Name)
+       end
+   end
+   return returntable
+end
+
+task.spawn(function() while task.wait(Speed/75) do
+if not Stop then
+    local cointhiny = GetCoins()
+    local pethingy = GetMyPets()
+    for i = 1, #pethingy do
+        if LegitFarmCoins == true then
+        local s,e = pcall(function() legitFarm1Coin(cointhiny["Number"..tostring(i)][2], pethingy[i%#pethingy+1]) end) if not s then warn(e) end
+        pcall(function() CollectOrbs() end)
+        else
+       pcall(function() FarmCoin(cointhiny["Number"..tostring(i)][2], pethingy[i%#pethingy+1]) end)
+       pcall(function() CollectOrbs() end)
+       end
+    end
+    end
+    if getgenv().start then
+    local cointhiny = getchest()
+    local pethingy = GetMyPets()
+    warn(tostring(cointhiny))
+        pcall(function() legitFarmCoin(cointhiny, pethingy) end)
+    end
+    if Config["AutoTP"]==true then
+        workspace.__THINGS.__REMOTES:FindFirstChild("performed teleport"):FireServer({})
+    end
+    if Config["AutoMakeGold"]==true then
+        MakePetsGold(false)
+    end
+    if Config["AutoMakeRainbow"]==true then
+        MakePetsRainbow(true)
+    end
+    if Config["AutoMerchant"]==true then
+        local isMerchantHere = game:GetService("Workspace")["__THINGS"]["__REMOTES"]["is merchant here"]:InvokeServer({})[1];
+        if isMerchantHere then
+            if mSessionOver == true then
+            notif:Fire("The merchant has arrived!")
+            notif:Fire("Buying Pets...")
+            BuyMerchantPets()
+            mSessionOver = false
+            end
+        else
+            mSessionOver = true
+        end
+    end
+    if Config["AutoHatch"] == true then
+    workspace.__THINGS.__REMOTES:FindFirstChild("buy egg"):InvokeServer({SelectedEgg,false})
+    end
+    if Config["AutoTripleDamage"] == true then
+    if shouldUseSelectedBoost("Triple Damage") == true then
+    workspace.__THINGS.__REMOTES:FindFirstChild("activate boost"):FireServer({"Triple Damage"})
+    end
+    end
+    if Config["AutoTripleCoins"] == true then
+    if shouldUseSelectedBoost("Triple Coins") == true then
+    workspace.__THINGS.__REMOTES:FindFirstChild("activate boost"):FireServer({"Triple Coins"})
+    end
+    end
+    if Config["AutoSuperLucky"] == true then
+    if shouldUseSelectedBoost("Super Lucky") == true then
+    workspace.__THINGS.__REMOTES:FindFirstChild("activate boost"):FireServer({"Super Lucky"})
+    end
+    end
+    if Config["AutoUltraLucky"] == true then
+    if shouldUseSelectedBoost("Ultra Lucky") == true then
+    workspace.__THINGS.__REMOTES:FindFirstChild("activate boost"):FireServer({"Ultra Lucky"})
+    end
+    end
+end end)
