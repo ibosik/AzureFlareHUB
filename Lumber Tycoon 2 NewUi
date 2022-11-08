@@ -1,6 +1,175 @@
 loadstring(game:HttpGet("https://raw.githubusercontent.com/ibosik/AzureFlareHUB/main/Lumber%20Tycoon%202%20butter%20source"))()
 local WaypointsPositions = {["The Den"] = CFrame.new(323, 49, 1930), ["Lighthouse"] = CFrame.new(1464.8, 356.3, 3257.2), ["Safari"] = CFrame.new(111.853, 11.0005, -998.805), ["Bridge"] = CFrame.new(112.308, 11.0005, -782.358), ["Bob's Shack"] = CFrame.new(260, 8, -2542), ["EndTimes Cave"] = CFrame.new(113, -214, -951), ["The Swamp"] = CFrame.new(-1209, 132, -801), ["The Cabin"] = CFrame.new(1244, 66, 2306), ["Volcano"] = CFrame.new(-1585, 625, 1140), ["Boxed Cars"] = CFrame.new(509, 5.2, -1463), ["Tiaga Peak"] = CFrame.new(1560, 410, 3274), ["Land Store"] = CFrame.new(258, 5, -99), ["Link's Logic"] = CFrame.new(4605, 3, -727), ["Palm Island"] = CFrame.new(2549, -5, -42), ["Palm Island 2"] = CFrame.new(1960, -5.900, -1501), ["Palm Island 3"] = CFrame.new(4344, -5.900, -1813), ["Fine Art Shop"] = CFrame.new(5207, -166, 719), ["SnowGlow Biome"] = CFrame.new(-1086.85, -5.89978, -945.316), ["Cave"] = CFrame.new(3581, -179, 430), ["Shrine Of Sight"] = CFrame.new(-1600, 195, 919), ["Fancy Furnishings"] = CFrame.new(491, 13, -1720), ["Docks"] = CFrame.new(1114, 3.2, -197), ["Strange Man"] = CFrame.new(1061, 20, 1131), ["Wood Dropoff"] = CFrame.new(323.406, -2.8, 134.734), ["Snow Biome"] = CFrame.new(889.955, 59.7999, 1195.55), ["Wood RUs"] = CFrame.new(265, 5, 57), ["Green Box"] = CFrame.new(-1668.05, 351.174, 1475.39), ["Spawn"] = CFrame.new(172, 2, 74), ["Cherry Meadow"] = CFrame.new(220.9, 59.8, 1305.8), ["Bird Cave"] = CFrame.new(4813.1, 33.5, -978.8),}
 
+function onebyone() --totally not skidded
+    function getHitPointsTbl()
+        return
+        {
+            ['Beesaxe']= 1.4;
+            ['AxeAmber']= 3.39;
+            ['ManyAxe']= 10.2;
+            ['BasicHatchet']= 0.2;
+            ['Axe1']= 0.55;
+            ['Axe2']= 0.93;
+            ['AxeAlphaTesters']= 1.5;
+            ['Rukiryaxe']= 1.68;
+            ['Axe3']= 1.45;
+            ['AxeBetaTesters']= 1.45;
+            ['FireAxe']= 0.6;
+            ['SilverAxe']= 1.6;
+            ['EndTimesAxe']= 1.58;
+            ['AxeChicken']= 0.9;
+            ['CandyCaneAxe']= 0;
+            ['AxeTwitter']= 1.65;
+            ['CandyCornAxe']= 1.75;
+        }
+    end
+    function plankData(plank)
+        local array = {}
+        array[1] = plank
+        array[2] = 1/(plank.Size.X*plank.Size.Z)
+        if array[2] < 0.2 then array[2] = 0.3 end
+        array[3] = math.floor(plank.Size.Y/array[2])
+        if array[3] < 1 then array[3] = 0 end
+        array[4] = plank.Size.Y
+        return array
+    end
+    function getMouseTarget()
+        local cursorPosition = game:GetService("UserInputService"):GetMouseLocation()
+        return workspace:FindPartOnRayWithIgnoreList(Ray.new(workspace.CurrentCamera.CFrame.p,(workspace.CurrentCamera:ViewportPointToRay(cursorPosition.x, cursorPosition.y, 0).Direction * 1000)),game.Players.LocalPlayer.Character:GetDescendants())
+    end
+    function getAxeList()
+        local axes = {}
+        for i,v in pairs (game.Players.LocalPlayer.Backpack:GetChildren()) do
+            table.insert(axes,v)
+        end
+        local pc = game.Players.LocalPlayer.Character
+        if pc:FindFirstChildOfClass"Tool" then
+            table.insert(axes,pc:FindFirstChildOfClass("Tool"))
+        end
+        return axes
+    end
+    function getTieredAxe()
+        return {
+            ['Beesaxe']= 13;
+            ['AxeAmber']= 12;
+            ['ManyAxe']= 15;
+            ['BasicHatchet']= 0;
+            ['RustyAxe']= -1;
+            ['Axe1']= 2;
+            ['Axe2']= 3;
+            ['AxeAlphaTesters']= 9;
+            ['Rukiryaxe']= 8;
+            ['Axe3']= 4;
+            ['AxeBetaTesters']= 10;
+            ['FireAxe']= 11;
+            ['SilverAxe']= 5;
+            ['EndTimesAxe']= 16;
+            ['AxeChicken']= 6;
+            ['CandyCaneAxe']= 1;
+            ['AxeTwitter']= 7;
+            ['CandyCornAxe']= 14;
+        }
+    end
+    function getBestAxee()
+        local pc = game.Players.LocalPlayer.Character
+        if pc:FindFirstChildOfClass"Tool" then
+            local t = pc:FindFirstChildOfClass"Tool"
+            if t:FindFirstChild("ToolName") then
+                return t
+            end
+        end
+        local best = -1;
+        local best_tool = nil;
+        local tier_list = getTieredAxe()
+        for i,v in pairs (getAxeList()) do
+            if v:FindFirstChild("ToolName") then
+                if tier_list[v.ToolName.Value] > best then
+                    best_tool = v
+                    best = tier_list[v.ToolName.Value]
+                end
+            end
+        end
+        return best_tool
+    end
+    local plr = game:GetService'Players'.LocalPlayer
+            local plrc = plr.Character
+            local m = plr:GetMouse()
+            local part = nil
+            local cancel1u = false
+            connecteda = m.Button1Up:connect(function()
+                local partt = getMouseTarget()
+                if partt.Name == "WoodSection" then
+                    part = partt
+                else
+                    cancel1u = true
+                end
+            end)
+            repeat wait() until cancel1u or part ~= nil
+            if connecteda ~= nil then
+                connecteda:Disconnect()
+                connecteda = nil
+            end
+            if cancel1u then
+                cancel1u = false
+                return
+            end
+            cancel1u = false
+            local HitPoints= getHitPointsTbl()
+            print('1')
+            local tool = getBestAxee()
+            print('2')
+            function axe(v,x)
+                local hps = HitPoints[tool.ToolName.Value]
+                local Wood = v.TreeClass.Value
+                if Wood == "LoneCave" and tool.ToolName.Value == "EndTimesAxe" then
+                    hps = 10000000
+                end
+                if Wood == "Volcano" and tool.ToolName.Value == "FireAxe" then
+                    hps = 6.35
+                end
+                local table =  {
+                    ["tool"] = tool,
+                    ["faceVector"] = Vector3.new(1, 0, 0),
+                    ["height"] = x,
+                    ["sectionId"] = 1,
+                    ["hitPoints"] = hps,
+                    ["cooldown"] = 0.21,
+                    ["cuttingClass"] = "Axe"
+                }
+                game:GetService("ReplicatedStorage").Interaction.RemoteProxy:FireServer(v.CutEvent, table)
+            end
+            
+            local ca = plankData(part)
+            
+            local caq = {}
+            local remaining = ca[3]
+            local ready = false
+            
+            if remaining == 0 then return end
+            local repeating = workspace.PlayerModels.ChildAdded:connect(function(new)
+                if new:WaitForChild("Owner").Value == plr and new:FindFirstChild'WoodSection' and math.floor(plankData(new.WoodSection)[4]) == math.floor(ca[4]-ca[2]) then
+                    ready = true
+                    caq = plankData(new:FindFirstChild'WoodSection')
+                end
+            end)
+            
+            for i=1,ca[3] do
+                
+                ready = false
+                
+                repeat
+                    
+                    wait(0.21)
+                    axe(ca[1].Parent,ca[2])
+                    
+                until ready or (i == ca[3] and wait(6))
+                ca = caq
+            end
+            
+end
+
+
 local FlyingEnabled = false
 local maxspeed = 150 
 function BetterFly()
@@ -80,27 +249,6 @@ end
 game.Players.LocalPlayer.CharacterAdded:Connect(BetterFly)
 BetterFly()
 
-function CountLand(owner)
-    land = {}
-    for i,v in pairs(game:GetService("Workspace").Properties:GetDescendants()) do
-        if v:IsA("ObjectValue") then
-            if v.Value == game.Players:FindFirstChild(owner) then
-for i,v in pairs(v.Parent:GetChildren()) do
-    if v:IsA("Part") and v.Name == "Square" or v.Name == "OriginSquare" then
-        if not table.find(land,v) then
-            table.insert(land,v)
-
-        end
-    end
-end
-
-Flux:Notification(game.Players:FindFirstChild(owner).Name .. " has " ..tostring(#land).." land slots","Land Amount")
-land = {}
-end
-
-end
-end
-end
 local Flux = loadstring(game:HttpGet"https://raw.githubusercontent.com/dawid-scripts/UI-Libs/main/fluxlib.txt")()
 
 local win = Flux:Window("AzurEZ Hub", "Lumber Tycoon 2", Color3.fromRGB(160, 0, 160), Enum.KeyCode.LeftControl)
@@ -124,6 +272,13 @@ local tab = win:Tab("Settings", "http://www.roblox.com/asset/?id=6034989541")
 tab:Label("Gui")
 tab:Line()
 tab:Button("Destroy Gui", "Destroy Gui.", function()
+game:GetService("CoreGui").FluxLib:Destroy()
+end)
+tab:Button("Press If Previous Gui Freezed", "", function()
+game:GetService("CoreGui").FluxLib:Destroy()
+game:GetService("CoreGui").FluxLib:Destroy()
+game:GetService("CoreGui").FluxLib:Destroy()
+game:GetService("CoreGui").FluxLib:Destroy()
 game:GetService("CoreGui").FluxLib:Destroy()
 end)
 tab:Button("AzurEZ V1", "First Version Of AzurEZ Hub.", function()
@@ -238,7 +393,7 @@ tab:Button("OFF Wood Lasso", "Select Your Wood And Teleport Him.", function()
     end)
     tab:Line()
 tab:Button("Teleport Selected Wood", "Teleport Selected Wood.", function()
-    WoodSelectionTp(WoodDirection, TpToWoodAfterFinished)
+    WoodSelectionTp(WoodDirection, true)
     end)
     tab:Line()
 tab:Button("Wood Selection Tool", "Select Your Wood And Teleport Him.", function()
@@ -274,6 +429,13 @@ tab:Button("Bring All Planks", "Bring All Planks", function()
 tab:Button("Sell All Planks", "Sell All Planks", function()
     SellAllPlanks()
     end)
+tab:Line()
+tab:Label("Auto Fill")
+tab:Line()
+tab:Button("Cut Plank to one by one", "", function()
+Flux:Notification("Click Any Plank On Your Slot", "Ok")
+     onebyone()
+end)
 local tab = win:Tab("Items", "http://www.roblox.com/asset/?id=6031079158")
 tab:Label("Teleport Items")
 tab:Line()
@@ -315,6 +477,96 @@ tab:Button("OFF Click Tp Items ( I HATE TOGGLES IN THIS UI LIBRARY )", "Click To
     ClickToTP()
 end)
 tab:Line()
+tab:Label("If you want to tp other peoples items with the selection tool")
+tab:Line()
+local AllPlayers = {"Select Player"}
+for i,v in next,game.Players:GetPlayers() do
+if not table.find(AllPlayers,v.Name) then
+	table.insert(AllPlayers,v.Name)
+end
+end
+items23 = {}
+table42 = {}
+
+for i,v in pairs(game:GetService("Workspace").PlayerModels:GetDescendants()) do
+	if v.Name == "ItemName" and v.Parent:FindFirstChild("Owner") and v.Parent.Owner.Value == game.Players.LocalPlayer then
+			if not table.find(items23,v.Value) then
+			table.insert(items23,v.Value)
+
+	end --game:GetService("Workspace").PlayerModels.Plank.TreeClass
+
+elseif v.Name == "PurchasedBoxItemName" and v.Parent:FindFirstChild("Owner") and v.Parent.Owner.Value == game.Players.LocalPlayer then
+				if not table.find(items23,v.Value) then
+				table.insert(items23,v.Value)
+			end
+
+		elseif v.Name == "TreeClass" and v.Parent:FindFirstChild("Owner") and v.Parent.Owner.Value == game.Players.LocalPlayer then
+			if not table.find(items23,v.Value) then
+			table.insert(items23,v.Value)
+		end
+			end
+		end
+tab:Dropdown("Item Owner", AllPlayers, function(t)
+DropOwner = t
+end)
+tab:Line()
+tab:Label("Count")
+tab:Line()
+tab:Dropdown("Select Item To Count", items23, function(t)
+        getgenv().item = t
+end)
+tab:Button("Refresh Item Counter Dropdown", "", function()
+
+		ItemsDrop:RemoveItems({items23})
+        
+        for i,v in pairs(game:GetService("Workspace").PlayerModels:GetDescendants()) do
+			if v.Name == "ItemName" and v.Parent:FindFirstChild("Owner") and v.Parent.Owner.Value == game.Players.LocalPlayer then
+					if not table.find(items23,v.Value) then
+					table.insert(items23,v.Value)
+		
+			end
+		
+		elseif v.Name == "PurchasedBoxItemName" and v.Parent:FindFirstChild("Owner") and v.Parent.Owner.Value == game.Players.LocalPlayer then
+						if not table.find(items23,v.Value) then
+						table.insert(items23,v.Value)
+					end
+
+				elseif v.Name == "TreeClass" and v.Parent:FindFirstChild("Owner") and v.Parent.Owner.Value == game.Players.LocalPlayer then
+					if not table.find(items23,v.Value) then
+					table.insert(items23,v.Value)
+				end
+					end
+				end
+
+
+ItemsDrop:AddItems({items23})
+            end)
+tab:Button("Count Selected Item", "", function()
+		for i,v in pairs(game:GetService("Workspace").PlayerModels:GetDescendants()) do
+			if v:FindFirstChild("Owner") and v.Owner.Value == game.Players.LocalPlayer then
+					if v:FindFirstChild("ItemName") and v.ItemName.Value == getgenv().item and not table.find(table42,v) then
+							table.insert(table42,v)	
+						
+						
+					elseif v:FindFirstChild("PurchasedBoxItemName") and v.PurchasedBoxItemName.Value == getgenv().item and not table.find(table42,v) then
+
+									table.insert(table42,v)
+
+					elseif v:FindFirstChild("TreeClass") and v.TreeClass.Value == getgenv().item and not table.find(table42,v) then
+		
+						table.insert(table42,v)
+								end
+
+							end
+		
+							end
+						
+			
+	
+	
+				Flux:Notification("you have " .. tostring(#table42) .. " " .. getgenv().item .. " item(s)")
+				table42 = {}
+            end)
 local tab = win:Tab("Slot", "http://www.roblox.com/asset/?id=6022668899")
 tab:Label("Land")
 tab:Line()
@@ -378,6 +630,13 @@ tab:Button("Max Land", "Max Land.", function()
 tab:Button("Sell Sold Sign", "Sell Sold Sign.", function()
     SellSoldSign()
     end)
+    tab:Line()
+tab:Dropdown("Land Owner", AllPlayers, function(t)
+LandOwner = t
+end)
+tab:Button("Count Land", "Over 25 Is Bad.", function()
+CountLand(LandOwner)
+end)
 tab:Line()
 tab:Label("Other")
 tab:Line()
@@ -441,12 +700,6 @@ tab:Button("Teleport To Waypoints", "", function()
 tab:Dropdown("Teleport To Waypoints", {"The Den", "Lighthouse", "Safari", "Bridge", "Bob's Shack", "EndTimes Cave", "The Swamp", "The Cabin", "Volcano", "Boxed Cars", "Tiaga Peak", "Land Store", "Link's Logic", "Palm Island", "Palm Island 2", "Palm Island 3", "Fine Art Shop", "SnowGlow Biome", "Cave", "Shrine Of Sight", "Fancy Furnishings", "Docks", "Strange Man", "Wood Dropoff", "Snow Biome", "Wood RUs", "Green Box", "Spawn", "Cherry Meadow", "Bird Cave",}, function(t)
     game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = WaypointsPositions[t]
 end)
-local AllPlayers = {"Select Player"}
-for i,v in next,game.Players:GetPlayers() do
-if not table.find(AllPlayers,v.Name) then
-	table.insert(AllPlayers,v.Name)
-end
-end
 tab:Dropdown("Select Player", AllPlayers, function(t)
     TeleportToPlayer(t)
 end)
@@ -588,6 +841,16 @@ tab:Button("Better Graphics", "", function()
     light.OutdoorAmbient = Color3.fromRGB(112, 117, 128)
     light.Outlines = false  
     end)
+    tab:Line()
+tab:Button("Full Bright", "", function()
+    loadstring(game:HttpGet("https://pastebin.com/raw/06iG6YkU", true))();
+    _G.FullBrightExecuted = true
+    end)
+tab:Button("OFF Full Bright", "", function()
+    loadstring(game:HttpGet("https://pastebin.com/raw/06iG6YkU", true))();
+    _G.FullBrightExecuted = false
+    end)
+    tab:Line()
 --[[local tab = win:Tab("Tab 1", "http://www.roblox.com/asset/?id=6023426915")
 tab:Button("Kill all", "This function may not work sometimes and you can get banned.", function()
 Flux:Notification("Killed all players successfully!", "Alright")
@@ -624,3 +887,24 @@ end end
 
 _G.idkk = true
 ]]
+function CountLand(owner)
+    land = {}
+    for i,v in pairs(game:GetService("Workspace").Properties:GetDescendants()) do
+        if v:IsA("ObjectValue") then
+            if v.Value == game.Players:FindFirstChild(owner) then
+for i,v in pairs(v.Parent:GetChildren()) do
+    if v:IsA("Part") and v.Name == "Square" or v.Name == "OriginSquare" then
+        if not table.find(land,v) then
+            table.insert(land,v)
+
+        end
+    end
+end
+
+Flux:Notification(game.Players:FindFirstChild(owner).Name .. " has " ..tostring(#land).." land slots","Land Amount")
+land = {}
+end
+
+end
+end
+end
