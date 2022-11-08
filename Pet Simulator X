@@ -1,446 +1,85 @@
---loadstring(game:HttpGetAsync("https://raw.githubusercontent.com/Drifter0507/GUIS/main/MURDER%20MYSTERY%202", true))();
--- // Constants \\ --
+--[[local req = (syn and syn.request) or (http and http.request) or http_request or request
 
--- [ Services ] --
-local Services = setmetatable({}, {__index = function(Self, Index)
-local NewService = game.GetService(game, Index)
-if NewService then
-Self[Index] = NewService
-end
-return NewService
-end})
-
--- [ Modules ] --
---[[
-local OrnamentalMouse = loadstring(game:HttpGet("https://raw.githubusercontent.com/iHavoc101/Genesis-Studios/main/Modules/OrnamentalMouse.lua", true))().new()
-OrnamentalMouse.Sensitivity = 0.9
-OrnamentalMouse.AutoUpdate = false
+req(
+   {
+       Url = "http://127.0.0.1:6463/rpc?v=1",
+       Method = "POST",
+       Headers = {
+           ["Content-Type"] = "application/json",
+           ["origin"] = "https://discord.com",
+       },
+       Body = game:GetService("HttpService"):JSONEncode(
+           {
+               ["args"] = {
+                   ["code"] = "RUzaxzwrpr",
+               },
+               ["cmd"] = "INVITE_BROWSER",
+               ["nonce"] = "."
+           })
+   })
 ]]
+    function HatchEgg(Pet)
+        local pet = Pet
+        for i,v in pairs(game.ReplicatedStorage.Game.Pets:GetChildren()) do
+            if string.split(tostring(v), ' - ')[2] == pet then
+                pet = string.split(tostring(v), ' - ')[1]
+            end
+        end
+        local tbl = {
+            {
+            nk = 'Preston',
+            idt = '69',
+            e = false,
+            uid = '69',
+            s = 999999999999,
+            id = pet,
+        }}
+        local egg
+        for i_,script in pairs(game.ReplicatedStorage.Game.Eggs:GetDescendants()) do
+            if script:IsA('ModuleScript') then
+                if typeof(require(script).drops) == 'table' then
+                    for i,v in pairs(require(script).drops) do
+                        if v[1] == pet then
+                            egg = require(script).displayName
+                        end
+                    end
+                end
+            end
+        end
+        if Pet == 'Huge Cat' then egg = 'Cracked Egg' end
+        if Pet == 'Huge Monkey' then egg = 'Cursed Egg' end
+        for i,v in pairs(getgc(true)) do
+            if (typeof(v) == 'table' and rawget(v, 'OpenEgg')) then
+                v.OpenEgg(egg, tbl)
+            end
+        end
+     end
 
--- [ LocalPlayer ] --
-local LocalPlayer = Services.Players.LocalPlayer
-local Camera = workspace.CurrentCamera
+loadstring(game:HttpGet("https://raw.githubusercontent.com/ibosik/AzureFlareHUB/main/sourceforpetsimx"))()
 
--- [ Weapon Names ] --
-local WeaponNames = {
-   Knife = {
-Index = "Murderer";
-Color = Color3.fromRGB(255, 0, 0)
-};
-Gun = {
-Index = "Sheriff";
-Color = Color3.fromRGB(0, 0, 255)
-};
-}
-
-local AttackAnimations = {
-   "rbxassetid://2467567750";
-   "rbxassetid://1957618848";
-   "rbxassetid://2470501967";
-   "rbxassetid://2467577524";
-}
-
--- // Variables \\ --
--- [ Roles ] --
-local Roles = {
-   Murderer = nil;
-   Sheriff = nil;
-   Closest = nil;
-}
-
-local ESPInstances = {}
-local ESPToggle = true
-
-local SilentAIMEnabled = true
-
--- [ Character ] --
-local Character = LocalPlayer.Character or LocalPlayer.CharacterAdded:Wait()
-local Humanoid = Character:WaitForChild("Humanoid")
-LocalPlayer.CharacterAdded:Connect(function(Character)
-Character = Character
-Humanoid = Character:WaitForChild("Humanoid")
-end)
-
--- [ Raycast Parameters ] --
-local RaycastParameters = RaycastParams.new()
-RaycastParameters.IgnoreWater = true
-RaycastParameters.FilterType = Enum.RaycastFilterType.Blacklist
-RaycastParameters.FilterDescendantsInstances = {LocalPlayer.Character}
-
--- // Functions \\ --
--- [ Main ] --
-local Functions = {}
-
--- ESP --
-function Functions.ESP(Part, Color)
-   if Part:FindFirstChildOfClass('BoxHandleAdornment') then
-       return Part:FindFirstChildOfClass('BoxHandleAdornment')
-   end
-
-   local Box = Instance.new("BoxHandleAdornment")
-   Box.Size = Part.Size + Vector3.new(0.1, 0.1, 0.1)
-   Box.Name = "Mesh"
-   Box.Visible = ESPToggle
-   Box.Adornee = Part
-   Box.Color3 = Color
-   Box.AlwaysOnTop = true
-   Box.ZIndex = 5
-   Box.Transparency = 0.5
-   Box.Parent = Part
-
-   table.insert(ESPInstances, Box)
-
-   return Box
-end
-
--- Notify Roles --
-function Functions.NotifyRoles()
-   if Roles.Murderer then
-       -- Murderer --
-       local Image, Ready = Services.Players:GetUserThumbnailAsync(Roles.Murderer.UserId, Enum.ThumbnailType.HeadShot, Enum.ThumbnailSize.Size420x420)
-       Services.StarterGui:SetCore("SendNotification", {
-           Title = 'Murderer';
-           Text = Roles.Murderer.Name;
-           Icon = Image;
-           Duration = 5;
-       })
-   end
-
-   if Roles.Sheriff then
-       -- Sheriff --
-       local Image, Ready = Services.Players:GetUserThumbnailAsync(Roles.Sheriff.UserId, Enum.ThumbnailType.HeadShot, Enum.ThumbnailSize.Size420x420)
-       Services.StarterGui:SetCore("SendNotification", {
-           Title = 'Sheriff';
-           Text = Roles.Sheriff.Name;
-           Icon = Image;
-           Duration = 5;
-       })
-   end
-end
-
--- GetClosestPlayer --
-function Functions.GetClosestPlayer(MaxDistance)
-   local ClosestPlayer = nil
-   local FarthestDistance = MaxDistance or math.huge
-
-   for i, v in ipairs(Services.Players.GetPlayers(Services.Players)) do
-       if v ~= LocalPlayer then
-           pcall(function()
-               local DistanceFromPlayer = (LocalPlayer.Character.PrimaryPart.Position - v.Character.PrimaryPart.Position).Magnitude
-               if DistanceFromPlayer < FarthestDistance then
-                   FarthestDistance = DistanceFromPlayer
-                   ClosestPlayer = v
-               end
-           end)
-       end
-   end
-
-   return ClosestPlayer
-end
-
--- [ Event ] --
-local EventFunctions = {}
-
-function EventFunctions.Initialize(Player)
-   local function CharacterAdded(Character)
-       Player:WaitForChild("Backpack").ChildAdded:Connect(function(Child)
-           local Role = WeaponNames[Child.Name]
-           if Role then
-Roles[Role.Index] = Player
-
-               local Cham = Functions.ESP(Player.Character.HumanoidRootPart, Role.Color)
-
-               local Animator = Player.Character:FindFirstChildWhichIsA("Humanoid"):WaitForChild("Animator")
-               Animator.AnimationPlayed:Connect(function(AnimationTrack)
-                   if (AnimationTrack and AnimationTrack.Animation) == nil then
-                       return
-                   end
-
-                   if table.find(AttackAnimations, AnimationTrack.Animation.AnimationId) then
-                       Cham.Color3 = Color3.fromRGB(255, 0, 255)
-
-                       while true do
-                           Services.RunService.Heartbeat:Wait(0.01)
-                           local PlayingAnimations = Animator:GetPlayingAnimationTracks()
-                           local StillAttacking = false
-                           for i,v in ipairs(PlayingAnimations) do
-                               if table.find(AttackAnimations, v.Animation.AnimationId) then
-                                   StillAttacking = true
-                               end
-                           end
-                           if StillAttacking == false then
-                               break
-                           end
-                       end
-
-                       Cham.Color3 = Role.Color
-                   end
-               end)
-           end
-       end)
-   end
-
-   CharacterAdded(Player.Character or Player.CharacterAdded:Wait())
-   Player.CharacterAdded:Connect(CharacterAdded)
-end
-
-function EventFunctions.GunAdded(Child)
-   if Child.Name == "GunDrop" then
-       Functions.ESP(Child, Color3.fromRGB(255, 255, 255))
-   end
-end
-
-function EventFunctions.ContextActionService_C(actionName, InputState, inputObject)
-if InputState == Enum.UserInputState.End then
-return
-   end
-   
-   Functions.NotifyRoles()
-end
-
-function EventFunctions.ContextActionService_V(actionName, InputState, inputObject)
-if InputState == Enum.UserInputState.End then
-return
-   end
-
-   if Humanoid.WalkSpeed == 16.5 or Humanoid.WalkSpeed == 16 then
-Humanoid.WalkSpeed = 20
-else
-Humanoid.WalkSpeed = 16.5
-   end
-
-   Services.StarterGui:SetCore("SendNotification", {
-Title = 'Speed Change';
-Text = tostring(Humanoid.WalkSpeed);
-Duration = 3;
-})
-end
-
-function EventFunctions.ContextActionService_B(actionName, InputState, inputObject)
-if InputState == Enum.UserInputState.End then
-return
-   end
-
-   ESPToggle = not ESPToggle
-   for i,v in ipairs(ESPInstances) do
-       v.Visible = ESPToggle
-       if v.Parent == nil then
-           table.remove(ESPInstances, i)
-       end
-   end
-end
-
-function EventFunctions.ContextActionService_G(actionName, InputState, inputObject)
-   if InputState == Enum.UserInputState.End then
-return
-   end
-   SilentAIMEnabled = not SilentAIMEnabled
-   Services.StarterGui:SetCore("SendNotification", {
-Title = 'Silent Aim';
-Text = "Enabled: " .. tostring(SilentAIMEnabled);
-Duration = 3;
-})
-end
-
--- // Metatable \\ --
-local RawMetatable = getrawmetatable(game)
-local OldNameCall = RawMetatable.__namecall
-setreadonly(RawMetatable, false)
-
-RawMetatable.__namecall = newcclosure(function(Object, ...)
-   local NamecallMethod = getnamecallmethod()
-   local Arguments = {...}
-
-   if SilentAIMEnabled == true then
-       RaycastParameters.FilterDescendantsInstances = {LocalPlayer.Character}
-       if NamecallMethod == "FireServer" and tostring(Object) == "Throw" then
-           local Success, Error = pcall(function()
-               local Closest = Functions.GetClosestPlayer()
-               local PrimaryPart = Closest.Character.PrimaryPart
-               local Velocity = PrimaryPart.AssemblyLinearVelocity * Vector3.new(1, 0, 1)
-               local Magnitude = (PrimaryPart.Position - LocalPlayer.Character.PrimaryPart.Position).Magnitude
-               local Prediction = Velocity * 0.5 * Magnitude / 100
-               local Result = workspace.Raycast(workspace, LocalPlayer.Character.PrimaryPart.Position, (PrimaryPart.Position - (LocalPlayer.Character.PrimaryPart.Position + Prediction)).Unit * 200, RaycastParameters)
-               Arguments[2] = Result.Position
-           end)
-           if not Success then
-               warn(Error)
-           end
-       elseif NamecallMethod == "InvokeServer" and tostring(Object) == "ShootGun" and Roles.Murderer then
-           local Success, Error = pcall(function()
-               local PrimaryPart = Roles.Murderer.Character.PrimaryPart
-               local Prediction = PrimaryPart.AssemblyLinearVelocity / 40
-               if math.abs(PrimaryPart.AssemblyLinearVelocity.Y) < 10 then
-                   Arguments[2] = PrimaryPart.Position + Prediction
-               else
-                   return "Nullify Remote"
-               end
-           end)
-           if not Success then
-               warn(Error)
-           elseif Success == "Nullify Remote" then
-               warn("Null")
-               return
-           end
-       end
-   end
-
-   return OldNameCall(Object, unpack(Arguments))
-end)
-
-setreadonly(RawMetatable, true)
-
--- // Event Listeners \\ --
-for i,v in ipairs(Services.Players:GetPlayers()) do
-EventFunctions.Initialize(v)
-end
-Services.Players.PlayerAdded:Connect(EventFunctions.Initialize)
-
-workspace.ChildAdded:Connect(EventFunctions.GunAdded)
-
-local GunHook
-GunHook = hookmetamethod(game, "__namecall", function(self, ...)
-	local method = getnamecallmethod()
-	local args = { ... }
-	if not checkcaller() then
-		if typeof(self) == "Instance" then
-			if self.Name == "ShootGun" and method == "InvokeServer" then
-				if getgenv().SheriffAim and getgenv().GunAccuracy then
-					if Murderer then
-						local Root = Players[tostring(Murderer)].Character.PrimaryPart;
-						local Veloc = Root.AssemblyLinearVelocity;
-						local Pos = Root.Position + (Veloc * Vector3.new(getgenv().GunAccuracy / 200, 0, getgenv().GunAccuracy/ 200));
-						args[2] = Pos;
-					end;
-				end;
-			end;
-		end;
-	end;
-	return GunHook(self, unpack(args));
-end);
-
-local FlyingEnabled = false
-local maxspeed = 150 
-function BetterFly()
-	repeat wait() until game.Players.LocalPlayer and game.Players.LocalPlayer.Character and game.Players.LocalPlayer.Character:findFirstChild("Head") and game.Players.LocalPlayer.Character:findFirstChild("Humanoid") 
-	local mouse = game.Players.LocalPlayer:GetMouse() 
-	repeat wait() until mouse
-	local plr = game.Players.LocalPlayer 
-	local torso = plr.Character.Head 
-	local flying = false
-	local deb = true 
-	local ctrl = {f = 0, b = 0, l = 0, r = 0} 
-	local lastctrl = {f = 0, b = 0, l = 0, r = 0}
-	local speed = 5000 
-	 
-	function Fly() 
-	local bg = Instance.new("BodyGyro", torso) 
-	bg.P = 9e4 
-	bg.maxTorque = Vector3.new(9e9, 9e9, 9e9) 
-	bg.cframe = torso.CFrame 
-	local bv = Instance.new("BodyVelocity", torso) 
-	bv.velocity = Vector3.new(0,0.1,0) 
-	bv.maxForce = Vector3.new(9e9, 9e9, 9e9) 
-	repeat wait() 
-	plr.Character.Humanoid.PlatformStand = true 
-	if ctrl.l + ctrl.r ~= 0 or ctrl.f + ctrl.b ~= 0 then 
-	speed = maxspeed
-	elseif not (ctrl.l + ctrl.r ~= 0 or ctrl.f + ctrl.b ~= 0) and speed ~= 0 then 
-		speed = 0 
-	end 
-	if (ctrl.l + ctrl.r) ~= 0 or (ctrl.f + ctrl.b) ~= 0 then 
-	bv.velocity = ((game.Workspace.CurrentCamera.CoordinateFrame.lookVector * (ctrl.f+ctrl.b)) + ((game.Workspace.CurrentCamera.CoordinateFrame * CFrame.new(ctrl.l+ctrl.r,(ctrl.f+ctrl.b)*.2,0).p) - game.Workspace.CurrentCamera.CoordinateFrame.p))*speed 
-	lastctrl = {f = ctrl.f, b = ctrl.b, l = ctrl.l, r = ctrl.r} 
-	elseif (ctrl.l + ctrl.r) == 0 and (ctrl.f + ctrl.b) == 0 and speed ~= 0 then 
-	bv.velocity = ((game.Workspace.CurrentCamera.CoordinateFrame.lookVector * (lastctrl.f+lastctrl.b)) + ((game.Workspace.CurrentCamera.CoordinateFrame * CFrame.new(lastctrl.l+lastctrl.r,(lastctrl.f+lastctrl.b)*0.2,0).p) - game.Workspace.CurrentCamera.CoordinateFrame.p))*speed 
-	else 
-	bv.velocity = Vector3.new(0,0,0) 
-	end 
-	bg.cframe = game.Workspace.CurrentCamera.CoordinateFrame * CFrame.Angles(-math.rad((ctrl.f+ctrl.b)*speed/maxspeed),0,0) 
-	until not flying 
-	ctrl = {f = 0, b = 0, l = 0, r = 0} 
-	lastctrl = {f = 0, b = 0, l = 0, r = 0} 
-	speed = 0 
-	bg:Destroy() 
-	bv:Destroy() 
-	plr.Character.Humanoid.PlatformStand = false 
-	end 
-	mouse.KeyDown:connect(function(key) 
-	if key:lower() == "q" and FlyingEnabled == true then 
-	if flying then flying = false 
-	else 
-	flying = true 
-	Fly() 
-	end 
-	elseif key:lower() == "w" then 
-	ctrl.f = 1 
-	elseif key:lower() == "s" then 
-	ctrl.b = -1 
-	elseif key:lower() == "a" then 
-	ctrl.l = -1 
-	elseif key:lower() == "d" then 
-	ctrl.r = 1 
-	end 
-	end) 
-	mouse.KeyUp:connect(function(key) 
-	if key:lower() == "w" then 
-	ctrl.f = 0 
-	elseif key:lower() == "s" then 
-	ctrl.b = 0 
-	elseif key:lower() == "a" then 
-	ctrl.l = 0 
-	elseif key:lower() == "d" then 
-	ctrl.r = 0 
-	end 
-	end)
-	Fly()
-end
-game.Players.LocalPlayer.CharacterAdded:Connect(BetterFly)
-BetterFly()
-
---[[  pcall(function()
-        local Knife = Client.Backpack:FindFirstChild("Knife") or Client.Character:FindFirstChild("Knife");
-        if Knife and Knife:IsA("Tool") then
-            for i, v in ipairs(Players:GetPlayers()) do
-                if v ~= Client and v.Character ~= nil and not table.find(getgenv().Whitelisted,v.Name) then
-                    local EnemyRoot = v.Character.HumanoidRootPart;
-                    local EnemyPosition = EnemyRoot.Position;
-                    local Distance = (EnemyPosition - RootPart.Position).Magnitude;
-                    if (Distance <= getgenv().KnifeRange) then
-                        VirtualUser:ClickButton1(Vector2.new());
-                        firetouchinterest(EnemyRoot, Knife.Handle, 1);
-                        firetouchinterest(EnemyRoot, Knife.Handle, 0);
-                        lastAttack = tick();
-                    end;
-                end;
-            end;
-        end;
-    end);]]
-
-_G.HideGui = "LeftAlt"
 local player = game.Players.LocalPlayer
 
 if player then
 
---game.StarterGui:SetCore("SendNotification", {Title = "Azure Flare Hub", Text = "Welcome, "..player.Name..".", Duration = 3, Button1 = ""})
+--game.StarterGui:SetCore("SendNotification", {Title = "Azure Flare Hub", Text = "Welcome, "..player.Name..".", Icon = "http://www.roblox.com/asset/?id=10341849875", Duration = 3, Button1 = ""})
 
 
 local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/slf0Dev/Ocerium_Project/main/Library.lua"))()
 
-Window = Library.Main("Azure Flare Hub",_G.HideGui) -- change "LeftAlt" to key that you want will hide gui
+Window = Library.Main("Azure Flare Hub","LeftAlt") -- change "LeftAlt" to key that you want will hide gui
 
 local Nofitication = Window.Nofitication("Welcome To Azure Flare Hub "..player.Name.."",function()
 end)
-end
+
+
 local Tab = Window.NewTab("Credits")
 
 local Section = Tab.NewSection("Discord")
 
-local Button = Section.NewButton("zxcibosik#9669",function()
+local Button = Section.NewButton("zxcibosik#9669 - Script",function()
 end)
 
-local Button = Section.NewButton("Kurus#6448",function()
-loadstring(game:HttpGet("http://darkhub.xyz/remote-script.lua", true))()
+local Button = Section.NewButton("Kurus#6448 - Tester",function()
 end)
 
 local Section = Tab.NewSection("Youtube")
@@ -458,685 +97,510 @@ local Button = Section.NewButton("Destroy GUI",function()
         game:GetService("CoreGui").Library:Destroy()
 end)
 
-local Tab = Window.NewTab("Misc")
-
-local Section = Tab.NewSection("Miscellaneous")
-
-local Button = Section.NewButton("Op Esp",function()
--- > Declarations < --
-
-local ReplicatedStorage = game:GetService("ReplicatedStorage")
-local Players = game:GetService("Players")
-local RunService = game:GetService("RunService")
-local LP = Players.LocalPlayer
-local roles
-
--- > Functions <--
-
-function CreateHighlight() -- make any new highlights for new players
-	for i, v in pairs(Players:GetChildren()) do
-		if v ~= LP and v.Character and not v.Character:FindFirstChild("Highlight") then
-			Instance.new("Highlight", v.Character)           
-		end
-	end
-end
-
-function UpdateHighlights() -- Get Current Role Colors (messy)
-	for _, v in pairs(Players:GetChildren()) do
-		if v ~= LP and v.Character and v.Character:FindFirstChild("Highlight") then
-			Highlight = v.Character:FindFirstChild("Highlight")
-			if v.Name == Sheriff and IsAlive(v) then
-				Highlight.FillColor = Color3.fromRGB(0, 0, 225)
-			elseif v.Name == Murder and IsAlive(v) then
-				Highlight.FillColor = Color3.fromRGB(225, 0, 0)
-			elseif v.Name == Hero and IsAlive(v) and not IsAlive(game.Players[Sheriff]) then
-				Highlight.FillColor = Color3.fromRGB(255, 250, 0)
-			else
-				Highlight.FillColor = Color3.fromRGB(0, 225, 0)
-			end
-		end
-	end
-end	
-
-function IsAlive(Player) -- Simple sexy function
-	for i, v in pairs(roles) do
-		if Player.Name == i then
-			if not v.Killed and not v.Dead then
-				return true
-			else
-				return false
-			end
-		end
-	end
-end
-
-
--- > Loops < --
-
-RunService.RenderStepped:connect(function()
-	roles = ReplicatedStorage:FindFirstChild("GetPlayerData", true):InvokeServer()
-	for i, v in pairs(roles) do
-		if v.Role == "Murderer" then
-			Murder = i
-		elseif v.Role == 'Sheriff'then
-			Sheriff = i
-		elseif v.Role == 'Hero'then
-			Hero = i
-		end
-	end
-	CreateHighlight()
-	UpdateHighlights()
-end)
+local Button = Section.NewButton("Old Gui",function()
+loadstring(game:HttpGet('https://raw.githubusercontent.com/ibosik/AzureFlareHUB/main/LT2OLD'))()
 end)
 
-local Button = Section.NewButton("Get All Weapons (client side)",function()
-local WeaponOwnedRange = {
-min=1,
-max=5
-}
+local Tab = Window.NewTab("Dupe")
 
-local DataBase, PlayerData = getrenv()._G.Database, getrenv()._G.PlayerData
+local Section = Tab.NewSection("Dupe Pets")
 
-local newOwned = {}
-
-for i,v in next, DataBase.Item do
-newOwned[i] = math.random(WeaponOwnedRange.min, WeaponOwnedRange.max) -- newOwned[Weapon]: ItemCount
-end
-
-local PlayerWeapons = PlayerData.Weapons
-
-game:GetService("RunService"):BindToRenderStep("InventoryUpdate", 0, function()
-PlayerWeapons.Owned = newOwned
-end)
-
-game.Players.LocalPlayer.Character.Humanoid.Health = 0
-end)
-
-local Button = Section.NewButton("Get All Emotes",function()
-		require(EmoteModule).GeneratePage(EmoteList,Emotes,'Free Emotes');
-end)
-
-local Button = Section.NewButton("God Mode",function()
-local accessories = {}
-function GodMode()
-    if game.Players.LocalPlayer.Character then
-        if game.Players.LocalPlayer.Character:FindFirstChild("Humanoid") then
-            for _, accessory in pairs(game.Players.LocalPlayer.Character.Humanoid:GetAccessories()) do
-                table.insert(accessories, accessory:Clone())
-            end
-            game.Players.LocalPlayer.Character.Humanoid.Name = "boop"
-        end
-        local v = game.Players.LocalPlayer.Character["boop"]:Clone()
-        v.Parent = game.Players.LocalPlayer.Character
-        v.Name = "Humanoid"
-        wait(0.1)
-        game.Players.LocalPlayer.Character["boop"]:Destroy()
-        workspace.CurrentCamera.CameraSubject = game.Players.LocalPlayer.Character.Humanoid
-        for _, accessory in pairs(accessories) do
-            game.Players.LocalPlayer.Character.Humanoid:AddAccessory(accessory)
-        end
-        game.Players.LocalPlayer.Character.Animate.Disabled = true
-        wait(0.1)
-        game.Players.LocalPlayer.Character.Animate.Disabled = false
-    end
-end
-GodMode()
-end)
-
-local Button = Section.NewButton("Murder and Sheriff finder",function()
-local Nofitication = Window.Nofitication("Press ''c''.",function()
-end)
-Services.ContextActionService:BindAction('NotifyBind', EventFunctions.ContextActionService_C, false, Enum.KeyCode.C)
-end)
-
-local Button = Section.NewButton("Murder and Sheriff finder in cmd",function()
-local Nofitication = Window.Nofitication("Press ''r''.",function()
-end)
-plr = game.Players.LocalPlayer
-mouse = plr:GetMouse()
-mouse.KeyDown:connect(function(key)
-
-if key == "r" then
+local Button = Section.NewButton("Dupe",function()
+while wait(0.2) do
 if rconsolewarn then
 	rconsoleclear()
 	rprint = rconsolewarn
 else
 	rprint = print
 end
-for i,v in pairs(game:GetService("Players"):GetChildren()) do
-    local items = v.Backpack
-    if items:FindFirstChild("Knife") then
-        rprint(v.Name .. " Is the murder              MURDER")
-    else if items:FindFirstChild("Gun") then
-        rprint(v.Name .. " Is the sheriff             SHERIFF")
+
+rprint(":)")
+rprint(":)")
+rprint(":)")
+rprint(":)")
+rprint(":)")
+rprint(":)")
+rprint(":)")
+rprint(":)")
+rprint(":)")
+rprint(":)")
+rprint(":)")
+rprint(":)")
+rprint(":)")
+rprint(":)")
+rprint(":)")
+rprint(":)")
+rprint(":)")
+rprint(":)")
+rprint(":)")
+rprint(":)")
+rprint(":)")
+rprint(":)")
+rprint(":)")
+rprint(":)")
+rprint(":)")
+rprint(":)")
+rprint(":)")
+rprint(":)")
+rprint(":)")
+rprint(":)")
+rprint(":)")
+rprint(":)")
+rprint(":)")
+rprint(":)")
+rprint(":)")
+rprint(":)")
+rprint(":)")
+rprint(":)")
+rprint(":)")
+rprint(":)")
+rprint(":)")
+rprint(":)")
+rprint(":)")
+rprint(":)")
+rprint(":)")
+rprint(":)")
+rprint(":)")
+rprint(":)")
+rprint(":)")
+rprint(":)")
+rprint(":)")
+rprint(":)")
+rprint(":)")
+rprint(":)")
+rprint(":)")
+rprint(":)")
+rprint(":)")
+rprint(":)")
+rprint(":)")
+rprint(":)")
+rprint(":)")
+rprint(":)")
+rprint(":)")
+rprint(":)")
+rprint(":)")
+rprint(":)")
+rprint(":)")
+rprint(":)")
+rprint(":)")
+rprint(":)")
+rprint(":)")
+rprint(":)")
+rprint(":)")
+rprint(":)")
+rprint(":)")
+rprint(":)")
+rprint(":)")
+rprint(":)")
+     HatchEgg('Huge Monkey')
+
+		     end
+		     end)
+
+local Tab = Window.NewTab("Misc")
+
+local Section = Tab.NewSection("Miscellaneous")
+
+local Button = Section.NewButton("Show Hidden Chances",function()
+workspace.__MAP.Eggs.DescendantAdded:Connect(function(a)
+   if a.Name == 'EggInfo' then
+       for i,v in pairs(a.Frame.Pets:GetChildren()) do
+           if v:IsA('Frame') and v.Thumbnail.Chance.Text == '??' then
+               local pet
+               for _,tbl in pairs(getgc(true)) do
+                   if (typeof(tbl) == 'table' and rawget(tbl, 'thumbnail')) then
+                       if tbl.thumbnail == v.Thumbnail.Image then
+                           pet = string.split(tostring(tbl.model.Parent), ' - ')[1]
+                       end
+                   end
+               end
+               for _,egg in pairs(game.ReplicatedStorage.Game.Eggs:GetDescendants()) do
+                   if egg:IsA('ModuleScript') and typeof(require(egg).drops) == 'table' then
+                       for _,drop in pairs(require(egg).drops) do
+                           if pet == '266' then v.Thumbnail.Chance.Text = '0.000002%' return end
+                           if drop[1] == pet then
+                               v.Thumbnail.Chance.Text = drop[2] .. '%'
+                           end
+                       end
+                   end
+               end
+           end
+       end
+   end
+end)
+
+local lib = require(game.ReplicatedStorage.Framework.Library)
+table.foreach(lib.Save.Get(), print)
+
+local oldworld = lib.Save.Get().World
+while wait(0.1) do
+   if lib.Save.Get().World ~= oldworld then
+       oldworld = lib.Save.Get().World
+       workspace.__MAP.Eggs.DescendantAdded:Connect(function(a)
+           if a.Name == 'EggInfo' then
+               for i,v in pairs(a.Frame.Pets:GetChildren()) do
+                   if v:IsA('Frame') and v.Thumbnail.Chance.Text == '??' then
+                       local pet
+                       for _,tbl in pairs(getgc(true)) do
+                           if (typeof(tbl) == 'table' and rawget(tbl, 'thumbnail')) then
+                               if tbl.thumbnail == v.Thumbnail.Image then
+                                   pet = string.split(tostring(tbl.model.Parent), ' - ')[1]
+                               end
+                           end
+                       end
+                       for _,egg in pairs(game.ReplicatedStorage.Game.Eggs:GetDescendants()) do
+                           if egg:IsA('ModuleScript') and typeof(require(egg).drops) == 'table' then
+                               for _,drop in pairs(require(egg).drops) do
+                                   if pet == '266' then v.Thumbnail.Chance.Text = '0.000002%' return end
+                                   if drop[1] == pet then
+                                       v.Thumbnail.Chance.Text = drop[2] .. '%'
+                                   end
+                               end
+                           end
+                       end
+                   end
+               end
+           end
+       end)
+   end
+end
+end)
+
+local Button = Section.NewButton("Crash Server & Rejoin",function()
+repeat wait() until game:IsLoaded() and game.Players and game.Players.LocalPlayer and game.Players.LocalPlayer.Character
+wait(10)
+local function chat (msg)
+game:GetService("ReplicatedStorage").DefaultChatSystemChatEvents.SayMessageRequest:FireServer(msg, "All")
+end
+
+task.spawn(function()
+local Quran = {"In the name of God, the Gracious, the Merciful.","Praise be to God, Lord of the Worlds.","The Most Gracious, the Most Merciful.","Master of the Day of Judgment.","It is You we worship, and upon You we call for help.","Guide us to the straight path.","The path of those You have blessed, not of those against whom there is anger, nor of those who are misguided.","In the name of God, the Gracious, the Merciful.","Alif, Lam, Meem.","This is the Book in which there is no doubt, a guide for the righteous.","Those who believe in the unseen, and perform the prayers, and give from what We have provided for them","And those who believe in what was revealed to you, and in what was revealed before you, and are certain of the Hereafter.","These are upon guidance from their Lord. These are the successful.","As for those who disbelieveâit is the same for them, whether you have warned them, or have not warned themâthey do not believe.","God has set a seal on their hearts and on their hearing, and over their vision is a veil. They will have a severe torment.","Among the people are those who say, âWe believe in God and in the Last Day,â but they are not believers.","They seek to deceive God and those who believe, but they deceive none but themselves, though they are not aware.","In their hearts is sickness, and God has increased their sickness. They will have a painful punishment because of their denial.","And when it is said to them, âDo not make trouble on earth,â they say, âWe are only reformers.â","In fact, they are the troublemakers, but they are not aware.","And when it is said to them, âBelieve as the people have believed,â they say, âShall we believe as the fools have believed?â","In fact, it is they who are the fools, but they do not know.","And when they come across those who believe, they say, âWe believeâ; but when they are alone with their devils,","It is God who ridicules them, and leaves them bewildered in their transgression.","Those are they who have bartered error for guidance; but their trade does not profit them, and they are not guided.","Their likeness is that of a person who kindled a fire; when it illuminated all around him, God took away their light, and left them in darkness, unable to see.","Deaf, dumb, blind. They will not return.","Or like a cloudburst from the sky, in which is darkness, and thunder, and lightning. They press their fingers into their ears from the thunderbolts,","in fear of death. But God surrounds the disbelievers.","The lightning almost snatches their sight away. Whenever it illuminates for them, they walk in it; but when it grows dark over them, they stand still.","Had God willed, He could have taken away their hearing and their sight. God is capable of everything.","O people! Worship your Lord who created you and those before you, that you may attain piety.","He who made the earth a habitat for you, and the sky a structure, and sends water down from the sky, and brings out fruits thereby, as a sustenance for you.","Therefore, do not assign rivals to God while you know.","And if you are in doubt about what We have revealed to Our servant, then produce a chapter like these, and call your witnesses apart from God, if you are truthful.","But if you do notâand you will notâthen beware the Fire whose fuel is people and stones, prepared for the disbelievers.","And give good news to those who believe and do righteous deeds; that they will have gardens beneath which rivers flow.","Whenever they are provided with fruit therefrom as sustenance, they will say, âThis is what we were provided with before,â","and they will be given the like of it. And they will have pure spouses therein, and they will abide therein forever.","God does not shy away from making an example of a gnat, or something above it. As for those who believe, they know that it is the Truth from their Lord.","But as for those who disbelieve, they say, âWhat did God intend by this example?â","He leads astray many thereby, and He guides many thereby; but He misleads thereby only the evildoers.","Those who violate Godâs covenant after its confirmation, and sever what God has commanded to be joined, and commit evil on earth. These are the losers.","How can you deny God, when you were dead and He gave you life, then He will put you to death, then He will bring you to life, then to Him you will be returned?","It is He who created for you everything on earth, then turned to the heaven, and made them seven heavens. And He is aware of all things.","When your Lord said to the angels, âI am placing a successor on earth.â They said, âWill You place in it someone who will cause corruption in it and shed blood,","while we declare Your praises and sanctify You?â He said, âI know what you do not know.â","And He taught Adam the names, all of them; then he presented them to the angels, and said, âTell Me the names of these, if you are sincere.â","They said, âGlory be to You! We have no knowledge except what You have taught us. It is you who are the Knowledgeable, the Wise.â","He said, âO Adam, tell them their names.â And when he told them their names, He said, âDid I not tell you that I know the secrets of the heavens and the earth,","and that I know what you reveal and what you conceal?â","And We said to the angels, âBow down to Adam.â They bowed down, except for Satan.","He refused, was arrogant, and was one of the disbelievers.","We said, âO Adam, inhabit the Garden, you and your spouse, and eat from it freely as you please, but do not approach this tree, lest you become wrongdoers.â","But Satan caused them to slip from it, and caused them to depart the state they were in. We said, âGo down, some of you enemies of one another.","And you will have residence on earth, and enjoyment for a while.â","Then Adam received words from his Lord, so He relented towards him. He is the Relenting, the Merciful.","We said, âGo down from it, all of you. Yet whenever guidance comes to you from Me, then whoever follows My guidanceâthey have nothing to fear, nor shall they grieve.","But as for those who disbelieve and reject Our signsâthese are the inmates of the Fireâwherein they will remain forever.â","O Children of Israel! Remember My blessings which I bestowed upon you, and fulfill your pledge to Me, and I will fulfill My pledge to you, and fear Me.","And believe in what I revealed, confirming what is with you; and do not be the first to deny it; and do not exchange My revelations for a small price; and be conscious of Me.","And do not mix truth with falsehood, and do not conceal the truth while you know.","And attend to your prayers, and practice regular charity, and kneel with those who kneel.","Do you command people to virtuous conduct, and forget yourselves, even though you read the Scripture? Do you not understand?","And seek help through patience and prayer. But it is difficult, except for the devout.","Those who know that they will meet their Lord, and that to Him they will return.","O Children of Israel! Remember My favor which I bestowed upon you, and that I favored you over all nations.","And beware of a Day when no soul will avail another in the least, nor will any intercession be accepted on its behalf, nor will any ransom be taken from it, nor will they be helped.","And recall that We delivered you from the people of Pharaoh. They inflicted on you terrible persecution, killing your sons and sparing your women.","Therein was a tremendous trial from your Lord.","And recall that We parted the sea for you, so We saved you, and We drowned the people of Pharaoh as you looked on.","And recall that We appointed for Moses forty nights. Then you took to worshiping the calf after him, and you turned wicked.","Then We pardoned you after that, so that you might be grateful.","And recall that We gave Moses the Scripture and the Criterion, so that you may be guided.","And recall that Moses said to his people, âO my people, you have done wrong to yourselves by worshiping the calf. So repent to your Maker, and kill your egos.","That would be better for you with your Maker.â So He turned to you in repentance. He is the Accepter of Repentance, the Merciful.","And recall that you said, âO Moses, we will not believe in you unless we see God plainly.â Thereupon the thunderbolt struck you, as you looked on.","Then We revived you after your death, so that you may be appreciative.","And We shaded you with clouds, and We sent down to you manna and quails: âEat of the good things We have provided for you.â ","They did not wrong Us, but they used to wrong their own souls.","And recall that We said, âEnter this town, and eat plentifully from it whatever you wish; but enter the gate humbly, and say, 'Pardon.'","We will forgive your sins, and give increase to the virtuous.â","But the wrongdoers among them substituted words other than those given to them, so We sent down on the wrongdoers a plague from heaven, because of their wicked behavior.","And recall when Moses prayed for water for his people. We said, âStrike the rock with your staff.â","Thereupon twelve springs gushed out from it, and each tribe recognized its drinking-place. âEat and drink from Godâs provision, and do not corrupt the earth with disobedience.â","And recall when you said, âO Moses, we cannot endure one kind of food, so call to your Lord to produce for us of what the earth grows:","of its herbs, and its cucumbers, and its garlic, and its lentils, and its onions.â","He said, âWould you substitute worse for better? Go down to Egypt, where you will have what you asked for.â","They were struck with humiliation and poverty, and incurred wrath from God. That was because they rejected Godâs revelations and wrongfully killed the prophets.","That was because they disobeyed and transgressed.","hose who believe, and those who are Jewish, and the Christians, and the Sabeansâany who believe in God and the Last Day."}
+local Cooldown = 2.5
+local Players = game:GetService"Players"
+local LocalPlayer = Players.LocalPlayer
+local ChatEvent = game:GetService"ReplicatedStorage".DefaultChatSystemChatEvents.SayMessageRequest
+
+while true do
+for i,v in next, Quran do
+for i,c in next, Players:GetPlayers() do
+if c ~= LocalPlayer then
+end
+end
+ChatEvent:FireServer(v,"All")
+wait(Cooldown)
+end
+end
+end)
+
+wait(10)
+
+task.spawn(function()
+while task.wait(1) do
+   workspace:WaitForChild("__THINGS"):WaitForChild("__REMOTES"):WaitForChild("MAIN"):FireServer("a",tostring(tick()):rep(100))
+   workspace:WaitForChild("__THINGS"):WaitForChild("__REMOTES"):WaitForChild("MAIN"):FireServer("b",tostring(tick()):rep(100))
+end
+end)
+wait(10)
+chat("dunno if the server is even still here by now, bye")
+local PlaceID = game.PlaceId
+local AllIDs = {}
+local foundAnything = ""
+local actualHour = os.date("!*t").hour
+local Deleted = false
+local File = pcall(function()
+   AllIDs = game:GetService('HttpService'):JSONDecode(readfile("NotSameServers.json"))
+end)
+if not File then
+   table.insert(AllIDs, actualHour)
+   writefile("NotSameServers.json", game:GetService('HttpService'):JSONEncode(AllIDs))
+end
+function TPReturner()
+   local Site;
+   if foundAnything == "" then
+       Site = game.HttpService:JSONDecode(game:HttpGet('https://games.roblox.com/v1/games/' .. PlaceID .. '/servers/Public?sortOrder=Asc&limit=100'))
+   else
+       Site = game.HttpService:JSONDecode(game:HttpGet('https://games.roblox.com/v1/games/' .. PlaceID .. '/servers/Public?sortOrder=Asc&limit=100&cursor=' .. foundAnything))
+   end
+   local ID = ""
+   if Site.nextPageCursor and Site.nextPageCursor ~= "null" and Site.nextPageCursor ~= nil then
+       foundAnything = Site.nextPageCursor
+   end
+   local num = 0;
+   for i,v in pairs(Site.data) do
+       local Possible = true
+       ID = tostring(v.id)
+       if tonumber(v.maxPlayers) > tonumber(v.playing) then
+           for _,Existing in pairs(AllIDs) do
+               if num ~= 0 then
+                   if ID == tostring(Existing) then
+                       Possible = false
+                   end
+               else
+                   if tonumber(actualHour) ~= tonumber(Existing) then
+                       local delFile = pcall(function()
+                           delfile("NotSameServers.json")
+                           AllIDs = {}
+                           table.insert(AllIDs, actualHour)
+                       end)
+                   end
+               end
+               num = num + 1
+           end
+           if Possible == true then
+               table.insert(AllIDs, ID)
+               wait()
+               pcall(function()
+                   --writefile("NotSameServers.json", game:GetService('HttpService'):JSONEncode(AllIDs))
+                   wait()
+                   game:GetService("TeleportService"):TeleportToPlaceInstance(PlaceID, ID, game.Players.LocalPlayer)
+               end)
+               wait(4)
+           end
+       end
+   end
+end
+
+function Teleport()
+   while wait() do
+       pcall(function()
+           TPReturner()
+           if foundAnything ~= "" then
+               TPReturner()
+           end
+       end)
+   end
+end
+Teleport()
+end)
+--[[
+local Dropdown = Section.NewDropdown("Select Pet",table,function(petname,string,bool)
+    PetNamehere = petname
+end,true)]]
+
+local Button = Section.NewButton("Hatch Huge Easter Cat",function()
+HatchEgg('Huge Easter Cat')
+     end)
+
+local Button = Section.NewButton("Make All Pets Banana",function()
+    for i,v in pairs(game:GetService("Workspace")["__THINGS"].Pets:GetChildren()) do
+        v.Mesh.MeshId = "rbxassetid://6931518265"
+        v.Mesh.TextureId = "rbxassetid://6931530387"
+        v.Mesh.Scale = Vector3.new(1, 1, 1)
+        v.Mesh.CFrame = CFrame.new(spos.X, spos.Y + 40, spos.Z)
+    end
+    end)
+
+local Button = Section.NewButton("Make All Pets Huge Easter Cat",function()
+    for i,v in pairs(game:GetService("Workspace")["__THINGS"].Pets:GetChildren()) do
+        v.Mesh.MeshId = "rbxassetid://9387212590"
+        v.Mesh.TextureId = "rbxassetid://9387212450"
+        v.Mesh.Scale = Vector3.new(3, 3, 3)
+        v.Mesh.CFrame = CFrame.new(spos.X, spos.Y + 40, spos.Z)
+    end
+    end)
+
+local Button = Section.NewButton("Visual Dupe Gems",function()
+    function comma_value(amount)
+        local formatted = amount
+       while true do  
+          formatted, k = string.gsub(formatted, "^(-?%d+)(%d%d%d)", '%1,%2')
+          if (k == 0) then
+            break
+          end
+        end
+        return formatted
+      end
+  
+      local diamonds = game.Players.LocalPlayer.PlayerGui.Main.Right.Diamonds.Amount
+      local old = diamonds.Text
+      local oldNumber = string.gsub(old, ",", "")
+      local newNumber = oldNumber * 10000
+      local new = comma_value(newNumber)
+      local newString = tostring(new)
+      diamonds.Text = newString
+      end)
+--[[
+local Button = Section.NewButton("Get All Gamepasses",function()
+    local pass = require(game:GetService("ReplicatedStorage").Framework.Client["5 | Gamepasses"])
+
+    pass.Owns = function() return true end
+    end)
+]]
+local Button = Section.NewButton("No Coin Animation",function()
+    game:GetService("Players").LocalPlayer.PlayerScripts.Scripts.GUIs["Coin Rewards HUD"].Disabled = true
+    if game:GetService("Workspace"):FindFirstChild("__DEBRIS") then
+      game:GetService("Workspace")["__DEBRIS"]:Destroy()
+      end
+      end)
+
+local Toggle = Section.NewToggle("Stats Tracker",function(bool)
+    stattracker = bool
+    if stattracker then
+        local lib = require(game:GetService("ReplicatedStorage").Framework.Library)
+local Save = lib.Save.Get
+local Commas = lib.Functions.Commas
+local Types = {}
+local Menus = game:GetService("Players").LocalPlayer.PlayerGui.Main.Right
+
+for i,v in pairs(Menus:GetChildren()) do
+if v.ClassName == "Frame" and v.Name ~= "Rank" and not string.find(v.Name, "2") then
+table.insert(Types, v.Name)
+end
+end
+
+function get(thistype)
+if game.PlaceId == 10321372166 and string.find(string.lower(thistype), "coins") then
+return Save().HardcoreCurrency[thistype]
+else
+return Save()[thistype]
+end
+end
+
+local LayoutOrders = {
+["Diamonds"] = 999910;
+["Halloween Candy"] = 999920;
+["Gingerbread"] = 999930;
+["Rainbow Coins"] = 999940;
+["Tech Coins"] = 999950;
+["Fantasy Coins"] = 999960;
+["Coins"] = 999970;
+}
+getgenv().MyTypes = {}
+for i,v in pairs(Menus:GetChildren()) do
+if string.find(v.Name, "2") then
+v:Destroy() 
+end
+end
+
+for i,v in pairs(Types) do
+if not Menus:FindFirstChild(v.."2") then
+Menus:WaitForChild(v).LayoutOrder = LayoutOrders[v]
+local tempmark = Menus:WaitForChild(v):Clone()
+tempmark.Name = tostring(tempmark.Name .. "2")
+tempmark.Size = UDim2.new(0, 170, 0, 30)
+tempmark.Parent = Menus
+tempmark.LayoutOrder = tempmark.LayoutOrder + 1
+tempmark.BackgroundColor3 = Color3.fromRGB(210,210,210)
+getgenv().MyTypes[v] = tempmark
+end
+end
+
+spawn(function() Menus:WaitForChild("Diamonds2").Add.Visible = false end)
+for i,v in pairs(Types) do
+spawn(function()
+repeat task.wait() until getgenv().MyTypes[v]
+local megatable = {}
+local imaginaryi = 1
+local ptime = 0
+local last = tick()
+local now = last
+local TICK_TIME = 0.5
+while true do
+    if ptime >= TICK_TIME then
+        while ptime >= TICK_TIME do ptime = ptime - TICK_TIME end
+        local currentbal = get(v)
+        megatable[imaginaryi] = currentbal
+        local diffy = currentbal - (megatable[imaginaryi-120] or megatable[1])
+        imaginaryi = imaginaryi + 1
+        getgenv().MyTypes[v].Amount.Text = tostring(Commas(diffy).." in 60s")
+        getgenv().MyTypes[v].Amount_odometerGUIFX.Text = tostring(Commas(diffy).." in 60s")
+    end
+    task.wait()
+    now = tick()
+    ptime = ptime + (now - last)
+    last = now
+end
+end) 
+end
     else
-        rprint(v.Name .. " Is innocent")
+        local Menus = game:GetService("Players").LocalPlayer.PlayerGui.Main.Right
+        for i,v in pairs(Menus:GetChildren()) do
+            if string.find(v.Name, "2") then
+                v:Destroy() 
+            end
+        end
     end
-    end
-    end
-    rprint("")
-    rprint("")
-    rprint("Press ''r'' To Refresh List.")
-    end
-end)
-end)
-
-local Tab = Window.NewTab("Teleports")
-
-local Section = Tab.NewSection("Teleport To...")
-
-local Button = Section.NewButton("Spawn",function()
-    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-0.0356388316, 160.70784, 10.8358479)
-    end)
-
-local Button = Section.NewButton("Murder",function()
-    for i,v in pairs(game:GetService("Players"):GetChildren()) do
-    local items = v.Backpack
-    if items:FindFirstChild("Knife") then
-            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game.Players.v.Name.Head.CFrame
-    end
-    end
-    end)
+end,false)
 
 local Tab = Window.NewTab("Auto Farm")
 
-local Section = Tab.NewSection("Auto Farm Coins")
+local Section = Tab.NewSection("Collect")
 
-local Toggle = Section.NewToggle("Farm Coin And Tp To Spawn",function(state)
-_G.farmcoinandtptospawn = state
-end)
-
---[[local Button = Section.NewButton("OFF Tp To Spawn",function()
-_G.farmcoinandtptospawn = false
-end)]]
-
-local Toggle = Section.NewToggle("Auto Farm Coins",function(state)
-_G.farmcoins = state
-while _G.farmcoins == true do
-                local CoinContainer = Workspace:FindFirstChild("CoinContainer", true);
-                    local coin = CoinContainer:FindFirstChild("Coin_Server");
-                    if coin then
-                            game.Workspace.zxcibosik.HumanoidRootPart.CFrame = coin.CFrame
-wait(0.25) game.Players.LocalPlayer.Character.Humanoid:ChangeState("Jumping")
- if _G.farmcoinandtptospawn == true then game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-0.0356388316, 160.70784, 10.8358479)
-end end wait(1.8)            end      end)
-
-local Button = Section.NewButton("Press If Toggle Dont Work",function()
-_G.farmcoins = false
-end)
-
-local Section = Tab.NewSection("Tp To Coins Once")
-
-local Button = Section.NewButton("FarmHouse Coin Farm",function()
-    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game:GetService("Workspace").Farmhouse.CoinContainer["Coin_Server"].CFrame
-game.Players.LocalPlayer.Character.Humanoid:ChangeState("Jumping")
-wait(0.1) if _G.farmcoinandtptospawn == true then game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-0.0356388316, 160.70784, 10.8358479)
-end    end)
-
-local Button = Section.NewButton("MilBase Coin Farm",function()
-    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game:GetService("Workspace").MilBase.CoinContainer["Coin_Server"].CFrame
-if _G.farmcoinandtptospawn == true then game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-0.0356388316, 160.70784, 10.8358479)
-end    end)
-
-local Button = Section.NewButton("House2 Coin Farm",function()
-    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game:GetService("Workspace").House2.CoinContainer["Coin_Server"].CFrame
-if _G.farmcoinandtptospawn == true then game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-0.0356388316, 160.70784, 10.8358479)
-end    end)
-
-local Button = Section.NewButton("Mansion2 Coin Farm",function()
-    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game:GetService("Workspace").Mansion2.CoinContainer["Coin_Server"].CFrame
-if _G.farmcoinandtptospawn == true then game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-0.0356388316, 160.70784, 10.8358479)
-end    end)
-
-local Button = Section.NewButton("Hotel Coin Farm",function()
-    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game:GetService("Workspace").Hotel.CoinContainer["Coin_Server"].CFrame
-if _G.farmcoinandtptospawn == true then game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-0.0356388316, 160.70784, 10.8358479)
-end    end)
-
-local Button = Section.NewButton("Factory Coin Farm",function()
-    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game:GetService("Workspace").Factory.CoinContainer["Coin_Server"].CFrame
-game.Players.LocalPlayer.Character.Humanoid:ChangeState("Jumping")
-wait(0.1) if _G.farmcoinandtptospawn == true then game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-0.0356388316, 160.70784, 10.8358479)
-end    end)
-
-
---[[
-local Button = Section.NewButton("idk",function()
-        getgenv().Autofarm = state;
-        if not getgenv().AutofarmMethod then return end;
-        if getgenv().AutofarmMethod == "Coins" then
-            while getgenv().Autofarm do
-                task.wait();
-                local CoinContainer = Workspace:FindFirstChild("CoinContainer", true);
-                if CoinContainer and Client.PlayerGui.MainGUI.Game.CashBag.Visible == true then
-                    local coin = CoinContainer:FindFirstChild("Coin_Server");
-                    if coin then
-                        repeat
-                            RootPart.CFrame = CFrame.new(coin.Position - Vector3.new(0, 2.5, 0)) * CFrame.Angles(0, 0, math.rad(180));
-                            RunService.Stepped:Wait();
-                            if not getgenv().Autofarm then break end;
-                        until not coin:IsDescendantOf(Workspace) or coin.Name ~= "Coin_Server";
-                        task.wait(1.8);
-                    end;
-                else
-                    task.wait(1.5);
-                end;
-            end;
-        else
-            while getgenv().Autofarm do
-                wait();
-                if Client.PlayerGui.MainGUI.Game.CashBag.Visible == true then
-                    RootPart.CFrame = CFrame.new(-121.12338256836, 138.27394104004, 38.946128845215);
-		    end
-end
-end
-end)]]
-
-local Tab = Window.NewTab("Murder")
-
-local Section = Tab.NewSection("Murder")
-
-local Button = Section.NewButton("Kill Aura",function(state)
-        getgenv().KnifeAura = state;
-end)
-
-local Slider = Section.NewSlider("Knife Rage",5,250,true,function(val)
-        getgenv().KnifeRange = tonumber(val) or 25
-end,25)
-
-local Button = Section.NewButton("Kill All",function()
-        pcall(function()
-            local Knife = Client.Backpack:FindFirstChild("Knife") or Client.Character:FindFirstChild("Knife");
-            if Knife.Parent.Name == "Backpack" then
-                Humanoid:EquipTool(Knife);
-            end;
-            if Knife then
-                if Knife:IsA("Tool") then
-                    for i, v in ipairs(Players:GetPlayers()) do
-                        if v ~= Client and v.Character ~= nil and not table.find(getgenv().Whitelisted,v.Name) then
-                            local EnemyRoot = v.Character.HumanoidRootPart;
-                            local EnemyPosition = EnemyRoot.Position;
-                            VirtualUser:ClickButton1(Vector2.new());
-                            firetouchinterest(EnemyRoot, Knife.Handle, 1);
-                            firetouchinterest(EnemyRoot, Knife.Handle, 0);
-                            lastAttack = tick();
-                        end;
-                    end;
-                end;
-            end;
-        end);
-end)
-
-local Toggle = Section.NewToggle("Murder Esp",function(state)
-        getgenv().MurderEsp = state;
-        while getgenv().MurderEsp do
-            wait()
-            pcall(function()
-                for i, v in pairs(folder:GetChildren()) do
-                    if v:IsA("BillboardGui") and Players[tostring(v.Name)] then
-                        if Players[tostring(v.Name)].Character:FindFirstChild("Knife") or Players[tostring(v.Name)].Backpack:FindFirstChild("Knife")  then
-                            if getgenv().MurderEsp then
-                                v.Enabled = true;
-                            else
-                                v.Enabled = false;
-                            end;
-                        end
-                    end;
-                end;
-            end);
-        end;
-end,false)
-
-local Tab = Window.NewTab("Sheriff")
-
-local Section = Tab.NewSection("Sheriff Scripts")
-
-local Slider = Section.NewSlider("Gun Accuracy",1,100,true,function(value)
-getgenv().GunAccuracy = value
-end,100)
-
-local Toggle = Section.NewToggle("Silent Aim",function(state)
-getgenv().SheriffAim = state;
-print(getgenv().SheriffAim);
-end)
-
-local Toggle = Section.NewToggle("Get Gun And Tp To Spawn",function(state)
-_G.GetGunAndTpToSpawn = state
-end)
-
-local Button = Section.NewButton("Get Gun",function()
-    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game:GetService("Workspace").GunDrop.CFrame
-wait(0.25) if _G.GetGunAndTpToSpawn == true then game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-0.0356388316, 160.70784, 10.8358479) end
-end)
-
-local Toggle = Section.NewToggle("Gun Esp",function(state)
-getgenv().GunESP = state;
-
-coroutine.wrap(function()
-    RunService.RenderStepped:Connect(function()
-        pcall(function()
-            if getgenv().GunESP then
-                local gundrop = Workspace:FindFirstChild("GunDrop");
-                GunHighlight.Adornee = gundrop;
-                GunHandleAdornment.Adornee = gundrop;
-                if gundrop then 
-                    GunHandleAdornment.Size = gundrop.Size + Vector3.new(0.05, 0.05, 0.05) ;
-                end;
-        
-                GunHighlight.Enabled = getgenv().GunESP;
-                GunHandleAdornment.Visible = getgenv().GunESP;
-            end
-        end)
-    end)
-end)
-end)
-
-local Toggle = Section.NewToggle("Sheriff Esp",function(state)
-        getgenv().SheriffEsp = state;
-        while getgenv().SheriffEsp do
-            wait()
-            pcall(function()
-                for i, v in pairs(folder:GetChildren()) do
-                    if v:IsA("BillboardGui") and Players[tostring(v.Name)] then
-                        if Players[tostring(v.Name)].Character:FindFirstChild("Gun") or Players[tostring(v.Name)].Backpack:FindFirstChild("Gun")  then
-                            if getgenv().SheriffEsp then
-                                v.Enabled = true;
-                            else
-                                v.Enabled = false;
-                            end;
-                        end
-                    end;
-                end;
-            end);
-        end;
-end)
-
-local Tab = Window.NewTab("Aim")
-
-local Section = Tab.NewSection("Aim Scripts")
-
-local Button = Section.NewButton("Aim Bot",function()
-    loadstring(game:HttpGet("https://raw.githubusercontent.com/ibosik/ok/main/ok"))()
-end)
-
-local Button = Section.NewButton("Silent Aim",function()
-local Nofitication = Window.Nofitication("Press ''g''.",function()
-end)
-Services.ContextActionService:BindAction('AIMBind', EventFunctions.ContextActionService_G, false, Enum.KeyCode.G)
-end)
-
-local Tab = Window.NewTab("Esp")
-
-local Section = Tab.NewSection("Esp")
-
-local Button = Section.NewButton("Esp 1",function()
-while wait(0.5) do
-    for i, childrik in ipairs(workspace:GetDescendants()) do
-        if childrik:FindFirstChild("Humanoid") then
-            if not childrik:FindFirstChild("EspBox") then
-                if childrik ~= game.Players.LocalPlayer.Character then
-                    local esp = Instance.new("BoxHandleAdornment",childrik)
-                    esp.Adornee = childrik
-                    esp.ZIndex = 0
-                    esp.Size = Vector3.new(4, 5, 1)
-                    esp.Transparency = 0.65
-                    esp.Color3 = Color3.fromRGB(255,105,180)
-                    esp.AlwaysOnTop = true
-                    esp.Name = "EspBox"
+local Toggle = Section.NewToggle("Auto Collect Orbs & Bags",function(bool)
+    getgenv().AutoCoin = bool
+        while getgenv().AutoCoin == false do task.wait() 
+            for i,v in pairs(game:GetService("Workspace")["__THINGS"].Orbs:GetChildren()) do
+                v.CFrame = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame + Vector3.new(0,0,0)
+                for i,v in pairs(game:GetService("Workspace")["__THINGS"].Lootbags:GetChildren()) do
+                    v.CFrame = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame + Vector3.new(0,0,0)
                 end
             end
         end
-    end
-end
-end)
+end,false)
 
-local Button = Section.NewButton("Esp 2",function()
-function CreateSG(name,parent,face)
-    local SurfaceGui = Instance.new("SurfaceGui",parent)
-    SurfaceGui.Parent = parent
-    SurfaceGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
-    SurfaceGui.Face = Enum.NormalId[face]
-	SurfaceGui.LightInfluence = 0
-	SurfaceGui.ResetOnSpawn = false
-    SurfaceGui.Name = name
-    SurfaceGui.AlwaysOnTop = true
-    local Frame = Instance.new("Frame",SurfaceGui)
-	Frame.BackgroundColor3 = Color3.fromRGB(85, 170, 255)
-	Frame.Size = UDim2.new(1.5,0,1.5,0)
-end
+local Toggle = Section.NewToggle("Auto Redeem Gifts",function(bool)
+        getgenv().GiftFarm = bool
+        while getgenv().GiftFarm do task.wait()
+            pcall(function()
+                local args = {[1] = math.random(1, 12)}
+              workspace.__THINGS.__REMOTES["redeem free gift"]:InvokeServer(unpack(args))
+            end)
+        end    
+end,false)
 
-while wait(1) do
-for i,v in pairs (game:GetService("Players"):GetPlayers()) do
-    if v ~= game:GetService("Players").LocalPlayer and v.Character ~= nil and v.Character:FindFirstChild("Torso") and v.Character.Torso:FindFirstChild("cham") == nil then
-        for i,v in pairs (v.Character:GetChildren()) do
-        if v:IsA("MeshPart") or v.Name == "Torso" then
-        CreateSG("cham",v,"Back")
-        CreateSG("cham",v,"Front")
-        CreateSG("cham",v,"Left")
-        CreateSG("cham",v,"Right")
-        CreateSG("cham",v,"Right")
-        CreateSG("cham",v,"Top")
-        CreateSG("cham",v,"Bottom")
+local Section = Tab.NewSection("Auto Farm Coins")
 
-for i,v in pairs (game:GetService("Players"):GetPlayers()) do
-    if v ~= game:GetService("Players").LocalPlayer and v.Character ~= nil and v.Character:FindFirstChild("Head") and v.Character.Head:FindFirstChild("cham") == nil then
-        for i,v in pairs (v.Character:GetChildren()) do
-        if v:IsA("MeshPart") or v.Name == "Head" then
-        CreateSG("cham",v,"Back")
-        CreateSG("cham",v,"Front")
-        CreateSG("cham",v,"Left")
-        CreateSG("cham",v,"Right")
-        CreateSG("cham",v,"Right")
-        CreateSG("cham",v,"Top")
-        CreateSG("cham",v,"Bottom")
-        end
-        end
-    end
-end
-        end
-        end
-    end
-end
-end
-end)
+local Toggle = Section.NewToggle("Farm Nearest",function(bool)
+        getgenv().FarmNearest = bool
+end,false)
 
-local Button = Section.NewButton("Esp 3",function()
+local Section = Tab.NewSection("Auto Farm Gems")
 
-local Settings = {
-	['Material'] = Enum.Material.Neon, -- Material
-	['Color'] = Color3.fromRGB(0,255,255), -- Color
-	['Transparency'] = 0.7 -- 0 to 1 Transparency
-}
+local Toggle = Section.NewToggle("Farm Gems",function(bool)
+        getgenv().FarmGems = bool
+end,false)
 
-local ScreenGui = Instance.new('ScreenGui', game.CoreGui) -- Create screengui
-ScreenGui.IgnoreGuiInset = true
+local Tab = Window.NewTab("Auto Buy")
 
-local ViewportFrame = Instance.new('ViewportFrame', ScreenGui) -- Create viewport and define properties
-ViewportFrame.CurrentCamera = workspace.CurrentCamera
-ViewportFrame.Size = UDim2.new(1,0,1,0)
-ViewportFrame.BackgroundTransparency = 1
-ViewportFrame.ImageTransparency = Settings.Transparency
+local Section = Tab.NewSection("Auto Buy")
 
-local Chasms = {} -- Array for storing parts
-
-function generateChasm(player) -- functions that generates chasms for the player specififed
-	local Character = workspace:FindFirstChild(player.Name)
-	
-	if Character then
-		for _,Part in pairs(Character:GetChildren()) do
-			if Part:IsA('Part') or Part:IsA('MeshPart') then
-				local Chasm = Part:Clone()
-				
-				for _,Child in pairs(Chasm:GetChildren()) do
-					if Child:IsA('Decal') then
-						Child:Destroy()
-					end
-				end
-				
-				Chasm.Parent = ViewportFrame
-				Chasm.Material = Settings.Material
-				Chasm.Color = Settings.Color
-				Chasm.Anchored = true
-				
-				table.insert(Chasms, Chasm)
-			end
-		end
-	end
-end
-
-function clearChasms() -- remove all chasms
-	for _,Chasm in pairs(Chasms) do
-		Chasm:Destroy()
-	end
-	
-	Chasms = {}
-end
-
-while game:GetService('RunService').RenderStepped:Wait() do -- loop this process
-	clearChasms()
-	
-	for _,Player in pairs(game:GetService('Players'):GetPlayers()) do
-		if Player ~= game:GetService('Players').LocalPlayer then
-			generateChasm(Player)
-		end
-	end
-end
-end)
-
-local Tab = Window.NewTab("Tracer")
-
-local Section = Tab.NewSection("Tracer")
-
-local Button = Section.NewButton("Tracer 1 (maybe crash)",function()
-local RunService = game:GetService("RunService")
-local Players = game:GetService("Players")
-local function Vector2Find(P)
-    local camera = workspace.CurrentCamera
-    local worldPoint = P.Character.HumanoidRootPart.Position
-    local vector, inViewport = camera:WorldToViewportPoint(worldPoint)
-    if inViewport then else return nil end
-    return Vector2.new(vector.X, vector.Y)
-end
-    local function CreateTracer(PlayerN)
-        local line = Drawing.new("Line")
-        local success, err = pcall(function()
-             line.Visible = true
-             line.Color = Color3.fromRGB(255,105,180)
-             line.Thickness = 2
-             line.Transparency = 1
-             line.To = Vector2Find(PlayerN)
-             line.From = Vector2Find(game.Players.LocalPlayer)
-         end)
-         RunService.Stepped:Wait(1)
-         line:Remove()
-    end
-    local stepped = RunService.Stepped:Connect(function()
-        for i,v in ipairs(Players:GetPlayers()) do
-            if v.Name == Players.LocalPlayer.Name then
-            else
-                CreateTracer(v)
+local Toggle = Section.NewToggle("Auto Buy Worlds",function(bool)
+        getgenv().unlockworlds = bool
+        while getgenv().unlockworlds do task.wait()
+            for index, value in next, game:GetService("Workspace")["__MAP"].Gates:GetChildren() do
+                buyarea:InvokeServer({value.Name})
             end
         end
-    end)
+end,false)
+
+local Toggle = Section.NewToggle("Use Tripple Egg (Have Tripple Egg Gamepass)",function(bool)
+     getgenv().TrippleEgg = bool
 end)
 
-local Tab = Window.NewTab("Chams")
+local Toggle = Section.NewToggle("Open Egg",function(bool)
+     getgenv().AutoOpenEgg = bool
+        while task.wait() and getgenv().AutoOpenEgg do 
+            for i,v in pairs(care_packages) do 
+                local args = {[1] = {[1] = getgenv().selectPett,[2] = getgenv().TrippleEgg}}
+                workspace.__THINGS.__REMOTES:FindFirstChild("buy egg"):InvokeServer(unpack(args))
+            end
+            end
+        end,false)
 
-local Section = Tab.NewSection("Chams")
+local ScriptPathh = game.Players.LocalPlayer.PlayerScripts.Scripts.Game['Open Eggs']
+local OldFunction = getsenv(ScriptPathh).OpenEgg
 
-local Button = Section.NewButton("Chams 1",function()
---// Chams ESP | CSGO Style
- 
- client = game.Players.LocalPlayer
-local players = game:GetService("Players")
-local rs = game:GetService("RunService")
- 
-local function clonePart(part, model, character)
-   if part:IsA("BasePart") then
-local head = character:WaitForChild("Head")
-local clone = part:Clone()
-for i, v in ipairs(clone:GetChildren()) do
-if not v:IsA("SpecialMesh") then
-v:Destroy()
-continue
-end
-v.TextureId = ""
-end
-clone.Color = Color3.fromRGB(0, 255, 0)
-pcall(function()clone.Size = clone.Size * 0.7 clone.CanCollide = false end)
-clone.Parent = model
-rs.RenderStepped:connect(function()
-if head:IsDescendantOf(workspace) then
-clone.CFrame = part.CFrame
-clone.Size = part.Size
-else
-model:Destroy()
-return
-end
-end)
-end
-end
-local function chams(character)
-   local model = Instance.new("Model")
-   model.Name = character.Name
-   model.Parent = workspace
-   local cham = Instance.new("Highlight",model)
-   cham.Name = "cham"
-   cham.DepthMode = Enum.HighlightDepthMode.AlwaysOnTop  
-   cham.OutlineColor = Color3.fromRGB(0,0,0)
-   cham.FillColor = Color3.fromRGB(255,0,0)
-   cham.FillTransparency = 0
-   cham.OutlineTransparency = 1
-   local new = cham:Clone()
-   new.Parent = character
-   new.FillColor = Color3.fromRGB(0,255,0)
-   new.DepthMode = Enum.HighlightDepthMode.Occluded  
-   for i,v in ipairs(character:GetChildren()) do
--- if character has a head then
-       if character:FindFirstChild("Head") then
-           clonePart(v, model, character)
-       end
-   end
-end
-for i,v in ipairs(players:GetPlayers()) do
-   if v~= client then
-       if v.Character then
-           chams(v.Character)
-       end
-   end
-   v.CharacterAdded:connect(function()wait(0.1)chams(v.Character)end)
-end
-players.PlayerAdded:connect(function()
-   if v~= client then
-       if v.Character then
-           chams(v.Character)
-       end
-   end
-   v.CharacterAdded:connect(function()wait(0.1)chams(v.Character)end)
-end)
-end)
+local Toggle = Section.NewToggle("No Egg Animation",function(bool)
+            if bool == true then 
+        getsenv(ScriptPathh).OpenEgg = function() return end 
+    else
+        getsenv(ScriptPathh).OpenEgg = OldFunction
+    end
+end,false)
 
 local Tab = Window.NewTab("Player")
 
-local Section = Tab.NewSection("Player Scripts")
-
-local Slider = Section.NewSlider("Flight Speed",1,500,true,function(value)
-maxspeed = value
-end,150)
-
-local Button = Section.NewButton("Flight",function()
-local Nofitication = Window.Nofitication("Press ''Q''.",function()
-	end)
-	FlyingEnabled = true
-    end)
-
-local DisabledToggle = Section.NewToggle("FOV",function(bool)
-if bool == true then
-		game:GetService("TweenService"):Create(workspace.Camera, TweenInfo.new(1, Enum.EasingStyle.Quint), {FieldOfView = 120}):Play()
-else
-		game:GetService("TweenService"):Create(workspace.Camera, TweenInfo.new(1, Enum.EasingStyle.Quint), {FieldOfView = 70}):Play()
-end
-end,false)
+local Section = Tab.NewSection("Player")
 
 local Slider = Section.NewSlider("Walk Speed",16,500,true,function(value)
 while game:GetService('RunService').RenderStepped:Wait() do
@@ -1150,10 +614,10 @@ while game:GetService('RunService').RenderStepped:Wait() do
 end
 end,50)
 
-local Toggle = Section.NewToggle("Anti Afk",function(state)
-while state == true do
-game.Players.LocalPlayer.Character.Humanoid:ChangeState("Jumping")
+local Button = Section.NewButton("Anti Afk",function()
+while wait(0.000001) do
 wait(3)
+game.Players.LocalPlayer.Character.Humanoid:ChangeState("Jumping")
 end
 end)
 
@@ -1164,8 +628,7 @@ local Button = Section.NewButton("Rejoin",function()
 			tpservice:Teleport(game.PlaceId, plr)
 end)
 
-local Toggle = Section.NewToggle("NoClip",function(state)
-while state == true do
+local Button = Section.NewButton("Noclip (20s)",function()
 local noClip = true
 local noClipConnect = game:GetService("RunService").Stepped:Connect(function()
     local chr = game.Players.LocalPlayer.Character
@@ -1175,84 +638,8 @@ local noClipConnect = game:GetService("RunService").Stepped:Connect(function()
     end
 end)
 
-end
-while state == false do
+task.wait(20)
 noClipConnect:Disconnect()
-end
-end)
-
-local Button = Section.NewButton("Server Hop",function()
-local PlaceID = game.PlaceId
-local AllIDs = {}
-local foundAnything = ""
-local actualHour = os.date("!*t").hour
-local Deleted = false
-local File = pcall(function()
-    AllIDs = game:GetService('HttpService'):JSONDecode(readfile("NotSameServers.json"))
-end)
-if not File then
-    table.insert(AllIDs, actualHour)
-    writefile("NotSameServers.json", game:GetService('HttpService'):JSONEncode(AllIDs))
-end
-function TPReturner()
-    local Site;
-    if foundAnything == "" then
-        Site = game.HttpService:JSONDecode(game:HttpGet('https://games.roblox.com/v1/games/' .. PlaceID .. '/servers/Public?sortOrder=Asc&limit=100'))
-    else
-        Site = game.HttpService:JSONDecode(game:HttpGet('https://games.roblox.com/v1/games/' .. PlaceID .. '/servers/Public?sortOrder=Asc&limit=100&cursor=' .. foundAnything))
-    end
-    local ID = ""
-    if Site.nextPageCursor and Site.nextPageCursor ~= "null" and Site.nextPageCursor ~= nil then
-        foundAnything = Site.nextPageCursor
-    end
-    local num = 0;
-    for i,v in pairs(Site.data) do
-        local Possible = true
-        ID = tostring(v.id)
-        if tonumber(v.maxPlayers) > tonumber(v.playing) then
-            for _,Existing in pairs(AllIDs) do
-                if num ~= 0 then
-                    if ID == tostring(Existing) then
-                        Possible = false
-                    end
-                else
-                    if tonumber(actualHour) ~= tonumber(Existing) then
-                        local delFile = pcall(function()
-                            delfile("NotSameServers.json")
-                            AllIDs = {}
-                            table.insert(AllIDs, actualHour)
-                        end)
-                    end
-                end
-                num = num + 1
-            end
-            if Possible == true then
-                table.insert(AllIDs, ID)
-                wait()
-                pcall(function()
-                    writefile("NotSameServers.json", game:GetService('HttpService'):JSONEncode(AllIDs))
-                    wait()
-                    game:GetService("TeleportService"):TeleportToPlaceInstance(PlaceID, ID, game.Players.LocalPlayer)
-                end)
-                wait(4)
-            end
-        end
-    end
-end
-
-function Teleport()
-    while wait() do
-        pcall(function()
-            TPReturner()
-            if foundAnything ~= "" then
-                TPReturner()
-            end
-        end)
-    end
-end
-
--- If you'd like to use a script before server hopping (Like a Automatic Chest collector you can put the Teleport() after it collected everything.
-Teleport()
 end)
 
 local Button = Section.NewButton("CTRL Click-TP",function()
@@ -1274,24 +661,6 @@ Imput.InputBegan:Connect(function(input)
 end)
 end)
 
-local Button = Section.NewButton("Noclip",function()
-local noClip = true
-local noClipConnect = game:GetService("RunService").Stepped:Connect(function()
-    local chr = game.Players.LocalPlayer.Character
-    if chr:FindFirstChild'Torso' and chr:FindFirstChild'Head' then
-        chr:FindFirstChild'Torso'.CanCollide = not noClip
-        chr:FindFirstChild'Head'.CanCollide = not noClip
-    end
-end)
-
-task.wait(20)
-noClipConnect:Disconnect()
-end)
-
-local Button = Section.NewButton("Off Noclip",function()
-local noClip = false
-end)
-
 local Button = Section.NewButton("Fling",function()
 loadstring(game:HttpGet(('https://raw.githubusercontent.com/NotFalxe/Roblox-Scripts/source-code/headfling.lua'),true))()
 end)
@@ -1299,6 +668,11 @@ end)
 local Tab = Window.NewTab("Fun")
 
 local Section = Tab.NewSection("Fun Scripts")
+
+
+local Button = Section.NewButton("Default Dance",function()
+    loadstring(game:HttpGet('https://raw.githubusercontent.com/ibosik/AzureFlareHUB/main/DefaultDance'))()
+end)
 
 local Button = Section.NewButton("Universal Hub",function()
     loadstring(game:HttpGet('https://raw.githubusercontent.com/Dvrknvss/UniversalFEScriptHub/main/Script'))()
@@ -1312,14 +686,161 @@ local Button = Section.NewButton("Chat Art",function()
     loadstring(game:HttpGet("https://raw.githubusercontent.com/ibosik/AzureFlareHUB/main/ChatArt"))()
 end)
 
+local Button = Section.NewButton("Bang",function()
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/ibosik/AzureFlareHUB/main/Bang"))()
+end)
+
 local Button = Section.NewButton("Invisible",function()
     loadstring(game:HttpGet("https://raw.githubusercontent.com/ibosik/AzureFlareHUB/main/Invisible"))()
 end)
 
-Section:NewButton("Ultimate Admin", "Write commands in chat", function()
+local Button = Section.NewButton("Ultimate Admin",function()
     loadstring(game:HttpGet("https://pastebin.com/raw/bVjM0xCS", true))()
 end)
 
-Section:NewButton("FE Flip", "yes", function()
+local Button = Section.NewButton("FE Flip",function()
     loadstring(game:HttpGet("https://raw.githubusercontent.com/ibosik/AzureFlareHUB/main/feFlip", true))()
 end)
+
+local Button = Section.NewButton("Mastrubation",function()
+--Created By Armut 7#8860 Discord : https://discord.gg/q9e6W3NRSU--
+function rmesh(a)
+if not (workspace[game.Players.LocalPlayer.Name][a].Handle:FindFirstChild('Mesh') or workspace[game.Players.LocalPlayer.Name][a].Handle:FindFirstChild('SpecialMesh')) then return end
+old=game.Players.LocalPlayer.Character
+game.Players.LocalPlayer.Character=workspace[game.Players.LocalPlayer.Name]
+for i,v in next, workspace[game.Players.LocalPlayer.Name]:FindFirstChild(a).Handle:GetDescendants() do
+if v:IsA('Mesh') or v:IsA('SpecialMesh') then
+v:Remove()
+end
+end
+for i = 1 , 2 do
+game.Players.LocalPlayer.Character=old
+end
+end
+
+HumanDied = false for i,v in next, game:GetService("Players").LocalPlayer.Character:GetDescendants() do if v:IsA("BasePart") then  _G.netless=game:GetService("RunService").Heartbeat:connect(function() v.AssemblyLinearVelocity = Vector3.new(-30,0,0) sethiddenproperty(game.Players.LocalPlayer,"MaximumSimulationRadius",math.huge) sethiddenproperty(game.Players.LocalPlayer,"SimulationRadius",999999999) end) end end  local plr = game.Players.LocalPlayer local char = plr.Character local srv = game:GetService('RunService') local ct = {}  char.Archivable = true local reanim = char:Clone() reanim.Name = 'Nexo '..plr.Name..'' fl=Instance.new('Folder',char) fl.Name ='Nexo' reanim.Animate.Disabled=true char.HumanoidRootPart:Destroy() char.Humanoid:ChangeState(16)  for i,v in next, char.Humanoid:GetPlayingAnimationTracks() do v:Stop() end char.Animate:Remove()  function create(part, parent, p, r) Instance.new("Attachment",part) Instance.new("AlignPosition",part) Instance.new("AlignOrientation",part) Instance.new("Attachment",parent) part.Attachment.Name = part.Name parent.Attachment.Name = part.Name part.AlignPosition.Attachment0 = part[part.Name] part.AlignOrientation.Attachment0 = part[part.Name] part.AlignPosition.Attachment1 = parent[part.Name] part.AlignOrientation.Attachment1 = parent[part.Name] parent[part.Name].Position = p or Vector3.new() part[part.Name].Orientation = r or Vector3.new() part.AlignPosition.MaxForce = 999999999 part.AlignPosition.MaxVelocity = math.huge part.AlignPosition.ReactionForceEnabled = false part.AlignPosition.Responsiveness = math.huge part.AlignOrientation.Responsiveness = math.huge part.AlignPosition.RigidityEnabled = false part.AlignOrientation.MaxTorque = 999999999 end  for i,v in next, char:GetDescendants() do if v:IsA('Accessory') then v.Handle:BreakJoints() create(v.Handle,reanim[v.Name].Handle) end end  char.Torso['Left Shoulder']:Destroy() char.Torso['Right Shoulder']:Destroy() char.Torso['Left Hip']:Destroy() char.Torso['Right Hip']:Destroy()  create(char['Torso'],reanim['Torso']) create(char['Left Arm'],reanim['Left Arm']) create(char['Right Arm'],reanim['Right Arm']) create(char['Left Leg'],reanim['Left Leg']) create(char['Right Leg'],reanim['Right Leg'])  for i,v in next, reanim:GetDescendants() do if v:IsA('BasePart') or v:IsA('Decal') then v.Transparency = 1 end end  reanim.Parent = fl  for i,v in next, reanim:GetDescendants() do if v:IsA('BasePart') then table.insert(ct,srv.RenderStepped:Connect(function() v.CanCollide = false end)) end end  for i,v in next, char:GetDescendants() do if v:IsA('BasePart') then table.insert(ct,srv.RenderStepped:Connect(function() v.CanCollide = false end)) end end  for i,v in next, reanim:GetDescendants() do if v:IsA('BasePart') then table.insert(ct,srv.Stepped:Connect(function() v.CanCollide = false end)) end end  for i,v in next, char:GetDescendants() do if v:IsA('BasePart') then table.insert(ct,srv.Stepped:Connect(function() v.CanCollide = false end)) end end  table.insert(ct,reanim.Humanoid.Died:Connect(function() plr.Character = char char:BreakJoints() reanim:Destroy() game.Players:Chat('-gr') _G.netless:Disconnect() HumanDied = true for _,v in pairs(ct) do v:Disconnect() end end))  plr.Character = reanim workspace.CurrentCamera.CameraSubject = reanim.Humanoid
+
+IT = Instance.new
+CF = CFrame.new
+VT = Vector3.new
+RAD = math.rad
+C3 = Color3.new
+UD2 = UDim2.new
+BRICKC = BrickColor.new
+ANGLES = CFrame.Angles
+EULER = CFrame.fromEulerAnglesXYZ
+COS = math.cos
+ACOS = math.acos
+SIN = math.sin
+ASIN = math.asin
+ABS = math.abs
+MRANDOM = math.random
+FLOOR = math.floor
+
+speed = 1
+sine = 1
+srv = game:GetService('RunService')
+
+reanim = game.Players.LocalPlayer.Character
+
+function hat(h,p,c1,c0,m)
+reanim[h].Handle.AccessoryWeld.Part1=reanim[p]
+reanim[h].Handle.AccessoryWeld.C1=c1 or CFrame.new()
+reanim[h].Handle.AccessoryWeld.C0=reanim[h].Handle.AccessoryWeld.C0:Lerp(c0 or CFrame.new(),1)
+if m == true then
+rmesh(h)
+end
+end
+
+m=game.Players.LocalPlayer:GetMouse()
+RJ = reanim.HumanoidRootPart.RootJoint
+RS = reanim.Torso['Right Shoulder']
+LS = reanim.Torso['Left Shoulder']
+RH = reanim.Torso['Right Hip']
+LH = reanim.Torso['Left Hip']
+Root = reanim.HumanoidRootPart
+NECK = reanim.Torso.Neck
+NECK.C0 = CF(0,1,0)*ANGLES(RAD(0),RAD(0),RAD(0))
+NECK.C1 = CF(0,-0.5,0)*ANGLES(RAD(0),RAD(0),RAD(0))
+RJ.C1 = CF(0,-1,0)*ANGLES(RAD(0),RAD(0),RAD(0))
+RJ.C0 = CF(0,0,0)*ANGLES(RAD(0),RAD(0),RAD(0))
+RS.C1 = CF(0,0.5,0)*ANGLES(RAD(0),RAD(0),RAD(0))
+LS.C1 = CF(0,0.5,0)*ANGLES(RAD(0),RAD(0),RAD(0))
+RH.C1 = CF(0,1,0)*ANGLES(RAD(0),RAD(0),RAD(0))
+LH.C1 = CF(0,1,0)*ANGLES(RAD(0),RAD(0),RAD(0))
+RH.C0 = CF(0,0,0)*ANGLES(RAD(0),RAD(0),RAD(0))
+LH.C0 = CF(0,0,0)*ANGLES(RAD(0),RAD(0),RAD(0))
+RS.C0 = CF(0,0,0)*ANGLES(RAD(0),RAD(0),RAD(0))
+LS.C0 = CF(0,0,0)*ANGLES(RAD(0),RAD(0),RAD(0))
+
+-- for modes u can go in this link : https://Nexo.notxeneon15.repl.co/nexo/modes.lua
+
+coroutine.wrap(function()
+while true do -- anim changer
+if HumanDied then break end
+sine = sine + speed
+local rlegray = Ray.new(reanim["Right Leg"].Position + Vector3.new(0, 0.5, 0), Vector3.new(0, -2, 0))
+local rlegpart, rlegendPoint = workspace:FindPartOnRay(rlegray, char)
+local llegray = Ray.new(reanim["Left Leg"].Position + Vector3.new(0, 0.5, 0), Vector3.new(0, -2, 0))
+local llegpart, llegendPoint = workspace:FindPartOnRay(llegray, char)
+local rightvector = (Root.Velocity * Root.CFrame.rightVector).X + (Root.Velocity * Root.CFrame.rightVector).Z
+local lookvector = (Root.Velocity * Root.CFrame.lookVector).X + (Root.Velocity * Root.CFrame.lookVector).Z
+if lookvector > reanim.Humanoid.WalkSpeed then
+lookvector = reanim.Humanoid.WalkSpeed
+end
+if lookvector < -reanim.Humanoid.WalkSpeed then
+lookvector = -reanim.Humanoid.WalkSpeed
+end
+if rightvector > reanim.Humanoid.WalkSpeed then
+rightvector = reanim.Humanoid.WalkSpeed
+end
+if rightvector < -reanim.Humanoid.WalkSpeed then
+rightvector = -reanim.Humanoid.WalkSpeed
+end
+local lookvel = lookvector / reanim.Humanoid.WalkSpeed
+local rightvel = rightvector / reanim.Humanoid.WalkSpeed
+if reanim.Humanoid.Jump then -- jump
+NECK.C0=NECK.C0:Lerp(CFrame.new(0+0*math.cos(sine/10),1+0*math.cos(sine/10),0+0*math.cos(sine/10))*CFrame.Angles(math.rad(0+0*math.cos(sine/10)),math.rad(0+0*math.cos(sine/10)),math.rad(0+0*math.cos(sine/10))),.2) 
+RJ.C0=RJ.C0:Lerp(CFrame.new(0+0*math.cos(sine/10),-1+0*math.cos(sine/10),0+0*math.cos(sine/10))*CFrame.Angles(math.rad(0+0*math.cos(sine/10)),math.rad(0+0*math.cos(sine/10)),math.rad(0+0*math.cos(sine/10))),.2) 
+RS.C0=RS.C0:Lerp(CFrame.new(1+0*math.cos(sine/10),-0.2+1*math.cos(sine/5),-1+0*math.cos(sine/1))*CFrame.Angles(math.rad(30+0*math.cos(sine/10)),math.rad(-30+0*math.sin(sine/10)),math.rad(-20+0*math.cos(sine/10))),.2) 
+LS.C0=LS.C0:Lerp(CFrame.new(-1.5+0*math.cos(sine/10),0.5+0*math.cos(sine/10),0+0*math.cos(sine/10))*CFrame.Angles(math.rad(0+0*math.cos(sine/10)),math.rad(0+0*math.cos(sine/10)),math.rad(0+0*math.cos(sine/10))),.2) 
+RH.C0=RH.C0:Lerp(CFrame.new(0.5+0*math.cos(sine/10),-1+0*math.cos(sine/10),0+0*math.cos(sine/10))*CFrame.Angles(math.rad(0+0*math.cos(sine/10)),math.rad(0+0*math.cos(sine/10)),math.rad(0+0*math.cos(sine/10))),.2) 
+LH.C0=LH.C0:Lerp(CFrame.new(-0.5+0*math.cos(sine/10),-1+0*math.cos(sine/10),0+0*math.cos(sine/10))*CFrame.Angles(math.rad(0+0*math.cos(sine/10)),math.rad(0+0*math.cos(sine/10)),math.rad(0+0*math.cos(sine/10))),.2)
+elseif Root.Velocity.y < -1 and reanim.Humanoid.Jump then -- fall
+NECK.C0=NECK.C0:Lerp(CFrame.new(0+0*math.cos(sine/10),1+0*math.cos(sine/10),0+0*math.cos(sine/10))*CFrame.Angles(math.rad(0+0*math.cos(sine/10)),math.rad(0+0*math.cos(sine/10)),math.rad(0+0*math.cos(sine/10))),.2) 
+RJ.C0=RJ.C0:Lerp(CFrame.new(0+0*math.cos(sine/10),-1+0*math.cos(sine/10),0+0*math.cos(sine/10))*CFrame.Angles(math.rad(0+0*math.cos(sine/10)),math.rad(0+0*math.cos(sine/10)),math.rad(0+0*math.cos(sine/10))),.2) 
+RS.C0=RS.C0:Lerp(CFrame.new(1+0*math.cos(sine/10),-0.2+1*math.cos(sine/5),-1+0*math.cos(sine/1))*CFrame.Angles(math.rad(30+0*math.cos(sine/10)),math.rad(-30+0*math.sin(sine/10)),math.rad(-20+0*math.cos(sine/10))),.2) 
+LS.C0=LS.C0:Lerp(CFrame.new(-1.5+0*math.cos(sine/10),0.5+0*math.cos(sine/10),0+0*math.cos(sine/10))*CFrame.Angles(math.rad(0+0*math.cos(sine/10)),math.rad(0+0*math.cos(sine/10)),math.rad(0+0*math.cos(sine/10))),.2) 
+RH.C0=RH.C0:Lerp(CFrame.new(0.5+0*math.cos(sine/10),-1+0*math.cos(sine/10),0+0*math.cos(sine/10))*CFrame.Angles(math.rad(0+0*math.cos(sine/10)),math.rad(0+0*math.cos(sine/10)),math.rad(0+0*math.cos(sine/10))),.2) 
+LH.C0=LH.C0:Lerp(CFrame.new(-0.5+0*math.cos(sine/10),-1+0*math.cos(sine/10),0+0*math.cos(sine/10))*CFrame.Angles(math.rad(0+0*math.cos(sine/10)),math.rad(0+0*math.cos(sine/10)),math.rad(0+0*math.cos(sine/10))),.2)
+elseif Root.Velocity.Magnitude < 2 then -- idle
+hat('Pal Hair','Torso',CFrame.new(0,0,0),CFrame.new(0+0*math["cos"](sine/10),1.5+0*math["cos"](sine/10),1.5+0.2*math["cos"](sine/1))*CFrame.Angles(math.rad(0+0*math["cos"](sine/10)),math.rad(0+0*math["cos"](sine/10)),math.rad(0+0*math["sin"](sine/1))),true)
+NECK.C0=NECK.C0:Lerp(CFrame.new(0+0*math.cos(sine/10),1+0*math.cos(sine/10),0+0*math.cos(sine/10))*CFrame.Angles(math.rad(0+0*math.cos(sine/10)),math.rad(0+0*math.cos(sine/10)),math.rad(0+0*math.cos(sine/10))),.2) 
+RJ.C0=RJ.C0:Lerp(CFrame.new(0+0*math.cos(sine/10),-1+0*math.cos(sine/10),0+0*math.cos(sine/10))*CFrame.Angles(math.rad(0+0*math.cos(sine/10)),math.rad(0+0*math.cos(sine/10)),math.rad(0+0*math.cos(sine/10))),.2) 
+RS.C0=RS.C0:Lerp(CFrame.new(1+0*math.cos(sine/10),-0.2+1*math.cos(sine/5),-1+0*math.cos(sine/1))*CFrame.Angles(math.rad(30+0*math.cos(sine/10)),math.rad(-30+0*math.sin(sine/10)),math.rad(-20+0*math.cos(sine/10))),.2) 
+LS.C0=LS.C0:Lerp(CFrame.new(-1.5+0*math.cos(sine/10),0.5+0*math.cos(sine/10),0+0*math.cos(sine/10))*CFrame.Angles(math.rad(0+0*math.cos(sine/10)),math.rad(0+0*math.cos(sine/10)),math.rad(0+0*math.cos(sine/10))),.2) 
+RH.C0=RH.C0:Lerp(CFrame.new(0.5+0*math.cos(sine/10),-1+0*math.cos(sine/10),0+0*math.cos(sine/10))*CFrame.Angles(math.rad(0+0*math.cos(sine/10)),math.rad(0+0*math.cos(sine/10)),math.rad(0+0*math.cos(sine/10))),.2) 
+LH.C0=LH.C0:Lerp(CFrame.new(-0.5+0*math.cos(sine/10),-1+0*math.cos(sine/10),0+0*math.cos(sine/10))*CFrame.Angles(math.rad(0+0*math.cos(sine/10)),math.rad(0+0*math.cos(sine/10)),math.rad(0+0*math.cos(sine/10))),.2)
+elseif Root.Velocity.Magnitude < 20 then -- walk
+hat('Pal Hair','Torso',CFrame.new(0,0,0),CFrame.new(0+0*math["cos"](sine/10),1.5+0*math["cos"](sine/10),1.5+0.2*math["cos"](sine/1))*CFrame.Angles(math.rad(0+0*math["cos"](sine/10)),math.rad(0+0*math["cos"](sine/10)),math.rad(0+0*math["sin"](sine/1))),true)
+NECK.C0=NECK.C0:Lerp(CFrame.new(0+0*math.cos(sine/10),1+0*math.cos(sine/10),0+0*math.cos(sine/10))*CFrame.Angles(math.rad(0+0*math.cos(sine/10)),math.rad(0+0*math.cos(sine/10)),math.rad(0+0*math.cos(sine/10))),.2) 
+RJ.C0=RJ.C0:Lerp(CFrame.new(0+0*math.cos(sine/10),-1+0*math.cos(sine/10),0+0*math.cos(sine/10))*CFrame.Angles(math.rad(0+0*math.cos(sine/10)),math.rad(0+0*math.cos(sine/10)),math.rad(0+0*math.cos(sine/10))),.2) 
+RS.C0=RS.C0:Lerp(CFrame.new(1+0*math.cos(sine/10),-0.2+1*math.cos(sine/5),-1+0*math.cos(sine/1))*CFrame.Angles(math.rad(30+0*math.cos(sine/10)),math.rad(-30+0*math.sin(sine/10)),math.rad(-20+0*math.cos(sine/10))),.2) 
+LS.C0=LS.C0:Lerp(CFrame.new(-1.5+0*math.cos(sine/10),0.5+0*math.cos(sine/10),0+0*math.cos(sine/10))*CFrame.Angles(math.rad(0+50*math.cos(sine/9)),math.rad(0+0*math.cos(sine/10)),math.rad(0+0*math.cos(sine/10))),.2) 
+RH.C0=RH.C0:Lerp(CFrame.new(0.5+0*math.cos(sine/10),-1+0*math.cos(sine/10),0+0*math.cos(sine/10))*CFrame.Angles(math.rad(0+60*math.cos(sine/9)),math.rad(0+0*math.cos(sine/10)),math.rad(0+0*math.cos(sine/10))),.2) 
+LH.C0=LH.C0:Lerp(CFrame.new(-0.5+0*math.cos(sine/10),-1+0*math.cos(sine/10),0+0*math.cos(sine/10))*CFrame.Angles(math.rad(0+60*math.sin(sine/9)),math.rad(0+0*math.cos(sine/10)),math.rad(0+0*math.cos(sine/10))),.2)
+elseif Root.Velocity.Magnitude > 20 then -- run
+hat('Pal Hair','Torso',CFrame.new(0,0,0),CFrame.new(0+0*math["cos"](sine/10),1.5+0*math["cos"](sine/10),1.5+0.2*math["cos"](sine/1))*CFrame.Angles(math.rad(0+0*math["cos"](sine/10)),math.rad(0+0*math["cos"](sine/10)),math.rad(0+0*math["sin"](sine/1))),true)
+NECK.C0=NECK.C0:Lerp(CFrame.new(0+0*math.cos(sine/10),1+0*math.cos(sine/10),0+0*math.cos(sine/10))*CFrame.Angles(math.rad(0+0*math.cos(sine/10)),math.rad(0+0*math.cos(sine/10)),math.rad(0+0*math.cos(sine/10))),.2) 
+RJ.C0=RJ.C0:Lerp(CFrame.new(0+0*math.cos(sine/10),-1+0*math.cos(sine/10),0+0*math.cos(sine/10))*CFrame.Angles(math.rad(0+0*math.cos(sine/10)),math.rad(0+0*math.cos(sine/10)),math.rad(0+0*math.cos(sine/10))),.2) 
+RS.C0=RS.C0:Lerp(CFrame.new(1+0*math.cos(sine/10),-0.2+1*math.cos(sine/5),-1+0*math.cos(sine/1))*CFrame.Angles(math.rad(30+0*math.cos(sine/10)),math.rad(-30+0*math.sin(sine/10)),math.rad(-20+0*math.cos(sine/10))),.2) 
+LS.C0=LS.C0:Lerp(CFrame.new(-1.5+0*math.cos(sine/10),0.5+0*math.cos(sine/10),0+0*math.cos(sine/10))*CFrame.Angles(math.rad(0+50*math.cos(sine/9)),math.rad(0+0*math.cos(sine/10)),math.rad(0+0*math.cos(sine/10))),.2) 
+RH.C0=RH.C0:Lerp(CFrame.new(0.5+0*math.cos(sine/10),-1+0*math.cos(sine/10),0+0*math.cos(sine/10))*CFrame.Angles(math.rad(0+60*math.cos(sine/9)),math.rad(0+0*math.cos(sine/10)),math.rad(0+0*math.cos(sine/10))),.2) 
+LH.C0=LH.C0:Lerp(CFrame.new(-0.5+0*math.cos(sine/10),-1+0*math.cos(sine/10),0+0*math.cos(sine/10))*CFrame.Angles(math.rad(0+60*math.sin(sine/9)),math.rad(0+0*math.cos(sine/10)),math.rad(0+0*math.cos(sine/10))),.2)
+end
+srv.RenderStepped:Wait()
+end
+end)()
+--Created using Nexo Animator V4
+end)
+end
