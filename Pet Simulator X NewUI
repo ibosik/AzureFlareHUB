@@ -1,5 +1,70 @@
 loadstring(game:HttpGet("https://raw.githubusercontent.com/ibosik/AzureFlareHUB/main/sourceforpetsimx2"))()
-
+task.spawn(function() while task.wait(Speed/75) do
+if not Stop then
+    local cointhiny = GetCoins()
+    local pethingy = GetMyPets()
+    for i = 1, #pethingy do
+        if LegitFarmCoins == true then
+        local s,e = pcall(function() legitFarm1Coin(cointhiny["Number"..tostring(i)][2], pethingy[i%#pethingy+1]) end) if not s then warn(e) end
+        pcall(function() CollectOrbs() end)
+        else
+       pcall(function() FarmCoin(cointhiny["Number"..tostring(i)][2], pethingy[i%#pethingy+1]) end)
+       pcall(function() CollectOrbs() end)
+       end
+    end
+    if getgenv().start then
+    local cointhiny = getchest()
+    local pethingy = GetMyPets()
+    warn(tostring(cointhiny))
+        pcall(function() legitFarmCoin(cointhiny, pethingy) end)
+    end
+    end
+    if Config["AutoTP"]==true then
+        workspace.__THINGS.__REMOTES:FindFirstChild("performed teleport"):FireServer({})
+    end
+    if Config["AutoMakeGold"]==true then
+        MakePetsGold(false)
+    end
+    if Config["AutoMakeRainbow"]==true then
+        MakePetsRainbow(true)
+    end
+    if Config["AutoMerchant"]==true then
+        local isMerchantHere = game:GetService("Workspace")["__THINGS"]["__REMOTES"]["is merchant here"]:InvokeServer({})[1];
+        if isMerchantHere then
+            if mSessionOver == true then
+            notif:Fire("The merchant has arrived!")
+            notif:Fire("Buying Pets...")
+            BuyMerchantPets()
+            mSessionOver = false
+            end
+        else
+            mSessionOver = true
+        end
+    end
+    if Config["AutoHatch"] == true then
+    workspace.__THINGS.__REMOTES:FindFirstChild("buy egg"):InvokeServer({SelectedEgg,false})
+    end
+    if Config["AutoTripleDamage"] == true then
+    if shouldUseSelectedBoost("Triple Damage") == true then
+    workspace.__THINGS.__REMOTES:FindFirstChild("activate boost"):FireServer({"Triple Damage"})
+    end
+    end
+    if Config["AutoTripleCoins"] == true then
+    if shouldUseSelectedBoost("Triple Coins") == true then
+    workspace.__THINGS.__REMOTES:FindFirstChild("activate boost"):FireServer({"Triple Coins"})
+    end
+    end
+    if Config["AutoSuperLucky"] == true then
+    if shouldUseSelectedBoost("Super Lucky") == true then
+    workspace.__THINGS.__REMOTES:FindFirstChild("activate boost"):FireServer({"Super Lucky"})
+    end
+    end
+    if Config["AutoUltraLucky"] == true then
+    if shouldUseSelectedBoost("Ultra Lucky") == true then
+    workspace.__THINGS.__REMOTES:FindFirstChild("activate boost"):FireServer({"Ultra Lucky"})
+    end
+    end
+end end)
 local FlyingEnabled = false
 local maxspeed = 150 
 function BetterFly()
@@ -80,7 +145,7 @@ game.Players.LocalPlayer.CharacterAdded:Connect(BetterFly)
 BetterFly()
 local Flux = loadstring(game:HttpGet"https://raw.githubusercontent.com/dawid-scripts/UI-Libs/main/fluxlib.txt")()
 
-local win = Flux:Window("AzurEZ Hub", "Pet Simulator X", _G.GuiColor--[[Color3.fromRGB(160, 0, 160)]], Enum.KeyCode.LeftControl)
+local win = Flux:Window("AzurEZ Hub", "Pet Simulator X", Color3.fromRGB(160, 0, 160), Enum.KeyCode.LeftControl)
 local tab = win:Tab("Credits", "http://www.roblox.com/asset/?id=6022668888")
 tab:Label("Discord")
 tab:Line()
@@ -100,11 +165,9 @@ if t == "Key" then]]
 local tab = win:Tab("Settings", "http://www.roblox.com/asset/?id=6034989541")
 tab:Label("Gui")
 tab:Line()
-tab:Colorpicker("Gui Color", Color3.fromRGB(255,1,1), function(t)
-while wait() do
-_G.GuiColor(t)
-    end
-end)
+--[[tab:Colorpicker("Gui Color", Color3.fromRGB(255,1,1), function(t)
+_G.GuiColor = Color3.fromRGB(t)
+end)]]
 tab:Button("Destroy Gui", "Destroy Gui.", function()
 game:GetService("CoreGui").FluxLib:Destroy()
 end)
@@ -252,6 +315,27 @@ end)
 local tab = win:Tab("Miscellaneous", "http://www.roblox.com/asset/?id=6035047377")
 tab:Label("Miscellaneous")
 tab:Line()
+tab:Dropdown("Skip Egg Hatching", {"Start Skip Hatching","Stop Skip Hatching"}, function(t)
+_G.SkipHatch33 = t
+while _G.SkipHatch33 == "Start Skip Hatching" do
+    if _G.SkipHatch33 == "Stop Skip Hatching" then
+for i,v in pairs(getgc(true)) do
+   if (typeof(v) == 'table' and rawget(v, 'OpenEgg')) then
+       v.OpenEgg = func
+		func = nil
+        end
+    end
+for i,v in pairs(getgc(true)) do
+   if (typeof(v) == 'table' and rawget(v, 'OpenEgg')) then
+       func = v.OpenEgg
+       v.OpenEgg = function()
+           return true
+   end
+   end
+   end
+   end
+   end
+end)
 tab:Textbox("Custom Pop Up", "", true, function(t)
 local lib = require(game.ReplicatedStorage:WaitForChild('Framework'):WaitForChild('Library'))
 lib.Message.New(t)
@@ -383,6 +467,26 @@ end)
 local tab = win:Tab("Auto Buy", "http://www.roblox.com/asset/?id=6031289461")
 tab:Label("Auto Buy")
 tab:Line()
+tab:Button("Auto Traveling Merchant", "", function()
+_G.BuyTM = true
+Flux:Notification("When Traveling Merchant Appear Script Will Buy All Pets From Merchant","OK")
+        local isMerchantHere = game:GetService("Workspace")["__THINGS"]["__REMOTES"]["is merchant here"]:InvokeServer({})[1];
+        if isMerchantHere then
+            if mSessionOver == true then
+                if _G.BuyTM == true then
+            Flux:Notification("The merchant has arrived!","Ok")
+            Flux:Notification("Buying Pets...","Ok")
+            BuyMerchantPets()
+                end
+            mSessionOver = false
+            end
+        else
+            mSessionOver = true
+        end
+end)
+tab:Button("OFF Auto Traveling Merchant", "", function()
+_G.BuyTM = false
+end)
 tab:Textbox("Enter Egg Name", "", true, function(sel84)
     local SelectionText = string.upper(sel84)
     local EggSelectionCorrected = nil
@@ -422,27 +526,7 @@ while _G.AutoHatch33 == "Start Hatching" do
     workspace.__THINGS.__REMOTES:FindFirstChild("buy egg"):InvokeServer({SelectedEgg,false})
 end
 end)
-tab:Dropdown("Skip Egg Hatching", {"Start Skip Hatching","Stop Skip Hatching"}, function(t)
-_G.SkipHatch33 = t
-while _G.SkipHatch33 == "Start Skip Hatching" do
-    if _G.SkipHatch33 == "Stop Skip Hatching" then
-for i,v in pairs(getgc(true)) do
-   if (typeof(v) == 'table' and rawget(v, 'OpenEgg')) then
-       v.OpenEgg = func
-		func = nil
-   end
-end
-for i,v in pairs(getgc(true)) do
-   if (typeof(v) == 'table' and rawget(v, 'OpenEgg')) then
-       func = v.OpenEgg
-       v.OpenEgg = function()
-           return true
-       end
-   end
-end
-end
-end
-end)
+
 local tab = win:Tab("Auto Farm", "http://www.roblox.com/asset/?id=6034837797")
 tab:Label("Auto Farm Coins")
 tab:Line()
@@ -450,18 +534,36 @@ tab:Button("AutoFarm Coins", "", function()
 Stop = true
 end)
 tab:Button("OFF AutoFarm Coins", "", function()
-Stop = true
+Stop = false
 end)
 tab:Line()
+
 tab:Button("Legit AutoFarm Coins", "", function()
     LegitFarmCoins = true
+while LegitFarmCoins == true do
+    wait(0.2)
+    local cointhiny = GetCoins()
+    local pethingy = GetMyPets()
+    for i = 1, #pethingy do
+        if LegitFarmCoins == true then
+        local s,e = pcall(function() legitFarm1Coin(cointhiny["Number"..tostring(i)][2], pethingy[i%#pethingy+1]) end) if not s then warn(e) end
+        pcall(function() CollectOrbs() end)
+        else
+       pcall(function() FarmCoin(cointhiny["Number"..tostring(i)][2], pethingy[i%#pethingy+1]) end)
+       pcall(function() CollectOrbs() end)
+       end
+    end
+    end
 end)
 tab:Button("OFF Legit AutoFarm Coins", "", function()
-    LegitFarmCoins = true
+    LegitFarmCoins = false
 end)
 tab:Line()
 tab:Slider("AutoFarm Coin Range", "", 20, 500,120,function(choise)
 Maxmagnitude = choise
+end)
+tab:Slider("Farming Speed", "", 1, 200,75,function(choise)
+Speed = choise
 end)
 
 local Chests = {
@@ -498,13 +600,15 @@ tab:Dropdown("Select Chest To Farm", Chests, function(selection2)
 end)
 tab:Button("AutoFarm Chest", "", function()
     getgenv().start = true
+while getgenv().start == true do wait(0.2)
+    local cointhiny = getchest()
+    local pethingy = GetMyPets()
+    warn(tostring(cointhiny))
+        pcall(function() legitFarmCoin(cointhiny, pethingy) end)
+    end
 end)
 tab:Button("OFF AutoFarm Chest", "", function()
     getgenv().start = false
-end)
-tab:Line()
-tab:Slider("Farming Speed", "", 1, 200,75,function(choise)
-Speed = choise
 end)
 tab:Line()
 tab:Button("Auto Collect Lootbags", "", function()
@@ -518,15 +622,35 @@ tab:Label("Other")
 tab:Line()
 tab:Dropdown("Auto Tripple Damage", {"Start Auto Tripple Damage","Stop Auto Tripple Damage"}, function(t)
 _G.AutoTripple33 = t
-if _G.AutoTripple33 == "Start Auto Tripple Damage" then
+while _G.AutoTripple33 == "Start Auto Tripple Damage" do
     if _G.AutoTripple33 == "Stop Auto Tripple Damage" then repeat wait() until _G.AutoTripple33 == "Start Auto Tripple Damage" end
-    Config["AutoTripleDamage"] = _G.AutoTripple33
+    if shouldUseSelectedBoost("Triple Damage") == true then
+    workspace.__THINGS.__REMOTES:FindFirstChild("activate boost"):FireServer({"Triple Damage"})
+    end
+end
+end)
+tab:Dropdown("Auto Tripple Coins", {"Start Auto Tripple Coins","Stop Auto Tripple Coins"}, function(t)
+_G.AutoTripple334 = t
+while _G.AutoTripple334 == "Start Auto Tripple Coins" do
+    if _G.AutoTripple334 == "Stop Auto Tripple Coins" then repeat wait() until _G.AutoTripple334 == "Start Auto Tripple Coins" end
+    if shouldUseSelectedBoost("Triple Coins") == true then
+    workspace.__THINGS.__REMOTES:FindFirstChild("activate boost"):FireServer({"Triple Coins"})
+    end
+end
+    end)
+tab:Dropdown("Auto Super Lucky", {"Start Auto Super Lucky","Stop Auto Super Lucky"}, function(t)
+_G.AutoTripple3345 = t
+while _G.AutoTripple3345 == "Start Auto Super Lucky" do
+    if _G.AutoTripple3345 == "Stop Auto Super Lucky" then repeat wait() until _G.AutoTripple3345 == "Start Auto Super Lucky" end
+    if shouldUseSelectedBoost("Super Lucky") == true then
+    workspace.__THINGS.__REMOTES:FindFirstChild("activate boost"):FireServer({"Super Lucky"})
+    end
 end
     end)
 tab:Dropdown("Auto Redeem Gifts", {"Start Auto Redeem Gifts","Stop Auto Redeem Gifts"}, function(t)
-_G.AutoTripple33 = t
-while _G.AutoTripple33 == "Start Auto Redeem Gifts" do
-    if _G.AutoTripple33 == "Stop Auto Redeem Gifts" then repeat wait() until _G.AutoTripple33 == "Start Auto Redeem Gifts" end
+_G.AutoTripple3333 = t
+while _G.AutoTripple3333 == "Start Auto Redeem Gifts" do
+    if _G.AutoTripple3333 == "Stop Auto Redeem Gifts" then repeat wait() until _G.AutoTripple3333 == "Start Auto Redeem Gifts" end
     local thing = workspace.__THINGS.__REMOTES:FindFirstChild("redeem rank rewards"):InvokeServer({})
 thing()
     if thing[1]==nil then
@@ -554,69 +678,7 @@ tab:Button("Auto Collect Bank Interest", "", function()
    return returntable
 end
 
-task.spawn(function() while task.wait(Speed/75) do
-if not Stop then
-    local cointhiny = GetCoins()
-    local pethingy = GetMyPets()
-    for i = 1, #pethingy do
-        if LegitFarmCoins == true then
-        local s,e = pcall(function() legitFarm1Coin(cointhiny["Number"..tostring(i)][2], pethingy[i%#pethingy+1]) end) if not s then warn(e) end
-        pcall(function() CollectOrbs() end)
-        else
-       pcall(function() FarmCoin(cointhiny["Number"..tostring(i)][2], pethingy[i%#pethingy+1]) end)
-       pcall(function() CollectOrbs() end)
-       end
-    end
-    end
-    if getgenv().start then
-    local cointhiny = getchest()
-    local pethingy = GetMyPets()
-    warn(tostring(cointhiny))
-        pcall(function() legitFarmCoin(cointhiny, pethingy) end)
-    end
-    if Config["AutoTP"]==true then
-        workspace.__THINGS.__REMOTES:FindFirstChild("performed teleport"):FireServer({})
-    end
-    if Config["AutoMakeGold"]==true then
-        MakePetsGold(false)
-    end
-    if Config["AutoMakeRainbow"]==true then
-        MakePetsRainbow(true)
-    end
-    if Config["AutoMerchant"]==true then
-        local isMerchantHere = game:GetService("Workspace")["__THINGS"]["__REMOTES"]["is merchant here"]:InvokeServer({})[1];
-        if isMerchantHere then
-            if mSessionOver == true then
-            notif:Fire("The merchant has arrived!")
-            notif:Fire("Buying Pets...")
-            BuyMerchantPets()
-            mSessionOver = false
-            end
-        else
-            mSessionOver = true
-        end
-    end
-    if Config["AutoHatch"] == true then
-    workspace.__THINGS.__REMOTES:FindFirstChild("buy egg"):InvokeServer({SelectedEgg,false})
-    end
-    if Config["AutoTripleDamage"] == true then
-    if shouldUseSelectedBoost("Triple Damage") == true then
-    workspace.__THINGS.__REMOTES:FindFirstChild("activate boost"):FireServer({"Triple Damage"})
-    end
-    end
-    if Config["AutoTripleCoins"] == true then
-    if shouldUseSelectedBoost("Triple Coins") == true then
-    workspace.__THINGS.__REMOTES:FindFirstChild("activate boost"):FireServer({"Triple Coins"})
-    end
-    end
-    if Config["AutoSuperLucky"] == true then
-    if shouldUseSelectedBoost("Super Lucky") == true then
-    workspace.__THINGS.__REMOTES:FindFirstChild("activate boost"):FireServer({"Super Lucky"})
-    end
-    end
-    if Config["AutoUltraLucky"] == true then
-    if shouldUseSelectedBoost("Ultra Lucky") == true then
-    workspace.__THINGS.__REMOTES:FindFirstChild("activate boost"):FireServer({"Ultra Lucky"})
-    end
-    end
-end end)
+local player = game.Players.LocalPlayer
+if player then
+Flux:Notification("Welcome To AzurEZ Hub V3, "..player.Name.."", ":D")
+end
