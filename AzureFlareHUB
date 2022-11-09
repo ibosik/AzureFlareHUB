@@ -12,7 +12,8 @@ wait(2)
 loadstring(game:HttpGet('https://raw.githubusercontent.com/ibosik/AzureFlareHUB/main/NotSupported'))()
 if game.PlaceId == 13822889 then
         game:GetService("CoreGui").Library:Destroy()
-loadstring(game:HttpGet('https://raw.githubusercontent.com/ibosik/AzureFlareHUB/main/Lumber%20Tycoon%202'))()
+--loadstring(game:HttpGet('https://raw.githubusercontent.com/ibosik/AzureFlareHUB/main/Lumber%20Tycoon%202'))()
+loadstring(game:HttpGet('https://raw.githubusercontent.com/ibosik/AzureFlareHUB/main/Lumber%20Tycoon%202%20NewUi'))()
 end
 
 if game.PlaceId == 621129760 then
@@ -64,22 +65,24 @@ if game.PlaceId == 1962086868 then
     
 if game.PlaceId == 10321372166 then
         game:GetService("CoreGui").Library:Destroy()
-    loadstring(game:HttpGet("https://raw.githubusercontent.com/ibosik/AzureFlareHUB/main/Pet%20Simulator%20X"))()
+--    loadstring(game:HttpGet("https://raw.githubusercontent.com/ibosik/AzureFlareHUB/main/Pet%20Simulator%20X"))()
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/ibosik/AzureFlareHUB/main/Pet%20Simulator%20X%20NewUi"))()
     end
     
     -- PSX Normal
     
 if game.PlaceId == 10321372166 then
         game:GetService("CoreGui").Library:Destroy()
-    loadstring(game:HttpGet("https://raw.githubusercontent.com/ibosik/AzureFlareHUB/main/Pet%20Simulator%20X"))()
-    end
+--    loadstring(game:HttpGet("https://raw.githubusercontent.com/ibosik/AzureFlareHUB/main/Pet%20Simulator%20X"))()
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/ibosik/AzureFlareHUB/main/Pet%20Simulator%20X%20NewUi"))()    end
 
     -- PSX Trading Plaza
     
 if game.PlaceId == 7722306047 then
     game:GetService("CoreGui").Library:Destroy()
-loadstring(game:HttpGet("https://raw.githubusercontent.com/ibosik/AzureFlareHUB/main/Pet%20Simulator%20X"))()
-end
+--    loadstring(game:HttpGet("https://raw.githubusercontent.com/ibosik/AzureFlareHUB/main/Pet%20Simulator%20X"))()
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/ibosik/AzureFlareHUB/main/Pet%20Simulator%20X%20NewUi"))()
+    end
 
 if game.PlaceId == 10972284553 then
         game:GetService("CoreGui").Library:Destroy()
