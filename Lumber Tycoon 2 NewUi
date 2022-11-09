@@ -1,6 +1,13 @@
 loadstring(game:HttpGet("https://raw.githubusercontent.com/ibosik/AzureFlareHUB/main/Lumber%20Tycoon%202%20butter%20source"))()
 local WaypointsPositions = {["The Den"] = CFrame.new(323, 49, 1930), ["Lighthouse"] = CFrame.new(1464.8, 356.3, 3257.2), ["Safari"] = CFrame.new(111.853, 11.0005, -998.805), ["Bridge"] = CFrame.new(112.308, 11.0005, -782.358), ["Bob's Shack"] = CFrame.new(260, 8, -2542), ["EndTimes Cave"] = CFrame.new(113, -214, -951), ["The Swamp"] = CFrame.new(-1209, 132, -801), ["The Cabin"] = CFrame.new(1244, 66, 2306), ["Volcano"] = CFrame.new(-1585, 625, 1140), ["Boxed Cars"] = CFrame.new(509, 5.2, -1463), ["Tiaga Peak"] = CFrame.new(1560, 410, 3274), ["Land Store"] = CFrame.new(258, 5, -99), ["Link's Logic"] = CFrame.new(4605, 3, -727), ["Palm Island"] = CFrame.new(2549, -5, -42), ["Palm Island 2"] = CFrame.new(1960, -5.900, -1501), ["Palm Island 3"] = CFrame.new(4344, -5.900, -1813), ["Fine Art Shop"] = CFrame.new(5207, -166, 719), ["SnowGlow Biome"] = CFrame.new(-1086.85, -5.89978, -945.316), ["Cave"] = CFrame.new(3581, -179, 430), ["Shrine Of Sight"] = CFrame.new(-1600, 195, 919), ["Fancy Furnishings"] = CFrame.new(491, 13, -1720), ["Docks"] = CFrame.new(1114, 3.2, -197), ["Strange Man"] = CFrame.new(1061, 20, 1131), ["Wood Dropoff"] = CFrame.new(323.406, -2.8, 134.734), ["Snow Biome"] = CFrame.new(889.955, 59.7999, 1195.55), ["Wood RUs"] = CFrame.new(265, 5, 57), ["Green Box"] = CFrame.new(-1668.05, 351.174, 1475.39), ["Spawn"] = CFrame.new(172, 2, 74), ["Cherry Meadow"] = CFrame.new(220.9, 59.8, 1305.8), ["Bird Cave"] = CFrame.new(4813.1, 33.5, -978.8),}
-
+local AllPlayers = {"Select Player"}
+for i,v in next,game.Players:GetPlayers() do
+if not table.find(AllPlayers,v.Name) then
+	table.insert(AllPlayers,v.Name)
+end
+end
+items23 = {}
+table42 = {}
 function onebyone() --totally not skidded
     function getHitPointsTbl()
         return
@@ -305,6 +312,24 @@ function DupeInv(Amount)
 end
 DupeInv()
 end)
+function CountAxes(TESTPLER)
+    Amount = 0
+        for a,b in pairs(game.Players:FindFirstChild(TESTPLER).ToolFolder:GetChildren()) do
+            if b.Name ~= "BlueprintTool" and b.Name == "Tool" then
+                Amount = Amount + 1
+            end
+        end
+        Flux:Notification("There is " ..Amount.." Axes in ".. TESTPLER .. "'s Backpack","Ok")
+        end
+
+AxesOwner = game.Players.LocalPlayer.Name
+tab:Dropdown("Select Player", AllPlayers, function(Value)
+     AxesOwner = Value
+        return
+end)
+tab:Button("Count Axes", "", function()
+    CountAxes(AxesOwner)
+    end)
 tab:Line()
 tab:Label("Dupe Items")
 tab:Line()
@@ -479,14 +504,6 @@ end)
 tab:Line()
 tab:Label("If you want to tp other peoples items with the selection tool")
 tab:Line()
-local AllPlayers = {"Select Player"}
-for i,v in next,game.Players:GetPlayers() do
-if not table.find(AllPlayers,v.Name) then
-	table.insert(AllPlayers,v.Name)
-end
-end
-items23 = {}
-table42 = {}
 
 for i,v in pairs(game:GetService("Workspace").PlayerModels:GetDescendants()) do
 	if v.Name == "ItemName" and v.Parent:FindFirstChild("Owner") and v.Parent.Owner.Value == game.Players.LocalPlayer then
@@ -664,8 +681,8 @@ tab:Button("OFF Auto White & Black List", "", function()
 local tab = win:Tab("Vehicle", "http://www.roblox.com/asset/?id=6034754441")
 tab:Label("Vehicle")
 tab:Line()
-tab:Bind("Vehicle Fly For 20s", Enum.KeyCode.V, function(v)
-        if game.Players.LocalPlayer then
+tab:Button("Vehicle Fly", "", function()
+ 		player = game.Players.LocalPlayer
 		humanoid = player.Character.Humanoid
 		if humanoid.Seated then
 		local CurrentSeat = player.Character.Humanoid.SeatPart
@@ -673,11 +690,18 @@ tab:Bind("Vehicle Fly For 20s", Enum.KeyCode.V, function(v)
         NOFLY()
 	wait()
 	sFLY(true)
-		end end
-        wait(20) NOFLY() end
+		end
+		end
+		if not humanoid.Seated then
+            NOFLY()
+        end
       end)
-tab:Slider("Vehicle Fly Speed", "", 0.5, 100,3,function(t)
-maxspeed = t
+tab:Button("OFF Vehicle Fly (Safe Death)", "", function()
+    game.Players.LocalPlayer.Character.Head:Remove()
+end)
+tab:Slider("Vehicle Fly Speed", "", 0.5, 100,3,function(v)
+		iyflyspeed = v
+		vehicleflyspeed = v
 end)
 tab:Slider("Vehicle Speed", "", 0.1, 50,2,function(t)
     VehicleSpeed(t)
