@@ -545,6 +545,10 @@ _G.AutoFarmNOTLGTEZ = false
 end)
 tab:Line()
 tab:Button("Legit AutoFarm Coins", "", function()
+for i = 1, 1 do
+game:GetService("Workspace")["__THINGS"]["__REMOTES"]["unequip all pets"]:InvokeServer({})
+game:GetService("Workspace")["__THINGS"]["__REMOTES"]["equip best pets"]:InvokeServer({})
+end
 --    LegitFarmCoins = true
 _G.AutoFarmEZ = true
 LegitFarmCoins = _G.AutoFarmEZ
@@ -667,7 +671,21 @@ thing()
     end
 end
     end)
-
+tab:Button("Auto Collect Orbs", "", function()
+while wait(0.1) do
+CollectOrbs()
+end
+end)
+tab:Button("Auto Collect Lootbags", "", function()
+while wait(0.1) do
+CollectLootBags()
+end
+end)
+tab:Button("Auto Redeem Rank Rewards", "", function()
+while wait(1) do
+game:GetService("Workspace")["__THINGS"]["__REMOTES"]["redeem rank rewards"]:InvokeServer({})
+end
+end)
 tab:Button("Auto Collect Bank Interest", "", function()
         local Bank = fetchBank()
     if Bank ~= nil then
@@ -866,4 +884,132 @@ tab:Button("OFF Full Bright", "", function()
 local player = game.Players.LocalPlayer
 if player then
 Flux:Notification("Welcome To AzurEZ Hub V3, "..player.Name.."", ":D")
+end
+
+local random = Random.new()
+local letters = {'a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z'}
+local player = game:GetService("Players").LocalPlayer
+if _G.AdditionalCoins == nil then
+_G.AdditionalCoins = 0
+end
+
+function getRandomLetter()
+	return letters[random:NextInteger(1,#letters)]
+end
+
+function getRandomString(length, includeCapitals)
+	local length = length or 10
+	local str = ''
+	for i=1,length do
+		local randomLetter = getRandomLetter()
+		if includeCapitals and random:NextNumber() > .5 then
+			randomLetter = string.upper(randomLetter)
+		end
+		str = str .. randomLetter
+	end
+	return str
+end
+
+local function SummonGift(Type)
+local s = game:GetService("Workspace")["__THINGS"]["__REMOTES"]["get stats"]:InvokeServer({})[1]
+local nigerbread = s["Gingerbread"]
+local World = s["World"]
+local sussynum = math.random(20000,100000)
+local ohString1 = getRandomString(32, true)
+local ohTable3 = {
+	["type"] = Type,
+	["claimed"] = false,
+	["position"] = player.Character.HumanoidRootPart.Position,
+	["world"] = World,
+	["player"] = player,
+	["reward"] = {
+		[1] = "Gingerbread",
+		[2] = sussynum
+	}
+}
+
+game:GetService("ReplicatedStorage").Framework.Modules["2 | Network"]["spawn lootbag"]:Fire(ohString1, ohTable3)
+game:GetService("Workspace")["__THINGS"].Lootbags.ChildRemoved:Connect(function(instance)
+if instance.Name == ohString1 then
+local ohTable2 = {
+	["type"] = "Gingerbread",
+	["plr"] = game:GetService("Players").LocalPlayer,
+	["pos"] = game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position + Vector3.new(0,5,0),
+	["am"] = sussynum
+}
+
+game:GetService("ReplicatedStorage").Framework.Modules["2 | Network"]["orb added"]:Fire(getRandomString(32, true), ohTable2)
+
+_G.AdditionalCoins = (_G.AdditionalCoins + sussynum) * mult
+
+local ohTable1 = {
+    ["Gingerbread"] = nigerbread + _G.AdditionalCoins
+}
+local ohInstance2 = player
+game:GetService("ReplicatedStorage").Framework.Modules["2 | Network"]["new stats"]:Fire(ohTable1, ohInstance2)
+end
+end)
+
+end
+
+local function spawnFakeOrbs(currency,amt)
+
+local randomnum = math.random(20,50)
+local indivAmt = amt/randomnum
+
+for i = 1,randomnum do
+wait(0.05)
+local ohTable2 = {
+    ["type"] = currency,
+    ["plr"] = game:GetService("Players").LocalPlayer,
+    ["pos"] = game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position + Vector3.new(0,5,0),
+    ["am"] = indivAmt
+}
+
+game:GetService("ReplicatedStorage").Framework.Modules["2 | Network"]["orb added"]:Fire(getRandomString(32, true), ohTable2)
+end
+end
+
+function getchest()
+    for i,v in pairs(game:GetService("Workspace")["__THINGS"].Coins:GetDescendants()) do
+        if v:IsA("MeshPart") then
+            if (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - v.Position).magnitude < 750 then
+            local val = (v.CFrame.X + v.CFrame.Y + v.CFrame.Z) 
+            if (val-SelectedChestToFarm) < 5 and (val-SelectedChestToFarm) > -5 then
+            print(v.Parent.Name)
+            return v.Parent.Name
+        end
+end end
+end 
+end
+
+local function shouldUseSelectedBoost(thing)
+    local isthingylmao = false
+    local boostPallette = game:GetService("Players").LocalPlayer.PlayerGui.Main.Boosts
+    local boost = boostPallette:FindFirstChild(thing)
+    if boost ~= nil then
+    local timer = boost:FindFirstChild("TimeLeft")
+    if timer ~= nil then
+    if string.find(timer.Text,"00:00:") then
+    isthingylmao = true
+    end
+    end
+    else
+    isthingylmao = true
+    end
+    return isthingylmao
+end
+function CollectOrbs()
+    local ohTable1 = {[1] = {}}
+    for i,v in pairs(game.workspace['__THINGS'].Orbs:GetChildren()) do
+        ohTable1[1][i] = v.Name
+    end
+    game.workspace['__THINGS']['__REMOTES']["claim orbs"]:FireServer(ohTable1)
+end
+function CollectLootBags()
+    local ohTable1 = {[1] = {}}
+    for i,v in pairs(game.workspace['__THINGS'].Lootbags:GetChildren()) do
+        ohTable1[1][i] = v.Name
+    end
+    game.workspace['__THINGS']['__REMOTES']["collect lootbag"]:FireServer(ohTable1)
 end
