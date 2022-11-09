@@ -71,7 +71,7 @@ if game.PlaceId == 10321372166 then
     
     -- PSX Normal
     
-if game.PlaceId == 10321372166 then
+if game.PlaceId == 6284583030 then
         game:GetService("CoreGui").Library:Destroy()
 --    loadstring(game:HttpGet("https://raw.githubusercontent.com/ibosik/AzureFlareHUB/main/Pet%20Simulator%20X"))()
     loadstring(game:HttpGet("https://raw.githubusercontent.com/ibosik/AzureFlareHUB/main/Pet%20Simulator%20X%20NewUi"))()    end
