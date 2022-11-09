@@ -1,0 +1,566 @@
+
+local Flux = loadstring(game:HttpGet"https://raw.githubusercontent.com/dawid-scripts/UI-Libs/main/fluxlib.txt")()
+
+local win = Flux:Window("AzurEZ Hub", "Lumber Tycoon 2", Color3.fromRGB(160, 0, 160), Enum.KeyCode.LeftControl)
+local tab = win:Tab("Credits", "http://www.roblox.com/asset/?id=6022668888")
+tab:Label("Discord")
+tab:Line()
+tab:Button("zxcibosik#9669", "Script", function()
+setclipboard("zxcibosik#9669")
+Flux:Notification("Copied To Clipboard.", "Alright")
+end)
+tab:Button("Kurus#6448", "Tester", function()
+setclipboard("https://pastebin.com/raw/S6YH0kZ3")
+Flux:Notification("Copied To Clipboard.", "Alright")
+    end)
+--[[local tab = win:Tab("Key", "http://www.roblox.com/asset/?id=6035053304")
+tab:Label("Key")
+tab:Line()
+tab:Textbox("Write Key Here", "", true, function(t)
+if t == "Key" then]]
+local tab = win:Tab("Settings", "http://www.roblox.com/asset/?id=6034989541")
+tab:Label("Gui")
+tab:Line()
+tab:Button("Destroy Gui", "Destroy Gui.", function()
+game:GetService("CoreGui").FluxLib:Destroy()
+end)
+tab:Button("Press If Previous Gui Freezed", "", function()
+game:GetService("CoreGui").FluxLib:Destroy()
+game:GetService("CoreGui").FluxLib:Destroy()
+game:GetService("CoreGui").FluxLib:Destroy()
+game:GetService("CoreGui").FluxLib:Destroy()
+game:GetService("CoreGui").FluxLib:Destroy()
+end)
+tab:Button("AzurEZ V1", "First Version Of AzurEZ Hub.", function()
+loadstring(game:HttpGet('https://raw.githubusercontent.com/ibosik/AzureFlareHUB/main/LT2OLD'))()
+end)
+
+tab:Button("AzurEZ V2", "Second Version Of AzurEZ Hub.", function()
+loadstring(game:HttpGet('https://raw.githubusercontent.com/ibosik/AzureFlareHUB/main/Lumber%20Tycoon%202'))()
+end)
+
+local tab = win:Tab("Dupe", "http://www.roblox.com/asset/?id=6031754538")
+tab:Label("Teleports")
+tab:Line()
+tab:Button("Safe Zone", "", function()
+loadstring(game:HttpGet("https://raw.githubusercontent.com/ibosik/AzureFlareHUB/main/SafeZoneKAT"))()
+end)
+tab:Button("Loop Safe Zone", "", function()
+while game:GetService('RunService').RenderStepped:Wait() do
+game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(8.90638733, 957.896484, -27.9066772)
+end
+end)
+tab:Line()
+tab:Label("AutoFarm")
+tab:Line()
+tab:Button("AutoFarm", "", function()
+getgenv().autofarm = true
+
+while wait(0.00001) do
+if not getgenv().autofarm then return end
+for i,v in pairs(game.Players:GetChildren()) do
+if v ~= game.Players.LocalPlayer and v.Character ~= nil and v.Character:FindFirstChild("HumanoidRootPart") ~= nil and not v.Character:FindFirstChild("ForceField") then
+if not getgenv().autofarm then return end
+if game.Players.LocalPlayer.Character:FindFirstChild("Knife")  then
+v.Character:FindFirstChild("HumanoidRootPart").CFrame = game.Players.LocalPlayer.Character:WaitForChild("HumanoidRootPart").CFrame   +  game.Players.LocalPlayer.Character:WaitForChild("HumanoidRootPart").CFrame.LookVector * 2
+wait(0.1)
+game:GetService'VirtualUser':Button1Down(Vector2.new(1,1))
+wait(0.1)
+game:GetService'VirtualUser':Button1Up(Vector2.new(1,1))
+     elseif game.Players.LocalPlayer.Backpack:FindFirstChild("Knife") and not game.Players.LocalPlayer.Character:FindFirstChild("Knife") then 
+game.Players.LocalPlayer.Backpack:FindFirstChild("Knife").Parent = game.Players.LocalPlayer.Character
+v.Character:FindFirstChild("HumanoidRootPart").CFrame = game.Players.LocalPlayer.Character:WaitForChild("HumanoidRootPart").CFrame   +  game.Players.LocalPlayer.Character:WaitForChild("HumanoidRootPart").CFrame.LookVector * 2
+wait(0.1)
+game:GetService'VirtualUser':Button1Down(Vector2.new(1,1))
+wait(0.1)
+game:GetService'VirtualUser':Button1Up(Vector2.new(1,1))
+end
+end
+end
+end
+end)
+tab:Button("AutoFarm", "", function()
+getgenv().autofarm = false
+end)
+local tab = win:Tab("Aim", "http://www.roblox.com/asset/?id=6031471484")
+tab:Label("Silent Aim")
+tab:Line()
+tab:Button("Silent Aim", "", function()
+getgenv().silentaim_settings = {
+   fov = _G.SilentAimFov,
+   hitbox = _G.PartToAimAt,
+   fovcircle = _G.FovCircle,
+}
+-- Services
+local Players = game:GetService("Players")
+local RunService = game:GetService("RunService")
+
+-- Player
+local Player = Players.LocalPlayer
+local Mouse = Player:GetMouse()
+local CurrentCamera = workspace.CurrentCamera
+
+local function GetClosest(Fov)
+   local Target, Closest = nil, Fov or math.huge
+
+   for i,v in pairs(Players:GetPlayers()) do
+       if (v.Character and v ~= Player and v.Character:FindFirstChild(getgenv().silentaim_settings.hitbox)) then
+           local Position, OnScreen = CurrentCamera:WorldToScreenPoint(v.Character[getgenv().silentaim_settings.hitbox].Position)
+           local Distance = (Vector2.new(Position.X, Position.Y) - Vector2.new(Mouse.X, Mouse.Y)).Magnitude
+
+           if (Distance < Closest and OnScreen) then
+               Closest = Distance
+               Target = v
+           end
+       end
+   end
+   
+   return Target
+end
+
+local Target
+local CircleInline = Drawing.new("Circle")
+local CircleOutline = Drawing.new("Circle")
+RunService.Stepped:Connect(function()
+   CircleInline.Radius = getgenv().silentaim_settings.fov
+   CircleInline.Thickness = 2
+   CircleInline.Position = Vector2.new(Mouse.X, Mouse.Y + 36)
+   CircleInline.Transparency = 1
+   CircleInline.Color = Color3.fromRGB(_G.SilentAimColor)
+   CircleInline.Visible = getgenv().silentaim_settings.fovcircle
+   CircleInline.ZIndex = 2
+
+   CircleOutline.Radius = getgenv().silentaim_settings.fov
+   CircleOutline.Thickness = 4
+   CircleOutline.Position = Vector2.new(Mouse.X, Mouse.Y + 36)
+   CircleOutline.Transparency = 1
+   CircleOutline.Color = Color3.new()
+   CircleOutline.Visible = getgenv().silentaim_settings.fovcircle
+   CircleOutline.ZIndex = 1
+
+   Target = GetClosest(getgenv().silentaim_settings.fov)
+end)
+
+local Old; Old = hookmetamethod(game, "__namecall", function(Self, ...)
+   local Args = {...}
+
+   if (not checkcaller() and getnamecallmethod() == "FindPartOnRayWithIgnoreList") then
+       if (table.find(Args[2], workspace.WorldIgnore.Ignore) and Target and Target.Character) then
+           local Origin = Args[1].Origin
+
+           Args[1] = Ray.new(Origin, Target.Character[getgenv().silentaim_settings.hitbox].Position - Origin)
+       end
+   end
+
+   return Old(Self, unpack(Args))
+end)
+end)
+tab:Colorpicker("Silent Aim Color", Color3.fromRGB(255,1,1), function(t)
+_G.SilentAimColor = t
+end)
+tab:Slider("Silent Aim Fov", "", 1, 5000,150,function(t)
+_G.SilentAimFov = t
+end)
+tab:Dropdown("Part to aim at", {"Torso","Head","RightArm","LeftArm","RightLeg","LeftLeg"}, function(t)
+_G.PartToAimAt = t
+end)
+tab:Dropdown("Fov Circle", {"Show","Hide"}, function(t)
+if t == "Show" then
+_G.FovCircle = true
+end
+if t == "Hide" then
+_G.FovCircle = false
+end
+end)
+tab:Line()
+tab:Label("AimBot")
+tab:Line()
+tab:Button("AimBot", "", function()
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/ibosik/ok/main/ok"))()
+end)
+local tab = win:Tab("Esp", "http://www.roblox.com/asset/?id=6031471484")
+tab:Label("Esp")
+tab:Line()
+tab:Button("Esp ''1''", "", function()
+while wait(0.5) do
+    for i, childrik in ipairs(workspace:GetDescendants()) do
+        if childrik:FindFirstChild("Humanoid") then
+            if not childrik:FindFirstChild("EspBox") then
+                if childrik ~= game.Players.LocalPlayer.Character then
+                    local esp = Instance.new("BoxHandleAdornment",childrik)
+                    esp.Adornee = childrik
+                    esp.ZIndex = 0
+                    esp.Size = Vector3.new(4, 5, 1)
+                    esp.Transparency = 0.65
+                    esp.Color3 = Color3.fromRGB(_G.EspCLR1)
+                    esp.AlwaysOnTop = true
+                    esp.Name = "EspBox"
+                end
+            end
+        end
+    end
+end
+end)
+tab:Colorpicker("ESP ''1'' Color", Color3.fromRGB(255,1,1), function(t)
+_G.EspCLR1 = t
+end)
+tab:Button("Esp ''2''", "", function()
+function CreateSG(name,parent,face)
+    local SurfaceGui = Instance.new("SurfaceGui",parent)
+    SurfaceGui.Parent = parent
+    SurfaceGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+    SurfaceGui.Face = Enum.NormalId[face]
+	SurfaceGui.LightInfluence = 0
+	SurfaceGui.ResetOnSpawn = false
+    SurfaceGui.Name = name
+    SurfaceGui.AlwaysOnTop = true
+    local Frame = Instance.new("Frame",SurfaceGui)
+	Frame.BackgroundColor3 = Color3.fromRGB(_G.EspCLR2)
+	Frame.Size = UDim2.new(1.5,0,1.5,0)
+end
+
+while wait(1) do
+for i,v in pairs (game:GetService("Players"):GetPlayers()) do
+    if v ~= game:GetService("Players").LocalPlayer and v.Character ~= nil and v.Character:FindFirstChild("Torso") and v.Character.Torso:FindFirstChild("cham") == nil then
+        for i,v in pairs (v.Character:GetChildren()) do
+        if v:IsA("MeshPart") or v.Name == "Torso" then
+        CreateSG("cham",v,"Back")
+        CreateSG("cham",v,"Front")
+        CreateSG("cham",v,"Left")
+        CreateSG("cham",v,"Right")
+        CreateSG("cham",v,"Right")
+        CreateSG("cham",v,"Top")
+        CreateSG("cham",v,"Bottom")
+
+for i,v in pairs (game:GetService("Players"):GetPlayers()) do
+    if v ~= game:GetService("Players").LocalPlayer and v.Character ~= nil and v.Character:FindFirstChild("Head") and v.Character.Head:FindFirstChild("cham") == nil then
+        for i,v in pairs (v.Character:GetChildren()) do
+        if v:IsA("MeshPart") or v.Name == "Head" then
+        CreateSG("cham",v,"Back")
+        CreateSG("cham",v,"Front")
+        CreateSG("cham",v,"Left")
+        CreateSG("cham",v,"Right")
+        CreateSG("cham",v,"Right")
+        CreateSG("cham",v,"Top")
+        CreateSG("cham",v,"Bottom")
+        end
+        end
+    end
+end
+        end
+        end
+    end
+end
+end
+end)
+tab:Colorpicker("ESP ''2'' Color", Color3.fromRGB(255,1,1), function(t)
+_G.EspCLR2 = t
+end)
+tab:Button("Esp ''3''", "", function()
+
+local Settings = {
+	['Material'] = Enum.Material.Neon, -- Material
+	['Color'] = Color3.fromRGB(_G.EspCLR3), -- Color
+	['Transparency'] = 0.7 -- 0 to 1 Transparency
+}
+
+local ScreenGui = Instance.new('ScreenGui', game.CoreGui) -- Create screengui
+ScreenGui.IgnoreGuiInset = true
+
+local ViewportFrame = Instance.new('ViewportFrame', ScreenGui) -- Create viewport and define properties
+ViewportFrame.CurrentCamera = workspace.CurrentCamera
+ViewportFrame.Size = UDim2.new(1,0,1,0)
+ViewportFrame.BackgroundTransparency = 1
+ViewportFrame.ImageTransparency = Settings.Transparency
+
+local Chasms = {} -- Array for storing parts
+
+function generateChasm(player) -- functions that generates chasms for the player specififed
+	local Character = workspace:FindFirstChild(player.Name)
+	
+	if Character then
+		for _,Part in pairs(Character:GetChildren()) do
+			if Part:IsA('Part') or Part:IsA('MeshPart') then
+				local Chasm = Part:Clone()
+				
+				for _,Child in pairs(Chasm:GetChildren()) do
+					if Child:IsA('Decal') then
+						Child:Destroy()
+					end
+				end
+				
+				Chasm.Parent = ViewportFrame
+				Chasm.Material = Settings.Material
+				Chasm.Color = Settings.Color
+				Chasm.Anchored = true
+				
+				table.insert(Chasms, Chasm)
+			end
+		end
+	end
+end
+
+function clearChasms() -- remove all chasms
+	for _,Chasm in pairs(Chasms) do
+		Chasm:Destroy()
+	end
+	
+	Chasms = {}
+end
+
+while game:GetService('RunService').RenderStepped:Wait() do -- loop this process
+	clearChasms()
+	
+	for _,Player in pairs(game:GetService('Players'):GetPlayers()) do
+		if Player ~= game:GetService('Players').LocalPlayer then
+			generateChasm(Player)
+		end
+	end
+end
+end)
+tab:Colorpicker("ESP ''3'' Color", Color3.fromRGB(255,1,1), function(t)
+_G.EspCLR3 = t
+end)
+tab:Button("Esp ''4''", "", function()
+getgenv().enabled = true --Toggle on/off
+getgenv().filluseteamcolor = false --Toggle fill color using player team color on/off
+getgenv().outlineuseteamcolor = false --Toggle outline color using player team color on/off
+getgenv().fillcolor = Color3.new(255, 192, 203) --Change fill color, no need to edit if using team color
+getgenv().outlinecolor = Color3.new(1, 1, 1) --Change outline color, no need to edit if using team color
+getgenv().filltrans = 0 --Change fill transparency
+getgenv().outlinetrans = 0 --Change outline transparency
+
+loadstring(game:HttpGet("https://raw.githubusercontent.com/zntly/highlight-esp/main/esp.lua"))()
+end)
+tab:Button("Box Esp", "", function()
+--// Universal Box ESP (Works on Arsenal and other games)
+
+-- settings
+local settings = {
+   defaultcolor = Color3.fromRGB(_G.BoxEspCLR),
+   teamcheck = false,
+   teamcolor = true
+};
+
+-- services
+local runService = game:GetService("RunService");
+local players = game:GetService("Players");
+
+-- variables
+local localPlayer = players.LocalPlayer;
+local camera = workspace.CurrentCamera;
+
+-- functions
+local newVector2, newColor3, newDrawing = Vector2.new, Color3.new, Drawing.new;
+local tan, rad = math.tan, math.rad;
+local round = function(...) local a = {}; for i,v in next, table.pack(...) do a[i] = math.round(v); end return unpack(a); end;
+local wtvp = function(...) local a, b = camera.WorldToViewportPoint(camera, ...) return newVector2(a.X, a.Y), b, a.Z end;
+
+local espCache = {};
+local function createEsp(player)
+   local drawings = {};
+   
+   drawings.box = newDrawing("Square");
+   drawings.box.Thickness = 1;
+   drawings.box.Filled = false;
+   drawings.box.Color = settings.defaultcolor;
+   drawings.box.Visible = false;
+   drawings.box.ZIndex = 2;
+
+   drawings.boxoutline = newDrawing("Square");
+   drawings.boxoutline.Thickness = 3;
+   drawings.boxoutline.Filled = false;
+   drawings.boxoutline.Color = newColor3();
+   drawings.boxoutline.Visible = false;
+   drawings.boxoutline.ZIndex = 1;
+
+   espCache[player] = drawings;
+end
+
+local function removeEsp(player)
+   if rawget(espCache, player) then
+       for _, drawing in next, espCache[player] do
+           drawing:Remove();
+       end
+       espCache[player] = nil;
+   end
+end
+
+local function updateEsp(player, esp)
+   local character = player and player.Character;
+   if character then
+       local cframe = character:GetModelCFrame();
+       local position, visible, depth = wtvp(cframe.Position);
+       esp.box.Visible = visible;
+       esp.boxoutline.Visible = visible;
+
+       if cframe and visible then
+           local scaleFactor = 1 / (depth * tan(rad(camera.FieldOfView / 2)) * 2) * 1000;
+           local width, height = round(4 * scaleFactor, 5 * scaleFactor);
+           local x, y = round(position.X, position.Y);
+
+           esp.box.Size = newVector2(width, height);
+           esp.box.Position = newVector2(round(x - width / 2, y - height / 2));
+           esp.box.Color = settings.teamcolor and player.TeamColor.Color or settings.defaultcolor;
+
+           esp.boxoutline.Size = esp.box.Size;
+           esp.boxoutline.Position = esp.box.Position;
+       end
+   else
+       esp.box.Visible = false;
+       esp.boxoutline.Visible = false;
+   end
+end
+
+-- main
+for _, player in next, players:GetPlayers() do
+   if player ~= localPlayer then
+       createEsp(player);
+   end
+end
+
+players.PlayerAdded:Connect(function(player)
+   createEsp(player);
+end);
+
+players.PlayerRemoving:Connect(function(player)
+   removeEsp(player);
+end)
+
+runService:BindToRenderStep("esp", Enum.RenderPriority.Camera.Value, function()
+   for player, drawings in next, espCache do
+       if settings.teamcheck and player.Team == localPlayer.Team then
+           continue;
+       end
+
+       if drawings and player ~= localPlayer then
+           updateEsp(player, drawings);
+       end
+   end
+end)
+end)
+tab:Colorpicker("Box ESP Color", Color3.fromRGB(255,1,1), function(t)
+_G.BoxEspCLR = t
+end)
+tab:Button("Esp ''5''", "", function()
+_G.FriendColor = Color3.fromRGB(_G.EspCLR5FRND)
+_G.EnemyColor = Color3.fromRGB(_G.EspCLR5ENM)
+_G.UseTeamColor = true
+
+--------------------------------------------------------------------
+
+if _G.Reantheajfdfjdgse then
+    return
+end
+
+_G.Reantheajfdfjdgse = "susan"
+
+local coregui = game:GetService("CoreGui")
+local players = game:GetService("Players")
+local plr = players.LocalPlayer
+
+local highlights = {}
+
+function esp(target, color)
+    pcall(function()
+        if target.Character then
+            if not highlights[target] then
+                local highlight = Instance.new("Highlight", coregui)
+                highlight.Name = target.Name
+                highlight.Adornee = target.Character
+                highlight.DepthMode = Enum.HighlightDepthMode.AlwaysOnTop
+                highlight.FillColor = color
+                highlights[target] = highlight
+            else
+                highlights[target].FillColor = color
+            end
+        end
+    end)
+end
+
+players.PlayerAdded:Connect(function(v)
+    v.CharacterAdded:Connect(function()
+        esp(v, _G.UseTeamColor and v.TeamColor.Color or ((plr.TeamColor == v.TeamColor) and _G.FriendColor or _G.EnemyColor))
+    end)
+end)
+
+players.PlayerRemoving:Connect(function(v)
+    if highlights[v] then
+        highlights[v]:Destroy()
+        highlights[v] = nil
+    end
+end)
+
+for i, v in pairs(players:GetPlayers()) do
+    if v ~= plr then
+        local color = _G.UseTeamColor and v.TeamColor.Color or ((plr.TeamColor == v.TeamColor) and _G.FriendColor or _G.EnemyColor)
+        v.CharacterAdded:Connect(function()
+            local color = _G.UseTeamColor and v.TeamColor.Color or ((plr.TeamColor == v.TeamColor) and _G.FriendColor or _G.EnemyColor)
+            esp(v, color)
+        end)
+        
+        esp(v, color)
+    end
+end
+
+while task.wait() do
+    for i, v in pairs(highlights) do
+        local color = _G.UseTeamColor and i.TeamColor.Color or ((plr.TeamColor == i.TeamColor) and _G.FriendColor or _G.EnemyColor)
+        v.FillColor = color
+    end
+end
+
+end)
+tab:Colorpicker("ESP ''5'' Enemy Color", Color3.fromRGB(255,1,1), function(t)
+_G.EspCLR5ENM = t
+end)
+tab:Colorpicker("ESP ''5'' Friend Color", Color3.fromRGB(255,1,1), function(t)
+_G.EspCLR5FRND = t
+end)
+tab:Line()
+tab:Label("Tracers")
+tab:Line()
+tab:Button("Tracers", "", function()
+local RunService = game:GetService("RunService")
+local Players = game:GetService("Players")
+local function Vector2Find(P)
+    local camera = workspace.CurrentCamera
+    local worldPoint = P.Character.HumanoidRootPart.Position
+    local vector, inViewport = camera:WorldToViewportPoint(worldPoint)
+    if inViewport then else return nil end
+    return Vector2.new(vector.X, vector.Y)
+end
+    local function CreateTracer(PlayerN)
+        local line = Drawing.new("Line")
+        local success, err = pcall(function()
+             line.Visible = true
+             line.Color = Color3.fromRGB(_G.TracersCLR)
+             line.Thickness = _G.TracersThickness
+             line.Transparency = _G.TracersTransparency
+             line.To = Vector2Find(PlayerN)
+             line.From = Vector2Find(game.Players.LocalPlayer)
+         end)
+         RunService.Stepped:Wait(1)
+         line:Remove()
+    end
+    local stepped = RunService.Stepped:Connect(function()
+        for i,v in ipairs(Players:GetPlayers()) do
+            if v.Name == Players.LocalPlayer.Name then
+            else
+                CreateTracer(v)
+            end
+        end
+    end)
+end)
+tab:Colorpicker("Tracers Color", Color3.fromRGB(255,1,1), function(t)
+_G.TracersCLR = t
+end)
+tab:Slider("Tracers Transparency", "", 0, 1,0.5,function(t)
+_G.TracersTransparency = t
+end)
+tab:Slider("Tracers Thickness", "", 0.5, 10,2,function(t)
+_G.TracersThickness = t
+end)
+local tab = win:Tab("Chams", "http://www.roblox.com/asset/?id=6031471484")
+tab:Label("Chams")
+tab:Line()
