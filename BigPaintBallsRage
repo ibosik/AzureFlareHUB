@@ -87,7 +87,7 @@ end
 
 loop = RunService.RenderStepped:Connect(function()
    local UserInputService = game:GetService("UserInputService")
-   local pressed = --[[UserInputService:IsKeyDown(Enum.KeyCode.E)]] UserInputService:IsMouseButtonPressed(Enum.UserInputType.--[[MouseButton1]]Q) --Enum.UserInputType.MouseButton2
+   local pressed = --[[UserInputService:IsKeyDown(Enum.KeyCode.E)]] UserInputService:IsMouseButtonPressed(Enum.UserInputType.MouseButton1) --Enum.UserInputType.MouseButton2
    local localPlay = game.Players.localPlayer.Character
    local cam = workspace.CurrentCamera
    local zz = workspace.CurrentCamera.ViewportSize/2
@@ -381,8 +381,8 @@ end)
 tab:Button("RB Gun/Dual Pistols (bind ''R'')", "", function()
 rbgun1() rbgun2() rbgun3()
 end)
-_G.fov = true
 tab:Button("Fov 120 (spam this button if fov changing to normal)", "", function()
+_G.fov = true
 while _G.fov == true and game:GetService('RunService').RenderStepped:Wait() do
 local ssss1 = 120
     game:GetService("TweenService"):Create(workspace.Camera, TweenInfo.new(0, Enum.EasingStyle.Quint), {FieldOfView = ssss1}):Play()
@@ -393,6 +393,7 @@ local ssss1 = 120
     end
 end)
 tab:Button("Fov 240 (spam this button if fov changing to normal)", "", function()
+_G.fov = true
 while _G.fov == true and game:GetService('RunService').RenderStepped:Wait() do
 local ssss1 = 240
     game:GetService("TweenService"):Create(workspace.Camera, TweenInfo.new(0, Enum.EasingStyle.Quint), {FieldOfView = ssss1}):Play()
@@ -403,8 +404,7 @@ local ssss1 = 240
     end
 end)
 tab:Button("OFF Fov", "", function()
---_G.fov = false
-ys:Disconnect()
+_G.fov = false
 end)
 tab:Button("Third Person Toggle (bind ''G'')", "", function()
 local cont = game:GetService("ContextActionService")
