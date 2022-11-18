@@ -1,0 +1,458 @@
+
+--game.CoreGui.ChildAdded:Connect(function(ooo)
+--loadstring(game:HttpGet("https://raw.githubusercontent.com/CriShoux/OwlHub/master/OwlHub.txt"))();
+
+local Flux = loadstring(game:HttpGet"https://raw.githubusercontent.com/dawid-scripts/UI-Libs/main/fluxlib.txt")()
+
+local win = Flux:Window("AzurEZ Hub", "Big Paintball", Color3.fromRGB(160, 0, 160), Enum.KeyCode.LeftControl)
+local tab = win:Tab("Credits", "http://www.roblox.com/asset/?id=6022668888")
+tab:Label("Discord")
+tab:Line()
+tab:Button("zxcibosik#9669", "Script", function()
+setclipboard("zxcibosik#9669")
+Flux:Notification("Copied To Clipboard.", "Alright")
+end)
+tab:Button("Kurus#6448", "Tester", function()
+setclipboard("https://pastebin.com/raw/S6YH0kZ3")
+Flux:Notification("Copied To Clipboard.", "Alright")
+    end)
+--[[local tab = win:Tab("Key", "http://www.roblox.com/asset/?id=6035053304")
+tab:Label("Key")
+tab:Line()
+tab:Textbox("Write Key Here", "", true, function(t)
+if t == "Key" then]]
+local tab = win:Tab("Settings", "http://www.roblox.com/asset/?id=6034989541")
+tab:Label("Gui")
+tab:Line()
+tab:Button("Destroy Gui", "Destroy Gui.", function()
+game:GetService("CoreGui").FluxLib:Destroy()
+end)
+tab:Button("Press If Previous Gui Freezed", "", function()
+game:GetService("CoreGui").FluxLib:Destroy()
+game:GetService("CoreGui").FluxLib:Destroy()
+game:GetService("CoreGui").FluxLib:Destroy()
+game:GetService("CoreGui").FluxLib:Destroy()
+game:GetService("CoreGui").FluxLib:Destroy()
+end)
+tab:Button("AzurEZ V1", "First Version Of AzurEZ Hub.", function()
+loadstring(game:HttpGet('https://raw.githubusercontent.com/ibosik/AzureFlareHUB/main/LT2OLD'))()
+end)
+
+tab:Button("AzurEZ V2", "Second Version Of AzurEZ Hub.", function()
+loadstring(game:HttpGet('https://raw.githubusercontent.com/ibosik/AzureFlareHUB/main/Lumber%20Tycoon%202'))()
+end)
+
+local tab = win:Tab("Rage", "http://www.roblox.com/asset/?id=6031754538")
+tab:Label("Rage")
+tab:Line()
+_G.Rage = true
+tab:Button("Rage", "", function()
+ _G.Rage=true
+    local args = {
+    [1] = true
+}
+local teamCheck = true
+local fov = 15000
+local smoothing = 1
+
+local RunService = game:GetService("RunService")
+
+local FOVring = Drawing.new("Circle")
+FOVring.Visible = true
+FOVring.Thickness = 1.5
+FOVring.Radius = fov
+FOVring.Transparency = 1
+FOVring.Color = Color3.fromRGB(255, 128, 128)
+FOVring.Position = workspace.CurrentCamera.ViewportSize/2
+
+local function getClosest(cframe)
+   local ray = Ray.new(cframe.Position, cframe.LookVector).Unit
+   
+   local target = nil
+   local mag = math.huge
+   
+   for i,v in pairs(game.Players:GetPlayers()) do
+       if v.Character and v.Character:FindFirstChild("Head") and v.Character:FindFirstChild("Humanoid") and v.Character:FindFirstChild("HumanoidRootPart") and v ~= game.Players.LocalPlayer and (v.Team ~= game.Players.LocalPlayer.Team or (not teamCheck)) then
+           local magBuf = (v.Character.Head.Position - ray:ClosestPoint(v.Character.Head.Position)).Magnitude
+           
+           if magBuf < mag then
+               mag = magBuf
+               target = v
+           end
+       end
+   end
+   
+   return target
+end
+
+loop = RunService.RenderStepped:Connect(function()
+   local UserInputService = game:GetService("UserInputService")
+   local pressed = --[[UserInputService:IsKeyDown(Enum.KeyCode.E)]] UserInputService:IsMouseButtonPressed(Enum.UserInputType.--[[MouseButton1]]Q) --Enum.UserInputType.MouseButton2
+   local localPlay = game.Players.localPlayer.Character
+   local cam = workspace.CurrentCamera
+   local zz = workspace.CurrentCamera.ViewportSize/2
+   
+   if pressed then
+       local Line = Drawing.new("Line")
+       local curTar = getClosest(cam.CFrame)
+       local ssHeadPoint = cam:WorldToScreenPoint(curTar.Character.Head.Position)
+       ssHeadPoint = Vector2.new(ssHeadPoint.X, ssHeadPoint.Y)
+       if (ssHeadPoint - zz).Magnitude < fov then
+           workspace.CurrentCamera.CFrame = workspace.CurrentCamera.CFrame:Lerp(CFrame.new(cam.CFrame.Position, curTar.Character.Head.Position), smoothing)
+       end
+   end
+   
+   if UserInputService:IsKeyDown(Enum.KeyCode.Delete) then
+       loop:Disconnect()
+       FOVring:Remove()
+   end
+end)
+while _G.Rage == true do
+game:GetService("ReplicatedStorage").RemoteEvent:FireServer(unpack(args))
+        for i,v in pairs(game:GetService("ReplicatedStorage").Framework.Modules["1 | Directory"].Guns:GetChildren()) do
+            pcall(function()
+                require(v)[tostring(i)].velocity = 99999999
+            end)
+        end
+    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame * CFrame.fromEulerAnglesXYZ(.0,.10000,.0)
+    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame * CFrame.fromEulerAnglesXYZ(.0,.10000,.0)
+    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame * CFrame.fromEulerAnglesXYZ(.0,.10000,.0)
+    wait() end
+end)
+tab:Button("OFF Rage", "", function()
+_G.Rage = false
+end)
+_G.ez1 = true
+tab:Line()--[[
+tab:Button("Chams Always On Top", "", function()
+_G.ez1 = true
+end)
+tab:Button("Chams Only On Visible Players", "", function()
+_G.ez1 = false
+end)
+tab:Button("ON TeamCheck", "", function()
+_G.ez11 = true
+end)
+tab:Button("OFF TeamCheck", "", function()
+_G.ez11 = false
+end)
+_G.ez11 = true
+_G.whaat = true
+tab:Button("OFF Chams", "", function()
+_G.whaat = false
+end)]]
+tab:Button("Good Chams", "", function()
+local dwEntities = game:GetService("Players")
+local dwLocalPlayer = dwEntities.LocalPlayer 
+local dwRunService = game:GetService("RunService")
+
+local settings_tbl = {
+    ESP_Enabled = true,
+    ESP_TeamCheck = false,
+    Chams = true,
+    Chams_Color = Color3.fromRGB(0,0,255),
+    Chams_Transparency = 0.1,
+    Chams_Glow_Color = Color3.fromRGB(255,0,0)
+}
+
+function destroy_chams(char)
+
+    for k,v in next, char:GetChildren() do 
+
+        if v:IsA("BasePart") and v.Transparency ~= 1 then
+
+            if v:FindFirstChild("Glow") and 
+            v:FindFirstChild("Chams") then
+
+                v.Glow:Destroy()
+                v.Chams:Destroy() 
+
+            end 
+
+        end 
+
+    end 
+
+end
+
+dwRunService.Heartbeat:Connect(function()
+
+    if settings_tbl.ESP_Enabled then
+
+        for k,v in next, dwEntities:GetPlayers() do 
+
+            if v ~= dwLocalPlayer then
+
+                if v.Character and
+                v.Character:FindFirstChild("HumanoidRootPart") and 
+                v.Character:FindFirstChild("Humanoid") and 
+                v.Character:FindFirstChild("Humanoid").Health ~= 0 then
+
+                    if settings_tbl.ESP_TeamCheck == false then
+
+                        local char = v.Character 
+
+                        for k,b in next, char:GetChildren() do 
+
+                            if b:IsA("BasePart") and 
+                            b.Transparency ~= 1 then
+                                
+                                if settings_tbl.Chams then
+
+                                    if not b:FindFirstChild("Glow") and
+                                    not b:FindFirstChild("Chams") then
+
+                                        local chams_box = Instance.new("BoxHandleAdornment", b)
+                                        chams_box.Name = "Chams"
+                                        chams_box.AlwaysOnTop = true
+                                        chams_box.ZIndex = 4 
+                                        chams_box.Adornee = b 
+                                        chams_box.Color3 = settings_tbl.Chams_Color
+                                        chams_box.Transparency = settings_tbl.Chams_Transparency
+                                        chams_box.Size = b.Size + Vector3.new(0.02, 0.02, 0.02)
+
+                                        local glow_box = Instance.new("BoxHandleAdornment", b)
+                                        glow_box.Name = "Glow"
+                                        glow_box.AlwaysOnTop = false 
+                                        glow_box.ZIndex = 3 
+                                        glow_box.Adornee = b 
+                                        glow_box.Color3 = settings_tbl.Chams_Glow_Color
+                                        glow_box.Size = chams_box.Size + Vector3.new(0.13, 0.13, 0.13)
+
+                                    end
+
+                                else
+
+                                    destroy_chams(char)
+
+                                end
+                            
+                            end
+
+                        end
+
+                    else
+
+                        if v.Team == dwLocalPlayer.Team then
+                            destroy_chams(v.Character)
+                        end
+
+                    end
+
+                else
+
+                    destroy_chams(v.Character)
+
+                end
+
+            end
+
+        end
+
+    else 
+
+        for k,v in next, dwEntities:GetPlayers() do 
+
+            if v ~= dwLocalPlayer and 
+            v.Character and 
+            v.Character:FindFirstChild("HumanoidRootPart") and 
+            v.Character:FindFirstChild("Humanoid") and 
+            v.Character:FindFirstChild("Humanoid").Health ~= 0 then
+                
+                destroy_chams(v.Character)
+
+            end
+
+        end
+
+    end
+
+end)
+end)
+local s = 0.7
+local rbarm1 = function()
+plr = game.Players.LocalPlayer
+mouse = plr:GetMouse()
+mouse.KeyDown:connect(function(key)
+
+if key == "r" then
+local a = game:GetService("Workspace").__DEBRIS.Guns.zxcibosik
+a.LeftArm.Transparency = s
+while wait(0.1) do 
+a.LeftArm.BrickColor = BrickColor.new(255/255,0/255,0/255)
+for i = 0,255,10 do wait() a.LeftArm.BrickColor = BrickColor.new(255/255,i/255,0/255) end
+for i = 255,0,-10 do wait() a.LeftArm.BrickColor = BrickColor.new(i/255,i/255,0/255) end
+for i = 255,0,-10 do wait() a.LeftArm.BrickColor = BrickColor.new(0/255,i/255,255/255) end
+for i = 0,255,10 do wait() a.LeftArm.BrickColor = BrickColor.new(i/255,0/255,255/255) end
+for i = 255,0,-10 do wait() a.LeftArm.BrickColor = BrickColor.new(255/255,0/255,i/255) end
+end end end) 
+end
+local rbarm2 = function()
+plr = game.Players.LocalPlayer
+mouse = plr:GetMouse()
+mouse.KeyDown:connect(function(key)
+
+if key == "r" then
+local a = game:GetService("Workspace").__DEBRIS.Guns.zxcibosik
+a.RightArm.Transparency = s
+while wait(0.1) do
+a.RightArm.BrickColor = BrickColor.new(255/255,0/255,0/255)
+for i = 0,255,10 do wait() a.RightArm.BrickColor = BrickColor.new(255/255,i/255,0/255) end
+for i = 255,0,-10 do wait() a.RightArm.BrickColor = BrickColor.new(i/255,i/255,0/255) end
+for i = 255,0,-10 do wait() a.RightArm.BrickColor = BrickColor.new(0/255,i/255,255/255) end
+for i = 0,255,10 do wait() a.RightArm.BrickColor = BrickColor.new(i/255,0/255,255/255) end
+for i = 255,0,-10 do wait() a.RightArm.BrickColor = BrickColor.new(255/255,0/255,i/255) end
+end end end) 
+end
+local rbgun3 = function()
+plr = game.Players.LocalPlayer
+mouse = plr:GetMouse()
+mouse.KeyDown:connect(function(key)
+
+if key == "r" then
+local a = game:GetService("Workspace").__DEBRIS.Guns.zxcibosik
+a.gun.Transparency = s
+while wait(0.1) do
+a.gun.BrickColor = BrickColor.new(255/255,0/255,0/255)
+for i = 0,255,10 do wait() a.gun.BrickColor = BrickColor.new(255/255,i/255,0/255) end
+for i = 255,0,-10 do wait() a.gun.BrickColor = BrickColor.new(i/255,i/255,0/255) end
+for i = 255,0,-10 do wait() a.gun.BrickColor = BrickColor.new(0/255,i/255,255/255) end
+for i = 0,255,10 do wait() a.gun.BrickColor = BrickColor.new(i/255,0/255,255/255) end
+for i = 255,0,-10 do wait() a.gun.BrickColor = BrickColor.new(255/255,0/255,i/255) end
+end end end) 
+end
+local rbgun1 = function()
+plr = game.Players.LocalPlayer
+mouse = plr:GetMouse()
+mouse.KeyDown:connect(function(key)
+
+if key == "r" then
+local a = game:GetService("Workspace").__DEBRIS.Guns.zxcibosik
+a.Right.Transparency = s
+a.outline.Transparency = s
+while wait(0.1) do
+a.Right.BrickColor = BrickColor.new(255/255,0/255,0/255)
+for i = 0,255,10 do wait() a.Right.BrickColor = BrickColor.new(255/255,i/255,0/255) end
+for i = 255,0,-10 do wait() a.Right.BrickColor = BrickColor.new(i/255,i/255,0/255) end
+for i = 255,0,-10 do wait() a.Right.BrickColor = BrickColor.new(0/255,i/255,255/255) end
+for i = 0,255,10 do wait() a.Right.BrickColor = BrickColor.new(i/255,0/255,255/255) end
+for i = 255,0,-10 do wait() a.Right.BrickColor = BrickColor.new(255/255,0/255,i/255) end
+end
+while wait(0.1) do
+a.outline.BrickColor = BrickColor.new(255/255,0/255,0/255)
+for i = 0,255,10 do wait() a.outline.BrickColor = BrickColor.new(255/255,i/255,0/255) end
+for i = 255,0,-10 do wait() a.outline.BrickColor = BrickColor.new(i/255,i/255,0/255) end
+for i = 255,0,-10 do wait() a.outline.BrickColor = BrickColor.new(0/255,i/255,255/255) end
+for i = 0,255,10 do wait() a.outline.BrickColor = BrickColor.new(i/255,0/255,255/255) end
+for i = 255,0,-10 do wait() a.outline.BrickColor = BrickColor.new(255/255,0/255,i/255) end
+end end end) 
+end
+local rbgun2 = function()
+plr = game.Players.LocalPlayer
+mouse = plr:GetMouse()
+mouse.KeyDown:connect(function(key)
+
+if key == "r" then
+local a = game:GetService("Workspace").__DEBRIS.Guns.zxcibosik
+a.Left.Transparency = s
+a.outline.Transparency = s
+while wait(0.1) do
+a.Left.BrickColor = BrickColor.new(255/255,0/255,0/255)
+for i = 0,255,10 do wait() a.Left.BrickColor = BrickColor.new(255/255,i/255,0/255) end
+for i = 255,0,-10 do wait() a.Left.BrickColor = BrickColor.new(i/255,i/255,0/255) end
+for i = 255,0,-10 do wait() a.Left.BrickColor = BrickColor.new(0/255,i/255,255/255) end
+for i = 0,255,10 do wait() a.Left.BrickColor = BrickColor.new(i/255,0/255,255/255) end
+for i = 255,0,-10 do wait() a.Left.BrickColor = BrickColor.new(255/255,0/255,i/255) end
+end
+local gg = a.outline.BrickColor
+wait(0.01) if gg == a.outline.BrickColor then
+while wait(0.1) do
+a.outline.BrickColor = BrickColor.new(255/255,0/255,0/255)
+for i = 0,255,10 do wait() a.outline.BrickColor = BrickColor.new(255/255,i/255,0/255) end
+for i = 255,0,-10 do wait() a.outline.BrickColor = BrickColor.new(i/255,i/255,0/255) end
+for i = 255,0,-10 do wait() a.outline.BrickColor = BrickColor.new(0/255,i/255,255/255) end
+for i = 0,255,10 do wait() a.outline.BrickColor = BrickColor.new(i/255,0/255,255/255) end
+for i = 255,0,-10 do wait() a.outline.BrickColor = BrickColor.new(255/255,0/255,i/255) end
+end end end end) 
+end
+tab:Button("RB Arms (bind ''R'')", "", function()
+rbarm1() rbarm2()
+end)
+tab:Button("RB Gun/Dual Pistols (bind ''R'')", "", function()
+rbgun1() rbgun2() rbgun3()
+end)
+_G.fov = true
+tab:Button("Fov 120 (spam this button if fov changing to normal)", "", function()
+while _G.fov == true and game:GetService('RunService').RenderStepped:Wait() do
+local ssss1 = 120
+    game:GetService("TweenService"):Create(workspace.Camera, TweenInfo.new(0, Enum.EasingStyle.Quint), {FieldOfView = ssss1}):Play()
+    game:GetService("TweenService"):Create(workspace.Camera, TweenInfo.new(0, Enum.EasingStyle.Quint), {FieldOfView = ssss1}):Play()
+    game:GetService("TweenService"):Create(workspace.Camera, TweenInfo.new(0, Enum.EasingStyle.Quint), {FieldOfView = ssss1}):Play()
+    game:GetService("TweenService"):Create(workspace.Camera, TweenInfo.new(0, Enum.EasingStyle.Quint), {FieldOfView = ssss1}):Play()
+    game:GetService("TweenService"):Create(workspace.Camera, TweenInfo.new(0, Enum.EasingStyle.Quint), {FieldOfView = ssss1}):Play()
+    end
+end)
+tab:Button("Fov 240 (spam this button if fov changing to normal)", "", function()
+while _G.fov == true and game:GetService('RunService').RenderStepped:Wait() do
+local ssss1 = 240
+    game:GetService("TweenService"):Create(workspace.Camera, TweenInfo.new(0, Enum.EasingStyle.Quint), {FieldOfView = ssss1}):Play()
+    game:GetService("TweenService"):Create(workspace.Camera, TweenInfo.new(0, Enum.EasingStyle.Quint), {FieldOfView = ssss1}):Play()
+    game:GetService("TweenService"):Create(workspace.Camera, TweenInfo.new(0, Enum.EasingStyle.Quint), {FieldOfView = ssss1}):Play()
+    game:GetService("TweenService"):Create(workspace.Camera, TweenInfo.new(0, Enum.EasingStyle.Quint), {FieldOfView = ssss1}):Play()
+    game:GetService("TweenService"):Create(workspace.Camera, TweenInfo.new(0, Enum.EasingStyle.Quint), {FieldOfView = ssss1}):Play()
+    end
+end)
+tab:Button("OFF Fov", "", function()
+--_G.fov = false
+ys:Disconnect()
+end)
+tab:Button("Third Person Toggle (bind ''G'')", "", function()
+local cont = game:GetService("ContextActionService")
+local player = game.Players.LocalPlayer
+local function perspectiveToggle(actionName, inputState,inputObj)
+if inputState == Enum.UserInputState.End then
+    if player.CameraMode == Enum.CameraMode.Classic then
+        player.CameraMode = Enum.CameraMode.LockFirstPerson
+        elseif player.CameraMode == Enum.CameraMode.LockFirstPerson then
+            player.CameraMode = Enum.CameraMode.Classic
+            player.CameraMaxZoomDistance = 25
+            player.CameraMinZoomDistance = 25
+            player.CameraMaxZoomDistance = 128
+            player.CameraMinZoomDistance = .5
+        end
+    end
+end
+cont:BindAction("PerspectiveToggle",perspectiveToggle,true,Enum.KeyCode.G)
+end)
+_G.Bhop = true
+tab:Button("Bhop", "", function()
+plr = game.Players.LocalPlayer
+mouse = plr:GetMouse()
+mouse.KeyDown:connect(function(key)
+if key == "space" then
+if _G.Bhop == true then
+game.Players.LocalPlayer.Character.Humanoid:ChangeState("Jumping")
+end end end)
+--[[
+game.Players.LocalPlayer.Character.Humanoid.Changed:Connect(function(property)
+if property == "Smooth Plastic" then
+    game.Players.LocalPlayer.Character.Humanoid:ChangeState("Jumping")
+end
+end)]]
+end)
+tab:Button("OFF Bhop", "", function()
+_G.Bhop = false
+end)
+plr = game.Players.LocalPlayer
+mouse = plr:GetMouse()
+mouse.KeyDown:connect(function(key)
+if key == "space" then
+game.Players.LocalPlayer.Character.Humanoid:ChangeState("Jumping")
+end end)
+while wait() do
+        for i,v in pairs(game:GetService("ReplicatedStorage").Framework.Modules["1 | Directory"].Guns:GetChildren()) do
+            pcall(function()
+                require(v)[tostring(i)].velocity = 99999999
+            end)
+        end
+        end
