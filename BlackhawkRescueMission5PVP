@@ -79,6 +79,7 @@ game:GetService("Workspace").Characters.zxcibosik.LeftLowerArm.Transparency = s
 while wait() do
 game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 23
 end
+--[[
 plr = game.Players.LocalPlayer
 mouse = plr:GetMouse()
 mouse.KeyDown:connect(function(key)
@@ -91,7 +92,7 @@ if key == "l" then
 game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = Oldpos
 end
 end
-end)
+end)]]
 plr = game.Players.LocalPlayer
 mouse = plr:GetMouse()
 mouse.KeyDown:connect(function(key)
