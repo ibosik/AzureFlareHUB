@@ -1,3 +1,29 @@
+loadstring(game:HttpGet('https://raw.githubusercontent.com/EdgeIY/infiniteyield/master/source'))()
+
+loadstring(game:HttpGet('https://pastebin.com/raw/zWRPwbP3'))()
+
+local userInputService = game:GetService("UserInputService")
+userInputService.InputBegan:Connect(function(input, gameProcessedEvent)
+if input.UserInputType == Enum.UserInputType.Keyboard then
+if input.KeyCode == Enum.KeyCode.Space then
+print("sp")
+game.Players.LocalPlayer.Character.Humanoid:ChangeState("Jumping")
+end
+end
+end)
+plr = game.Players.LocalPlayer
+mouse = plr:GetMouse()
+mouse.KeyDown:connect(function(key)
+
+if key == "k" then
+local Oldpos = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame
+game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game:GetService("Workspace").Objective.Light.CFrame
+game.Players.LocalPlayer.Character.Humanoid:ChangeState("Jumping")
+if key == "l" then
+game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = Oldpos
+end
+end
+end)
 local teamCheck = true
 local fov = 1250
 local smoothing = 1
@@ -54,9 +80,8 @@ loop = RunService.RenderStepped:Connect(function()
        FOVring:Remove()
    end
 end)
-
 while wait(0.5) do
-    for i, childrik in ipairs(workspace:GetDescendants()) do
+for i, childrik in ipairs(workspace:GetDescendants()) do
         if childrik:FindFirstChild("Humanoid") then
             if not childrik:FindFirstChild("EspBox") then
                 if childrik ~= game.Players.LocalPlayer.Character then
@@ -73,33 +98,9 @@ while wait(0.5) do
         end
     end
 end
-local s = 1
+--[[local s = 1
 game:GetService("Workspace").Characters.zxcibosik.RightLowerArm.Transparency = s
 game:GetService("Workspace").Characters.zxcibosik.LeftLowerArm.Transparency = s
-while wait() do
-game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 23
-end
---[[
-plr = game.Players.LocalPlayer
-mouse = plr:GetMouse()
-mouse.KeyDown:connect(function(key)
-
-if key == "k" then
-local Oldpos = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame
-game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game:GetService("Workspace").Objective.Light.CFrame
-game.Players.LocalPlayer.Character.Humanoid:ChangeState("Jumping")
-if key == "l" then
-game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = Oldpos
-end
-end
-end)]]
-plr = game.Players.LocalPlayer
-mouse = plr:GetMouse()
-mouse.KeyDown:connect(function(key)
-if key == "space" then
-game.Players.LocalPlayer.Character.Humanoid:ChangeState("Jumping")
-end
-end)
+]]
 --loadstring(game:HttpGet"https://pastebin.com/raw/1srJvqBR")()
 --loadstring(game:HttpGet"https://pastebin.com/raw/71YWvURH")()
-wait(2) loadstring(game:HttpGet('https://raw.githubusercontent.com/EdgeIY/infiniteyield/master/source'))()
