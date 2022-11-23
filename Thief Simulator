@@ -1,3 +1,7 @@
+--loadstring(game:HttpGet('https://raw.githubusercontent.com/ibosik/AzureFlareHUB/main/AzureFlareHUB'))()
+
+--loadstring(game:HttpGet("https://raw.githubusercontent.com/ibosik/AzureFlareHUB/main/BigPaintBall"))()
+
 local player = game.Players.LocalPlayer
 
 if player then
@@ -7,7 +11,7 @@ if player then
 
 local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/slf0Dev/Ocerium_Project/main/Library.lua"))()
 
-Window = Library.Main("Azure Flare Hub | LT2","LeftAlt") -- change "LeftAlt" to key that you want will hide gui
+Window = Library.Main("Azure Flare Hub | TS","LeftAlt") -- change "LeftAlt" to key that you want will hide gui
 
 local Nofitication = Window.Nofitication("Welcome To Azure Flare Hub "..player.Name.."",function()
 end)
@@ -17,10 +21,11 @@ local Tab = Window.NewTab("Credits")
 
 local Section = Tab.NewSection("Discord")
 
-local Button = Section.NewButton("zxcibosik#9669 - Script",function()
+local Button = Section.NewButton("ibosiktt#5391 - Script",function()
 end)
 
 local Button = Section.NewButton("Kurus#6448 - Tester",function()
+loadstring(game:HttpGet("http://darkhub.xyz/remote-script.lua", true))()
 end)
 
 local Section = Tab.NewSection("Youtube")
@@ -28,6 +33,11 @@ local Section = Tab.NewSection("Youtube")
 local Button = Section.NewButton("IbosikYT",function()
 setclipboard("https://www.youtube.com/channel/UC_wPcE323Qfe0Wntx44FcKw")
 game.StarterGui:SetCore("SendNotification", {Title = "Link copied", Text = "", Duration = 3, Button1 = ""})
+end)
+
+local Section = Tab.NewSection("Information")
+
+local Button = Section.NewButton("Left Alt - Hide Gui",function()
 end)
 
 local Tab = Window.NewTab("Settings")
@@ -38,309 +48,181 @@ local Button = Section.NewButton("Destroy GUI",function()
         game:GetService("CoreGui").Library:Destroy()
 end)
 
-local Button = Section.NewButton("Old Gui",function()
-loadstring(game:HttpGet('https://raw.githubusercontent.com/ibosik/AzureFlareHUB/main/LT2OLD'))()
-end)
+local Tab = Window.NewTab("Auto Farm")
 
-local Tab = Window.NewTab("Dupe (Fixed)")
+local Section = Tab.NewSection("Auto Farm Money/Items")
 
-local Section = Tab.NewSection("Axe")
-
-local Button = Section.NewButton("Dupe Axe (hold axe)",function()
-local OldPos
-function DupeInv(Amount)
-    if not game.Players.LocalPlayer.Character:FindFirstChild("Tool") then return end
-    OldPos = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame
-        game:GetService("ReplicatedStorage").Interaction.ClientInteracted:FireServer(game.Players.LocalPlayer.Character:FindFirstChild("Tool"),"Drop tool",game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame + Vector3.new(3,1,0))
-        game.Players.LocalPlayer.Character.Head:Remove()
-    wait()
-    repeat task.wait() until game.Players.LocalPlayer.Character:FindFirstChild("Head") and game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart")
-    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = OldPos
-end
-DupeInv()
-end)
-
-local Section = Tab.NewSection("Items")
-
-local Button = Section.NewButton("Fixed ;(((((",function()
-end)
-
-local Button = Section.NewButton("Suicide",function()
-local A_1 = "mne nadaela eta zhizn"
-local A_2 = "All"
-local Event = game:GetService("ReplicatedStorage").DefaultChatSystemChatEvents.SayMessageRequest
-Event:FireServer(A_1, A_2)
-wait(3)
-local A_1 = "ya stal ded insyltom"
-local A_2 = "All"
-local Event = game:GetService("ReplicatedStorage").DefaultChatSystemChatEvents.SayMessageRequest
-Event:FireServer(A_1, A_2)
-wait(1)
-local A_1 = "1000-7"
-local A_2 = "All"
-local Event = game:GetService("ReplicatedStorage").DefaultChatSystemChatEvents.SayMessageRequest
-Event:FireServer(A_1, A_2)
-wait(1)
-LocalPlayer = game:GetService("Players").LocalPlayer
-LocalPlayer.Character.Humanoid:MoveTo(LocalPlayer.Character.HumanoidRootPart.Position + LocalPlayer.Character.HumanoidRootPart.CFrame.lookVector * 10)
-LocalPlayer.Character.Humanoid.Jump = true
-wait(0.5)
-function Iterate(instance, func)
-for i, v in next, instance:GetChildren() do
-func(v)
-end
-end
-limbs = {
-["Right Leg"] = true;
-["Right Arm"] = true;
-["Left Leg"] = true;
-["Left Arm"] = true;
-}
-Iterate(LocalPlayer.Character, function(v)
-if v:IsA("BasePart") then
-local attachment = Instance.new("Attachment")
-attachment.Parent = v
-attachment.Name = (v.Name .. "[Attachment]")
-if limbs[v.Name] then
-attachment.Position = Vector3.new(0, v.Size.Y/2, 0)
-elseif v.Name == "Head" then
-attachment.Position = Vector3.new(0, -v.Size.Y/2, 0)
-attachment.Rotation = Vector3.new(0, 0, -90)
-end
-end
-end)
-local leftLegAttachment = Instance.new("Attachment")
-leftLegAttachment.Position = Vector3.new(-.5, -1, 0)
-leftLegAttachment.Rotation = Vector3.new(0, -90, 0)
-local rightLegAttachment = Instance.new("Attachment")
-rightLegAttachment.Position = Vector3.new(.5, -1, 0)
-rightLegAttachment.Rotation = Vector3.new(0, -90, 0)
-rightLegAttachment.Parent, leftLegAttachment.Parent = LocalPlayer.Character.Torso, LocalPlayer.Character.Torso
-jointAttachments = {
-['Head'] = {
-['Attachment0'] = LocalPlayer.Character.Torso['NeckAttachment'];
-['Attachment1'] = LocalPlayer.Character.Head['Head[Attachment]'];
-};
-['Left Arm'] = {
-['Attachment0'] = LocalPlayer.Character.Torso['LeftCollarAttachment'];
-['Attachment1'] = LocalPlayer.Character['Left Arm']['Left Arm[Attachment]'];
-};
-['Right Arm'] = {
-['Attachment0'] = LocalPlayer.Character.Torso['RightCollarAttachment'];
-['Attachment1'] = LocalPlayer.Character['Right Arm']['Right Arm[Attachment]'];
-};
-['Left Leg'] = {
-['Attachment0'] = leftLegAttachment;
-['Attachment1'] = LocalPlayer.Character['Left Leg']['Left Leg[Attachment]'];
-};
-['Right Leg'] = {
-['Attachment0'] = rightLegAttachment;
-['Attachment1'] = LocalPlayer.Character['Right Leg']['Right Leg[Attachment]'];
-};
-}
-LocalPlayer.Character.Humanoid.PlatformStand = true
-Iterate(LocalPlayer.Character, function(v)
-if v:IsA("BasePart") then
-if jointAttachments[v.Name] then
-local ballSocketJoint = Instance.new("BallSocketConstraint")
-ballSocketJoint.Parent = v
-ballSocketJoint.Radius = 0.15
-ballSocketJoint.Attachment0, ballSocketJoint.Attachment1 = jointAttachments[v.Name]['Attachment0'], jointAttachments[v.Name]['Attachment1']
-end
-end
-end)
-Iterate(LocalPlayer.Character.Torso, function(v)
-if v:IsA("Motor") then
-v:Remove()
-end
-end)
-end)    
-
-local Tab = Window.NewTab("V2207 LEAK")
-
-local Section = Tab.NewSection("Items")
-
-local Button = Section.NewButton("SOON",function()
-end)
-
-local Section = Tab.NewSection("Idk")
-
-local Button = Section.NewButton("Mary",function()
-    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game.Workspace.Region_Plains.Mary.Mary.CFrame
-    end)
-
-local Tab = Window.NewTab("Slot")
-
-local Section = Tab.NewSection("Slot")
-
-local Button = Section.NewButton("Free Land",function()
-for a,b in pairs(workspace.Properties:GetChildren()) do 
-    if b:FindFirstChild("Owner") and b:FindFirstChild("OriginSquare") and b.Owner.Value == nil then 
-        game.ReplicatedStorage.PropertyPurchasing.ClientPurchasedProperty:FireServer(b, b.OriginSquare.OriginCFrame.Value.p + Vector3.new(0,3,0))
- wait(0.5)
-        Instance.new('RemoteEvent', game:service'ReplicatedStorage'.Interaction).Name = "Ban"
-	for i,v in pairs(game.Workspace.Properties:GetChildren()) do
-		if v.Owner.Value == game.Players.LocalPlayer then
-    game.Players.LocalPlayer.Character.Humanoid.Jump = true
-    wait(0.1)
-			game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.OriginSquare.CFrame + Vector3.new(0,10,0)
-    game.Players.LocalPlayer.Character.Humanoid.Jump = true
-    wait(0.1)
-		end
-	end
-    end
-end
-end)
-
-local Button = Section.NewButton("Max Land",function()
-    for i, v in pairs(game:GetService("Workspace").Properties:GetChildren()) do
-        if v:FindFirstChild("Owner") and v.Owner.Value == game.Players.LocalPlayer then
-            base = v
-            square = v.OriginSquare
+local Button = Section.NewButton("Rob Once",function()
+    for _, x in pairs(game:GetService("Workspace"):GetChildren()) do
+        local n = tostring(x)
+        if string.find(n, "Base:") then
+            print(x)
+            if x:FindFirstChild("HumanoidRootPart") ~= nil then
+                game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = x.HumanoidRootPart.CFrame
+                wait(0.2)
+                pcall(function()
+                    fireproximityprompt(x.HumanoidRootPart.ProximityPrompt, 1000) 
+                end)
+                wait(0.2)
+                break
             end
         end
-    function makebase(pos)
-        local Event = game:GetService("ReplicatedStorage").PropertyPurchasing.ClientExpandedProperty
-        Event:FireServer(base, pos)
-        end
-    local spos = square.Position
-    makebase(CFrame.new(spos.X + 40, spos.Y, spos.Z))
-    makebase(CFrame.new(spos.X - 40, spos.Y, spos.Z))
-    makebase(CFrame.new(spos.X, spos.Y, spos.Z + 40))
-    makebase(CFrame.new(spos.X, spos.Y, spos.Z - 40))
-    makebase(CFrame.new(spos.X + 40, spos.Y, spos.Z + 40))
-    makebase(CFrame.new(spos.X + 40, spos.Y, spos.Z - 40))
-    makebase(CFrame.new(spos.X - 40, spos.Y, spos.Z + 40))
-    makebase(CFrame.new(spos.X - 40, spos.Y, spos.Z - 40))
-    makebase(CFrame.new(spos.X + 80, spos.Y, spos.Z))
-    makebase(CFrame.new(spos.X - 80, spos.Y, spos.Z))
-    makebase(CFrame.new(spos.X, spos.Y, spos.Z + 80))
-    makebase(CFrame.new(spos.X, spos.Y, spos.Z - 80))
---Corners--
-    makebase(CFrame.new(spos.X + 80, spos.Y, spos.Z + 80))
-    makebase(CFrame.new(spos.X + 80, spos.Y, spos.Z - 80))
-    makebase(CFrame.new(spos.X - 80, spos.Y, spos.Z + 80))
-    makebase(CFrame.new(spos.X - 80, spos.Y, spos.Z - 80))
---Corners--
-    makebase(CFrame.new(spos.X + 40, spos.Y, spos.Z + 80))
-    makebase(CFrame.new(spos.X - 40, spos.Y, spos.Z + 80))
-    makebase(CFrame.new(spos.X + 80, spos.Y, spos.Z + 40))
-    makebase(CFrame.new(spos.X + 80, spos.Y, spos.Z - 40))
-    makebase(CFrame.new(spos.X - 80, spos.Y, spos.Z + 40))
-    makebase(CFrame.new(spos.X - 80, spos.Y, spos.Z - 40))
-    makebase(CFrame.new(spos.X + 40, spos.Y, spos.Z - 80))
-    makebase(CFrame.new(spos.X - 40, spos.Y, spos.Z - 80))
+    end
 end)
 
---local Button = Section.NewButton("Car color",function()
---    loadstring(game:HttpGetAsync("https://raw.githubusercontent.com/DragonDupe/SubscribeDragonDupe/main/PINK%20CAR%20SPAWNER.txt"))()
---end)
+local Button = Section.NewButton("Rob All Once",function()
+    for _, x in pairs(game:GetService("Workspace"):GetChildren()) do
+        local n = tostring(x)
+        if string.find(n, "Base:") then
+--            bv = bv + 1
+            if x:FindFirstChild("HumanoidRootPart") ~= nil then
+                game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = x.HumanoidRootPart.CFrame
+                wait(0.2)
+                fireproximityprompt(x.HumanoidRootPart.ProximityPrompt, 1000)    
+                wait(0.2)
+            end
+        end
+    end
+    bv = 0
+end)
 
-local Button = Section.NewButton("All Blueprints",function()
-for index,value in pairs(game:GetService("ReplicatedStorage").Purchasables.Structures.BlueprintStructures:GetChildren()) do
-    local parent = Instance.new("Folder", game:GetService("Players").LocalPlayer.PlayerBlueprints.Blueprints)
-    parent.Name = value.Name
-    local category = Instance.new("StringValue", parent)
-    category.Value = value.ItemCategory.Value
-    category.Name = "ItemCategory"
+local Section = Tab.NewSection("''OFF Loop Rob All'' Will Work When U Rob Everyone")
+
+local Button = Section.NewButton("OFF Loop Rob All",function()
+game:GetService("Workspace").Part:Destroy()
+game:GetService("Workspace").Part:Destroy()
+game:GetService("Workspace").Part:Destroy()
+game:GetService("Workspace").Part:Destroy()
+game:GetService("Workspace").Part:Destroy()
+game:GetService("Workspace").Part:Destroy()
+end)
+
+local Button = Section.NewButton("Loop Rob All",function()
+local myPart = Instance.new("Part")
+
+myPart.Transparency = 0
+myPart.Anchored = true
+
+myPart.Position = Vector3.new(-523235.6257133, 1123235.76918, 142366.86157)
+myPart.Size = Vector3.new(1, 0.5, 2)
+
+myPart.Parent = game.Workspace
+--game:GetService("Workspace").Part:Destroy()
+while game:GetService("Workspace").Part do
+    for _, x in pairs(game:GetService("Workspace"):GetChildren()) do
+        local n = tostring(x)
+        if string.find(n, "Base:") then
+            if x:FindFirstChild("HumanoidRootPart") ~= nil then
+                game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = x.HumanoidRootPart.CFrame
+                wait(0.2)
+                fireproximityprompt(x.HumanoidRootPart.ProximityPrompt, 1000)    
+                wait(0.2)
+            end
+        end
+    end
+    bv = 0
+wait(2)
 end
 end)
 
-local Tab = Window.NewTab("Esp")
+local Section = Tab.NewSection("Sell Items")
 
-local Section = Tab.NewSection("Esp")
+local Button = Section.NewButton("Sell",function()
+    firetouchinterest(game:GetService("Workspace").Sells.World1.Sell,game:GetService("Players").LocalPlayer.Character.HumanoidRootPart,0)
+    end)
 
-local Button = Section.NewButton("Esp (Kurus-Ware)",function()
+local Button = Section.NewButton("Loop Sell",function()
+while game:GetService('RunService').RenderStepped:Wait() do
+    firetouchinterest(game:GetService("Workspace").Sells.World1.Sell,game:GetService("Players").LocalPlayer.Character.HumanoidRootPart,0)
+end
+    end)
+
+local Section = Tab.NewSection("CFrame Sell Items (Only 1 World)")
+
+local Button = Section.NewButton("Sell",function()
+game.Players.LocalPlayer.Character.Humanoid:ChangeState("Jumping")
+game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game:GetService("Workspace").Sells.World1.Sell.CFrame
+end)
+
+local Button = Section.NewButton("OFF Loop Sell",function()
+game:GetService("Workspace").Chests.Part:Destroy()
+game:GetService("Workspace").Chests.Part:Destroy()
+game:GetService("Workspace").Chests.Part:Destroy()
+game:GetService("Workspace").Chests.Part:Destroy()
+game:GetService("Workspace").Chests.Part:Destroy()
+game:GetService("Workspace").Chests.Part:Destroy()
+end)
+
+local Button = Section.NewButton("Loop Sell",function()
+local myPart = Instance.new("Part")
+
+myPart.Transparency = 0
+myPart.Anchored = true
+
+myPart.Position = Vector3.new(-523235.6257133, 1123235.76918, 142366.86157)
+myPart.Size = Vector3.new(1, 0.5, 2)
+
+myPart.Parent = game.Workspace.Chests
+while game:GetService("Workspace").Chests.Part do
+game.Players.LocalPlayer.Character.Humanoid:ChangeState("Jumping")
+game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game:GetService("Workspace").Sells.World1.Sell.CFrame
+wait(1.3)
+end
+end)
+    
+local Tab = Window.NewTab("Worlds")
+
+local Section = Tab.NewSection("Teleport to ... World")
+
+local Button = Section.NewButton("Teleport To 1 World",function()
+game:GetService("TeleportService"):Teleport(8232438881,FromChar)
+end)
+
+local Button = Section.NewButton("Teleport To 2 World",function()
+game:GetService("TeleportService"):Teleport(9091733239,FromChar)
+end)
+
+local Button = Section.NewButton("Teleport To 3 World",function()
+game:GetService("TeleportService"):Teleport(10782148786,FromChar)
+end)
+
+local Button = Section.NewButton("Teleport To Rebirth Manager",function()
+game:GetService("TeleportService"):Teleport(10782149835,FromChar)
+end)
+
+local Section = Tab.NewSection("1 World")
+
+local Button = Section.NewButton("Delete Zone 2 Barrier",function()
+game:GetService("Workspace")["Zone 2"]:Destroy()
+end)
+
+local Button = Section.NewButton("Delete Zone 3 Barrier",function()
+game:GetService("Workspace")["Zone 3"]:Destroy()
+end)
+
+local Section = Tab.NewSection("2 World")
+
+local Button = Section.NewButton("Delete Zone 4 Barrier",function()
+game:GetService("Workspace")["Zone 4"]:Destroy()
+end)
+
+local Button = Section.NewButton("Delete Zone 5 Barrier",function()
+game:GetService("Workspace")["Zone 5"]:Destroy()
+end)
+
+local Section = Tab.NewSection("3 World")
+
+local Button = Section.NewButton("Delete Zone 4 Barrier",function()
+game:GetService("Workspace")["Zone 6"]:Destroy()
+end)
+
+local Button = Section.NewButton("Delete Zone 5 Barrier",function()
+game:GetService("Workspace")["Zone 7"]:Destroy()
 end)
 
 local Tab = Window.NewTab("Player")
 
 local Section = Tab.NewSection("Player")
-
-local Button = Section.NewButton("Flight",function()
-local Nofitication = Window.Nofitication("Press ''Q''.",function()
-local FlyingEnabled = false
-local maxspeed = 150 
-function BetterFly()
-	repeat wait() until game.Players.LocalPlayer and game.Players.LocalPlayer.Character and game.Players.LocalPlayer.Character:findFirstChild("Head") and game.Players.LocalPlayer.Character:findFirstChild("Humanoid") 
-	local mouse = game.Players.LocalPlayer:GetMouse() 
-	repeat wait() until mouse
-	local plr = game.Players.LocalPlayer 
-	local torso = plr.Character.Head 
-	local flying = false
-	local deb = true 
-	local ctrl = {f = 0, b = 0, l = 0, r = 0} 
-	local lastctrl = {f = 0, b = 0, l = 0, r = 0}
-	local speed = 5000 
-	 
-	function Fly() 
-	local bg = Instance.new("BodyGyro", torso) 
-	bg.P = 9e4 
-	bg.maxTorque = Vector3.new(9e9, 9e9, 9e9) 
-	bg.cframe = torso.CFrame 
-	local bv = Instance.new("BodyVelocity", torso) 
-	bv.velocity = Vector3.new(0,0.1,0) 
-	bv.maxForce = Vector3.new(9e9, 9e9, 9e9) 
-	repeat wait() 
-	plr.Character.Humanoid.PlatformStand = true 
-	if ctrl.l + ctrl.r ~= 0 or ctrl.f + ctrl.b ~= 0 then 
-	speed = maxspeed
-	elseif not (ctrl.l + ctrl.r ~= 0 or ctrl.f + ctrl.b ~= 0) and speed ~= 0 then 
-		speed = 0 
-	end 
-	if (ctrl.l + ctrl.r) ~= 0 or (ctrl.f + ctrl.b) ~= 0 then 
-	bv.velocity = ((game.Workspace.CurrentCamera.CoordinateFrame.lookVector * (ctrl.f+ctrl.b)) + ((game.Workspace.CurrentCamera.CoordinateFrame * CFrame.new(ctrl.l+ctrl.r,(ctrl.f+ctrl.b)*.2,0).p) - game.Workspace.CurrentCamera.CoordinateFrame.p))*speed 
-	lastctrl = {f = ctrl.f, b = ctrl.b, l = ctrl.l, r = ctrl.r} 
-	elseif (ctrl.l + ctrl.r) == 0 and (ctrl.f + ctrl.b) == 0 and speed ~= 0 then 
-	bv.velocity = ((game.Workspace.CurrentCamera.CoordinateFrame.lookVector * (lastctrl.f+lastctrl.b)) + ((game.Workspace.CurrentCamera.CoordinateFrame * CFrame.new(lastctrl.l+lastctrl.r,(lastctrl.f+lastctrl.b)*0.2,0).p) - game.Workspace.CurrentCamera.CoordinateFrame.p))*speed 
-	else 
-	bv.velocity = Vector3.new(0,0,0) 
-	end 
-	bg.cframe = game.Workspace.CurrentCamera.CoordinateFrame * CFrame.Angles(-math.rad((ctrl.f+ctrl.b)*speed/maxspeed),0,0) 
-	until not flying 
-	ctrl = {f = 0, b = 0, l = 0, r = 0} 
-	lastctrl = {f = 0, b = 0, l = 0, r = 0} 
-	speed = 0 
-	bg:Destroy() 
-	bv:Destroy() 
-	plr.Character.Humanoid.PlatformStand = false 
-	end 
-	mouse.KeyDown:connect(function(key) 
-	if key:lower() == "q" and FlyingEnabled == true then 
-	if flying then flying = false 
-	else 
-	flying = true 
-	Fly() 
-	end 
-	elseif key:lower() == "w" then 
-	ctrl.f = 1 
-	elseif key:lower() == "s" then 
-	ctrl.b = -1 
-	elseif key:lower() == "a" then 
-	ctrl.l = -1 
-	elseif key:lower() == "d" then 
-	ctrl.r = 1 
-	end 
-	end) 
-	mouse.KeyUp:connect(function(key) 
-	if key:lower() == "w" then 
-	ctrl.f = 0 
-	elseif key:lower() == "s" then 
-	ctrl.b = 0 
-	elseif key:lower() == "a" then 
-	ctrl.l = 0 
-	elseif key:lower() == "d" then 
-	ctrl.r = 0 
-	end 
-	end)
-	Fly()
-end
-game.Players.LocalPlayer.CharacterAdded:Connect(BetterFly)
-BetterFly()
-
-	FlyingEnabled = true
-    end)
-	end)
 
 local Slider = Section.NewSlider("Walk Speed",16,500,true,function(value)
 while game:GetService('RunService').RenderStepped:Wait() do
@@ -368,104 +250,6 @@ local Button = Section.NewButton("Rejoin",function()
 			tpservice:Teleport(game.PlaceId, plr)
 end)
 
-local Button = Section.NewButton("Full Bright",function()
-    loadstring(game:HttpGet("https://pastebin.com/raw/06iG6YkU", true))();
-    _G.FullBrightExecuted = true
-end)
-
-local Button = Section.NewButton("OFF Full Bright",function()
-    loadstring(game:HttpGet("https://pastebin.com/raw/06iG6YkU", true))();
-    _G.FullBrightExecuted = false
-end)
-
-local Button = Section.NewButton("Noclip (20s)",function()
-local noClip = true
-local noClipConnect = game:GetService("RunService").Stepped:Connect(function()
-    local chr = game.Players.LocalPlayer.Character
-    if chr:FindFirstChild'Torso' and chr:FindFirstChild'Head' then
-        chr:FindFirstChild'Torso'.CanCollide = not noClip
-        chr:FindFirstChild'Head'.CanCollide = not noClip
-    end
-end)
-
-task.wait(20)
-noClipConnect:Disconnect()
-end)
-
-local Button = Section.NewButton("Server Hop",function()
-local PlaceID = game.PlaceId
-local AllIDs = {}
-local foundAnything = ""
-local actualHour = os.date("!*t").hour
-local Deleted = false
-local File = pcall(function()
-    AllIDs = game:GetService('HttpService'):JSONDecode(readfile("NotSameServers.json"))
-end)
-if not File then
-    table.insert(AllIDs, actualHour)
-    writefile("NotSameServers.json", game:GetService('HttpService'):JSONEncode(AllIDs))
-end
-function TPReturner()
-    local Site;
-    if foundAnything == "" then
-        Site = game.HttpService:JSONDecode(game:HttpGet('https://games.roblox.com/v1/games/' .. PlaceID .. '/servers/Public?sortOrder=Asc&limit=100'))
-    else
-        Site = game.HttpService:JSONDecode(game:HttpGet('https://games.roblox.com/v1/games/' .. PlaceID .. '/servers/Public?sortOrder=Asc&limit=100&cursor=' .. foundAnything))
-    end
-    local ID = ""
-    if Site.nextPageCursor and Site.nextPageCursor ~= "null" and Site.nextPageCursor ~= nil then
-        foundAnything = Site.nextPageCursor
-    end
-    local num = 0;
-    for i,v in pairs(Site.data) do
-        local Possible = true
-        ID = tostring(v.id)
-        if tonumber(v.maxPlayers) > tonumber(v.playing) then
-            for _,Existing in pairs(AllIDs) do
-                if num ~= 0 then
-                    if ID == tostring(Existing) then
-                        Possible = false
-                    end
-                else
-                    if tonumber(actualHour) ~= tonumber(Existing) then
-                        local delFile = pcall(function()
-                            delfile("NotSameServers.json")
-                            AllIDs = {}
-                            table.insert(AllIDs, actualHour)
-                        end)
-                    end
-                end
-                num = num + 1
-            end
-            if Possible == true then
-                table.insert(AllIDs, ID)
-                wait()
-                pcall(function()
-                    writefile("NotSameServers.json", game:GetService('HttpService'):JSONEncode(AllIDs))
-                    wait()
-                    game:GetService("TeleportService"):TeleportToPlaceInstance(PlaceID, ID, game.Players.LocalPlayer)
-                end)
-                wait(4)
-            end
-        end
-    end
-end
-
-function Teleport()
-    while wait() do
-        pcall(function()
-            TPReturner()
-            if foundAnything ~= "" then
-                TPReturner()
-            end
-        end)
-    end
-end
-
--- If you'd like to use a script before server hopping (Like a Automatic Chest collector you can put the Teleport() after it collected everything.
-Teleport()
-end)
-
 local Button = Section.NewButton("CTRL Click-TP",function()
 local Imput = game:GetService("UserInputService")
 local Plr = game.Players.LocalPlayer
@@ -487,162 +271,6 @@ end)
 
 local Button = Section.NewButton("Fling",function()
 loadstring(game:HttpGet(('https://raw.githubusercontent.com/NotFalxe/Roblox-Scripts/source-code/headfling.lua'),true))()
-game.WorkSpace.Effects:Destroy()
-end)
-
-local Button = Section.NewButton("Delete Sit Permissions",function()
-game.Players.LocalPlayer.PlayerScripts.SitPermissions:Remove()
-end)
-
-local Button = Section.NewButton("Btools",function()
-    loadstring(game:HttpGetAsync("https://pastebin.com/raw/Lf1ySa1m"))()
-end)
-
-local Button = Section.NewButton("No Fog",function()
-    game.Lighting.Changed:Connect(function()
-        game.Lighting.TimeOfDay = "12:00:00"
-        game.Lighting.FogEnd = 9999
-        game.Lighting.Brightness = 2
-    end)
-end)
-
-local Button = Section.NewButton("Delete Water",function()
-game.Workspace.Water.Water:Destroy()
-game.Workspace.Water.Water:Destroy()
-game.Workspace.Water.Water:Destroy()
-game.Workspace.Water.Water:Destroy()
-game.Workspace.Water.Water:Destroy()
-game.Workspace.Water.Water:Destroy()
-game.Workspace.Water.Water:Destroy()
-game.Workspace.Water.Water:Destroy()
-game.Workspace.Water.Water:Destroy()
-game.Workspace.Water.Water:Destroy()
-game.Workspace.Water.Water:Destroy()
-game.Workspace.Water.Water:Destroy()
-game.Workspace.Water.Water:Destroy()
-game.Workspace.Water.Water:Destroy()
-wait(1)
-game.Players.LocalPlayer.Character.Humanoid.Health = 0
-end)
-
-local EnabledToggle = Section.NewToggle("Walk On Water",function(bool)
-            for _,v in pairs(game.Workspace.Water:GetChildren()) do
-                v.CanCollide = true
-                end
-end,true)
-
-local DisabledToggle = Section.NewToggle("OFF Walk On Water",function(bool)
-            for _,v in pairs(game.Workspace.Water:GetChildren()) do
-                v.CanCollide = false
-                end
-end,false)
-
---local SliderPrecise = section.NewSlider("Walk Speed",0,500,true,function(value)
---    game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = s
---end)
-
-local Tab = Window.NewTab("Waypoints")
-
-local Section = Tab.NewSection("Teleport To...")
-
-local Button = Section.NewButton("Spawn",function()
-    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(172, 2.9, 74)
-end)
- 
-local Button = Section.NewButton("Bridge",function()
-    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(112, 11, -782)
-end)
-
-local Button = Section.NewButton("The Den",function()
-    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(323, 41.7, 1930)
-end)
-
-local Button = Section.NewButton("Lighthouse",function()
-    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(1464.8, 355.2, 3257.19)
-end)
-
-local Button = Section.NewButton("Safari",function()
-    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(111.8, 11, -998.8)
-end)
- 
-local Button = Section.NewButton("Bob's Shack",function()
-    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(260, 8.4, -2542)
-end)
- 
-local Button = Section.NewButton("Swamp",function()
-    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-1209, 132.3, -801)
-end)
- 
-local Button = Section.NewButton("The Cabin",function()
-    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(1244.6, 63.59, 2306)
-end)
- 
-local Button = Section.NewButton("Boxed Cars",function()
-    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(509, 3.19, -1463)
-end)
- 
-local Button = Section.NewButton("Frost Trees",function()
-    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(1560, 410.3, 3274)
-end)
-
-local Button = Section.NewButton("Land Store",function()
-    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(258.3, 3.2, -99)
-end)
- 
-local Button = Section.NewButton("Link's Logic",function()
-    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(4605, 3, -727)
-end)
- 
-local Button = Section.NewButton("Palm Island",function()
-    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(2549, -5.8, -42)
-end)
-
-local Button = Section.NewButton("Fine Art Shop",function()
-    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(5207, -166.2, 719)
-end)
-
-local Button = Section.NewButton("Cave",function()
-    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(3581, -179.53, 430)
-end)
-
-local Button = Section.NewButton("Shrine of Sight",function()
-    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-1600, 195.4, 919)
-end)
-
-local Button = Section.NewButton("Fancy Furnishings",function()
-    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(491, 3.2, -1720)
-end)
- 
-local Button = Section.NewButton("Docks",function()
-    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(1114, -1.2, -197)
-end)
-
-local Button = Section.NewButton("Strange man",function()
-    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(1061, 16.7, 1131)
-end)
- 
-local Button = Section.NewButton("Wood Dropoff",function()
-    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(323.4, -2.7, 134.7)
-end)
-
-local Button = Section.NewButton("Taiga",function()
-    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(889.95, 59.79, 1195.55)
-end)
- 
-local Button = Section.NewButton("Wood Rus",function()
-    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(265, 3.19, 57)
-end)
- 
-local Button = Section.NewButton("Cherry Meadow",function()
-    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(220.89, 59.8, 1305.8)
-end)
- 
-local Button = Section.NewButton("Bird Cave",function()
-    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(4813.1, 17, -978.7)
-end)
- 
-local Button = Section.NewButton("Lone Cave",function()
-    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(113, -212.99, -951)
 end)
 
 local Tab = Window.NewTab("Fun")
