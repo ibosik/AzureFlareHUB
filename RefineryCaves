@@ -112,6 +112,30 @@ game:GetService("CoreGui").FluxLib:Destroy()
 end)
 
 local tab = win:Tab("Miscellaneous", "http://www.roblox.com/asset/?id=6031754538")
+tab:Label("Bugs")
+tab:Line()
+tab:Button("Dupe 1$", "", function()
+local args = {
+    [1] = game:GetService("Players").LocalPlayer,
+    [2] = 0.5
+}
+
+game:GetService("ReplicatedStorage").Events.TransferCash:FireServer(unpack(args))
+
+end)
+tab:Button("Loop Dupe 1$", "", function()
+_G.dupe = not _G.dupe
+while _G.dupe == true do
+local args = {
+    [1] = game:GetService("Players").LocalPlayer,
+    [2] = 0.5
+}
+
+game:GetService("ReplicatedStorage").Events.TransferCash:FireServer(unpack(args))
+wait(10)
+end
+end)
+tab:Line()
 tab:Label("Auto Clicker")
 tab:Line()
 tab:Bind("Auto Clicker Bind (V is default)", Enum.KeyCode.V, function(t)
