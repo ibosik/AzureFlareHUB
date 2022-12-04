@@ -145,13 +145,18 @@ tab:Line()
 tab:Button("Rain", "", function()
 game.Workspace.Raining.Value = not game.Workspace.Raining.Value
 end)
-tab:Textbox("Spawn Item", "", true, function(t)
-local Item = t
-
+tab:Textbox("Item To Spawn", "", true, function(t)
+_G.item = t
+end)
+tab:Button("Spawn Item", "", function()
+local Item = _G.item
 require(game:GetService("ReplicatedStorage").Modules.Objs).SpawnItem(Item,game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame,v,game.Players.LocalPlayer)
 end)
-tab:Textbox("Spawn Tool", "", true, function(t)
-local Tool = t
+tab:Textbox("Tool To Spawn", "", true, function(t)
+_G.tool = t
+end)
+tab:Button("Spawn Tool", "", function()
+local Tool = _G.tool
 local s = game.ReplicatedStorage.Tools[Tool]:Clone()
 s.Parent = game.Players.LocalPlayer.Backpack
 end)
