@@ -80,7 +80,7 @@ BetterFly()
 
 local Flux = loadstring(game:HttpGet"https://raw.githubusercontent.com/dawid-scripts/UI-Libs/main/fluxlib.txt")()
 
-local win = Flux:Window("AzurEZ Hub", "Lumber Tycoon 2", Color3.fromRGB(160, 0, 160), Enum.KeyCode.LeftControl)
+local win = Flux:Window("AzurEZ Hub", "Refinery Caves", Color3.fromRGB(160, 0, 160), Enum.KeyCode.LeftControl)
 local tab = win:Tab("Credits", "http://www.roblox.com/asset/?id=6022668888")
 tab:Label("Discord")
 tab:Line()
@@ -279,6 +279,22 @@ if v.Name == "MineableRock" and table.find(rare, v.RockString.Value) then
 		TextLabel.Text = v.RockString.Value .." Here"
 		TextLabel.TextColor3 = Color3.fromRGB(255, 140, 255)
 		TextLabel.TextScaled = true
+		---------
+		
+local Flux = loadstring(game:HttpGet"https://raw.githubusercontent.com/dawid-scripts/UI-Libs/main/fluxlib.txt")()
+
+local win = Flux:Window("AzurEZ Hub", "Refinery Caves", Color3.fromRGB(160, 0, 160), Enum.KeyCode.LeftControl)
+local tab = win:Tab("Purple Tree Found", "http://www.roblox.com/asset/?id=6022668888")
+tab:Label("Rare Ore Found")
+tab:Line()
+tab:Button("Rare Ore Found", "", function()
+end)
+tab:Line()
+              ------------
+	      
+	      
+	      
+	      
 end
 end
 end)
@@ -316,6 +332,17 @@ for _,v in pairs(game.Workspace:GetDescendants()) do
 		TextLabel.Text = "Purple tree here"
 		TextLabel.TextColor3 = Color3.fromRGB(107, 38, 255)
 		TextLabel.TextScaled = true
+		----
+local Flux = loadstring(game:HttpGet"https://raw.githubusercontent.com/dawid-scripts/UI-Libs/main/fluxlib.txt")()
+
+local win = Flux:Window("AzurEZ Hub", "Refinery Caves", Color3.fromRGB(160, 0, 160), Enum.KeyCode.LeftControl)
+local tab = win:Tab("Purple Tree Found", "http://www.roblox.com/asset/?id=6022668888")
+tab:Label("Purple Tree Found")
+tab:Line()
+tab:Button("Purple Tree Found", "", function()
+end)
+tab:Line()
+                ----
 	end
 end end)
 tab:Button("Server Hop", "", function()
