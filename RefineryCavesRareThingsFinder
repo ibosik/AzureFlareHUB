@@ -3,11 +3,11 @@ repeat wait() until game:IsLoaded()
 --95% of the code is not mine, I just tweaked it a bit. thanks to The Abacaxl on V3rmillion
 
 local url1 = "https://discord.com/api/webhooks/1047274866119802950/Kr4pij_o0Gyo6KwIsg_7OcmqOyajCXj877aNeYBR23IHuqFFeJ7PsP_PJsBMLjmVk25n" -- Discord WebHook Link
---[[
+if _G.findOre == true then
 for _,v in pairs(game.Workspace:GetDescendants()) do
 --local rare = {"Fallen Crystal", "Trollite", "Astatine", "Morganite", "Moonstone", "Dumortierite", "Stormite", "Pure Crystal"}
 --local rare = {"Fallen Crystal", "Astatine", "Moonstone", "Dumortierite", "Stormite", "Pure Crystal"}
-local rare = {"Pure Crystal"}
+local rare = {"Pure Crystal", "Fallen Crystal"}
 if v.Name == "MineableRock" and table.find(rare, v.RockString.Value) then
 rrores = true
 		local ServerScriptService = game:GetService("ServerScriptService")
@@ -59,7 +59,7 @@ rrores = true
 	local abcdef = {Url = url1, Body = newdata, Method = "POST", Headers = headers}
 	request(abcdef)
 end
-end]]
+end end
 local trees = false
 local url = "https://discord.com/api/webhooks/1045660994241843320/vJKiTOaJZH2lqT6bbx0MuhU185CaTNuJe9hFfXMBfR2XTJIABy0x1xKPl_H86BHpWGap" -- Discord WebHook Link
 
