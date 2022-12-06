@@ -347,3 +347,15 @@ tab:Line()
 end end)
 tab:Button("Server Hop", "", function()
 Teleport() end)
+local tab = win:Tab("Player", "http://www.roblox.com/asset/?id=6031754538")
+tab:Label("Player Scripts")
+tab:Line()
+tab:Button("All Blueprints", "", function()
+for _,v in pairs(game.ReplicatedStorage:GetDescendants()) do
+    local s = v:Clone()
+    s.Parent=game.Players.LocalPlayer.Values.Blueprints
+end
+end)
+tab:Button("Mute", "", function()
+game.Players.LocalPlayer.Values.Muted = not game.Players.LocalPlayer.Values.Muted
+end)
