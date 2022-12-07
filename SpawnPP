@@ -1,0 +1,111 @@
+if _G.DeleteOldPP == true then
+    game.ReplicatedStorage.P:Remove()
+    game.Workspace.P:Remove()
+end
+
+--// Settings
+
+_G.DeleteOldPP = true
+_G.waitt = 1 -- After Waiting Script Do ""All Parts".Anchored = false"
+
+--// Locals
+
+local plr = game.Players.LocalPlayer.Character.HumanoidRootPart
+local a = Instance.new("Part")
+local b = Instance.new("Part")
+local aa = Instance.new("Part")
+local ba = Instance.new("Part")
+local ca = Instance.new("Part")
+local da = Instance.new("Part")
+local p = Instance.new("Model")
+
+--// Parts
+
+p.Name = "P"
+p.Parent = game.ReplicatedStorage
+-----------------------------------------
+local pp = game.ReplicatedStorage.P
+-----------------------------------------
+a.Name = "Left"
+a.Size = Vector3.new(5,5,5,5)
+b.Name = "Right"
+b.Size = Vector3.new(5,5,5,5)
+aa.Name = "idk1"
+aa.Size = Vector3.new(5,5,5,5)
+ba.Name = "idk2"
+ba.Size = Vector3.new(5,5,5,5)
+ca.Name = "idk3"
+ca.Size = Vector3.new(5,5,5,5)
+da.Name = "idk4"
+da.Size = Vector3.new(5,5,5,5)
+a.Parent = pp
+b.Parent = pp
+aa.Parent = pp
+ba.Parent = pp
+ca.Parent = pp
+da.Parent = pp
+
+--// Teleporting
+
+-----------------------------------------
+local k = pp:Clone()
+----------------------------------------
+k.Left.CFrame = plr.CFrame
+k.Right.CFrame = plr.CFrame
+k.idk1.CFrame = plr.CFrame
+k.idk2.CFrame = plr.CFrame
+k.idk3.CFrame = plr.CFrame
+k.idk4.CFrame = plr.CFrame
+
+k.Left.CFrame = k.Left.CFrame + Vector3.new(-5,20,0)
+k.Right.CFrame = k.Right.CFrame + Vector3.new(5,20,0)
+k.idk1.CFrame = k.idk1.CFrame + Vector3.new(0,20,0)
+k.idk2.CFrame = k.idk2.CFrame + Vector3.new(0,25,0)
+k.idk3.CFrame = k.idk3.CFrame + Vector3.new(0,30,0)
+k.idk4.CFrame = k.idk4.CFrame + Vector3.new(0,35,0)
+
+--// Anchore
+
+k.Parent = game.Workspace
+----------------------------------------
+local w = game.Workspace.P
+----------------------------------------
+w.Left.Anchored = true
+w.Right.Anchored = true
+w.idk1.Anchored = true
+w.idk2.Anchored = true
+w.idk3.Anchored = true
+w.idk4.Anchored = true
+
+w.Left.Color = Color3.fromRGB(255,171,99)
+w.Right.Color = Color3.fromRGB(255,171,99)
+w.idk1.Color = Color3.fromRGB(255,171,99)
+w.idk2.Color = Color3.fromRGB(255,171,99)
+w.idk3.Color = Color3.fromRGB(255,171,99)
+w.idk4.Color = Color3.fromRGB(255,0,0)
+
+wait(3)
+
+w.Left.Anchored = false
+w.Right.Anchored = false
+w.idk1.Anchored = false
+w.idk2.Anchored = false
+w.idk3.Anchored = false
+w.idk4.Anchored = false
+
+wait(2)
+
+w.Left.Material = "Neon"
+w.Right.Material = "Neon"
+w.idk1.Material = "Neon"
+w.idk2.Material = "Neon"
+w.idk3.Material = "Neon"
+w.idk4.Material = "Neon"
+repeat game.RunService.RenderStepped:Wait()
+w.Left.Transparency = w.Left.Transparency + 0.05
+w.Right.Transparency = w.Right.Transparency + 0.05
+w.idk1.Transparency = w.idk1.Transparency + 0.05
+w.idk2.Transparency = w.idk2.Transparency + 0.05
+w.idk3.Transparency = w.idk3.Transparency + 0.05
+w.idk4.Transparency = w.idk4.Transparency + 0.05
+until w.idk4.Transparency == 1
