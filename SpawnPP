@@ -1,11 +1,6 @@
-if _G.DeleteOldPP == true then
-    game.ReplicatedStorage.P:Remove()
-    game.Workspace.P:Remove()
-end
 
 --// Settings
 
-_G.DeleteOldPP = true
 _G.waitt = 1 -- After Waiting Script Do ""All Parts".Anchored = false"
 
 --// Locals
