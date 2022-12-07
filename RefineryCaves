@@ -255,11 +255,13 @@ end
 local tab = win:Tab("Find Rare Things", "http://www.roblox.com/asset/?id=6031754538")
 tab:Label("Rare Ores")
 tab:Line()
+_G.coount = 0
 tab:Button("Rare Ores Esp", "", function()
 for _,v in pairs(game.Workspace:GetDescendants()) do
 local rare = {"Fallen Crystal", "Trollite", "Astatine", "Morganite", "Moonstone", "Dumortierite", "Stormite", "Pure Crystal"}
 --local rare = {"Fallen Crystal", "Astatine", "Moonstone", "Dumortierite", "Stormite", "Pure Crystal"}
 if v.Name == "MineableRock" and table.find(rare, v.RockString.Value) then
+    _G.coount = _G.coount + 1
   local BillboardGui = Instance.new("BillboardGui") --UI
 		local TextLabel = Instance.new("TextLabel")
 		BillboardGui.Parent = v.Part
@@ -284,10 +286,10 @@ if v.Name == "MineableRock" and table.find(rare, v.RockString.Value) then
 local Flux = loadstring(game:HttpGet"https://raw.githubusercontent.com/dawid-scripts/UI-Libs/main/fluxlib.txt")()
 
 local win = Flux:Window("AzurEZ Hub", "Refinery Caves", Color3.fromRGB(160, 0, 160), Enum.KeyCode.LeftControl)
-local tab = win:Tab("Purple Tree Found", "http://www.roblox.com/asset/?id=6022668888")
-tab:Label("Rare Ore Found")
+local tab = win:Tab(_G.coount.." Rare Ores Found", "http://www.roblox.com/asset/?id=6022668888")
+tab:Label(_G.coount.." Rare Ores Found")
 tab:Line()
-tab:Button("Rare Ore Found", "", function()
+tab:Button(_G.coount.." Rare Ores Found", "", function()
 end)
 tab:Line()
               ------------
@@ -350,6 +352,15 @@ Teleport() end)
 local tab = win:Tab("Player", "http://www.roblox.com/asset/?id=6031754538")
 tab:Label("Player Scripts")
 tab:Line()
+tab:Button("Count Items In Backpack (F9)", "", function()
+_G.count = 0
+for _,v in pairs(game.Players.LocalPlayer.Backpack:GetDescendants()) do
+    if v.ClassName == "Tool" then
+_G.count = _G.count + 1
+    end
+end
+print(_G.count)
+end)
 tab:Button("All Blueprints", "", function()
 for _,v in pairs(game.ReplicatedStorage:GetDescendants()) do
     local s = v:Clone()
@@ -358,4 +369,7 @@ end
 end)
 tab:Button("Mute", "", function()
 game.Players.LocalPlayer.Values.Muted = not game.Players.LocalPlayer.Values.Muted
+end)
+tab:Button("Go to Lore", "", function()
+game:GetService("ReplicatedStorage").Events.GoToLore:FireServer()
 end)
