@@ -17,7 +17,7 @@ local Tab = Window.NewTab("NOT SUPPORTED GAME")
 
 local Section = Tab.NewSection("This Game Is Not Supported")
 
-local Section = Tab.NewSection("Supported Games: 11")
+local Section = Tab.NewSection("Supported Games: 12")
 
 local Button = Section.NewButton("Lumber Tycoon 2",function()
 end)
