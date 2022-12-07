@@ -108,6 +108,5 @@ w.idk1.Transparency = w.idk1.Transparency + 0.05
 w.idk2.Transparency = w.idk2.Transparency + 0.05
 w.idk3.Transparency = w.idk3.Transparency + 0.05
 w.idk4.Transparency = w.idk4.Transparency + 0.05
-until w.idk4.Transparency == 1
-wait(2)
+until w.idk4.Transparency >= 1
 game.Workspace.P:Remove()
