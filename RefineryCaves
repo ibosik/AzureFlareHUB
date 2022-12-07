@@ -282,7 +282,13 @@ if v.Name == "MineableRock" and table.find(rare, v.RockString.Value) then
 		TextLabel.TextColor3 = Color3.fromRGB(255, 140, 255)
 		TextLabel.TextScaled = true
 		---------
-		
+              ------------
+	      
+	      
+	      
+	      
+end
+end
 local Flux = loadstring(game:HttpGet"https://raw.githubusercontent.com/dawid-scripts/UI-Libs/main/fluxlib.txt")()
 
 local win = Flux:Window("AzurEZ Hub", "Refinery Caves", Color3.fromRGB(160, 0, 160), Enum.KeyCode.LeftControl)
@@ -292,13 +298,6 @@ tab:Line()
 tab:Button(_G.coount.." Rare Ores Found", "", function()
 end)
 tab:Line()
-              ------------
-	      
-	      
-	      
-	      
-end
-end
 end)
 tab:Button("Server Hop", "", function()
 Teleport() end)
