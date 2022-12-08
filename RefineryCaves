@@ -1,4 +1,3 @@
-
 local FlyingEnabled = false
 local maxspeed = 150 
 function BetterFly()
