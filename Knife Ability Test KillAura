@@ -1,0 +1,13 @@
+dist=25
+game.Players.LocalPlayer:GetMouse().KeyDown:Connect(function(key)
+if key=="f"then
+root=game.Players.LocalPlayer.Character.HumanoidRootPart
+for i,v in pairs(game.Players:GetPlayers()) do
+    if v.Character.Humanoid.Health~=0 and (root.Position - v.Character.HumanoidRootPart.Position).magnitude < dist then
+        v.Character.HumanoidRootPart.CFrame=root.CFrame
+        if not game.Players.LocalPlayer.Character:FindFirstChild("Knife") then
+        game.Players.LocalPlayer.Backpack.Knife.Parent=root.Parent end
+        wait(0.2)
+        game:GetService'VirtualUser':Button1Down(Vector2.new(1,1))
+game:GetService'VirtualUser':Button1Up(Vector2.new(1,1))
+end end end end)
