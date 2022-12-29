@@ -1,0 +1,12 @@
+--// Get Reward
+local args = {
+    [1] = "asdsada"
+}
+local idk=10
+game:GetService("ReplicatedStorage"):GetChildren()[idk]:InvokeServer(unpack(args))
+--// Discover Elf
+
+task.spawn(function()
+local idk=15
+game:GetService("ReplicatedStorage"):GetChildren()[idk]:InvokeServer()
+end)
