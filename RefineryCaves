@@ -1,81 +1,126 @@
-local FlyingEnabled = false
-local maxspeed = 150 
-function BetterFly()
-	repeat wait() until game.Players.LocalPlayer and game.Players.LocalPlayer.Character and game.Players.LocalPlayer.Character:findFirstChild("Head") and game.Players.LocalPlayer.Character:findFirstChild("Humanoid") 
-	local mouse = game.Players.LocalPlayer:GetMouse() 
-	repeat wait() until mouse
-	local plr = game.Players.LocalPlayer 
-	local torso = plr.Character.Head 
-	local flying = false
-	local deb = true 
-	local ctrl = {f = 0, b = 0, l = 0, r = 0} 
-	local lastctrl = {f = 0, b = 0, l = 0, r = 0}
-	local speed = 5000 
-	 
-	function Fly() 
-	local bg = Instance.new("BodyGyro", torso) 
-	bg.P = 9e4 
-	bg.maxTorque = Vector3.new(9e9, 9e9, 9e9) 
-	bg.cframe = torso.CFrame 
-	local bv = Instance.new("BodyVelocity", torso) 
-	bv.velocity = Vector3.new(0,0.1,0) 
-	bv.maxForce = Vector3.new(9e9, 9e9, 9e9) 
-	repeat wait() 
-	plr.Character.Humanoid.PlatformStand = true 
-	if ctrl.l + ctrl.r ~= 0 or ctrl.f + ctrl.b ~= 0 then 
-	speed = maxspeed
-	elseif not (ctrl.l + ctrl.r ~= 0 or ctrl.f + ctrl.b ~= 0) and speed ~= 0 then 
-		speed = 0 
-	end 
-	if (ctrl.l + ctrl.r) ~= 0 or (ctrl.f + ctrl.b) ~= 0 then 
-	bv.velocity = ((game.Workspace.CurrentCamera.CoordinateFrame.lookVector * (ctrl.f+ctrl.b)) + ((game.Workspace.CurrentCamera.CoordinateFrame * CFrame.new(ctrl.l+ctrl.r,(ctrl.f+ctrl.b)*.2,0).p) - game.Workspace.CurrentCamera.CoordinateFrame.p))*speed 
-	lastctrl = {f = ctrl.f, b = ctrl.b, l = ctrl.l, r = ctrl.r} 
-	elseif (ctrl.l + ctrl.r) == 0 and (ctrl.f + ctrl.b) == 0 and speed ~= 0 then 
-	bv.velocity = ((game.Workspace.CurrentCamera.CoordinateFrame.lookVector * (lastctrl.f+lastctrl.b)) + ((game.Workspace.CurrentCamera.CoordinateFrame * CFrame.new(lastctrl.l+lastctrl.r,(lastctrl.f+lastctrl.b)*0.2,0).p) - game.Workspace.CurrentCamera.CoordinateFrame.p))*speed 
-	else 
-	bv.velocity = Vector3.new(0,0,0) 
-	end 
-	bg.cframe = game.Workspace.CurrentCamera.CoordinateFrame * CFrame.Angles(-math.rad((ctrl.f+ctrl.b)*speed/maxspeed),0,0) 
-	until not flying 
-	ctrl = {f = 0, b = 0, l = 0, r = 0} 
-	lastctrl = {f = 0, b = 0, l = 0, r = 0} 
-	speed = 0 
-	bg:Destroy() 
-	bv:Destroy() 
-	plr.Character.Humanoid.PlatformStand = false 
-	end 
-	mouse.KeyDown:connect(function(key) 
-	if key:lower() == "q" and FlyingEnabled == true then 
-	if flying then flying = false 
-	else 
-	flying = true 
-	Fly() 
-	end 
-	elseif key:lower() == "w" then 
-	ctrl.f = 1 
-	elseif key:lower() == "s" then 
-	ctrl.b = -1 
-	elseif key:lower() == "a" then 
-	ctrl.l = -1 
-	elseif key:lower() == "d" then 
-	ctrl.r = 1 
-	end 
-	end) 
-	mouse.KeyUp:connect(function(key) 
-	if key:lower() == "w" then 
-	ctrl.f = 0 
-	elseif key:lower() == "s" then 
-	ctrl.b = 0 
-	elseif key:lower() == "a" then 
-	ctrl.l = 0 
-	elseif key:lower() == "d" then 
-	ctrl.r = 0 
-	end 
-	end)
-	Fly()
+function deliverytp()
+game.Players.LocalPlayer:GetMouse().KeyDown:Connect(function(key)
+if key=="v" then
+local Grabbables=workspace.Grabable
+local events = game.ReplicatedStorage.Events
+local function Grab(Bool, Part)
+task.spawn(function()
+if Bool==true then
+	Events.Grab:InvokeServer(Part, {})
+	elseif Bool==false then
+		Events.Ungrab:FireServer(Part, false, {})
+	end end) end
+	local DeliveryBox=Grabbables.DeliveryBox
+	Grab(true,GrabPart)
+	wait(0.2)
+	DeliveryBox:PivotTo(CFrame.new(DeliveryBox.Configuration.To.Value.Position + Vector3.new(0,3)))
+elseif key=="g" then
+		game:GetService("Workspace").Map.Buildings.UCS.Other.DeliveryJob.IPart.Interact:FireServer()
+	end end)
 end
-game.Players.LocalPlayer.CharacterAdded:Connect(BetterFly)
-BetterFly()
+function TpTools()
+local a=Instance.new("Tool")
+local b=Instance.new("Part")
+a.Parent=game.Players.LocalPlayer.Backpack
+a.Name="Deselect All"
+b.Transparency=1
+b.CanCollide=false
+b.Name="Handle"
+b.Parent=a
+a.Activated:Connect(function()
+for i,v in pairs(game.Workspace:GetDescendants()) do
+if v.Name=="BillboardGui" and v:FindFirstChild("TextLabel") or v.Name=="SelectionBoxx" then
+v:Remove()
+end end end)
+local a=Instance.new("Tool")
+local b=Instance.new("Part")
+a.Parent=game.Players.LocalPlayer.Backpack
+a.Name="Select Item"
+b.Transparency=1
+b.CanCollide=false
+b.Name="Handle"
+b.Parent=a
+a.Activated:Connect(function()
+_G.c=game.Players.LocalPlayer:GetMouse().Target
+        local BillboardGui = Instance.new("BillboardGui") --UI
+		local TextLabel = Instance.new("TextLabel")
+		BillboardGui.Parent = _G.c
+		BillboardGui.AlwaysOnTop = true
+		BillboardGui.LightInfluence = 1
+		BillboardGui.Size = UDim2.new(0, 50, 0, 50)
+		BillboardGui.StudsOffset = Vector3.new(0, 2, 0)
+
+		TextLabel.Parent = BillboardGui
+		TextLabel.BackgroundColor3 = Color3.new(1, 1, 1)
+		TextLabel.BackgroundTransparency = 1
+		TextLabel.BorderColor3 = Color3.new(27, 42, 53)
+		TextLabel.BorderSizePixel = 0
+		TextLabel.Font = Enum.Font.GothamBold
+		TextLabel.Size = UDim2.new(1, 0, 1, 0)
+		TextLabel.TextStrokeTransparency = -0.010
+		TextLabel.Text = "Selected Item"
+		TextLabel.TextColor3 = Color3.fromRGB(255, 140, 255)
+		TextLabel.TextScaled = true
+		TextLabel.TextTransparency=1
+		local Select=Instance.new("SelectionBox")
+Select.Parent=BillboardGui.Parent
+Select.Adornee=BillboardGui.Parent
+Select.LineThickness=0.05
+Select.Name="SelectionBoxx"
+function zigzag(X) return math.acos(math.cos(X*math.pi))/math.pi end
+local counter = 0
+
+local selected = {}
+
+task.spawn(function()
+	while wait(0.1) do
+		counter = counter + 0.01
+	end
+end)
+                            Select.SurfaceColor3 = Color3.fromRGB(0, 0, 0)
+							task.spawn(function()
+								while wait(0.1) do
+								Select.Color3 = Color3.fromHSV(zigzag(counter),1,1)
+								end
+							end)
+spawn(function()while wait() do
+	Select.LineThickness=Select.LineThickness+0.001 wait(0.1)
+	Select.LineThickness=Select.LineThickness+0.001 wait(0.1)
+	Select.LineThickness=Select.LineThickness+0.001 wait(0.1)
+	Select.LineThickness=Select.LineThickness+0.001 wait(0.1)
+
+	Select.LineThickness=Select.LineThickness-0.001 wait(0.1)
+	Select.LineThickness=Select.LineThickness-0.001 wait(0.1)
+	Select.LineThickness=Select.LineThickness-0.001 wait(0.1)
+	Select.LineThickness=Select.LineThickness-0.001 wait(0.1)
+end end)
+end)
+local a=Instance.new("Tool")
+local b=Instance.new("Part")
+a.Parent=game.Players.LocalPlayer.Backpack
+a.Name="Tp Item"
+b.Transparency=1
+b.CanCollide=false
+b.Name="Handle"
+b.Parent=a
+a.Activated:Connect(function()
+local Grabbables=workspace.Grabable
+for i,v in pairs(Grabbables:GetDescendants()) do
+if v.Name=="BillboardGui" and v:FindFirstChild("TextLabel") then
+local events = game.ReplicatedStorage.Events
+local function Grab(Bool, Part)
+task.spawn(function()
+if Bool==true then
+	Events.Grab:InvokeServer(Part, {})
+	elseif Bool==false then
+		Events.Ungrab:FireServer(Part, false, {})
+	end end) end
+	local DeliveryBox=v.Parent
+	Grab(true,GrabPart)
+	wait(0.2)
+	DeliveryBox:PivotTo(CFrame.new(game.Players.LocalPlayer.Character.HumanoidRootPart.Position + Vector3.new(0,3)))
+end end end)
+end
 
 local Flux = loadstring(game:HttpGet"https://raw.githubusercontent.com/dawid-scripts/UI-Libs/main/fluxlib.txt")()
 
@@ -110,6 +155,15 @@ game:GetService("CoreGui").FluxLib:Destroy()
 game:GetService("CoreGui").FluxLib:Destroy()
 end)
 
+local tab = win:Tab("Teleport", "http://www.roblox.com/asset/?id=6031754538")
+tab:Label("Teleport Items")
+tab:Line()
+tab:Button("Get Item TP Tools", "", function()
+TpTools()
+	end)
+tab:Button("TP DeliveryBox", "''v'' - Tp DeliveryBox, ''g'' - Get Job.", function()
+deliverytp()
+	end)
 local tab = win:Tab("Miscellaneous", "http://www.roblox.com/asset/?id=6031754538")
 tab:Label("Bugs")
 tab:Line()
