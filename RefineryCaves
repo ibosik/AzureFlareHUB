@@ -1,24 +1,137 @@
-function deliverytp()
-game.Players.LocalPlayer:GetMouse().KeyDown:Connect(function(key)
-if key=="v" then
-local Grabbables=workspace.Grabable
-local events = game.ReplicatedStorage.Events
-local function Grab(Bool, Part)
-task.spawn(function()
-if Bool==true then
-	Events.Grab:InvokeServer(Part, {})
-	elseif Bool==false then
-		Events.Ungrab:FireServer(Part, false, {})
-	end end) end
-	local DeliveryBox=Grabbables.DeliveryBox
-	Grab(true,GrabPart)
-	wait(0.2)
-	DeliveryBox:PivotTo(CFrame.new(DeliveryBox.Configuration.To.Value.Position + Vector3.new(0,3)))
-elseif key=="g" then
-		game:GetService("Workspace").Map.Buildings.UCS.Other.DeliveryJob.IPart.Interact:FireServer()
-	end end)
-end
+local posspeed=0.1
+
 function TpTools()
+local a=Instance.new("Tool")
+local b=Instance.new("Part")
+a.Parent=game.Players.LocalPlayer.Backpack
+a.Name="Remove Pos"
+b.Transparency=1
+b.CanCollide=false
+b.Name="Handle"
+b.Parent=a
+a.Activated:Connect(function()
+if workspace:FindFirstChild("Pos1") then workspace:FindFirstChild("Pos1"):Remove() end
+end)
+function zigzag(X) return math.acos(math.cos(X*math.pi))/math.pi end
+local counter = 0
+
+local selected = {}
+
+task.spawn(function()
+	while wait(0.1) do
+		counter = counter + 0.01
+	end
+end)
+
+local a=Instance.new("Tool")
+local b=Instance.new("Part")
+a.Parent=game.Players.LocalPlayer.Backpack
+a.Name="Pos"
+b.Transparency=1
+b.CanCollide=false
+b.Name="Handle"
+b.Parent=a
+a.Activated:Connect(function()
+if workspace:FindFirstChild("Pos1") then workspace:FindFirstChild("Pos1"):Remove() end
+function zigzag(X) return math.acos(math.cos(X*math.pi))/math.pi end
+local counter = 0
+
+local selected = {}
+
+task.spawn(function()
+	while wait(0.1) do
+		counter = counter + 0.01
+	end
+end)
+
+function keyy(v, t)	
+spawn(function ()
+	wait(10)
+	v:Remove()
+end)
+  local BillboardGui = Instance.new("BillboardGui")
+  		local TextLabel = Instance.new("TextLabel")
+		BillboardGui.Parent = v
+		BillboardGui.AlwaysOnTop = true
+		BillboardGui.LightInfluence = 1
+		BillboardGui.Size = UDim2.new(0, 50, 0, 50)
+		BillboardGui.StudsOffset = Vector3.new(0, 0, 0)
+
+		TextLabel.Parent = BillboardGui
+		TextLabel.BackgroundColor3 = Color3.new(1, 1, 1)
+		TextLabel.BackgroundTransparency = 1
+		TextLabel.BorderColor3 = Color3.new(27, 42, 53)
+		TextLabel.BorderSizePixel = 0
+		TextLabel.Font = Enum.Font.GothamBold
+		TextLabel.Size = UDim2.new(1, 0, 1, 0)
+		TextLabel.TextStrokeTransparency = -0.010
+		TextLabel.Text = t
+		TextLabel.TextColor3 = Color3.fromRGB(255,0,0)
+		TextLabel.TextScaled = false
+end
+local c=Instance.new("Part")
+c.Name="Pos1"
+c.Parent=workspace
+c.Shape=Enum.PartType.Ball
+c.Material=Enum.Material.ForceField
+c.Color=Color3.fromRGB(255, 0, 0)
+c.Size=Vector3.new(1,1,1,1)
+c.CFrame=game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame
+c.CanCollide=false
+c.Anchored=true
+local t=Instance.new("Part")
+t.Name="T"
+t.Parent=c
+t.Size=Vector3.new(1,1,1,1)
+t.CFrame=c.CFrame+Vector3.new(1,0,0)
+t.CanCollide=false
+t.Anchored=true
+t.Transparency=1
+keyy(t, "T")
+local t=Instance.new("Part")
+t.Name="F"
+t.Parent=c
+t.Size=Vector3.new(1,1,1,1)
+t.CFrame=c.CFrame-Vector3.new(0,0,1)
+t.CanCollide=false
+t.Anchored=true
+t.Transparency=1
+keyy(t, "F")
+local t=Instance.new("Part")
+t.Name="H"
+t.Parent=c
+t.Size=Vector3.new(1,1,1,1)
+t.CFrame=c.CFrame+Vector3.new(0,0,1)
+t.CanCollide=false
+t.Anchored=true
+t.Transparency=1
+keyy(t, "H")
+local t=Instance.new("Part")
+t.Name="G"
+t.Parent=c
+t.Size=Vector3.new(1,1,1,1)
+t.CFrame=c.CFrame-Vector3.new(1,0,0)
+t.CanCollide=false
+t.Anchored=true
+t.Transparency=1
+keyy(t, "G")
+local m=game.Players.LocalPlayer:GetMouse()
+m.KeyDown:Connect(function (k)
+	if k=="t" then
+		c.CFrame=c.CFrame+Vector3.new(0.1, 0, 0)
+    	elseif k=="g" then
+		c.CFrame=c.CFrame-Vector3.new(0.1, 0, 0)
+		elseif k=="f" then
+		c.CFrame=c.CFrame-Vector3.new(0, 0, 0.1)
+		elseif k=="h" then
+		c.CFrame=c.CFrame+Vector3.new(0, 0, 0.1)
+		elseif k=="y" then
+		c.CFrame=c.CFrame+Vector3.new(0, 0.1, 0)
+		elseif k=="b" then
+		c.CFrame=c.CFrame-Vector3.new(0, 0.1, 0)
+	end
+end)
+end)
 local a=Instance.new("Tool")
 local b=Instance.new("Part")
 a.Parent=game.Players.LocalPlayer.Backpack
@@ -98,7 +211,7 @@ end)
 local a=Instance.new("Tool")
 local b=Instance.new("Part")
 a.Parent=game.Players.LocalPlayer.Backpack
-a.Name="Tp Item"
+a.Name="Tp Item To Player"
 b.Transparency=1
 b.CanCollide=false
 b.Name="Handle"
@@ -120,8 +233,52 @@ if Bool==true then
 	wait(0.2)
 	DeliveryBox:PivotTo(CFrame.new(game.Players.LocalPlayer.Character.HumanoidRootPart.Position + Vector3.new(0,3)))
 end end end)
+local a=Instance.new("Tool")
+local b=Instance.new("Part")
+a.Parent=game.Players.LocalPlayer.Backpack
+a.Name="Tp Item To Pos"
+b.Transparency=1
+b.CanCollide=false
+b.Name="Handle"
+b.Parent=a
+a.Activated:Connect(function()
+local Grabbables=workspace.Grabable
+for i,v in pairs(Grabbables:GetDescendants()) do
+if v.Name=="BillboardGui" and v:FindFirstChild("TextLabel") then
+local events = game.ReplicatedStorage.Events
+local function Grab(Bool, Part)
+task.spawn(function()
+if Bool==true then
+	Events.Grab:InvokeServer(Part, {})
+	elseif Bool==false then
+		Events.Ungrab:FireServer(Part, false, {})
+	end end) end
+	local DeliveryBox=v.Parent
+	Grab(true,GrabPart)
+	wait(0.2)
+	DeliveryBox:PivotTo(CFrame.new(game.Workspace.Pos1.Position))
+end end end)
 end
-
+function deliverytp()
+game.Players.LocalPlayer:GetMouse().KeyDown:Connect(function(key)
+if key=="v" then
+local Grabbables=workspace.Grabable
+local events = game.ReplicatedStorage.Events
+local function Grab(Bool, Part)
+task.spawn(function()
+if Bool==true then
+	Events.Grab:InvokeServer(Part, {})
+	elseif Bool==false then
+		Events.Ungrab:FireServer(Part, false, {})
+	end end) end
+	local DeliveryBox=Grabbables.DeliveryBox
+	Grab(true,GrabPart)
+	wait(0.2)
+	DeliveryBox:PivotTo(CFrame.new(DeliveryBox.Configuration.To.Value.Position + Vector3.new(0,3)))
+elseif key=="g" then
+		game:GetService("Workspace").Map.Buildings.UCS.Other.DeliveryJob.IPart.Interact:FireServer()
+	end end)
+end
 local Flux = loadstring(game:HttpGet"https://raw.githubusercontent.com/dawid-scripts/UI-Libs/main/fluxlib.txt")()
 
 local win = Flux:Window("AzurEZ Hub", "Refinery Caves", Color3.fromRGB(160, 0, 160), Enum.KeyCode.LeftControl)
@@ -161,6 +318,249 @@ tab:Line()
 tab:Button("Get Item TP Tools", "", function()
 TpTools()
 	end)
+tab:Line()
+tab:Button("Remove Pos", "", function()
+if workspace:FindFirstChild("Pos1") then workspace:FindFirstChild("Pos1"):Remove() end
+	end)
+tab:Button("Create Pos", "", function()
+if workspace:FindFirstChild("Pos1") then workspace:FindFirstChild("Pos1"):Remove() end
+function zigzag(X) return math.acos(math.cos(X*math.pi))/math.pi end
+local counter = 0
+
+local selected = {}
+
+task.spawn(function()
+	while wait(0.1) do
+		counter = counter + 0.01
+	end
+end)
+
+function keyy(v, t)	
+spawn(function ()
+	wait(10)
+	v:Remove()
+end)
+  local BillboardGui = Instance.new("BillboardGui")
+  		local TextLabel = Instance.new("TextLabel")
+		BillboardGui.Parent = v
+		BillboardGui.AlwaysOnTop = true
+		BillboardGui.LightInfluence = 1
+		BillboardGui.Size = UDim2.new(0, 50, 0, 50)
+		BillboardGui.StudsOffset = Vector3.new(0, 0, 0)
+
+		TextLabel.Parent = BillboardGui
+		TextLabel.BackgroundColor3 = Color3.new(1, 1, 1)
+		TextLabel.BackgroundTransparency = 1
+		TextLabel.BorderColor3 = Color3.new(27, 42, 53)
+		TextLabel.BorderSizePixel = 0
+		TextLabel.Font = Enum.Font.GothamBold
+		TextLabel.Size = UDim2.new(1, 0, 1, 0)
+		TextLabel.TextStrokeTransparency = -0.010
+		TextLabel.Text = t
+		TextLabel.TextColor3 = Color3.fromRGB(255,0,0)
+		TextLabel.TextScaled = false
+end
+local c=Instance.new("Part")
+c.Name="Pos1"
+c.Parent=workspace
+c.Shape=Enum.PartType.Ball
+c.Material=Enum.Material.ForceField
+c.Color=Color3.fromRGB(255, 0, 0)
+c.Size=Vector3.new(1,1,1,1)
+c.CFrame=game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame
+c.CanCollide=false
+c.Anchored=true
+local t=Instance.new("Part")
+t.Name="T"
+t.Parent=c
+t.Size=Vector3.new(1,1,1,1)
+t.CFrame=c.CFrame+Vector3.new(1,0,0)
+t.CanCollide=false
+t.Anchored=true
+t.Transparency=1
+keyy(t, "T")
+local t=Instance.new("Part")
+t.Name="F"
+t.Parent=c
+t.Size=Vector3.new(1,1,1,1)
+t.CFrame=c.CFrame-Vector3.new(0,0,1)
+t.CanCollide=false
+t.Anchored=true
+t.Transparency=1
+keyy(t, "F")
+local t=Instance.new("Part")
+t.Name="H"
+t.Parent=c
+t.Size=Vector3.new(1,1,1,1)
+t.CFrame=c.CFrame+Vector3.new(0,0,1)
+t.CanCollide=false
+t.Anchored=true
+t.Transparency=1
+keyy(t, "H")
+local t=Instance.new("Part")
+t.Name="G"
+t.Parent=c
+t.Size=Vector3.new(1,1,1,1)
+t.CFrame=c.CFrame-Vector3.new(1,0,0)
+t.CanCollide=false
+t.Anchored=true
+t.Transparency=1
+keyy(t, "G")
+local m=game.Players.LocalPlayer:GetMouse()
+m.KeyDown:Connect(function (k)
+	if k=="t" then
+		c.CFrame=c.CFrame+Vector3.new(posspeed, 0, 0)
+    	elseif k=="g" then
+		c.CFrame=c.CFrame-Vector3.new(posspeed, 0, 0)
+		elseif k=="f" then
+		c.CFrame=c.CFrame-Vector3.new(0, 0, posspeed)
+		elseif k=="h" then
+		c.CFrame=c.CFrame+Vector3.new(0, 0, posspeed)
+		elseif k=="y" then
+		c.CFrame=c.CFrame+Vector3.new(0, posspeed, 0)
+		elseif k=="b" then
+		c.CFrame=c.CFrame-Vector3.new(0, posspeed, 0)
+	end
+end)
+	end)
+tab:Slider("Change Pos Tp Speed", "", 0.1, 10,0.1,function(t)
+posspeed=t
+end)
+tab:Button("Change Pos Tp Speed To 0.1", "", function()
+posspeed=0.1
+	end)
+tab:Button("Deselect Items", "", function()
+for i,v in pairs(game.Workspace:GetDescendants()) do
+if v.Name=="BillboardGui" and v:FindFirstChild("TextLabel") or v.Name=="SelectionBoxx" then
+v:Remove() end end end)
+tab:Button("Select Item Tool", "", function()
+local a=Instance.new("Tool")
+local b=Instance.new("Part")
+a.Parent=game.Players.LocalPlayer.Backpack
+a.Name="Select Item"
+b.Transparency=1
+b.CanCollide=false
+b.Name="Handle"
+b.Parent=a
+a.Activated:Connect(function()
+_G.c=game.Players.LocalPlayer:GetMouse().Target
+        local BillboardGui = Instance.new("BillboardGui") --UI
+		local TextLabel = Instance.new("TextLabel")
+		BillboardGui.Parent = _G.c
+		BillboardGui.AlwaysOnTop = true
+		BillboardGui.LightInfluence = 1
+		BillboardGui.Size = UDim2.new(0, 50, 0, 50)
+		BillboardGui.StudsOffset = Vector3.new(0, 2, 0)
+
+		TextLabel.Parent = BillboardGui
+		TextLabel.BackgroundColor3 = Color3.new(1, 1, 1)
+		TextLabel.BackgroundTransparency = 1
+		TextLabel.BorderColor3 = Color3.new(27, 42, 53)
+		TextLabel.BorderSizePixel = 0
+		TextLabel.Font = Enum.Font.GothamBold
+		TextLabel.Size = UDim2.new(1, 0, 1, 0)
+		TextLabel.TextStrokeTransparency = -0.010
+		TextLabel.Text = "Selected Item"
+		TextLabel.TextColor3 = Color3.fromRGB(255, 140, 255)
+		TextLabel.TextScaled = true
+		TextLabel.TextTransparency=1
+		local Select=Instance.new("SelectionBox")
+Select.Parent=BillboardGui.Parent
+Select.Adornee=BillboardGui.Parent
+Select.LineThickness=0.05
+Select.Name="SelectionBoxx"
+function zigzag(X) return math.acos(math.cos(X*math.pi))/math.pi end
+local counter = 0
+
+local selected = {}
+
+task.spawn(function()
+	while wait(0.1) do
+		counter = counter + 0.01
+	end
+end)
+                            Select.SurfaceColor3 = Color3.fromRGB(0, 0, 0)
+							task.spawn(function()
+								while wait(0.1) do
+								Select.Color3 = Color3.fromHSV(zigzag(counter),1,1)
+								end
+							end)
+spawn(function()while wait() do
+	Select.LineThickness=Select.LineThickness+0.001 wait(0.1)
+	Select.LineThickness=Select.LineThickness+0.001 wait(0.1)
+	Select.LineThickness=Select.LineThickness+0.001 wait(0.1)
+	Select.LineThickness=Select.LineThickness+0.001 wait(0.1)
+
+	Select.LineThickness=Select.LineThickness-0.001 wait(0.1)
+	Select.LineThickness=Select.LineThickness-0.001 wait(0.1)
+	Select.LineThickness=Select.LineThickness-0.001 wait(0.1)
+	Select.LineThickness=Select.LineThickness-0.001 wait(0.1)
+end end)
+end)
+	end)
+tab:Button("Tp Items To You", "", function()
+local Grabbables=workspace.Grabable
+for i,v in pairs(Grabbables:GetDescendants()) do
+if v.Name=="BillboardGui" and v:FindFirstChild("TextLabel") then
+local events = game.ReplicatedStorage.Events
+local function Grab(Bool, Part)
+task.spawn(function()
+if Bool==true then
+	Events.Grab:InvokeServer(Part, {})
+	elseif Bool==false then
+		Events.Ungrab:FireServer(Part, false, {})
+	end end) end
+	local DeliveryBox=v.Parent
+	Grab(true,GrabPart)
+	wait(0.2)
+	DeliveryBox:PivotTo(CFrame.new(game.Players.LocalPlayer.Character.HumanoidRootPart.Position + Vector3.new(0,3)))
+end end end)
+tab:Button("Tp Items To Pos", "", function()
+local Grabbables=workspace.Grabable
+for i,v in pairs(Grabbables:GetDescendants()) do
+if v.Name=="BillboardGui" and v:FindFirstChild("TextLabel") then
+local events = game.ReplicatedStorage.Events
+local function Grab(Bool, Part)
+task.spawn(function()
+if Bool==true then
+	Events.Grab:InvokeServer(Part, {})
+	elseif Bool==false then
+		Events.Ungrab:FireServer(Part, false, {})
+	end end) end
+	local DeliveryBox=v.Parent
+	Grab(true,GrabPart)
+	wait(0.2)
+	DeliveryBox:PivotTo(CFrame.new(game.Workspace.Pos1.Position))
+end end	end)
+tab:Button("Select Player", "", function()
+local a=Instance.new("Tool")
+local b=Instance.new("Part")
+a.Parent=game.Players.LocalPlayer.Backpack
+a.Name="Select Player"
+b.Transparency=1
+b.CanCollide=false
+b.Name="Handle"
+b.Parent=a
+a.Activated:Connect(function()
+local nameplr=game.Players.LocalPlayer:GetMouse().Target
+end) end)
+tab:Button("Tp Items To Player", "", function()
+local Grabbables=workspace.Grabable
+for i,v in pairs(Grabbables:GetDescendants()) do
+if v.Name=="BillboardGui" and v:FindFirstChild("TextLabel") then
+local events = game.ReplicatedStorage.Events
+local function Grab(Bool, Part)
+task.spawn(function()
+if Bool==true then
+	Events.Grab:InvokeServer(Part, {})
+	elseif Bool==false then
+		Events.Ungrab:FireServer(Part, false, {})
+	end end) end
+	local DeliveryBox=v.Parent
+	Grab(true,GrabPart)
+	wait(0.2)
+	DeliveryBox:PivotTo(CFrame.new(nameplr.Position+Vector3.new(0,3,0)))
+end end	end)
 tab:Button("TP DeliveryBox", "''v'' - Tp DeliveryBox, ''g'' - Get Job.", function()
 deliverytp()
 	end)
