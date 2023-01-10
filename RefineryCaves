@@ -275,13 +275,13 @@ if Bool==true then
 	Grab(true,GrabPart)
 	wait(0.2)
 	DeliveryBox:PivotTo(CFrame.new(DeliveryBox.Configuration.To.Value.Position + Vector3.new(0,3)))
-elseif key=="g" then
+elseif key=="b" then
 		game:GetService("Workspace").Map.Buildings.UCS.Other.DeliveryJob.IPart.Interact:FireServer()
 	end end)
 end
 local Flux = loadstring(game:HttpGet"https://raw.githubusercontent.com/dawid-scripts/UI-Libs/main/fluxlib.txt")()
 
-local win = Flux:Window("AzurEZ Hub", "Refinery Caves", Color3.fromRGB(160, 0, 160), Enum.KeyCode.LeftControl)
+local win = Flux:Window("AzurEZ Hub", "Refinery Caves", Color3.fromRGB(160, 0, 160), Enum.KeyCode.RightShift)
 local tab = win:Tab("Credits", "http://www.roblox.com/asset/?id=6022668888")
 tab:Label("Discord")
 tab:Line()
@@ -423,12 +423,16 @@ m.KeyDown:Connect(function (k)
 	end
 end)
 	end)
+tab:Slider("Item Tp Delay", "", 0, 10,0,function(t)
+tpspeed=t
+end)
 tab:Slider("Change Pos Tp Speed", "", 0.1, 10,0.1,function(t)
 posspeed=t
 end)
 tab:Button("Change Pos Tp Speed To 0.1", "", function()
 posspeed=0.1
 	end)
+	tab:Line()
 tab:Button("Deselect Items", "", function()
 for i,v in pairs(game.Workspace:GetDescendants()) do
 if v.Name=="BillboardGui" and v:FindFirstChild("TextLabel") or v.Name=="SelectionBoxx" then
@@ -498,6 +502,7 @@ spawn(function()while wait() do
 end end)
 end)
 	end)
+	tab:Line()
 tab:Button("Tp Items To You", "", function()
 local Grabbables=workspace.Grabable
 for i,v in pairs(Grabbables:GetDescendants()) do
@@ -512,9 +517,31 @@ if Bool==true then
 	end end) end
 	local DeliveryBox=v.Parent
 	Grab(true,GrabPart)
-	wait(0.2)
+	wait(tpspeed)
 	DeliveryBox:PivotTo(CFrame.new(game.Players.LocalPlayer.Character.HumanoidRootPart.Position + Vector3.new(0,3)))
 end end end)
+tab:Button("Tp All Items From Shops To Pos", "", function()
+_G.jaja=true
+local Grabbables=workspace.Grabable
+for i,v in pairs(Grabbables:GetDescendants()) do
+if v.ClassName=="Part" and v.Parent:FindFirstChild("Shop") then
+local events = game.ReplicatedStorage.Events
+local function Grab(Bool, Part)
+task.spawn(function()
+if Bool==true then
+	Events.Grab:InvokeServer(Part, {})
+	elseif Bool==false then
+		Events.Ungrab:FireServer(Part, false, {})
+	end end) end
+	local DeliveryBox=v
+	Grab(true,GrabPart)
+	wait(0.2)
+if _G.jaja==true then
+	DeliveryBox:PivotTo(CFrame.new(game.Workspace.Pos1.Position)) end
+end end	end)
+tab:Button("OFF Tp All Items", "", function()
+_G.jaja=false
+end)
 tab:Button("Tp Items To Pos", "", function()
 local Grabbables=workspace.Grabable
 for i,v in pairs(Grabbables:GetDescendants()) do
@@ -529,9 +556,11 @@ if Bool==true then
 	end end) end
 	local DeliveryBox=v.Parent
 	Grab(true,GrabPart)
-	wait(0.2)
+	wait(tpspeed)
 	DeliveryBox:PivotTo(CFrame.new(game.Workspace.Pos1.Position))
 end end	end)
+tab:Line()
+--[[
 tab:Button("Select Player", "", function()
 local a=Instance.new("Tool")
 local b=Instance.new("Part")
@@ -543,7 +572,16 @@ b.Name="Handle"
 b.Parent=a
 a.Activated:Connect(function()
 local nameplr=game.Players.LocalPlayer:GetMouse().Target
-end) end)
+end) end)]]
+tab:Textbox("Write Player Name", "", true, function(t)
+if workspace:FindFirstChild("SelectedPlayer") then workspace:FindFirstChild("SelectedPlayer"):Remove() end
+local idk1=Instance.new("Part")
+idk1.Parent=workspace
+idk1.Name="SelectedPlayer"
+idk1.CanCollide=false
+idk1.Transparency=false
+spawn(function () while wait() do
+idk1.CFrame=game.Players..t..Character.Head.CFrame end end) end)
 tab:Button("Tp Items To Player", "", function()
 local Grabbables=workspace.Grabable
 for i,v in pairs(Grabbables:GetDescendants()) do
@@ -559,8 +597,9 @@ if Bool==true then
 	local DeliveryBox=v.Parent
 	Grab(true,GrabPart)
 	wait(0.2)
-	DeliveryBox:PivotTo(CFrame.new(nameplr.Position+Vector3.new(0,3,0)))
+	DeliveryBox:PivotTo(CFrame.new(workspace.SelectedPlayer.Position+Vector3.new(0,0,0)))
 end end	end)
+tab:Line()
 tab:Button("TP DeliveryBox", "''v'' - Tp DeliveryBox, ''g'' - Get Job.", function()
 deliverytp()
 	end)
@@ -803,6 +842,20 @@ tab:Button("Server Hop", "", function()
 Teleport() end)
 local tab = win:Tab("Player", "http://www.roblox.com/asset/?id=6031754538")
 tab:Label("Player Scripts")
+tab:Line()
+tab:Slider("Fly Speed", "", 1, 10000,1,function(t)
+flyspeed=t
+end)
+tab:Button("Fly", "", function()
+_G.Fly=not _G.Fly
+spawn(function ()
+while _G.Fly==true and game.RunService.RenderStepped:Wait() do
+game.Players.LocalPlayer.Character.Humanoid:ChangeState("Swimming")
+game.Players.LocalPlayer.Character.Humanoid.WalkSpeed=flyspeed
+end end)
+if _G.Fly==false then
+game.Players.LocalPlayer.Character.Humanoid.WalkSpeed=16
+end end)
 tab:Line()
 tab:Button("Count Items In Backpack (F9)", "", function()
 _G.count = 0
